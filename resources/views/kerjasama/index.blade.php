@@ -1,10 +1,10 @@
 @extends('layouts.master')
-@section('title', 'Mitra')
+@section('title', 'Kerja Sama')
 
 @section('content')
 <div class="card">
 <div class="card-header">
-<h3 class="card-title">Tabel Daftar Mitra</h3>
+<h3 class="card-title">Tabel Daftar Kerja Sama</h3>
 <div class="card-tools">
 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
 <i class="fas fa-minus"></i>
@@ -19,24 +19,36 @@
 <thead>
 <tr>
 <th>Id</th>
-<th>Nama Mitra</th>
-<th>Tingkat</th>
+<th>Nama Kerja Sama</th>
+<th>Tanggal Mulai</th>
+<th>Tanggal Sampai</th>
+<th>Mitra Id</th>
+<th>Kategori Id</th>
+<th>Status Id</th>
 </tr>
 </thead>
 <tbody>
-    @foreach($mitras as $data)
+    @foreach($kerjasamas as $data)
         <tr>
             <td>{{ $data->id }}</td>
-            <td>{{ $data->nama_mitra }}</td>
-            <td>{{ $data->tingkat }}</td>
+            <td>{{ $data->nama_kerja_sama }}</td>
+            <td>{{ $data->tanggal_mulai }}</td>
+            <td>{{ $data->tanggal_sampai }}</td>
+            <td>{{ $data->mitras_id }}</td>
+            <td>{{ $data->kategoris_id }}</td>
+            <td>{{ $data->status_id }}</td>
         </tr>
     @endforeach
 </tbody>
 <tfoot>
 <tr>
 <th>Id</th>
-<th>Nama Mitra</th>
-<th>Tingkat</th>
+<th>Nama Kerja Sama</th>
+<th>Tanggal Mulai</th>
+<th>Tanggal Sampai</th>
+<th>Mitra Id</th>
+<th>Kategori Id</th>
+<th>Status Id</th>
 </tr>
 </tfoot>
 </table>

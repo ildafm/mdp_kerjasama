@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Dosen;
+use App\Models\Kerjasama;
 use Illuminate\Http\Request;
 
-class DosenController extends Controller
+class KerjasamaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +15,8 @@ class DosenController extends Controller
     public function index()
     {
         //
-        $title = 'Halaman Dosen';
-        $dosens = Dosen::All();
-        return view('dosen.index')
-            ->with('dosens', $dosens)
-            ->with('title', $title);
+        $kerjasamas = Kerjasama::All();
+        return view('kerjasama.index')->with('kerjasamas', $kerjasamas);
     }
 
     /**
@@ -46,10 +43,10 @@ class DosenController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Dosen  $dosen
+     * @param  \App\Models\Kerjasama  $kerjasama
      * @return \Illuminate\Http\Response
      */
-    public function show(Dosen $dosen)
+    public function show(Kerjasama $kerjasama)
     {
         //
     }
@@ -57,10 +54,10 @@ class DosenController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Dosen  $dosen
+     * @param  \App\Models\Kerjasama  $kerjasama
      * @return \Illuminate\Http\Response
      */
-    public function edit(Dosen $dosen)
+    public function edit(Kerjasama $kerjasama)
     {
         //
     }
@@ -69,10 +66,10 @@ class DosenController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Dosen  $dosen
+     * @param  \App\Models\Kerjasama  $kerjasama
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Dosen $dosen)
+    public function update(Request $request, Kerjasama $kerjasama)
     {
         //
     }
@@ -80,10 +77,10 @@ class DosenController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Dosen  $dosen
+     * @param  \App\Models\Kerjasama  $kerjasama
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Dosen $dosen)
+    public function destroy(Kerjasama $kerjasama)
     {
         //
     }

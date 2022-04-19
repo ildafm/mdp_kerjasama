@@ -1,10 +1,11 @@
 @extends('layouts.master')
-@section('title', 'Mitra')
+@section('title', 'Dosen')
 
 @section('content')
+
 <div class="card">
 <div class="card-header">
-<h3 class="card-title">Tabel Daftar Mitra</h3>
+<h3 class="card-title">Tabel Daftar Dosen</h3>
 <div class="card-tools">
 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
 <i class="fas fa-minus"></i>
@@ -19,24 +20,24 @@
 <thead>
 <tr>
 <th>Id</th>
-<th>Nama Mitra</th>
-<th>Tingkat</th>
+<th>Kode Dosen</th>
+<th>Nama Dosen</th>
 </tr>
 </thead>
 <tbody>
-    @foreach($mitras as $data)
+    @foreach($dosens as $data)
         <tr>
             <td>{{ $data->id }}</td>
-            <td>{{ $data->nama_mitra }}</td>
-            <td>{{ $data->tingkat }}</td>
+            <td>{{ $data->kode_dosen }}</td>
+            <td>{{ $data->nama_dosen }}</td>
         </tr>
     @endforeach
 </tbody>
 <tfoot>
 <tr>
 <th>Id</th>
-<th>Nama Mitra</th>
-<th>Tingkat</th>
+<th>Kode Dosen</th>
+<th>Nama Dosen</th>
 </tr>
 </tfoot>
 </table>
@@ -48,4 +49,5 @@ Footer
 </div>
 
 </div>
+
 @endsection
