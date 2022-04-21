@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2022 at 08:17 AM
+-- Generation Time: Apr 21, 2022 at 12:50 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -131,15 +131,15 @@ CREATE TABLE `kegiatans` (
   `bentuk_kegiatan` text NOT NULL,
   `PIC` enum('F','P') NOT NULL,
   `keterangan` text NOT NULL,
-  `kerjasamas_id` int(11) NOT NULL,
-  `dosens_id` int(11) NOT NULL
+  `kerjasama_id` int(11) NOT NULL,
+  `dosen_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `kegiatans`
 --
 
-INSERT INTO `kegiatans` (`id`, `tanggal_mulai`, `tanggal_sampai`, `bentuk_kegiatan`, `PIC`, `keterangan`, `kerjasamas_id`, `dosens_id`) VALUES
+INSERT INTO `kegiatans` (`id`, `tanggal_mulai`, `tanggal_sampai`, `bentuk_kegiatan`, `PIC`, `keterangan`, `kerjasama_id`, `dosen_id`) VALUES
 (1, '2022-04-30', '2022-05-30', 'Daring', 'P', 'Dilakukan secara daring', 1, 1);
 
 -- --------------------------------------------------------
@@ -153,8 +153,8 @@ CREATE TABLE `kerjasamas` (
   `nama_kerja_sama` varchar(100) NOT NULL,
   `tanggal_mulai` date NOT NULL,
   `tanggal_sampai` date NOT NULL,
-  `mitras_id` int(11) NOT NULL,
-  `kategoris_id` int(11) NOT NULL,
+  `mitra_id` int(11) NOT NULL,
+  `kategori_id` int(11) NOT NULL,
   `status_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -162,7 +162,7 @@ CREATE TABLE `kerjasamas` (
 -- Dumping data for table `kerjasamas`
 --
 
-INSERT INTO `kerjasamas` (`id`, `nama_kerja_sama`, `tanggal_mulai`, `tanggal_sampai`, `mitras_id`, `kategoris_id`, `status_id`) VALUES
+INSERT INTO `kerjasamas` (`id`, `nama_kerja_sama`, `tanggal_mulai`, `tanggal_sampai`, `mitra_id`, `kategori_id`, `status_id`) VALUES
 (1, 'Kerja sama 1', '2022-04-30', '2022-05-30', 1, 1, 1);
 
 -- --------------------------------------------------------
@@ -174,38 +174,44 @@ INSERT INTO `kerjasamas` (`id`, `nama_kerja_sama`, `tanggal_mulai`, `tanggal_sam
 CREATE TABLE `mitras` (
   `id` int(11) NOT NULL,
   `nama_mitra` varchar(45) NOT NULL,
-  `tingkat` enum('I','N','W') NOT NULL DEFAULT 'W'
+  `tingkat` enum('I','N','W') NOT NULL DEFAULT 'W',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `mitras`
 --
 
-INSERT INTO `mitras` (`id`, `nama_mitra`, `tingkat`) VALUES
-(1, 'Universitas Indonesia', 'N'),
-(2, 'Universitas Palembang', 'W'),
-(3, 'mitra1', 'W'),
-(4, 'mitra1', 'N'),
-(5, 'mitra1', 'N'),
-(6, 'mitra1', 'N'),
-(7, 'mitra1', 'N');
+INSERT INTO `mitras` (`id`, `nama_mitra`, `tingkat`, `created_at`, `updated_at`) VALUES
+(1, 'Universitas Indonesia', 'N', '2022-04-21 08:19:25', '2022-04-21 08:19:25'),
+(2, 'Universitas Palembang', 'W', '2022-04-21 08:19:25', '2022-04-21 08:19:25'),
+(3, 'mitra1', 'W', '2022-04-21 08:19:25', '2022-04-21 08:19:25'),
+(4, 'mitra2', 'I', '2022-04-21 08:19:25', '2022-04-21 08:19:25'),
+(5, 'mitra3', 'W', '2022-04-21 08:19:25', '2022-04-21 08:19:25'),
+(6, 'mitra4', 'N', '2022-04-21 08:19:25', '2022-04-21 08:19:25'),
+(7, 'mitra5', 'N', '2022-04-21 08:19:25', '2022-04-21 08:19:25'),
+(8, 'Universitas Jakarta', 'W', '2022-04-21 01:19:34', '2022-04-21 01:19:34'),
+(9, 'UI', 'N', '2022-04-21 01:25:07', '2022-04-21 01:25:07'),
+(10, 'Vietnam University', 'I', '2022-04-21 01:27:59', '2022-04-21 01:27:59'),
+(11, 'Mitra 5', 'W', '2022-04-21 01:28:43', '2022-04-21 01:28:43');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `status`
+-- Table structure for table `statuses`
 --
 
-CREATE TABLE `status` (
+CREATE TABLE `statuses` (
   `id` int(11) NOT NULL,
   `nama_status` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `status`
+-- Dumping data for table `statuses`
 --
 
-INSERT INTO `status` (`id`, `nama_status`) VALUES
+INSERT INTO `statuses` (`id`, `nama_status`) VALUES
 (1, 'Aktif');
 
 -- --------------------------------------------------------
@@ -238,16 +244,16 @@ CREATE TABLE `usulans` (
   `bentuk_kerjasama` text NOT NULL,
   `rencana_kegiatan` text NOT NULL,
   `tanggal_rencana_kegiatan` date NOT NULL,
-  `mitras_id` int(11) NOT NULL,
-  `dosens_id` int(11) NOT NULL,
-  `units_id` int(11) NOT NULL
+  `mitra_id` int(11) NOT NULL,
+  `dosen_id` int(11) NOT NULL,
+  `unit_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `usulans`
 --
 
-INSERT INTO `usulans` (`id`, `nama_usulan`, `bentuk_kerjasama`, `rencana_kegiatan`, `tanggal_rencana_kegiatan`, `mitras_id`, `dosens_id`, `units_id`) VALUES
+INSERT INTO `usulans` (`id`, `nama_usulan`, `bentuk_kerjasama`, `rencana_kegiatan`, `tanggal_rencana_kegiatan`, `mitra_id`, `dosen_id`, `unit_id`) VALUES
 (1, 'Usulan 1', 'Kerja sama 1', 'Rencana 1', '2022-04-18', 1, 1, 1);
 
 --
@@ -295,16 +301,16 @@ ALTER TABLE `kategoris`
 --
 ALTER TABLE `kegiatans`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_kegiatans_kerjasamas1_idx` (`kerjasamas_id`),
-  ADD KEY `fk_kegiatans_dosens1_idx` (`dosens_id`);
+  ADD KEY `fk_kegiatans_kerjasamas1_idx` (`kerjasama_id`),
+  ADD KEY `fk_kegiatans_dosens1_idx` (`dosen_id`);
 
 --
 -- Indexes for table `kerjasamas`
 --
 ALTER TABLE `kerjasamas`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_kerjasamas_mitras_idx` (`mitras_id`),
-  ADD KEY `fk_kerjasamas_kategoris1_idx` (`kategoris_id`),
+  ADD KEY `fk_kerjasamas_mitras_idx` (`mitra_id`),
+  ADD KEY `fk_kerjasamas_kategoris1_idx` (`kategori_id`),
   ADD KEY `fk_kerjasamas_status1_idx` (`status_id`);
 
 --
@@ -314,9 +320,9 @@ ALTER TABLE `mitras`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `status`
+-- Indexes for table `statuses`
 --
-ALTER TABLE `status`
+ALTER TABLE `statuses`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -330,9 +336,9 @@ ALTER TABLE `units`
 --
 ALTER TABLE `usulans`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_usulans_mitras1_idx` (`mitras_id`),
-  ADD KEY `fk_usulans_dosens1_idx` (`dosens_id`),
-  ADD KEY `fk_usulans_units1_idx` (`units_id`);
+  ADD KEY `fk_usulans_mitras1_idx` (`mitra_id`),
+  ADD KEY `fk_usulans_dosens1_idx` (`dosen_id`),
+  ADD KEY `fk_usulans_units1_idx` (`unit_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -384,12 +390,12 @@ ALTER TABLE `kerjasamas`
 -- AUTO_INCREMENT for table `mitras`
 --
 ALTER TABLE `mitras`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `status`
+-- AUTO_INCREMENT for table `statuses`
 --
-ALTER TABLE `status`
+ALTER TABLE `statuses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
@@ -426,24 +432,24 @@ ALTER TABLE `bukti_kegiatan_units`
 -- Constraints for table `kegiatans`
 --
 ALTER TABLE `kegiatans`
-  ADD CONSTRAINT `fk_kegiatans_dosens1` FOREIGN KEY (`dosens_id`) REFERENCES `dosens` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_kegiatans_kerjasamas1` FOREIGN KEY (`kerjasamas_id`) REFERENCES `kerjasamas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_kegiatans_dosens1` FOREIGN KEY (`dosen_id`) REFERENCES `dosens` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_kegiatans_kerjasamas1` FOREIGN KEY (`kerjasama_id`) REFERENCES `kerjasamas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `kerjasamas`
 --
 ALTER TABLE `kerjasamas`
-  ADD CONSTRAINT `fk_kerjasamas_kategoris1` FOREIGN KEY (`kategoris_id`) REFERENCES `kategoris` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_kerjasamas_mitras` FOREIGN KEY (`mitras_id`) REFERENCES `mitras` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_kerjasamas_status1` FOREIGN KEY (`status_id`) REFERENCES `status` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_kerjasamas_kategoris1` FOREIGN KEY (`kategori_id`) REFERENCES `kategoris` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_kerjasamas_mitras` FOREIGN KEY (`mitra_id`) REFERENCES `mitras` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_kerjasamas_status1` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `usulans`
 --
 ALTER TABLE `usulans`
-  ADD CONSTRAINT `fk_usulans_dosens1` FOREIGN KEY (`dosens_id`) REFERENCES `dosens` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_usulans_mitras1` FOREIGN KEY (`mitras_id`) REFERENCES `mitras` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_usulans_units1` FOREIGN KEY (`units_id`) REFERENCES `units` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_usulans_dosens1` FOREIGN KEY (`dosen_id`) REFERENCES `dosens` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_usulans_mitras1` FOREIGN KEY (`mitra_id`) REFERENCES `mitras` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_usulans_units1` FOREIGN KEY (`unit_id`) REFERENCES `units` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
