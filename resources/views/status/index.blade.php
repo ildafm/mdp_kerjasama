@@ -1,11 +1,10 @@
 @extends('layouts.master')
-@section('title', 'Dosen')
+@section('title', 'Status')
 
 @section('content')
-
 <div class="card">
 <div class="card-header">
-<h3 class="card-title">Tabel Daftar Dosen</h3>
+<h3 class="card-title">Tabel Daftar Status</h3>
 <div class="card-tools">
 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
 <i class="fas fa-minus"></i>
@@ -20,28 +19,25 @@
 <thead>
 <tr>
 <th>Id</th>
-<th>Kode Dosen</th>
-<th>Nama Dosen</th>
+<th>Nama Status</th>
 </tr>
 </thead>
 <tbody>
-    @foreach($dosens as $data)
+    @foreach($status as $data)
         <tr>
             <td>{{ $data->id }}</td>
-            <td>{{ $data->kode_dosen }}</td>
-            <td>{{ $data->nama_dosen }}</td>
+            <td>{{ $data->nama_status }}</td>
         </tr>
     @endforeach
 </tbody>
 <tfoot>
 <tr>
 <th>Id</th>
-<th>Kode Dosen</th>
-<th>Nama Dosen</th>
+<th>Nama Status</th>
 </tr>
 </tfoot>
 </table>
-</div>
-</div>
 
+</div>
+</div>
 @endsection

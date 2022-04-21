@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Status;
 use Illuminate\Http\Request;
-use App\Models\Mitra;
 
-class MitraController extends Controller
+class StatusController extends Controller
 {
-    //
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         //
-        $title = 'Halaman Mitra';
-        $mitras = Mitra::all();
-        return view('mitra.index')
-            ->with('mitras', $mitras)
-            ->with('title', $title);
+        $status = Status::All();
+        return view('status.index')->with('status', $status);
     }
 
     /**
@@ -26,7 +27,6 @@ class MitraController extends Controller
     public function create()
     {
         //
-        return view('mitra.create');
     }
 
     /**
@@ -38,27 +38,15 @@ class MitraController extends Controller
     public function store(Request $request)
     {
         //
-        $validateData = $request->validate([
-            'nama_mitra' => 'required',
-            'tingkat' => 'required'
-        ]);
-
-        $mitra = new Mitra();
-        $mitra->nama_mitra = $validateData['nama_mitra'];
-        $mitra->tingkat = $validateData['tingkat'];
-        $mitra->save();
-
-        $request->session()->flash('pesan', 'Penambahan data berhasil');
-        return redirect()->route('mitras.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Dosen  $dosen
+     * @param  \App\Models\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function show(Dosen $dosen)
+    public function show(Status $status)
     {
         //
     }
@@ -66,10 +54,10 @@ class MitraController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Dosen  $dosen
+     * @param  \App\Models\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function edit(Dosen $dosen)
+    public function edit(Status $status)
     {
         //
     }
@@ -78,10 +66,10 @@ class MitraController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Dosen  $dosen
+     * @param  \App\Models\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Dosen $dosen)
+    public function update(Request $request, Status $status)
     {
         //
     }
@@ -89,10 +77,10 @@ class MitraController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Dosen  $dosen
+     * @param  \App\Models\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Dosen $dosen)
+    public function destroy(Status $status)
     {
         //
     }

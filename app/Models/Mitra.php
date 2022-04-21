@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Mitra extends Model
 {
     use HasFactory;
+    
+    public function kerjasamas(){
+        return $this->hasMany(Kerjasama::class);
+    }
+
+    public function usulans(){
+        return $this->hasMany(Usulan::class);
+    }
 }

@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Unit extends Model
 {
     use HasFactory;
+    
+    public function usulans(){
+        return $this->hasMany(Usulan::class);
+    }
 }

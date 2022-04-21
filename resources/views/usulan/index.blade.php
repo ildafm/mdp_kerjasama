@@ -1,10 +1,10 @@
 @extends('layouts.master')
-@section('title', 'Unit')
+@section('title', 'Usulan')
 
 @section('content')
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Tabel Daftar Unit</h3>
+        <h3 class="card-title">Tabel Daftar Usulan</h3>
         <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                 <i class="fas fa-minus"></i>
@@ -23,9 +23,9 @@
                     <th>Bentuk Kerja Sama</th>
                     <th>Rencana Kegiatan</th>
                     <th>Tanggal Rencana Kegiatan</th>
-                    <th>Mitra Id</th>
-                    <th>Dosen Id</th>
-                    <th>Unit Id</th>
+                    <th>Nama Mitra</th>
+                    <th>Nama Dosen</th>
+                    <th>Nama Unit</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,9 +36,9 @@
                         <td>{{ $data->bentuk_kerjasama }}</td>
                         <td>{{ $data->rencana_kegiatan }}</td>
                         <td>{{ $data->tanggal_rencana_kegiatan }}</td>
-                        <td>{{ $data->mitras_id }}</td>
-                        <td>{{ $data->dosens_id }}</td>
-                        <td>{{ $data->units_id }}</td>
+                        <td>{{ $data->mitra->nama_mitra }}</td>
+                        <td>{{ $data->dosen->nama_dosen }}</td>
+                        <td>{{ $data->unit->nama_unit }}</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -49,15 +49,12 @@
                 <th>Bentuk Kerja Sama</th>
                 <th>Rencana Kegiatan</th>
                 <th>Tanggal Rencana Kegiatan</th>
-                <th>Mitra Id</th>
-                <th>Dosen Id</th>
-                <th>Unit Id</th>
+                <th>Nama Mitra</th>
+                <th>Nama Dosen</th>
+                <th>Nama Unit</th>
             </tr>
             </tfoot>
         </table>
-    </div>
-    <div class="card-footer">
-    Footer
     </div>
 </div>
 @endsection

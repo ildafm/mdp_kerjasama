@@ -8,6 +8,7 @@ use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\KerjasamaController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UsulanController;
+use App\Http\Controllers\StatusController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +33,4 @@ Route::resource('kegiatans', KegiatanController::class);
 Route::resource('kerjasamas', KerjasamaController::class);
 Route::resource('units', UnitController::class);
 Route::resource('usulans', UsulanController::class);
+Route::resource('status', StatusController::class);

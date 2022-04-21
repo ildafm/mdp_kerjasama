@@ -15,7 +15,9 @@ class KerjasamaController extends Controller
     public function index()
     {
         //
+        // $kerjasamas = Kerjasama::has('mitra')->get();
         $kerjasamas = Kerjasama::All();
+        // dump($kerjasamas);
         return view('kerjasama.index')->with('kerjasamas', $kerjasamas);
     }
 

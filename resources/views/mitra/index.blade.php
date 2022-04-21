@@ -4,8 +4,10 @@
 @section('content')
 <div class="card">
 <div class="card-header">
-<h3 class="card-title">Tabel Daftar Mitra</h3>
+<!-- <h3 class="card-title">Tabel Daftar Mitra</h3> -->
+<a href="{{ url('/mitras/create') }}" class='btn btn-primary'>Tambah Mitra</a>
 <div class="card-tools">
+
 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
 <i class="fas fa-minus"></i>
 </button>
@@ -15,6 +17,11 @@
 </div>
 </div>
 <div class="card-body">
+    @if(session()->has('pesan'))
+     <div class='alert alert-success'>
+         {{ session()->get('pesan') }}
+     </div>
+     @endif
 <table id="example1" class="table table-bordered table-striped">
 <thead>
 <tr>
@@ -40,12 +47,6 @@
 </tr>
 </tfoot>
 </table>
-
 </div>
-
-<div class="card-footer">
-Footer
-</div>
-
 </div>
 @endsection

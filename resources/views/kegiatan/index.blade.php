@@ -25,8 +25,8 @@
 <th>Bentuk Kegiatan</th>
 <th>PIC</th>
 <th>Keterangan</th>
-<th>Kerja Sama Id</th>
-<th>Dosen Id</th>
+<th>Nama Kerja Sama</th>
+<th>Nama Dosen</th>
 </tr>
 </thead>
 <tbody>
@@ -38,8 +38,8 @@
             <td>{{ $data->bentuk_kegiatan }}</td>
             <td>{{ $data->PIC }}</td>
             <td>{{ $data->keterangan }}</td>
-            <td>{{ $data->kerjasama_id }}</td>
-            <td>{{ $data->dosen_id }}</td>
+            <td>{{ $data->kerjasama->nama_kerja_sama }}</td>
+            <td>{{ $data->dosen->nama_dosen }}</td>
         </tr>
     @endforeach
 </tbody>
@@ -51,18 +51,13 @@
 <th>Bentuk Kegiatan</th>
 <th>PIC</th>
 <th>Keterangan</th>
-<th>Kerja Sama Id</th>
-<th>Dosen Id</th>
+<th>Nama Kerja Sama</th>
+<th>Nama Dosen</th>
 </tr>
 </tfoot>
 </table>
 
 </div>
-
-<div class="card-footer">
-Footer
-</div>
-
 </div>
 
 @endsection

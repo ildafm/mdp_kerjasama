@@ -22,9 +22,9 @@
 <th>Nama Kerja Sama</th>
 <th>Tanggal Mulai</th>
 <th>Tanggal Sampai</th>
-<th>Mitra Id</th>
-<th>Kategori Id</th>
-<th>Status Id</th>
+<th>Nama Mitra</th>
+<th>Nama Kategori</th>
+<th>Status</th>
 </tr>
 </thead>
 <tbody>
@@ -34,9 +34,9 @@
             <td>{{ $data->nama_kerja_sama }}</td>
             <td>{{ $data->tanggal_mulai }}</td>
             <td>{{ $data->tanggal_sampai }}</td>
-            <td>{{ $data->mitras_id }}</td>
-            <td>{{ $data->kategoris_id }}</td>
-            <td>{{ $data->status_id }}</td>
+            <td>{{ $data->mitra->nama_mitra }}</td>
+            <td>{{ $data->kategori->nama_kategori }}</td>
+            <td>{{ $data->status->nama_status }}</td>
         </tr>
     @endforeach
 </tbody>
@@ -46,18 +46,12 @@
 <th>Nama Kerja Sama</th>
 <th>Tanggal Mulai</th>
 <th>Tanggal Sampai</th>
-<th>Mitra Id</th>
-<th>Kategori Id</th>
-<th>Status Id</th>
+<th>Nama Mitra</th>
+<th>Nama Kategori</th>
+<th>Status</th>
 </tr>
 </tfoot>
 </table>
-
 </div>
-
-<div class="card-footer">
-Footer
-</div>
-
 </div>
 @endsection

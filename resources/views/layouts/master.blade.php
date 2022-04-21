@@ -206,10 +206,10 @@ Mitra
 </li>
 
 <li class="nav-item">
-<a href="{{ url('/dosens') }}" class="nav-link">
-<i class="nav-icon fas fa-user"></i>
+<a href="{{ url('/kerjasamas') }}" class="nav-link">
+<i class="nav-icon fas fa-handshake"></i>
 <p>
-Dosen
+Kerja Sama
 </p>
 </a>
 </li>
@@ -224,14 +224,14 @@ Kegiatan
 </li>
 
 <li class="nav-item">
-<a href="{{ url('/kerjasamas') }}" class="nav-link">
-<i class="nav-icon fas fa-handshake"></i>
+<a href="{{ url('/usulans') }}" class="nav-link">
+<i class="nav-icon fas fa-paper-plane"></i>
 <p>
-Kerja Sama
+Usulan
 </p>
 </a>
-
 </li>
+
 <li class="nav-item">
 <a href="{{ url('/units') }}" class="nav-link">
 <i class="nav-icon fas fa-users"></i>
@@ -242,10 +242,19 @@ Unit
 </li>
 
 <li class="nav-item">
-<a href="{{ url('/usulans') }}" class="nav-link">
-<i class="nav-icon fas fa-paper-plane"></i>
+<a href="{{ url('/dosens') }}" class="nav-link">
+<i class="nav-icon fas fa-user"></i>
 <p>
-Usulan
+Dosen
+</p>
+</a>
+</li>
+
+<li class="nav-item">
+<a href="{{ url('/status') }}" class="nav-link">
+<i class="nav-icon fas fa-flag"></i>
+<p>
+Status
 </p>
 </a>
 </li>
@@ -311,7 +320,7 @@ Usulan
 
 <script src="{{ asset('dist/js/adminlte.min.js?v=3.2.0') }}"></script>
 
-<script src="{{ asset('dist/js/demo.js') }}"></script>
+<!-- <script src="{{ asset('dist/js/demo.js') }}"></script> -->
 
 <script>
   $(function () {
