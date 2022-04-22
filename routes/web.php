@@ -33,4 +33,4 @@ Route::resource('kegiatans', KegiatanController::class);
 Route::resource('kerjasamas', KerjasamaController::class);
 Route::resource('units', UnitController::class);
 Route::resource('usulans', UsulanController::class);
-Route::resource('status', StatusController::class);
+Route::resource('statuses', StatusController::class);

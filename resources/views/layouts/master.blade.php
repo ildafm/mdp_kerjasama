@@ -251,7 +251,7 @@ Dosen
 </li>
 
 <li class="nav-item">
-<a href="{{ url('/status') }}" class="nav-link">
+<a href="{{ url('/statuses') }}" class="nav-link">
 <i class="nav-icon fas fa-flag"></i>
 <p>
 Status

@@ -27,6 +27,7 @@ class UnitController extends Controller
     public function create()
     {
         //
+        return view('unit.create');
     }
 
     /**
@@ -38,6 +39,17 @@ class UnitController extends Controller
     public function store(Request $request)
     {
         //
+        $validateData = $request->validate([
+            
+            'nama_unit' => 'required'
+        ]);
+
+        $unit = new Unit();
+        $unit->nama_unit = $validateData['nama_unit'];
+        $unit->save();
+
+        $request->session()->flash('pesan', 'Penambahan data berhasil');
+        return redirect()->route('units.index');
     }
 
     /**

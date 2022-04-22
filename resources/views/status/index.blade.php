@@ -4,7 +4,8 @@
 @section('content')
 <div class="card">
 <div class="card-header">
-<h3 class="card-title">Tabel Daftar Status</h3>
+<!-- <h3 class="card-title">Tabel Daftar Status</h3> -->
+<a href="{{ url('/statuses/create') }}" class='btn btn-primary'>Tambah Status</a>
 <div class="card-tools">
 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
 <i class="fas fa-minus"></i>

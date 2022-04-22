@@ -16,7 +16,8 @@ class StatusController extends Controller
     {
         //
         $status = Status::All();
-        return view('status.index')->with('status', $status);
+        return view('status.index')
+        ->with('statuses', $status);
     }
 
     /**
@@ -27,6 +28,7 @@ class StatusController extends Controller
     public function create()
     {
         //
+        return view('status.create');
     }
 
     /**
@@ -38,6 +40,17 @@ class StatusController extends Controller
     public function store(Request $request)
     {
         //
+        $validateData = $request->validate([
+            
+            'nama_status' => 'required'
+        ]);
+
+        $status = new Status();
+        $status->nama_status = $validateData['nama_status'];
+        $status->save();
+
+        $request->session()->flash('pesan', 'Penambahan data berhasil');
+        return redirect()->route('statuses.index');
     }
 
     /**
