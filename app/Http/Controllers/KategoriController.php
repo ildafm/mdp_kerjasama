@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kategori;
+use Illuminate\Contracts\Support\ValidatedData;
 use Illuminate\Http\Request;
 
 class KategoriController extends Controller
@@ -15,6 +16,8 @@ class KategoriController extends Controller
     public function index()
     {
         //
+        $kategoris = Kategori::All();
+        return view('kategori.index')->with('kategoris', $kategoris);
     }
 
     /**
@@ -25,6 +28,7 @@ class KategoriController extends Controller
     public function create()
     {
         //
+        return view('kategori.create');
     }
 
     /**
@@ -36,6 +40,16 @@ class KategoriController extends Controller
     public function store(Request $request)
     {
         //
+        $validateData = $request->validate([
+            'nama_kategori' => 'required'
+        ]);
+
+        $kategori = new Kategori();
+        $kategori->nama_kategori = $validateData['nama_kategori'];
+        $kategori->save();
+
+        $request->session()->flash('pesan', 'Penambahan data berhasil');
+        return redirect()->route('kategoris.index');
     }
 
     /**

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 22, 2022 at 09:58 AM
+-- Generation Time: Apr 22, 2022 at 10:10 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -105,7 +105,9 @@ INSERT INTO `dosens` (`id`, `kode_dosen`, `nama_dosen`, `created_at`, `updated_a
 (3, 'D00003', 'Adi', '2022-04-22 00:42:17', '2022-04-22 00:42:17'),
 (4, 'D00004', 'Ada', '2022-04-22 00:43:46', '2022-04-22 00:43:46'),
 (5, 'D00005', 'Lily', '2022-04-22 00:45:45', '2022-04-22 00:45:45'),
-(6, 'D00006', 'Uky', '2022-04-22 00:56:30', '2022-04-22 00:56:30');
+(6, 'D00006', 'Uky', '2022-04-22 00:56:30', '2022-04-22 00:56:30'),
+(7, 'D00007', 'Soso', '2022-04-22 01:01:28', '2022-04-22 01:01:28'),
+(9, 'D00008', 'Nila', '2022-04-22 08:23:09', '2022-04-22 08:23:09');
 
 -- --------------------------------------------------------
 
@@ -131,15 +133,19 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `kategoris` (
   `id` int(11) NOT NULL,
-  `nama_kategori` varchar(45) NOT NULL
+  `nama_kategori` varchar(45) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `kategoris`
 --
 
-INSERT INTO `kategoris` (`id`, `nama_kategori`) VALUES
-(1, 'Anak Bangsa');
+INSERT INTO `kategoris` (`id`, `nama_kategori`, `created_at`, `updated_at`) VALUES
+(1, 'Anak Bangsa', '2022-04-22 13:07:30', '2022-04-22 13:07:30'),
+(2, 'Maju Jaya', '2022-04-22 13:07:35', '2022-04-22 13:07:35'),
+(3, 'Semesta Bangsa', '2022-04-22 13:08:06', '2022-04-22 13:08:06');
 
 -- --------------------------------------------------------
 
@@ -178,15 +184,20 @@ CREATE TABLE `kerjasamas` (
   `tanggal_sampai` date NOT NULL,
   `mitra_id` int(11) NOT NULL,
   `kategori_id` int(11) NOT NULL,
-  `status_id` int(11) NOT NULL
+  `status_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `kerjasamas`
 --
 
-INSERT INTO `kerjasamas` (`id`, `nama_kerja_sama`, `tanggal_mulai`, `tanggal_sampai`, `mitra_id`, `kategori_id`, `status_id`) VALUES
-(1, 'Kerja sama 1', '2022-04-30', '2022-05-30', 1, 1, 1);
+INSERT INTO `kerjasamas` (`id`, `nama_kerja_sama`, `tanggal_mulai`, `tanggal_sampai`, `mitra_id`, `kategori_id`, `status_id`, `created_at`, `updated_at`) VALUES
+(1, 'Kerja Sama 1', '2022-04-30', '2022-05-30', 1, 1, 1, '2022-04-22 13:10:46', '2022-04-22 13:59:03'),
+(2, 'Kerja Sama 2', '2022-04-23', '2022-04-30', 10, 3, 2, '2022-04-22 13:40:37', '2022-04-22 13:40:37'),
+(3, 'Kerja Sama 3', '2022-04-23', '2022-04-30', 2, 2, 4, '2022-04-22 13:45:26', '2022-04-22 13:45:26'),
+(4, 'Kerja Sama 4', '2022-04-30', '2022-04-15', 2, 3, 2, '2022-04-22 13:49:03', '2022-04-22 13:49:03');
 
 -- --------------------------------------------------------
 
@@ -506,13 +517,13 @@ ALTER TABLE `bukti_kerjasamas`
 -- AUTO_INCREMENT for table `dosens`
 --
 ALTER TABLE `dosens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `kategoris`
 --
 ALTER TABLE `kategoris`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `kegiatans`
@@ -524,7 +535,7 @@ ALTER TABLE `kegiatans`
 -- AUTO_INCREMENT for table `kerjasamas`
 --
 ALTER TABLE `kerjasamas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `mitras`

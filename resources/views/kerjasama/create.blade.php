@@ -1,0 +1,99 @@
+@extends('layouts.master')
+@section('title', 'Kerja Sama')
+
+@section('content')
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Tambah Kerja Sama</h3>
+    
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+    
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <form action="{{ route('kerjasamas.store') }}" method="POST">
+            @csrf
+
+        <div class="form-group">
+            <label for="nama_kerja_sama">Nama Kerja Sama</label>
+            <input type="text" name='nama_kerja_sama' class="form-control @error('nama_kerja_sama') is-invalid @enderror" placeholder="Masukan Nama Kerja Sama">
+            @error('nama_kerja_sama')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class='col-lg-6 col-xs-12'>
+                    <label for="tanggal_mulai">Tanggal Mulai : </label>
+                    <input type="date" name="tanggal_mulai" id="">
+                    @error('tanggal_mulai')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-lg-6 col-xs-12">
+                    <label for="tanggal_sampai"> Sampai : </label>
+                    <input type="date" name="tanggal_sampai" id="">
+                    @error('tanggal_sampai')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="nama_mitra">Nama Mitra</label>
+            <select class="form-control" name='nama_mitra'>
+                @foreach($mitras as $data)
+                    <option value="{{ $data->id }}">{{ $data->id }} - {{ $data->nama_mitra }}</option>
+                @endforeach
+            </select>
+            @error('nama_mitra')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="nama_kategori">Nama Kategori</label>
+            <select class="form-control" name='nama_kategori'>
+                @foreach($kategoris as $data)
+                    <option value="{{ $data->id }}">{{ $data->id }} - {{ $data->nama_kategori }}</option>
+                @endforeach
+            </select>
+            @error('nama_kategori')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="nama_status">Nama Status</label>
+            <select class="form-control" name='nama_status'>
+                @foreach($statuses as $data)
+                    <option value="{{ $data->id }}">{{ $data->id }} - {{ $data->nama_status }}</option>
+                @endforeach
+            </select>
+            @error('nama_status')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+    </div>
+
+    <div class="card-footer">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+
+</div>
+
+
+</form>
+
+@endsection

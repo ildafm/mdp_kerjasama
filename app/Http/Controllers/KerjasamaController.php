@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kategori;
 use App\Models\Kerjasama;
+use App\Models\Status;
+use App\Models\Mitra;
 use Illuminate\Http\Request;
 
 class KerjasamaController extends Controller
@@ -29,6 +32,15 @@ class KerjasamaController extends Controller
     public function create()
     {
         //
+        // return view('kerjasama.create');
+        $mitras = Mitra::All();
+        $kategoris = Kategori::All();
+        $statuses = Status::All();
+        // dump($mitras);
+        return view('kerjasama.create')
+            ->with('mitras', $mitras)
+            ->with('kategoris', $kategoris)
+            ->with('statuses', $statuses);
     }
 
     /**
@@ -40,6 +52,26 @@ class KerjasamaController extends Controller
     public function store(Request $request)
     {
         //
+        $validateData = $request->validate([
+            'nama_kerja_sama' => 'required',
+            'tanggal_mulai' => 'required',
+            'tanggal_sampai' => 'required',
+            'nama_mitra' => 'required',
+            'nama_kategori' => 'required',
+            'nama_status' => 'required'
+        ]);
+
+        $kerjasama = new Kerjasama();
+        $kerjasama->nama_kerja_sama = $validateData['nama_kerja_sama'];
+        $kerjasama->tanggal_mulai = $validateData['tanggal_mulai'];
+        $kerjasama->tanggal_sampai = $validateData['tanggal_sampai'];
+        $kerjasama->mitra_id = $validateData['nama_mitra'];
+        $kerjasama->kategori_id = $validateData['nama_kategori'];
+        $kerjasama->status_id = $validateData['nama_status'];
+        $kerjasama->save();
+
+        $request->session()->flash('pesan', 'Penambahan data berhasil');
+        return redirect()->route('kerjasamas.index');
     }
 
     /**

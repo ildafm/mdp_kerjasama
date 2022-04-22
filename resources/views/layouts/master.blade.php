@@ -259,6 +259,15 @@ Status
 </a>
 </li>
 
+<li class="nav-item">
+<a href="{{ url('/kategoris') }}" class="nav-link">
+<i class="nav-icon fas fa-layer-group"></i>
+<p>
+Kategori
+</p>
+</a>
+</li>
+
 </div>
 </aside>
 

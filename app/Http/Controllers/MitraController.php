@@ -12,8 +12,7 @@ class MitraController extends Controller
     {
         //
         $mitras = Mitra::all();
-        return view('mitra.index')
-            ->with('mitras', $mitras);
+        return view('mitra.index')->with('mitras', $mitras);
     }
 
     /**
@@ -53,10 +52,10 @@ class MitraController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Dosen  $dosen
+     * @param  \App\Models\Mitra  $mitra
      * @return \Illuminate\Http\Response
      */
-    public function show(Dosen $dosen)
+    public function show(Mitra $mitra)
     {
         //
     }
@@ -64,10 +63,10 @@ class MitraController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Dosen  $dosen
+     * @param  \App\Models\Mitra  $mitra
      * @return \Illuminate\Http\Response
      */
-    public function edit(Dosen $dosen)
+    public function edit(Mitra $mitra)
     {
         //
     }
@@ -76,10 +75,10 @@ class MitraController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Dosen  $dosen
+     * @param  \App\Models\Mitra  $mitra
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Dosen $dosen)
+    public function update(Request $request, Mitra $mitra)
     {
         //
     }
@@ -87,10 +86,10 @@ class MitraController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Dosen  $dosen
+     * @param  \App\Models\Mitra  $mitra
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Dosen $dosen)
+    public function destroy(Mitra $mitra)
     {
         //
     }
