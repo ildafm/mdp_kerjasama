@@ -16,12 +16,16 @@
         </div>
     </div>
     <div class="card-body">
+        @if(session()->has('pesan'))
+        <div class='alert alert-success'>
+            {{ session()->get('pesan') }}
+        </div>
+        @endif
         <table id="example1" class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>Id</th>
                     <th>Nama Unit</th>
-
                 </tr>
             </thead>
             <tbody>

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 22, 2022 at 09:30 AM
+-- Generation Time: Apr 22, 2022 at 09:58 AM
 -- Server version: 10.4.22-MariaDB
--- PHP Version: 7.4.27
+-- PHP Version: 7.3.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -100,7 +100,12 @@ CREATE TABLE `dosens` (
 --
 
 INSERT INTO `dosens` (`id`, `kode_dosen`, `nama_dosen`, `created_at`, `updated_at`) VALUES
-(1, '0001', 'Andi', '2022-04-22 02:54:17', '2022-04-22 02:54:17');
+(1, 'D00001', 'Andi', '2022-04-22 07:40:52', '2022-04-22 07:41:26'),
+(2, 'D00002', 'Aris', '2022-04-22 00:41:01', '2022-04-22 07:43:13'),
+(3, 'D00003', 'Adi', '2022-04-22 00:42:17', '2022-04-22 00:42:17'),
+(4, 'D00004', 'Ada', '2022-04-22 00:43:46', '2022-04-22 00:43:46'),
+(5, 'D00005', 'Lily', '2022-04-22 00:45:45', '2022-04-22 00:45:45'),
+(6, 'D00006', 'Uky', '2022-04-22 00:56:30', '2022-04-22 00:56:30');
 
 -- --------------------------------------------------------
 
@@ -284,8 +289,11 @@ CREATE TABLE `statuses` (
 --
 
 INSERT INTO `statuses` (`id`, `nama_status`, `created_at`, `updated_at`) VALUES
-(1, 'Aktif', '2022-04-22 04:19:35', '2022-04-22 04:19:35'),
-(2, '3rq f wf', '2022-04-21 21:19:42', '2022-04-21 21:19:42');
+(1, 'Aktif', '2022-04-22 07:48:14', '2022-04-22 07:48:14'),
+(2, 'Berjalan', '2022-04-22 00:48:32', '2022-04-22 00:48:32'),
+(3, 'Terhenti', '2022-04-22 00:53:30', '2022-04-22 00:53:30'),
+(4, 'Berjalan Lambat', '2022-04-22 00:54:56', '2022-04-22 00:54:56'),
+(5, 'Selesai', '2022-04-22 00:55:37', '2022-04-22 00:55:37');
 
 -- --------------------------------------------------------
 
@@ -305,8 +313,13 @@ CREATE TABLE `units` (
 --
 
 INSERT INTO `units` (`id`, `nama_unit`, `created_at`, `updated_at`) VALUES
-(1, 'Unit 1', '2022-04-22 05:03:11', '2022-04-22 05:03:11'),
-(2, 'fdf', '2022-04-21 22:11:47', '2022-04-21 22:11:47');
+(1, 'Unit 1', '2022-04-21 15:11:07', '2022-04-21 15:11:07'),
+(2, 'Unit 2', '2022-04-21 08:11:14', '2022-04-21 08:11:14'),
+(3, 'Unit 3', '2022-04-21 08:11:30', '2022-04-21 08:11:30'),
+(4, 'Unit 4', '2022-04-21 08:11:50', '2022-04-21 08:11:50'),
+(5, 'Unit 5', '2022-04-22 00:37:07', '2022-04-22 00:37:07'),
+(6, 'Unit S1', '2022-04-22 00:39:02', '2022-04-22 00:39:02'),
+(7, 'Unit S2', '2022-04-22 00:54:41', '2022-04-22 00:54:41');
 
 -- --------------------------------------------------------
 
@@ -493,13 +506,7 @@ ALTER TABLE `bukti_kerjasamas`
 -- AUTO_INCREMENT for table `dosens`
 --
 ALTER TABLE `dosens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `failed_jobs`
---
-ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `kategoris`
@@ -520,40 +527,22 @@ ALTER TABLE `kerjasamas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `migrations`
---
-ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
 -- AUTO_INCREMENT for table `mitras`
 --
 ALTER TABLE `mitras`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `personal_access_tokens`
---
-ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `statuses`
 --
 ALTER TABLE `statuses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `units`
 --
 ALTER TABLE `units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `usulans`

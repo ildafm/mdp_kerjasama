@@ -11,11 +11,9 @@ class MitraController extends Controller
     public function index()
     {
         //
-        $title = 'Halaman Mitra';
         $mitras = Mitra::all();
         return view('mitra.index')
-            ->with('mitras', $mitras)
-            ->with('title', $title);
+            ->with('mitras', $mitras);
     }
 
     /**

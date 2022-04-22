@@ -15,11 +15,8 @@ class DosenController extends Controller
     public function index()
     {
         //
-        $title = 'Halaman Dosen';
         $dosens = Dosen::All();
-        return view('dosen.index')
-            ->with('dosens', $dosens)
-            ->with('title', $title);
+        return view('dosen.index')->with('dosens', $dosens);
     }
 
     /**
@@ -43,14 +40,14 @@ class DosenController extends Controller
     {
         //
         $validateData = $request->validate([
-            'kode_dosen' => 'required',
+            'kode_dosen' => 'required | max:6',
             'nama_dosen' => 'required'
         ]);
 
-        $mitra = new Dosen();
-        $mitra->kode_dosen = $validateData['kode_dosen'];
-        $mitra->nama_dosen = $validateData['nama_dosen'];
-        $mitra->save();
+        $dosen = new Dosen();
+        $dosen->kode_dosen = $validateData['kode_dosen'];
+        $dosen->nama_dosen = $validateData['nama_dosen'];
+        $dosen->save();
 
         $request->session()->flash('pesan', 'Penambahan data berhasil');
         return redirect()->route('dosens.index');

@@ -16,6 +16,11 @@
 </div>
 </div>
 <div class="card-body">
+        @if(session()->has('pesan'))
+        <div class='alert alert-success'>
+            {{ session()->get('pesan') }}
+        </div>
+        @endif
 <table id="example1" class="table table-bordered table-striped">
 <thead>
 <tr>
@@ -24,7 +29,7 @@
 </tr>
 </thead>
 <tbody>
-    @foreach($status as $data)
+    @foreach($statuses as $data)
         <tr>
             <td>{{ $data->id }}</td>
             <td>{{ $data->nama_status }}</td>
