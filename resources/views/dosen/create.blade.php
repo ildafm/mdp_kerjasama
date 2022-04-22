@@ -1,10 +1,10 @@
 @extends('layouts.master')
-@section('title', 'Mitra')
+@section('title', 'Dosen')
 
 @section('content')
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Tambah Mitra</h3>
+        <h3 class="card-title">Tambah Dosen</h3>
     
         <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -18,26 +18,22 @@
     </div>
 
     <div class="card-body">
-        <form action="{{ route('mitras.store') }}" method="POST">
+        <form action="{{ route('dosens.store') }}" method="POST">
             @csrf
         <div class="form-group">
-            <label for="nama_mitra">Nama Mitra</label>
-            <input type="text" name='nama_mitra' class="form-control @error('nama_mitra') is-invalid @enderror" placeholder="Masukan Nama Mitra">
-            @error('nama_mitra')
+            <label for="kode_dosen">Kode Dosen</label>
+            <input type="text" name='kode_dosen' class="form-control @error('kode_dosen') is-invalid @enderror" placeholder="Masukan Kode Dosen">
+            @error('kode_dosen')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
-        </div>
 
-        <div class="form-group">
-            <label for="tingkat">Tingkat</label>
-            <select class="form-control" name='tingkat'>
-                <option value='I'>Internasional</option>
-                <option value='N'>Nasional</option>
-                <option value='W'>Wilayah/lokal</option>
-            </select>
-            @error('tingkat')
+            <div class="form-group">
+            <label for="nama_dosen">Nama Dosen</label>
+            <input type="text" name='nama_dosen' class="form-control @error('nama_dosen') is-invalid @enderror" placeholder="Masukan Nama Dosen">
+            @error('nama_dosen')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
+
         </div>
 
     </div>

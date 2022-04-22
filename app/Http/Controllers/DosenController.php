@@ -30,6 +30,7 @@ class DosenController extends Controller
     public function create()
     {
         //
+        return view('dosen.create');
     }
 
     /**
@@ -41,6 +42,18 @@ class DosenController extends Controller
     public function store(Request $request)
     {
         //
+        $validateData = $request->validate([
+            'kode_dosen' => 'required',
+            'nama_dosen' => 'required'
+        ]);
+
+        $mitra = new Dosen();
+        $mitra->kode_dosen = $validateData['kode_dosen'];
+        $mitra->nama_dosen = $validateData['nama_dosen'];
+        $mitra->save();
+
+        $request->session()->flash('pesan', 'Penambahan data berhasil');
+        return redirect()->route('dosens.index');
     }
 
     /**

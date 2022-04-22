@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 21, 2022 at 12:50 PM
+-- Generation Time: Apr 22, 2022 at 05:25 AM
 -- Server version: 10.4.22-MariaDB
--- PHP Version: 7.3.33
+-- PHP Version: 7.4.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -90,15 +90,18 @@ INSERT INTO `bukti_kerjasamas` (`id`, `nama_bukti_kerjasama`) VALUES
 CREATE TABLE `dosens` (
   `id` int(11) NOT NULL,
   `kode_dosen` char(6) NOT NULL,
-  `nama_dosen` varchar(45) NOT NULL
+  `nama_dosen` varchar(45) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `dosens`
 --
 
-INSERT INTO `dosens` (`id`, `kode_dosen`, `nama_dosen`) VALUES
-(1, '0001', 'Andi');
+INSERT INTO `dosens` (`id`, `kode_dosen`, `nama_dosen`, `created_at`, `updated_at`) VALUES
+(1, '0001', 'Andi', '2022-04-22 03:14:49', '2022-04-22 03:14:49'),
+(2, '00002', 'Ali', '2022-04-21 20:15:02', '2022-04-21 20:15:02');
 
 -- --------------------------------------------------------
 
@@ -366,7 +369,7 @@ ALTER TABLE `bukti_kerjasamas`
 -- AUTO_INCREMENT for table `dosens`
 --
 ALTER TABLE `dosens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `kategoris`
