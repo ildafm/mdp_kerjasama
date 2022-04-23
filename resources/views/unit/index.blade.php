@@ -26,6 +26,7 @@
                 <tr>
                     <th>Id</th>
                     <th>Nama Unit</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,6 +34,17 @@
                     <tr>
                         <td>{{ $data->id }}</td>
                         <td>{{ $data->nama_unit }}</td>
+                        <td>
+                            <a href="/units/{{$data->id}}/edit" class="btn btn-block btn-primary">Edit</a>
+                            <form method="POST" action="{{ route('units.destroy', ['unit'=>$data->id]) }}">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-danger btn-block delete-user" value="Hapus">
+                                </div>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
@@ -40,9 +52,20 @@
             <tr>
                 <th>Id</th>
                 <th>Nama Unit</th>
+                <th>Aksi</th>
             </tr>
             </tfoot>
         </table>
     </div>
 </div>
+
+<script>
+    $('.delete-user').click(function(e){
+        e.preventDefault() // Don't post the form, unless confirmed
+        if (confirm('Are you sure?')) {
+            // Post the form
+            $(e.target).closest('form').submit() // Post the surrounding form
+        }
+    });
+</script>
 @endsection

@@ -92,5 +92,9 @@ class MitraController extends Controller
     public function destroy(Mitra $mitra)
     {
         //
+        $mitra->delete();
+        return redirect()->route('mitras.index')->with('pesan', "Hapus data $mitra->nama_mitra berhasil");
+        // dump($mitra->id);
+
     }
 }

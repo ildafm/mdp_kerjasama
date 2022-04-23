@@ -26,6 +26,7 @@
 <th>Nama Mitra</th>
 <th>Nama Kategori</th>
 <th>Status</th>
+<th>Aksi</th>
 </tr>
 </thead>
 <tbody>
@@ -38,6 +39,17 @@
             <td>{{ $data->mitra->nama_mitra }}</td>
             <td>{{ $data->kategori->nama_kategori }}</td>
             <td>{{ $data->status->nama_status }}</td>
+            <td>
+                <a href="/kerjasamas/{{$data->id}}/edit" class="btn btn-block btn-primary">Edit</a>
+                <form method="POST" action="{{ route('kerjasamas.destroy', ['kerjasama'=>$data->id]) }}">
+                    {{ csrf_field() }}
+                    {{ method_field('DELETE') }}
+
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-danger btn-block delete-user" value="Hapus">
+                    </div>
+                </form>
+            </td>
         </tr>
     @endforeach
 </tbody>
@@ -50,9 +62,20 @@
 <th>Nama Mitra</th>
 <th>Nama Kategori</th>
 <th>Status</th>
+<th>Aksi</th>
 </tr>
 </tfoot>
 </table>
 </div>
 </div>
+
+<script>
+    $('.delete-user').click(function(e){
+        e.preventDefault() // Don't post the form, unless confirmed
+        if (confirm('Are you sure?')) {
+            // Post the form
+            $(e.target).closest('form').submit() // Post the surrounding form
+        }
+    });
+</script>
 @endsection

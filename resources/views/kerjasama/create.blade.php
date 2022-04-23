@@ -28,27 +28,28 @@
                 <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>
-
-        <div class="form-group">
-            <div class="row">
-                <div class='col-lg-6 col-xs-12'>
+        <div class="row">
+        <div class="form-group col-lg-6">
+            <!-- <div class="row"> -->
+                <!-- <div class='col-lg-6 col-xs-12'> -->
                     <label for="tanggal_mulai">Tanggal Mulai : </label>
-                    <input type="date" name="tanggal_mulai" id="">
+                    <input type="date" name="tanggal_mulai" id="" class="form-control">
                     @error('tanggal_mulai')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
-                </div>
-
-                <div class="col-lg-6 col-xs-12">
-                    <label for="tanggal_sampai"> Sampai : </label>
-                    <input type="date" name="tanggal_sampai" id="">
+                <!-- </div> -->
+        </div>
+        <div class="form-group col-lg-6">
+                <!-- <div class="col-lg-6 col-xs-12"> -->
+                    <label for="tanggal_sampai"> Tanggal Sampai : </label>
+                    <input type="date" name="tanggal_sampai" id=""  class="form-control">
                     @error('tanggal_sampai')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
-                </div>
-            </div>
+                <!-- </div> -->
+            <!-- </div> -->
         </div>
-
+        </div>
         <div class="form-group">
             <label for="nama_mitra">Nama Mitra</label>
             <select class="form-control" name='nama_mitra'>
@@ -61,7 +62,8 @@
             @enderror
         </div>
 
-        <div class="form-group">
+        <div class="row">
+        <div class="form-group col-lg-6">
             <label for="nama_kategori">Nama Kategori</label>
             <select class="form-control" name='nama_kategori'>
                 @foreach($kategoris as $data)
@@ -73,7 +75,7 @@
             @enderror
         </div>
 
-        <div class="form-group">
+        <div class="form-group col-lg-6">
             <label for="nama_status">Nama Status</label>
             <select class="form-control" name='nama_status'>
                 @foreach($statuses as $data)
@@ -84,7 +86,7 @@
                 <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>
-
+        </div>
     </div>
 
     <div class="card-footer">

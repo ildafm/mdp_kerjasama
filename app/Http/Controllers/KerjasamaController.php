@@ -55,7 +55,7 @@ class KerjasamaController extends Controller
         $validateData = $request->validate([
             'nama_kerja_sama' => 'required',
             'tanggal_mulai' => 'required',
-            'tanggal_sampai' => 'required',
+            'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
             'nama_mitra' => 'required',
             'nama_kategori' => 'required',
             'nama_status' => 'required'
@@ -68,6 +68,7 @@ class KerjasamaController extends Controller
         $kerjasama->mitra_id = $validateData['nama_mitra'];
         $kerjasama->kategori_id = $validateData['nama_kategori'];
         $kerjasama->status_id = $validateData['nama_status'];
+
         $kerjasama->save();
 
         $request->session()->flash('pesan', 'Penambahan data berhasil');
@@ -117,5 +118,7 @@ class KerjasamaController extends Controller
     public function destroy(Kerjasama $kerjasama)
     {
         //
+        $kerjasama->delete();
+        return redirect()->route('kerjasamas.index')->with('pesan', "Hapus data $kerjasama->nama_kerja_sama berhasil");
     }
 }
