@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Mitra;
+use Illuminate\Contracts\Support\ValidatedData;
 
 class MitraController extends Controller
 {
@@ -69,6 +70,8 @@ class MitraController extends Controller
     public function edit(Mitra $mitra)
     {
         //
+        // dump($mitra);
+        return view('mitra.edit')->with('mitra', $mitra);
     }
 
     /**
@@ -81,6 +84,27 @@ class MitraController extends Controller
     public function update(Request $request, Mitra $mitra)
     {
         //
+
+        // dump($mitra);
+        $this->validate($request, [
+            'nama_mitra' => 'required',
+            'tingkat' => 'required'
+        ]);
+
+        $mitra = Mitra::findOrFail($mitra->id);
+
+        $mitra->update([
+            'nama_mitra' => $request->nama_mitra,
+            'tingkat' => $request->tingkat
+        ]);
+
+        // $mitra->nama_mitra = $validateData['nama_mitra'];
+        // $mitra->tingkat = $validateData['tingkat'];
+
+        // $mitra->save();
+         
+        $request->session()->flash('pesan', 'Perubahan data berhasil');
+        return redirect()->route('mitras.index');
     }
 
     /**

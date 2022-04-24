@@ -40,7 +40,8 @@
                 {{ Status::mitra($data->tingkat) }}
             </td>
             <td>
-                <a href="/mitras/{{$data->id}}/edit" class="btn btn-block btn-primary">Edit</a>
+                <a href="{{ route('mitras.edit', ['mitra'=>$data->id]) }}" class="btn btn-block btn-primary">Ubah</a>
+                
                 <form method="POST" action="{{ route('mitras.destroy', ['mitra'=>$data->id]) }}">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}

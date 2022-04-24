@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 23, 2022 at 06:46 AM
+-- Generation Time: Apr 24, 2022 at 09:46 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -242,9 +242,9 @@ CREATE TABLE `mitras` (
 INSERT INTO `mitras` (`id`, `nama_mitra`, `tingkat`, `created_at`, `updated_at`) VALUES
 (1, 'Universitas Indonesia', 'N', '2022-04-21 08:19:25', '2022-04-21 08:19:25'),
 (2, 'Universitas Palembang', 'W', '2022-04-21 08:19:25', '2022-04-21 08:19:25'),
-(3, 'mitra1', 'W', '2022-04-21 08:19:25', '2022-04-21 08:19:25'),
-(4, 'mitra2', 'I', '2022-04-21 08:19:25', '2022-04-21 08:19:25'),
-(5, 'mitra3', 'W', '2022-04-21 08:19:25', '2022-04-21 08:19:25'),
+(3, 'Universitas Indonesia Sejahtera', 'N', '2022-04-21 08:19:25', '2022-04-24 07:26:30'),
+(4, 'Halaman Berkah', 'W', '2022-04-21 08:19:25', '2022-04-24 07:26:57'),
+(5, 'Bangun Semesta Jaya', 'W', '2022-04-21 08:19:25', '2022-04-24 07:40:17'),
 (6, 'mitra4', 'N', '2022-04-21 08:19:25', '2022-04-21 08:19:25'),
 (10, 'Vietnam University', 'I', '2022-04-21 01:27:59', '2022-04-21 01:27:59');
 
