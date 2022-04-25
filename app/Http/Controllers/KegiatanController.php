@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Kegiatan;
 use Illuminate\Http\Request;
+use App\Models\Kerjasama;
+use App\Models\Dosen;
 
 class KegiatanController extends Controller
 {
@@ -27,6 +29,12 @@ class KegiatanController extends Controller
     public function create()
     {
         //
+        $dosens = Dosen::All();
+        $kerjasamas = Kerjasama::All();
+
+        return view('kegiatan.create')
+            ->with('dosens', $dosens)
+            ->with('kerjasamas', $kerjasamas);
     }
 
     /**
@@ -38,6 +46,30 @@ class KegiatanController extends Controller
     public function store(Request $request)
     {
         //
+        $validateData = $request->validate([
+            'tanggal_mulai' => 'required',
+            'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
+            'bentuk_kegiatan' => 'required',
+            'PIC' => 'required',
+            'kerjasamas' => 'required',
+            'dosens' => 'required',
+            'keterangan' => 'required'
+        ]);
+
+        $kegiatan = new Kegiatan();
+
+        $kegiatan->tanggal_mulai = $validateData['tanggal_mulai'];
+        $kegiatan->tanggal_sampai = $validateData['tanggal_sampai'];
+        $kegiatan->bentuk_kegiatan = $validateData['bentuk_kegiatan'];
+        $kegiatan->PIC = $validateData['PIC'];
+        $kegiatan->kerjasama_id = $validateData['kerjasamas'];
+        $kegiatan->dosen_id = $validateData['dosens'];
+        $kegiatan->keterangan =$validateData['keterangan'];
+
+        $kegiatan->save();
+
+        $request->session()->flash('pesan', 'Penambahan data berhasil');
+        return redirect()->route('kegiatans.index');
     }
 
     /**

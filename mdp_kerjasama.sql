@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2022 at 09:46 AM
+-- Generation Time: Apr 25, 2022 at 03:59 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -161,15 +161,18 @@ CREATE TABLE `kegiatans` (
   `PIC` enum('F','P') NOT NULL,
   `keterangan` text NOT NULL,
   `kerjasama_id` int(11) NOT NULL,
-  `dosen_id` int(11) NOT NULL
+  `dosen_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `kegiatans`
 --
 
-INSERT INTO `kegiatans` (`id`, `tanggal_mulai`, `tanggal_sampai`, `bentuk_kegiatan`, `PIC`, `keterangan`, `kerjasama_id`, `dosen_id`) VALUES
-(1, '2022-04-30', '2022-05-30', 'Daring', 'P', 'Dilakukan secara daring', 1, 1);
+INSERT INTO `kegiatans` (`id`, `tanggal_mulai`, `tanggal_sampai`, `bentuk_kegiatan`, `PIC`, `keterangan`, `kerjasama_id`, `dosen_id`, `created_at`, `updated_at`) VALUES
+(1, '2022-04-30', '2022-05-30', 'Daring', 'P', 'Dilakukan secara daring', 1, 1, '2022-04-25 01:57:59', '2022-04-25 01:57:59'),
+(2, '2022-04-25', '2022-05-25', 'Bentuk 1', 'P', 'Keterangan 1', 2, 9, '2022-04-25 01:58:07', '2022-04-25 01:58:07');
 
 -- --------------------------------------------------------
 
@@ -240,12 +243,11 @@ CREATE TABLE `mitras` (
 --
 
 INSERT INTO `mitras` (`id`, `nama_mitra`, `tingkat`, `created_at`, `updated_at`) VALUES
-(1, 'Universitas Indonesia', 'N', '2022-04-21 08:19:25', '2022-04-21 08:19:25'),
-(2, 'Universitas Palembang', 'W', '2022-04-21 08:19:25', '2022-04-21 08:19:25'),
+(1, 'Universitas Indonesia', 'I', '2022-04-21 08:19:25', '2022-04-24 08:00:27'),
+(2, 'Universitas Palembang', 'N', '2022-04-21 08:19:25', '2022-04-24 08:00:33'),
 (3, 'Universitas Indonesia Sejahtera', 'N', '2022-04-21 08:19:25', '2022-04-24 07:26:30'),
 (4, 'Halaman Berkah', 'W', '2022-04-21 08:19:25', '2022-04-24 07:26:57'),
-(5, 'Bangun Semesta Jaya', 'W', '2022-04-21 08:19:25', '2022-04-24 07:40:17'),
-(6, 'mitra4', 'N', '2022-04-21 08:19:25', '2022-04-21 08:19:25'),
+(5, 'Bangun Semesta Jaya', 'N', '2022-04-21 08:19:25', '2022-04-24 08:00:05'),
 (10, 'Vietnam University', 'I', '2022-04-21 01:27:59', '2022-04-21 01:27:59');
 
 -- --------------------------------------------------------
@@ -523,7 +525,7 @@ ALTER TABLE `kategoris`
 -- AUTO_INCREMENT for table `kegiatans`
 --
 ALTER TABLE `kegiatans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `kerjasamas`
