@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 25, 2022 at 03:59 AM
+-- Generation Time: Apr 25, 2022 at 06:11 AM
 -- Server version: 10.4.22-MariaDB
--- PHP Version: 7.3.33
+-- PHP Version: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -359,15 +359,19 @@ CREATE TABLE `usulans` (
   `tanggal_rencana_kegiatan` date NOT NULL,
   `mitra_id` int(11) NOT NULL,
   `dosen_id` int(11) NOT NULL,
-  `unit_id` int(11) NOT NULL
+  `unit_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `usulans`
 --
 
-INSERT INTO `usulans` (`id`, `nama_usulan`, `bentuk_kerjasama`, `rencana_kegiatan`, `tanggal_rencana_kegiatan`, `mitra_id`, `dosen_id`, `unit_id`) VALUES
-(1, 'Usulan 1', 'Kerja sama 1', 'Rencana 1', '2022-04-18', 1, 1, 1);
+INSERT INTO `usulans` (`id`, `nama_usulan`, `bentuk_kerjasama`, `rencana_kegiatan`, `tanggal_rencana_kegiatan`, `mitra_id`, `dosen_id`, `unit_id`, `created_at`, `updated_at`) VALUES
+(1, 'Usulan 1', 'Kerja sama 1', 'Rencana 1', '2022-04-18', 1, 1, 1, '2022-04-25 04:07:10', '2022-04-25 04:07:10'),
+(2, 'sgdg', 'gssg', 'sgssgg', '2022-04-25', 3, 4, 2, '2022-04-25 04:10:11', '2022-04-25 04:10:11'),
+(3, 'sgdg', 'gssg', 'sgssgg', '2022-04-14', 2, 1, 5, '2022-04-25 04:10:27', '2022-04-25 04:10:27');
 
 --
 -- Indexes for dumped tables
@@ -555,7 +559,7 @@ ALTER TABLE `units`
 -- AUTO_INCREMENT for table `usulans`
 --
 ALTER TABLE `usulans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

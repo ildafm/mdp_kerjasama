@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Usulan;
 use Illuminate\Http\Request;
+use App\Models\Dosen;
+use App\Models\Mitra;
+use App\Models\Unit;
 
 class UsulanController extends Controller
 {
@@ -27,6 +30,14 @@ class UsulanController extends Controller
     public function create()
     {
         //
+        $dosens = Dosen::All();
+        $mitras = Mitra::All();
+        $units  = Unit::All();
+
+        return view('usulan.create')
+            ->with('dosens', $dosens)
+            ->with('mitras', $mitras)
+            ->with('units', $units);
     }
 
     /**
@@ -38,6 +49,30 @@ class UsulanController extends Controller
     public function store(Request $request)
     {
         //
+        $validateData = $request->validate([
+            'nama_usulan' => 'required',
+            'bentuk_kerjasama' => 'required',
+            'rencana_kegiatan' => 'required',
+            'tanggal_kegiatan' => 'required',
+            'nama_mitra' => 'required',
+            'nama_dosen' => 'required',
+            'nama_unit' => 'required'
+        ]);
+
+        $usulan = new Usulan();
+
+        $usulan->nama_usulan = $validateData['nama_usulan'];
+        $usulan->bentuk_kerjasama = $validateData['bentuk_kerjasama'];
+        $usulan->rencana_kegiatan = $validateData['rencana_kegiatan'];
+        $usulan->tanggal_rencana_kegiatan = $validateData['tanggal_kegiatan'];
+        $usulan->mitra_id = $validateData['nama_mitra'];
+        $usulan->dosen_id = $validateData['nama_dosen'];
+        $usulan->unit_id =$validateData['nama_unit'];
+
+        $usulan->save();
+
+        $request->session()->flash('pesan', 'Penambahan data berhasil');
+        return redirect()->route('usulans.index');
     }
 
     /**
