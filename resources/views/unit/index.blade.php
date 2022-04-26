@@ -35,7 +35,8 @@
                         <td>{{ $data->id }}</td>
                         <td>{{ $data->nama_unit }}</td>
                         <td>
-                            <a href="/units/{{$data->id}}/edit" class="btn btn-block btn-primary">Edit</a>
+                            <a href="{{ route('units.edit', ['unit'=>$data->id]) }}" class="btn btn-block btn-primary">Ubah</a>
+
                             <form method="POST" action="{{ route('units.destroy', ['unit'=>$data->id]) }}">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}

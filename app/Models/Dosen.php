@@ -16,4 +16,6 @@ class Dosen extends Model
     public function usulans(){
         return $this->hasMany(Usulan::class);
     }
+
+    protected $fillable = ['kode_dosen', 'nama_dosen'];
 }

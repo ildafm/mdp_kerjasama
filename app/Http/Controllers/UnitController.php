@@ -72,6 +72,7 @@ class UnitController extends Controller
     public function edit(Unit $unit)
     {
         //
+        return view('unit.edit')->with('unit', $unit);
     }
 
     /**
@@ -84,6 +85,18 @@ class UnitController extends Controller
     public function update(Request $request, Unit $unit)
     {
         //
+        $this->validate($request, [
+            'nama_unit' => 'required'
+        ]);
+
+        $unit = Unit::findOrFail($unit->id);
+
+        $unit->update([
+            'nama_unit' => $request->nama_unit,
+        ]);
+
+        $request->session()->flash('pesan', 'Perubahan data berhasil');
+        return redirect()->route('units.index');
     }
 
     /**

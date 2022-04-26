@@ -4,7 +4,7 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Ubah Data Mitra</h3>
+        <h3 class="card-title">Ubah Data Mitra {{ $mitra->nama_mitra }}</h3>
     
         <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -33,9 +33,9 @@
         <div class="form-group">
             <label for="tingkat">Tingkat</label>
             <select class="form-control" name='tingkat'>
-                <option value='I'>Internasional</option>
-                <option value='N'>Nasional</option>
-                <option value='W'>Wilayah/lokal</option>
+                <option value='I' <?= ($mitra->tingkat == 'I') ? 'selected' : '' ?>>Internasional</option>
+                <option value='N' <?= ($mitra->tingkat == 'N') ? 'selected' : '' ?>>Nasional</option>
+                <option value='W' <?= ($mitra->tingkat == 'W') ? 'selected' : '' ?>>Wilayah/lokal</option>
             </select>
             @error('tingkat')
                 <div class="text-danger">{{ $message }}</div>

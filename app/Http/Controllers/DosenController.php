@@ -73,6 +73,7 @@ class DosenController extends Controller
     public function edit(Dosen $dosen)
     {
         //
+        return view('dosen.edit')->with('dosen', $dosen);
     }
 
     /**
@@ -85,6 +86,19 @@ class DosenController extends Controller
     public function update(Request $request, Dosen $dosen)
     {
         //
+        $validateData = $request->validate([
+            'kode_dosen' => 'required | max:6',
+            'nama_dosen' => 'required'
+        ]);
+
+        $dosen = Dosen::findOrFail($dosen->id);
+        $dosen->update([
+            'kode_dosen' => $request->kode_dosen,
+            'nama_dosen' => $request->nama_dosen,
+        ]);
+
+        $request->session()->flash('pesan', 'Perubahan data berhasil');
+        return redirect()->route('dosens.index');
     }
 
     /**
@@ -96,5 +110,7 @@ class DosenController extends Controller
     public function destroy(Dosen $dosen)
     {
         //
+        $dosen->delete();
+        return redirect()->route('dosens.index')->with('pesan', "Hapus data $dosen->nama_dosen berhasil");
     }
 }
