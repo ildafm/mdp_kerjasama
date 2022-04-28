@@ -96,5 +96,7 @@ class StatusController extends Controller
     public function destroy(Status $status)
     {
         //
+        $status->delete();
+        return redirect()->route('statuses.index')->with('pesan', "Hapus data $status->nama_status berhasil");
     }
 }

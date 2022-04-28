@@ -26,6 +26,7 @@
 <tr>
 <th>Id</th>
 <th>Nama Status</th>
+<th>Aksi</th>
 </tr>
 </thead>
 <tbody>
@@ -33,6 +34,18 @@
         <tr>
             <td>{{ $data->id }}</td>
             <td>{{ $data->nama_status }}</td>
+            <td>
+                <a href="{{ route('statuses.edit', ['status'=>$data->id]) }}" class="btn btn-block btn-primary">Ubah</a>
+                
+                <form method="POST" action="{{ route('statuses.destroy', ['status'=>$data->id]) }}">
+                    {{ csrf_field() }}
+                    {{ method_field('DELETE') }}
+
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-danger btn-block delete-user" value="Hapus">
+                    </div>
+                </form>
+            </td>
         </tr>
     @endforeach
 </tbody>
@@ -40,6 +53,7 @@
 <tr>
 <th>Id</th>
 <th>Nama Status</th>
+<th>Aksi</th>
 </tr>
 </tfoot>
 </table>
