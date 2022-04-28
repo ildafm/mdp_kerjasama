@@ -72,6 +72,7 @@ class KategoriController extends Controller
     public function edit(Kategori $kategori)
     {
         //
+        return view('kategori.edit')->with('kategori', $kategori);
     }
 
     /**
@@ -84,6 +85,18 @@ class KategoriController extends Controller
     public function update(Request $request, Kategori $kategori)
     {
         //
+        $this->validate($request, [
+            'nama_kategori' => 'required'
+        ]);
+
+        $kategori = Kategori::findOrFail($kategori->id);
+
+        $kategori->update([
+            'nama_kategori' => $request->nama_kategori
+        ]);
+
+        $request->session()->flash('pesan', 'Perubahan data berhasil');
+        return redirect()->route('kategoris.index');
     }
 
     /**
