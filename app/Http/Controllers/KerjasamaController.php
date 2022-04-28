@@ -95,6 +95,14 @@ class KerjasamaController extends Controller
     public function edit(Kerjasama $kerjasama)
     {
         //
+        $mitras = Mitra::All();
+        $kategoris = Kategori::All();
+        $statuses = Status::All();
+        return view('kerjasama.edit')
+            ->with('kerjasama', $kerjasama)
+            ->with('mitras', $mitras)
+            ->with('kategoris', $kategoris)
+            ->with('statuses', $statuses);
     }
 
     /**

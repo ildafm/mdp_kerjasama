@@ -73,6 +73,7 @@ class StatusController extends Controller
     public function edit(Status $status)
     {
         //
+        return view('status.edit')->with('status', $status);
     }
 
     /**
@@ -85,6 +86,18 @@ class StatusController extends Controller
     public function update(Request $request, Status $status)
     {
         //
+        $this->validate($request, [
+            'nama_status' => 'required'
+        ]);
+
+        $status = Status::findOrFail($status->id);
+
+        $status->update([
+            'nama_status' => $request->nama_status
+        ]);
+
+        $request->session()->flash('pesan', 'Perubahan data berhasil');
+        return redirect()->route('statuses.index');
     }
 
     /**

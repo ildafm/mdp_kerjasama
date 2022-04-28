@@ -45,7 +45,8 @@
             <td>{{ $data->kategori->nama_kategori }}</td>
             <td>{{ $data->status->nama_status }}</td>
             <td>
-                <a href="/kerjasamas/{{$data->id}}/edit" class="btn btn-block btn-primary">Edit</a>
+                <a href="{{ route('kerjasamas.edit', ['kerjasama'=>$data->id]) }}" class="btn btn-block btn-primary">Ubah</a>
+                
                 <form method="POST" action="{{ route('kerjasamas.destroy', ['kerjasama'=>$data->id]) }}">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
