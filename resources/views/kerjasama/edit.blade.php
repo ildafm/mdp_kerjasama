@@ -19,7 +19,9 @@
 
     <div class="card-body">
         <form action="{{ route('kerjasamas.update', ['kerjasama'=>$kerjasama->id]) }}" method="POST">
-            @csrf
+            {{-- @csrf --}}
+            {{ csrf_field() }}
+            {{ method_field('PUT') }}
 
         <div class="form-group">
             <label for="nama_kerja_sama">Nama Kerja Sama</label>
@@ -54,7 +56,7 @@
             <label for="nama_mitra">Nama Mitra</label>
             <select class="form-control" name='nama_mitra'>
                 @foreach($mitras as $data)
-                    <option value="{{ $data->id }}" <?= ($data->id == '{{ $data->id }}') ? 'selected' : '' ?>>{{ $data->id }} - {{ $data->nama_mitra }}</option>
+                <option value="{{ $data->id }}" {{ $data->id == $kerjasama->mitra_id ? 'selected' : '' }} >{{ $data->id }} - {{ $data->nama_mitra }}</option>
                 @endforeach
             </select>
             @error('nama_mitra')
@@ -67,7 +69,7 @@
             <label for="nama_kategori">Nama Kategori</label>
             <select class="form-control" name='nama_kategori'>
                 @foreach($kategoris as $data)
-                    <option value="{{ $data->id }}">{{ $data->id }} - {{ $data->nama_kategori }}</option>
+                    <option value="{{ $data->id }}" {{ $data->id == $kerjasama->kategori_id ? 'selected' : '' }}>{{ $data->id }} - {{ $data->nama_kategori }}</option>
                 @endforeach
             </select>
             @error('nama_kategori')
@@ -79,7 +81,7 @@
             <label for="nama_status">Nama Status</label>
             <select class="form-control" name='nama_status'>
                 @foreach($statuses as $data)
-                    <option value="{{ $data->id }}">{{ $data->id }} - {{ $data->nama_status }}</option>
+                    <option value="{{ $data->id }}" {{ $data->id == $kerjasama->status_id ? 'selected' : '' }}>{{ $data->id }} - {{ $data->nama_status }}</option>
                 @endforeach
             </select>
             @error('nama_status')

@@ -115,6 +115,28 @@ class KerjasamaController extends Controller
     public function update(Request $request, Kerjasama $kerjasama)
     {
         //
+        $this->validate($request, [
+            'nama_kerja_sama' => 'required',
+            'tanggal_mulai' => 'required',
+            'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
+            'nama_mitra' => 'required',
+            'nama_kategori' => 'required',
+            'nama_status' => 'required'
+        ]);
+
+        $kerjasama = Kerjasama::findOrFail($kerjasama->id);
+
+        $kerjasama->update([
+            'nama_kerja_sama' => $request->nama_kerja_sama,
+            'tanggal_mulai' => $request->tanggal_mulai,
+            'tanggal_sampai' => $request->tanggal_sampai,
+            'mitra_id' => $request->nama_mitra,
+            'kategori_id' => $request->nama_kategori,
+            'status_id' => $request->nama_status
+        ]);
+
+        $request->session()->flash('pesan', 'Perubahan data berhasil');
+        return redirect()->route('kerjasamas.index');
     }
 
     /**
