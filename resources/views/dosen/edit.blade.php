@@ -51,5 +51,4 @@
 @endsection
 
 {{-- Kesalahan --}}
-{{-- Kode dosen > 6 akan merefresh halaman --}}
-{{-- Duplikat Kode Dosen menyebabkan eror tetapi tidak menimbulkan pesan eror --}}
+{{-- pesan eror akan merefresh halaman --}}

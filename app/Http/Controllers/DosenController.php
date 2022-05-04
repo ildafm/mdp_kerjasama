@@ -40,7 +40,7 @@ class DosenController extends Controller
     {
         //
         $validateData = $request->validate([
-            'kode_dosen' => 'required | max:6',
+            'kode_dosen' => 'required | max:6 | unique:dosens',
             'nama_dosen' => 'required'
         ]);
 
@@ -87,7 +87,7 @@ class DosenController extends Controller
     {
         //
         $validateData = $request->validate([
-            'kode_dosen' => 'required | max:6',
+            'kode_dosen' => 'required | max:6 | unique:dosens',
             'nama_dosen' => 'required'
         ]);
 
