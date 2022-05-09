@@ -37,5 +37,3 @@ Route::resource('units', UnitController::class);
 Route::resource('usulans', UsulanController::class);
 Route::resource('statuses', StatusController::class);
 Route::resource('kategoris', KategoriController::class);
-
-Route::resource('logins', SessionController::class);
