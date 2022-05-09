@@ -7,6 +7,7 @@ use App\Http\Controllers\DosenController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\KerjasamaController;
+use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UsulanController;
 use App\Http\Controllers\StatusController;
@@ -36,3 +37,5 @@ Route::resource('units', UnitController::class);
 Route::resource('usulans', UsulanController::class);
 Route::resource('statuses', StatusController::class);
 Route::resource('kategoris', KategoriController::class);
+
+Route::resource('logins', SessionController::class);

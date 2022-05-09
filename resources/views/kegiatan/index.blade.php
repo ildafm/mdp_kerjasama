@@ -33,6 +33,7 @@
 <th>Keterangan</th>
 <th>Nama Kerja Sama</th>
 <th>Nama Dosen</th>
+<th>Aksi</th>
 </tr>
 </thead>
 <tbody>
@@ -42,10 +43,24 @@
             <td>{{ $data->tanggal_mulai }}</td>
             <td>{{ $data->tanggal_sampai }}</td>
             <td>{{ $data->bentuk_kegiatan }}</td>
-            <td>{{ $data->PIC }}</td>
+            <td>{{-- $data->PIC --}}
+            {{ Status::kegiatan($data->PIC) }}
+            </td>
             <td>{{ $data->keterangan }}</td>
             <td>{{ $data->kerjasama->nama_kerja_sama }}</td>
             <td>{{ $data->dosen->nama_dosen }}</td>
+            <td>
+                <a href="{{ route('kegiatans.edit', ['kegiatan'=>$data->id]) }}" class="btn btn-block btn-primary">Ubah</a>
+                
+                <form method="POST" action="{{ route('kegiatans.destroy', ['kegiatan'=>$data->id]) }}">
+                    {{ csrf_field() }}
+                    {{ method_field('DELETE') }}
+
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-danger btn-block delete-user" value="Hapus">
+                    </div>
+                </form>
+            </td>
         </tr>
     @endforeach
 </tbody>
@@ -59,11 +74,22 @@
 <th>Keterangan</th>
 <th>Nama Kerja Sama</th>
 <th>Nama Dosen</th>
+<th>Aksi</th>
 </tr>
 </tfoot>
 </table>
 
 </div>
 </div>
+
+<script>
+    $('.delete-user').click(function(e){
+        e.preventDefault() // Don't post the form, unless confirmed
+        if (confirm('Are you sure?')) {
+            // Post the form
+            $(e.target).closest('form').submit() // Post the surrounding form
+        }
+    });
+</script>
 
 @endsection

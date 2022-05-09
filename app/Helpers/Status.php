@@ -10,4 +10,12 @@ class Status{
         ];
         return $arrayStatus[$status];
     }
+
+    public static function kegiatan($pic){
+        $arrayPic = [
+            'P' => 'Program Studi',
+            'F' => 'Fakultas'
+        ];
+        return $arrayPic[$pic];
+    }
 }

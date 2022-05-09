@@ -92,6 +92,12 @@ class KegiatanController extends Controller
     public function edit(Kegiatan $kegiatan)
     {
         //
+        $kerjasamas = Kerjasama::All();
+        $dosens = Dosen::All();
+        return view('kegiatan.edit')
+            ->with('kerjasamas', $kerjasamas)
+            ->with('kegiatans', $kegiatan)
+            ->with('dosens', $dosens);
     }
 
     /**
@@ -104,6 +110,30 @@ class KegiatanController extends Controller
     public function update(Request $request, Kegiatan $kegiatan)
     {
         //
+        $this->validate($request, [
+            'tanggal_mulai' => 'required',
+            'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
+            'bentuk_kegiatan' => 'required',
+            'PIC' => 'required',
+            'keterangan' => 'required',
+            'kerjasamas' => 'required',
+            'dosens' => 'required',
+        ]);
+
+        $kegiatan = Kegiatan::findOrFail($kegiatan->id);
+
+        $kegiatan->update([
+            'tanggal_mulai' => $request->tanggal_mulai,
+            'tanggal_sampai' => $request->tanggal_sampai,
+            'bentuk_kegiatan' => $request->bentuk_kegiatan,
+            'PIC' => $request->PIC,
+            'keterangan' => $request->keterangan,
+            'kerjasama_id' => $request->kerjasamas,
+            'dosen_id' => $request->dosens
+        ]);
+
+        $request->session()->flash('pesan', 'Perubahan data berhasil');
+        return redirect()->route('kegiatans.index');
     }
 
     /**
@@ -115,5 +145,7 @@ class KegiatanController extends Controller
     public function destroy(Kegiatan $kegiatan)
     {
         //
+        $kegiatan->delete();
+        return redirect()->route('kegiatans.index')->with('pesan', "Hapus data kegiatan dengan id : $kegiatan->id berhasil");
     }
 }

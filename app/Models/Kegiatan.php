@@ -16,4 +16,6 @@ class Kegiatan extends Model
     public function dosen(){
         return $this->belongsTo(Dosen::class);
     }
+
+    protected $fillable = ['tanggal_mulai', 'tanggal_sampai', 'bentuk_kegiatan', 'PIC', 'keterangan', 'kerjasama_id', 'dosen_id'];
 }
