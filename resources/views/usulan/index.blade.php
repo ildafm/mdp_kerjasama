@@ -32,6 +32,7 @@
                     <th>Nama Mitra</th>
                     <th>Nama Dosen</th>
                     <th>Nama Unit</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,6 +46,18 @@
                         <td>{{ $data->mitra->nama_mitra }}</td>
                         <td>{{ $data->dosen->nama_dosen }}</td>
                         <td>{{ $data->unit->nama_unit }}</td>
+                        <td>
+                            <a href="{{ route('usulans.edit', ['usulan'=>$data->id]) }}" class="btn btn-block btn-primary">Ubah</a>
+                            
+                            <form method="POST" action="{{ route('usulans.destroy', ['usulan'=>$data->id]) }}">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-danger btn-block delete-user" value="Hapus">
+                                </div>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
@@ -58,6 +71,7 @@
                 <th>Nama Mitra</th>
                 <th>Nama Dosen</th>
                 <th>Nama Unit</th>
+                <th>Aksi</th>
             </tr>
             </tfoot>
         </table>

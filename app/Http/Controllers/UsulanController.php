@@ -53,7 +53,7 @@ class UsulanController extends Controller
             'nama_usulan' => 'required',
             'bentuk_kerjasama' => 'required',
             'rencana_kegiatan' => 'required',
-            'tanggal_kegiatan' => 'required',
+            'tanggal_rencana_kegiatan' => 'required',
             'nama_mitra' => 'required',
             'nama_dosen' => 'required',
             'nama_unit' => 'required'
@@ -64,7 +64,7 @@ class UsulanController extends Controller
         $usulan->nama_usulan = $validateData['nama_usulan'];
         $usulan->bentuk_kerjasama = $validateData['bentuk_kerjasama'];
         $usulan->rencana_kegiatan = $validateData['rencana_kegiatan'];
-        $usulan->tanggal_rencana_kegiatan = $validateData['tanggal_kegiatan'];
+        $usulan->tanggal_rencana_kegiatan = $validateData['tanggal_rencana_kegiatan'];
         $usulan->mitra_id = $validateData['nama_mitra'];
         $usulan->dosen_id = $validateData['nama_dosen'];
         $usulan->unit_id =$validateData['nama_unit'];
@@ -95,6 +95,15 @@ class UsulanController extends Controller
     public function edit(Usulan $usulan)
     {
         //
+        $dosens = Dosen::All();
+        $mitras = Mitra::All();
+        $units  = Unit::All();
+
+        return view('usulan.edit')
+            ->with('dosens', $dosens)
+            ->with('mitras', $mitras)
+            ->with('units', $units)
+            ->with('usulans', $usulan);
     }
 
     /**
@@ -107,6 +116,30 @@ class UsulanController extends Controller
     public function update(Request $request, Usulan $usulan)
     {
         //
+        $this->validate($request, [
+            'nama_usulan' => 'required',
+            'bentuk_kerjasama' => 'required',
+            'rencana_kegiatan' => 'required',
+            'tanggal_rencana_kegiatan' => 'required',
+            'nama_mitra' => 'required',
+            'nama_dosen' => 'required',
+            'nama_unit' => 'required'
+        ]);
+
+        $usulan = Usulan::findOrFail($usulan->id);
+
+        $usulan->update([
+            'nama_usulan' => $request->nama_usulan,
+            'bentuk_kerjasama' => $request->bentuk_kerjasama,
+            'rencana_kegiatan' => $request->rencana_kegiatan,
+            'tanggal_rencana_kegiatan' => $request->tanggal_rencana_kegiatan,
+            'mitra_id' => $request->nama_mitra,
+            'dosen_id' => $request->nama_dosen,
+            'unit_id' => $request->nama_unit
+        ]);
+
+        $request->session()->flash('pesan', 'Perubahan data berhasil');
+        return redirect()->route('usulans.index');
     }
 
     /**
@@ -118,5 +151,7 @@ class UsulanController extends Controller
     public function destroy(Usulan $usulan)
     {
         //
+        $usulan->delete();
+        return redirect()->route('usulans.index')->with('pesan', "Hapus data usulan $usulan->nama_usulan berhasil");
     }
 }

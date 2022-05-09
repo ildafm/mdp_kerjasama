@@ -20,4 +20,6 @@ class Usulan extends Model
     public function unit(){
         return $this->belongsTo(Unit::class);
     }
+
+    protected $fillable = ['nama_usulan', 'bentuk_kerjasama', 'rencana_kegiatan', 'tanggal_rencana_kegiatan', 'mitra_id', 'dosen_id', 'unit_id'];
 }
