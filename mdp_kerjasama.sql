@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 26, 2022 at 03:39 AM
+-- Generation Time: May 12, 2022 at 10:13 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -171,7 +171,7 @@ CREATE TABLE `kegiatans` (
 
 INSERT INTO `kegiatans` (`id`, `tanggal_mulai`, `tanggal_sampai`, `bentuk_kegiatan`, `PIC`, `keterangan`, `kerjasama_id`, `dosen_id`, `created_at`, `updated_at`) VALUES
 (1, '2022-04-30', '2022-05-30', 'Daring', 'P', 'Dilakukan secara daring', 1, 1, '2022-04-25 01:57:59', '2022-04-25 01:57:59'),
-(2, '2022-04-25', '2022-05-25', 'Bentuk 1', 'P', 'Keterangan 1', 2, 9, '2022-04-25 01:58:07', '2022-04-25 01:58:07');
+(2, '2022-05-09', '2022-05-28', 'Bentuk kegiatan Q1', 'F', 'Keterangan Q1', 1, 2, '2022-04-25 01:58:07', '2022-05-09 05:00:21');
 
 -- --------------------------------------------------------
 
@@ -197,7 +197,7 @@ CREATE TABLE `kerjasamas` (
 
 INSERT INTO `kerjasamas` (`id`, `nama_kerja_sama`, `tanggal_mulai`, `tanggal_sampai`, `mitra_id`, `kategori_id`, `status_id`, `created_at`, `updated_at`) VALUES
 (1, 'Kerja Sama 1', '2022-04-30', '2022-05-30', 1, 1, 1, '2022-04-22 13:10:46', '2022-04-22 13:59:03'),
-(2, 'Kerja Sama 2', '2022-04-23', '2022-04-30', 10, 3, 2, '2022-04-22 13:40:37', '2022-04-22 13:40:37'),
+(2, 'Kerja Sama 2', '2022-04-28', '2022-05-28', 4, 2, 3, '2022-04-22 13:40:37', '2022-04-28 02:43:27'),
 (3, 'Kerja Sama 3', '2022-04-23', '2022-04-30', 2, 2, 4, '2022-04-22 13:45:26', '2022-04-22 13:45:26'),
 (4, 'Kerja Sama 4', '2022-04-30', '2022-04-15', 2, 3, 2, '2022-04-22 13:49:03', '2022-04-22 13:49:03');
 
@@ -247,7 +247,8 @@ INSERT INTO `mitras` (`id`, `nama_mitra`, `tingkat`, `created_at`, `updated_at`)
 (3, 'Universitas Indonesia Sejahtera', 'N', '2022-04-21 08:19:25', '2022-04-24 07:26:30'),
 (4, 'Halaman Berkah', 'W', '2022-04-21 08:19:25', '2022-04-24 07:26:57'),
 (5, 'Bangun Semesta Jaya', 'N', '2022-04-21 08:19:25', '2022-04-24 08:00:05'),
-(10, 'Vietnam University', 'I', '2022-04-21 01:27:59', '2022-04-21 01:27:59');
+(25, 'Vietnam University', 'N', '2022-05-10 18:41:15', '2022-05-10 19:36:03'),
+(26, 'UI', 'I', '2022-05-10 18:41:31', '2022-05-10 18:41:31');
 
 -- --------------------------------------------------------
 
@@ -297,7 +298,7 @@ CREATE TABLE `statuses` (
 --
 
 INSERT INTO `statuses` (`id`, `nama_status`, `created_at`, `updated_at`) VALUES
-(1, 'Aktif', '2022-04-22 07:48:14', '2022-04-22 07:48:14'),
+(1, 'Aktif', '2022-04-22 07:48:14', '2022-04-28 01:53:07'),
 (2, 'Kadaluarsa', '2022-04-22 00:48:32', '2022-04-23 02:44:51'),
 (3, 'Dalam Perpanjangan', '2022-04-22 00:53:30', '2022-04-23 03:10:22'),
 (4, 'Tidak Aktif', '2022-04-22 00:54:56', '2022-04-23 03:10:32');
@@ -344,6 +345,13 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Muhammad Fadli', 'ildafm4000@mhs.mdp.ac.id', NULL, '$2y$10$PTMFcAj0xFGrtM32yUvlou.pS.4KAfnu1mwP/C9RIDmx0T.kxTokS', NULL, '2022-05-12 17:25:16', '2022-05-12 17:25:16');
+
 -- --------------------------------------------------------
 
 --
@@ -369,8 +377,8 @@ CREATE TABLE `usulans` (
 
 INSERT INTO `usulans` (`id`, `nama_usulan`, `bentuk_kerjasama`, `rencana_kegiatan`, `tanggal_rencana_kegiatan`, `mitra_id`, `dosen_id`, `unit_id`, `created_at`, `updated_at`) VALUES
 (1, 'Usulan 1', 'Kerja sama 1', 'Rencana 1', '2022-04-18', 1, 1, 1, '2022-04-25 04:07:10', '2022-04-25 04:07:10'),
-(2, 'sgdg', 'gssg', 'sgssgg', '2022-04-25', 3, 4, 2, '2022-04-25 04:10:11', '2022-04-25 04:10:11'),
-(3, 'sgdg', 'gssg', 'sgssgg', '2022-04-14', 2, 1, 5, '2022-04-25 04:10:27', '2022-04-25 04:10:27');
+(2, 'Usulan 2', 'Kerja sama 2', 'Kegiatan 2', '2022-06-01', 1, 5, 1, '2022-04-25 04:10:11', '2022-05-09 14:33:49'),
+(4, 'Usulan Q1', 'Kerja sama QS1', 'Rencana Q1', '2022-05-09', 2, 6, 5, '2022-05-09 14:21:33', '2022-05-09 14:21:33');
 
 --
 -- Indexes for dumped tables
@@ -528,25 +536,25 @@ ALTER TABLE `kategoris`
 -- AUTO_INCREMENT for table `kegiatans`
 --
 ALTER TABLE `kegiatans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `kerjasamas`
 --
 ALTER TABLE `kerjasamas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `mitras`
 --
 ALTER TABLE `mitras`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `statuses`
 --
 ALTER TABLE `statuses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `units`
@@ -555,10 +563,16 @@ ALTER TABLE `units`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `usulans`
 --
 ALTER TABLE `usulans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables

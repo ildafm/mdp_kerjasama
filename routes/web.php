@@ -37,3 +37,9 @@ Route::resource('units', UnitController::class);
 Route::resource('usulans', UsulanController::class);
 Route::resource('statuses', StatusController::class);
 Route::resource('kategoris', KategoriController::class);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/login2', function(){return view('login2');});
