@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
 
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -71,13 +72,13 @@
 
                     {{-- input email --}}
                     <div class="input-group mb-3">
-                        <input id="email" type="email" class="form-control @error('email') swalDefaultError @enderror"
-                            name="email" value="{{ old('email') }} " required autocomplete="email" autofocus
+                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                            name="email" value="{{ old('email') }}" required autocomplete="email" autofocus
                             placeholder="Email">
 
                         @error('email')
                             <span class="invalid-feedback" role="alert">
-                                {{-- <strong>{{ $message }}</strong> --}}
+                                <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                         <div class="input-group-append">
@@ -126,28 +127,17 @@
                     </div>
                 </form>
 
-                {{-- fungsi belum ditambahkan --}}
-                <div class="social-auth-links text-center mt-2 mb-3">
-                    <a href="#" class="btn btn-block btn-primary">
-                        <i class="fab fa-facebook mr-2"></i> Sign in using Facebook <br>
-                    </a>
-                    <a href="#" class="btn btn-block btn-danger">
-                        <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
-                    </a>
-                </div>
-
-
                 {{-- lupa password --}}
                 @if (Route::has('password.request'))
                     <p class="mb-1">
-                        <a href="{{ route('password.request') }}">I forgot my password</a>
+                        <a href="{{ route('password.request') }}">Forgot my password</a>
                     </p>
                 @endif
 
-                {{-- register --}}
+                {{-- register
                 <p class="mb-0">
                     <a href="{{ route('register') }}" class="text-center">Register a new membership</a>
-                </p>
+                </p> --}}
             </div>
 
         </div>
