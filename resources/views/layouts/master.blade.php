@@ -284,7 +284,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ url('/penggunas') }}" class="nav-link">
+                            <a href="{{ url('/users') }}" class="nav-link">
                                 <i class="nav-icon fas fa-address-card"></i>
                                 <p>
                                     User

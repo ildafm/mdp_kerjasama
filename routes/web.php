@@ -11,7 +11,7 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UsulanController;
 use App\Http\Controllers\StatusController;
-use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +38,7 @@ Route::resource('units', UnitController::class);
 Route::resource('usulans', UsulanController::class);
 Route::resource('statuses', StatusController::class);
 Route::resource('kategoris', KategoriController::class);
-Route::resource('penggunas', PenggunaController::class);
+Route::resource('users', UserController::class);
 
 Auth::routes();
 
