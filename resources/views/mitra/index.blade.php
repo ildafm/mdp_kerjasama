@@ -96,8 +96,11 @@
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <script>
         $('.delete-user').click(function(e) {
-            // Post the form
-            $(e.target).closest('form').submit() // Post the surrounding form
+            e.preventDefault() // Don't post the form, unless confirmed
+            if (confirm('Are you sure?')) {
+                // Post the form
+                $(e.target).closest('form').submit() // Post the surrounding form
+            }
         });
     </script>
 
