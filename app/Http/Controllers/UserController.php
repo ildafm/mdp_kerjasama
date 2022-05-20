@@ -28,6 +28,7 @@ class UserController extends Controller
     public function create()
     {
         //
+        return view('user.create');
     }
 
     /**
@@ -39,6 +40,22 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
+        $validateData = $request->validate([
+            'name' => 'required',
+            'email' => 'required | unique:users | email',
+            'password' => 'required | min:8 | confirmed',
+            'level' => 'required'
+        ]);
+
+        $user = new User();
+        $user->name = $validateData['name'];
+        $user->email = $validateData['email'];
+        $user->password = $validateData['password'];
+        $user->level = $validateData['level'];
+        $user->save();
+
+        $request->session()->flash('pesan', 'Penambahan data berhasil');
+        return redirect()->route('users.index');
     }
 
     /**

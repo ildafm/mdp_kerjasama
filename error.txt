@@ -1,0 +1,6 @@
+-> Masalah register/tambahUser
+-> Masalah reset password
+-> Masalah penghapusan data mitra dengan modal
+-> Tabel-tabel bukti belum terpakai
+-> Foto user
+-> posisi logout dan ikon logout
