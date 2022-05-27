@@ -5,7 +5,9 @@
     <div class="card">
         <div class="card-header">
             <!-- <h3 class="card-title">Tabel Daftar Status</h3> -->
+            {{-- Button tambah --}}
             <a href="{{ url('/users/create') }}" class='btn btn-primary'>Tambah User</a>
+
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                     <i class="fas fa-minus"></i>

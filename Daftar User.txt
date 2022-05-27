@@ -1,0 +1,5 @@
+Daftar User yang sudah terdaftar dan bisa dipakai untuk sementara
+
+Name : Admin
+Email : admin@gmail.com
+Password : admin123

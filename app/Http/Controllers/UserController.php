@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -41,16 +46,16 @@ class UserController extends Controller
     {
         //
         $validateData = $request->validate([
-            'name' => 'required',
-            'email' => 'required | unique:users | email',
-            'password' => 'required | min:8 | confirmed',
+            'name' => 'required | string',
+            'email' => 'required | unique:users | email | max:255 | string',
+            'password' => 'required | min:8 | confirmed | string',
             'level' => 'required'
         ]);
 
         $user = new User();
         $user->name = $validateData['name'];
         $user->email = $validateData['email'];
-        $user->password = $validateData['password'];
+        $user->password = Hash::make($validateData['password']);
         $user->level = $validateData['level'];
         $user->save();
 

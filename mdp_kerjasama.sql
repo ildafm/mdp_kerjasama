@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 13, 2022 at 05:17 AM
+-- Generation Time: May 27, 2022 at 04:34 AM
 -- Server version: 10.4.22-MariaDB
--- PHP Version: 7.4.26
+-- PHP Version: 7.3.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -105,7 +105,6 @@ INSERT INTO `dosens` (`id`, `kode_dosen`, `nama_dosen`, `created_at`, `updated_a
 (3, 'D00003', 'Adi', '2022-04-22 00:42:17', '2022-04-22 00:42:17'),
 (4, 'D00004', 'Ada', '2022-04-22 00:43:46', '2022-04-22 00:43:46'),
 (5, 'D00005', 'Lily', '2022-04-22 00:45:45', '2022-04-22 00:45:45'),
-(6, 'D00006', 'Uky', '2022-04-22 00:56:30', '2022-04-22 00:56:30'),
 (9, 'D00008', 'Nila', '2022-04-22 08:23:09', '2022-04-22 08:23:09');
 
 -- --------------------------------------------------------
@@ -198,8 +197,7 @@ CREATE TABLE `kerjasamas` (
 INSERT INTO `kerjasamas` (`id`, `nama_kerja_sama`, `tanggal_mulai`, `tanggal_sampai`, `mitra_id`, `kategori_id`, `status_id`, `created_at`, `updated_at`) VALUES
 (1, 'Kerja Sama 1', '2022-04-30', '2022-05-30', 1, 1, 1, '2022-04-22 13:10:46', '2022-04-22 13:59:03'),
 (2, 'Kerja Sama 2', '2022-04-23', '2022-04-30', 10, 3, 2, '2022-04-22 13:40:37', '2022-04-22 13:40:37'),
-(3, 'Kerja Sama 3', '2022-04-23', '2022-04-30', 2, 2, 4, '2022-04-22 13:45:26', '2022-04-22 13:45:26'),
-(4, 'Kerja Sama 4', '2022-04-30', '2022-04-15', 2, 3, 2, '2022-04-22 13:49:03', '2022-04-22 13:49:03');
+(3, 'Kerja Sama 3', '2022-04-23', '2022-04-30', 2, 2, 4, '2022-04-22 13:45:26', '2022-04-22 13:45:26');
 
 -- --------------------------------------------------------
 
@@ -246,8 +244,7 @@ INSERT INTO `mitras` (`id`, `nama_mitra`, `tingkat`, `created_at`, `updated_at`)
 (2, 'Universitas Palembang', 'N', '2022-04-21 08:19:25', '2022-04-24 08:00:33'),
 (3, 'Universitas Indonesia Sejahtera', 'N', '2022-04-21 08:19:25', '2022-04-24 07:26:30'),
 (4, 'Halaman Berkah', 'W', '2022-04-21 08:19:25', '2022-04-24 07:26:57'),
-(10, 'Vietnam University', 'I', '2022-04-21 01:27:59', '2022-04-21 01:27:59'),
-(14, 'adsf', 'I', '2022-05-11 02:41:21', '2022-05-11 02:41:21');
+(10, 'Vietnam University', 'I', '2022-04-21 01:27:59', '2022-04-21 01:27:59');
 
 -- --------------------------------------------------------
 
@@ -327,8 +324,7 @@ INSERT INTO `units` (`id`, `nama_unit`, `created_at`, `updated_at`) VALUES
 (5, 'Unit Q1', '2022-04-22 00:37:07', '2022-04-26 01:16:30'),
 (6, 'Unit S4', '2022-04-27 03:30:03', '2022-04-27 03:36:18'),
 (7, 'Unit S5', '2022-04-27 03:31:00', '2022-04-27 03:36:24'),
-(8, 'Unit S5', '2022-04-27 03:34:34', '2022-04-27 03:36:29'),
-(9, 'Unit S6', '2022-04-27 03:35:12', '2022-04-27 03:36:38');
+(8, 'Unit S5', '2022-04-27 03:34:34', '2022-04-27 03:36:29');
 
 -- --------------------------------------------------------
 
@@ -344,8 +340,8 @@ CREATE TABLE `users` (
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -353,7 +349,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `level`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Muhammad Fadli', 'ildafm4000@mhs.mdp.ac.id', 'A', NULL, '$2y$10$PTMFcAj0xFGrtM32yUvlou.pS.4KAfnu1mwP/C9RIDmx0T.kxTokS', NULL, '2022-05-12 17:25:16', '2022-05-12 17:25:16');
+(1, 'Muhammad Fadli', 'ildafm4000@mhs.mdp.ac.id', 'A', NULL, '$2y$10$PTMFcAj0xFGrtM32yUvlou.pS.4KAfnu1mwP/C9RIDmx0T.kxTokS', NULL, '2022-05-12 17:25:16', '2022-05-12 17:25:16'),
+(2, 'Admin', 'admin@gmail.com', 'A', NULL, '$2y$10$QJCNAlJ2EBXjxsXYsgZIZu6afA5AJGSFlNNiAv5uBqitIGw.DbTdS', NULL, '2022-05-27 01:55:39', '2022-05-27 01:55:39');
 
 -- --------------------------------------------------------
 
@@ -533,13 +530,13 @@ ALTER TABLE `dosens`
 -- AUTO_INCREMENT for table `kategoris`
 --
 ALTER TABLE `kategoris`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `kegiatans`
 --
 ALTER TABLE `kegiatans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `kerjasamas`
@@ -557,7 +554,7 @@ ALTER TABLE `mitras`
 -- AUTO_INCREMENT for table `statuses`
 --
 ALTER TABLE `statuses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `units`
@@ -566,10 +563,16 @@ ALTER TABLE `units`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `usulans`
 --
 ALTER TABLE `usulans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables

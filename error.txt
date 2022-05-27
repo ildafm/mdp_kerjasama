@@ -1,6 +1,8 @@
 -> Masalah register/tambahUser
 -> Masalah reset password
--> Masalah penghapusan data mitra dengan modal
+-> Masalah penghapusan data mitra dengan modal (Selesai)
 -> Tabel-tabel bukti belum terpakai
 -> Foto user
 -> posisi logout dan ikon logout
+-> Menambahkan komentar (Sedikit)
+-> Ubah Pesan eror untuk login
