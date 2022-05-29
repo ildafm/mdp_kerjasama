@@ -81,6 +81,7 @@ class KegiatanController extends Controller
     public function show(Kegiatan $kegiatan)
     {
         //
+        return view('kegiatan.show')->with('kegiatan', $kegiatan);
     }
 
     /**

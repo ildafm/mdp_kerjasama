@@ -1,13 +1,12 @@
 @extends('layouts.master')
-@section('title', 'Dosen')
+@section('title', 'Mitra')
 
 @section('content')
-
     <div class="card">
         <div class="card-header">
-            <!-- <h3 class="card-title">Tabel Daftar Dosen</h3> -->
+
             {{-- Button Tambah --}}
-            <a href="{{ url('/dosens/create') }}" class='btn btn-primary'>Tambah Dosen</a>
+            <a href="{{ url('/mitras/create') }}" class='btn btn-primary'>Tambah Mitra</a>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -21,61 +20,45 @@
         </div>
 
         <div class="card-body">
-            {{-- Tampilkan Pesan --}}
-            @if (session()->has('pesan'))
-                <div class='alert alert-success'>
-                    {{ session()->get('pesan') }}
-                </div>
-            @endif
 
             {{-- Tabel Data --}}
             <table id="example1" class="table table-bordered table-striped">
 
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Kode Dosen</th>
-                        <th>Nama Dosen</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-
                 <tbody>
-                    @foreach ($dosens as $data)
-                        <tr>
-                            <td>{{ $data->id }}</td>
-                            <td>{{ $data->kode_dosen }}</td>
-                            <td>{{ $data->nama_dosen }}</td>
-                            <td>
-                                {{-- Button Tampil --}}
-                                <a href="{{ url('dosens/' . $data->id) }}" class="btn btn-block btn-primary">Tampil</a>
-
-                                {{-- Button Ubah --}}
-                                <a href="{{ route('dosens.edit', ['dosen' => $data->id]) }}"
-                                    class="btn btn-block btn-warning">Ubah</a>
-
-                                {{-- Button Hapus --}}
-                                <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                    data-namaDosen="{{ $data->nama_dosen }}" data-toggle="modal"
-                                    data-target="#modal-sm">Hapus</button>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-
-                <tfoot>
                     <tr>
-                        <th>ID</th>
-                        <th>Kode Dosen</th>
-                        <th>Nama Dosen</th>
-                        <th>Aksi</th>
+                        <td>ID</td>
+                        <td>{{ $mitra->id }}</td>
                     </tr>
-                </tfoot>
+
+                    <tr>
+                        <td>Nama Mitra</td>
+                        <td>{{ $mitra->nama_mitra }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Tingkat</td>
+                        <td>{{ Status::mitra($mitra->tingkat) }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Aksi</td>
+                        <td>
+                            {{-- Button Ubah --}}
+                            <a href="{{ route('mitras.edit', ['mitra' => $mitra->id]) }}"
+                                class="btn btn-md btn-primary">Ubah</a>
+
+                            {{-- Button Hapus --}}
+                            <button class="btn btn-md btn-danger btn-hapus" data-id="{{ $mitra->id }}"
+                                data-toggle="modal" data-target="#modal-sm"
+                                data-namaMitra="{{ $mitra->nama_mitra }}">Hapus</button>
+                        </td>
+                    </tr>
+
+                </tbody>
 
             </table>
 
         </div>
-
     </div>
 
     {{-- Modal Layout --}}
@@ -92,7 +75,7 @@
                         </button>
                     </div>
                     <div class="modal-body" id="mb-konfirmasi">
-                        {{-- <p>Apakah anda yakin ingin menghapus data ini?</p> --}}
+
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
@@ -106,13 +89,13 @@
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <script>
         // jika tombol hapus ditekan, generate alamat URL untuk proses hapus
-        // id disini adalah id dosen
+        // id disini adalah id mitra
         $('.btn-hapus').click(function() {
             let id = $(this).attr('data-id');
-            $('#formDelete').attr('action', '/dosens/' + id);
+            $('#formDelete').attr('action', '/mitras/' + id);
 
-            let namaDosen = $(this).attr('data-namaDosen');
-            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus dosen " + namaDosen + " ?")
+            let namaMitra = $(this).attr('data-namaMitra');
+            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus mitra " + namaMitra + " ?")
         })
 
         // jika tombol Ya, hapus ditekan, submit form hapus

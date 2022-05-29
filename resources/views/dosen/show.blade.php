@@ -31,46 +31,36 @@
             {{-- Tabel Data --}}
             <table id="example1" class="table table-bordered table-striped">
 
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Kode Dosen</th>
-                        <th>Nama Dosen</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-
                 <tbody>
-                    @foreach ($dosens as $data)
-                        <tr>
-                            <td>{{ $data->id }}</td>
-                            <td>{{ $data->kode_dosen }}</td>
-                            <td>{{ $data->nama_dosen }}</td>
-                            <td>
-                                {{-- Button Tampil --}}
-                                <a href="{{ url('dosens/' . $data->id) }}" class="btn btn-block btn-primary">Tampil</a>
-
-                                {{-- Button Ubah --}}
-                                <a href="{{ route('dosens.edit', ['dosen' => $data->id]) }}"
-                                    class="btn btn-block btn-warning">Ubah</a>
-
-                                {{-- Button Hapus --}}
-                                <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                    data-namaDosen="{{ $data->nama_dosen }}" data-toggle="modal"
-                                    data-target="#modal-sm">Hapus</button>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-
-                <tfoot>
                     <tr>
-                        <th>ID</th>
-                        <th>Kode Dosen</th>
-                        <th>Nama Dosen</th>
-                        <th>Aksi</th>
+                        <td>ID</td>
+                        <td>{{ $dosen->id }}</td>
                     </tr>
-                </tfoot>
+
+                    <tr>
+                        <td>Kode Dosen</td>
+                        <td>{{ $dosen->kode_dosen }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Nama Dosen</td>
+                        <td>{{ $dosen->nama_dosen }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Aksi</td>
+                        <td>
+                            {{-- Button Ubah --}}
+                            <a href="{{ route('dosens.edit', ['dosen' => $dosen->id]) }}"
+                                class="btn btn-md btn-warning">Ubah</a>
+
+                            {{-- Button Hapus --}}
+                            <button class="btn btn-md btn-danger btn-hapus" data-id="{{ $dosen->id }}"
+                                data-namaDosen="{{ $dosen->nama_dosen }}" data-toggle="modal"
+                                data-target="#modal-sm">Hapus</button>
+                        </td>
+                    </tr>
+                </tbody>
 
             </table>
 

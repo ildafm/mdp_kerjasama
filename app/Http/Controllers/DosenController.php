@@ -62,6 +62,7 @@ class DosenController extends Controller
     public function show(Dosen $dosen)
     {
         //
+        return view('dosen.show')->with('dosen', $dosen);
     }
 
     /**

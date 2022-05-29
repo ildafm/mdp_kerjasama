@@ -59,6 +59,7 @@ class MitraController extends Controller
     public function show(Mitra $mitra)
     {
         //
+        return view('mitra.show')->with('mitra', $mitra);
     }
 
     /**

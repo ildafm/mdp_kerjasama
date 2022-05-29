@@ -61,6 +61,7 @@ class UnitController extends Controller
     public function show(Unit $unit)
     {
         //
+        return view('unit.show')->with('unit', $unit);
     }
 
     /**

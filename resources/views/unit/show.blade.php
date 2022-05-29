@@ -1,13 +1,12 @@
 @extends('layouts.master')
-@section('title', 'Dosen')
+@section('title', 'Unit')
 
 @section('content')
-
     <div class="card">
         <div class="card-header">
-            <!-- <h3 class="card-title">Tabel Daftar Dosen</h3> -->
+
             {{-- Button Tambah --}}
-            <a href="{{ url('/dosens/create') }}" class='btn btn-primary'>Tambah Dosen</a>
+            <a href="{{ url('/units/create') }}" class='btn btn-primary'>Tambah Unit</a>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -21,57 +20,35 @@
         </div>
 
         <div class="card-body">
-            {{-- Tampilkan Pesan --}}
-            @if (session()->has('pesan'))
-                <div class='alert alert-success'>
-                    {{ session()->get('pesan') }}
-                </div>
-            @endif
 
             {{-- Tabel Data --}}
             <table id="example1" class="table table-bordered table-striped">
 
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Kode Dosen</th>
-                        <th>Nama Dosen</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-
                 <tbody>
-                    @foreach ($dosens as $data)
-                        <tr>
-                            <td>{{ $data->id }}</td>
-                            <td>{{ $data->kode_dosen }}</td>
-                            <td>{{ $data->nama_dosen }}</td>
-                            <td>
-                                {{-- Button Tampil --}}
-                                <a href="{{ url('dosens/' . $data->id) }}" class="btn btn-block btn-primary">Tampil</a>
-
-                                {{-- Button Ubah --}}
-                                <a href="{{ route('dosens.edit', ['dosen' => $data->id]) }}"
-                                    class="btn btn-block btn-warning">Ubah</a>
-
-                                {{-- Button Hapus --}}
-                                <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                    data-namaDosen="{{ $data->nama_dosen }}" data-toggle="modal"
-                                    data-target="#modal-sm">Hapus</button>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-
-                <tfoot>
                     <tr>
-                        <th>ID</th>
-                        <th>Kode Dosen</th>
-                        <th>Nama Dosen</th>
-                        <th>Aksi</th>
+                        <td>ID</td>
+                        <td>{{ $unit->id }}</td>
                     </tr>
-                </tfoot>
 
+                    <tr>
+                        <td>Nama Unit</td>
+                        <td>{{ $unit->nama_unit }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Aksi</td>
+                        <td>
+                            {{-- Button Ubah --}}
+                            <a href="{{ route('units.edit', ['unit' => $unit->id]) }}"
+                                class="btn btn-md btn-warning">Ubah</a>
+
+                            {{-- Button Hapus --}}
+                            <button class="btn btn-md btn-danger btn-hapus" data-id="{{ $unit->id }}"
+                                data-namaUnit="{{ $unit->nama_unit }}" data-toggle="modal"
+                                data-target="#modal-sm">Hapus</button>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
 
         </div>
@@ -106,13 +83,13 @@
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <script>
         // jika tombol hapus ditekan, generate alamat URL untuk proses hapus
-        // id disini adalah id dosen
+        // id disini adalah id unit
         $('.btn-hapus').click(function() {
             let id = $(this).attr('data-id');
-            $('#formDelete').attr('action', '/dosens/' + id);
+            $('#formDelete').attr('action', '/units/' + id);
 
-            let namaDosen = $(this).attr('data-namaDosen');
-            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus dosen " + namaDosen + " ?")
+            let namaUnit = $(this).attr('data-namaUnit');
+            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus unit " + namaUnit + " ?")
         })
 
         // jika tombol Ya, hapus ditekan, submit form hapus
@@ -120,5 +97,4 @@
             $('#formDelete').submit();
         })
     </script>
-
 @endsection

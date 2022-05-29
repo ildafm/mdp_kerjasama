@@ -1,13 +1,13 @@
 @extends('layouts.master')
-@section('title', 'Dosen')
+@section('title', 'Kategori')
 
 @section('content')
 
     <div class="card">
         <div class="card-header">
-            <!-- <h3 class="card-title">Tabel Daftar Dosen</h3> -->
-            {{-- Button Tambah --}}
-            <a href="{{ url('/dosens/create') }}" class='btn btn-primary'>Tambah Dosen</a>
+
+            {{-- Button tambah --}}
+            <a href="{{ url('/kategoris/create') }}" class='btn btn-primary'>Tambah Kategori</a>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -21,56 +21,36 @@
         </div>
 
         <div class="card-body">
-            {{-- Tampilkan Pesan --}}
-            @if (session()->has('pesan'))
-                <div class='alert alert-success'>
-                    {{ session()->get('pesan') }}
-                </div>
-            @endif
 
             {{-- Tabel Data --}}
             <table id="example1" class="table table-bordered table-striped">
 
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Kode Dosen</th>
-                        <th>Nama Dosen</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-
                 <tbody>
-                    @foreach ($dosens as $data)
-                        <tr>
-                            <td>{{ $data->id }}</td>
-                            <td>{{ $data->kode_dosen }}</td>
-                            <td>{{ $data->nama_dosen }}</td>
-                            <td>
-                                {{-- Button Tampil --}}
-                                <a href="{{ url('dosens/' . $data->id) }}" class="btn btn-block btn-primary">Tampil</a>
-
-                                {{-- Button Ubah --}}
-                                <a href="{{ route('dosens.edit', ['dosen' => $data->id]) }}"
-                                    class="btn btn-block btn-warning">Ubah</a>
-
-                                {{-- Button Hapus --}}
-                                <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                    data-namaDosen="{{ $data->nama_dosen }}" data-toggle="modal"
-                                    data-target="#modal-sm">Hapus</button>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-
-                <tfoot>
                     <tr>
-                        <th>ID</th>
-                        <th>Kode Dosen</th>
-                        <th>Nama Dosen</th>
-                        <th>Aksi</th>
+                        <td>ID</td>
+                        <td>{{ $kategori->id }}</td>
                     </tr>
-                </tfoot>
+
+                    <tr>
+                        <td>Nama Kategori</td>
+                        <td>{{ $kategori->nama_kategori }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Aksi</td>
+                        <td>
+                            {{-- Button Ubah --}}
+                            <a href="{{ route('kategoris.edit', ['kategori' => $kategori->id]) }}"
+                                class="btn btn-md btn-warning">Ubah</a>
+
+                            {{-- Button Hapus --}}
+                            <button class="btn btn-md btn-danger btn-hapus" data-id="{{ $kategori->id }}"
+                                data-namaKategori="{{ $kategori->nama_kategori }}" data-toggle="modal"
+                                data-target="#modal-sm">Hapus</button>
+                        </td>
+                    </tr>
+
+                </tbody>
 
             </table>
 
@@ -106,13 +86,13 @@
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <script>
         // jika tombol hapus ditekan, generate alamat URL untuk proses hapus
-        // id disini adalah id dosen
+        // id disini adalah id kategori
         $('.btn-hapus').click(function() {
             let id = $(this).attr('data-id');
-            $('#formDelete').attr('action', '/dosens/' + id);
+            $('#formDelete').attr('action', '/kategoris/' + id);
 
-            let namaDosen = $(this).attr('data-namaDosen');
-            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus dosen " + namaDosen + " ?")
+            let namaKategori = $(this).attr('data-namaKategori');
+            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus kategori " + namaKategori + " ?")
         })
 
         // jika tombol Ya, hapus ditekan, submit form hapus

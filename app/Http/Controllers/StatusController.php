@@ -62,6 +62,7 @@ class StatusController extends Controller
     public function show(Status $status)
     {
         //
+        return view('status.show')->with('status', $status);
     }
 
     /**

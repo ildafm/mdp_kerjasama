@@ -61,6 +61,7 @@ class KategoriController extends Controller
     public function show(Kategori $kategori)
     {
         //
+        return view('kategori.show')->with('kategori', $kategori);
     }
 
     /**

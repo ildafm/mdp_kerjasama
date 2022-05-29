@@ -32,7 +32,7 @@
 
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>ID</th>
                         <th>Nama Usulan</th>
                         <th>Bentuk Kerja Sama</th>
                         <th>Rencana Kegiatan</th>
@@ -56,13 +56,17 @@
                             <td>{{ $data->dosen->nama_dosen }}</td>
                             <td>{{ $data->unit->nama_unit }}</td>
                             <td>
+                                {{-- BUtton Tampil --}}
+                                <a href="{{ url('usulans/' . $data->id) }}" class="btn btn-block btn-primary">Tampil</a>
+
                                 {{-- Button Ubah --}}
                                 <a href="{{ route('usulans.edit', ['usulan' => $data->id]) }}"
-                                    class="btn btn-block btn-primary">Ubah</a>
+                                    class="btn btn-block btn-warning">Ubah</a>
 
                                 {{-- Button Hapus --}}
                                 <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                    data-toggle="modal" data-target="#modal-sm">Hapus</button>
+                                    data-namaUsulan="{{ $data->nama_usulan }}" data-toggle="modal"
+                                    data-target="#modal-sm">Hapus</button>
                             </td>
                         </tr>
                     @endforeach
@@ -70,7 +74,7 @@
 
                 <tfoot>
                     <tr>
-                        <th>Id</th>
+                        <th>ID</th>
                         <th>Nama Usulan</th>
                         <th>Bentuk Kerja Sama</th>
                         <th>Rencana Kegiatan</th>
@@ -101,8 +105,8 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <p>Apakah anda yakin ingin menghapus data ini?</p>
+                    <div class="modal-body" id="mb-konfirmasi">
+                        {{-- <p>Apakah anda yakin ingin menghapus data ini?</p> --}}
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
@@ -120,6 +124,9 @@
         $('.btn-hapus').click(function() {
             let id = $(this).attr('data-id');
             $('#formDelete').attr('action', '/usulans/' + id);
+
+            let namaUsulan = $(this).attr('data-namaUsulan');
+            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus usulan " + namaUsulan + " ?")
         })
 
         // jika tombol Ya, hapus ditekan, submit form hapus

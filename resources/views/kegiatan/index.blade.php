@@ -33,7 +33,7 @@
 
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>ID</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
                         <th>Bentuk Kegiatan</th>
@@ -59,9 +59,13 @@
                             <td>{{ $data->kerjasama->nama_kerja_sama }}</td>
                             <td>{{ $data->dosen->nama_dosen }}</td>
                             <td>
+                                {{-- Button Tampil --}}
+                                <a href="{{ url('kegiatans/' . $data->id) }}"
+                                    class="btn btn-block btn-primary">Tampil</a>
+
                                 {{-- Button Ubah --}}
                                 <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
-                                    class="btn btn-block btn-primary">Ubah</a>
+                                    class="btn btn-block btn-warning">Ubah</a>
 
                                 {{-- Button Hapus --}}
                                 <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
@@ -73,7 +77,7 @@
 
                 <tfoot>
                     <tr>
-                        <th>Id</th>
+                        <th>ID</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
                         <th>Bentuk Kegiatan</th>
@@ -104,8 +108,8 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <p>Apakah anda yakin ingin menghapus data ini?</p>
+                    <div class="modal-body" id="mb-konfirmasi">
+                        {{-- <p>Apakah anda yakin ingin menghapus data ini?</p> --}}
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
@@ -124,6 +128,9 @@
         $('.btn-hapus').click(function() {
             let id = $(this).attr('data-id');
             $('#formDelete').attr('action', '/kegiatans/' + id);
+
+            let dataID = $(this).attr('data-id')
+            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus kegiatan dengan id : " + dataID + " ?")
         })
 
         // jika tombol Ya, hapus ditekan, submit form hapus

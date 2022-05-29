@@ -6,3 +6,6 @@
 -> posisi logout dan ikon logout
 -> Menambahkan komentar (Sedikit)
 -> Ubah Pesan eror untuk login
+-> Memperbaiki Modal (Sedikit)
+-> Menambahkan Button Tampil dan menu Show (Sedikit)
+-> Modal Status Yang Hanya Mengambil Satu Kata Saja (Selesai)

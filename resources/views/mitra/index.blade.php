@@ -32,7 +32,7 @@
 
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>ID</th>
                         <th>Nama Mitra</th>
                         <th>Tingkat</th>
                         <th>Aksi</th>
@@ -48,13 +48,17 @@
                                 {{ Status::mitra($data->tingkat) }}
                             </td>
                             <td>
+                                {{-- Button Tampil --}}
+                                <a href="{{ url('mitras/' . $data->id) }}" class="btn btn-block btn-primary">Tampil</a>
+
                                 {{-- Button Ubah --}}
                                 <a href="{{ route('mitras.edit', ['mitra' => $data->id]) }}"
-                                    class="btn btn-block btn-primary">Ubah</a>
+                                    class="btn btn-block btn-warning">Ubah</a>
 
                                 {{-- Button Hapus --}}
                                 <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                    data-toggle="modal" data-target="#modal-sm">Hapus</button>
+                                    data-toggle="modal" data-target="#modal-sm"
+                                    data-namaMitra="{{ $data->nama_mitra }}">Hapus</button>
                             </td>
                         </tr>
                     @endforeach
@@ -62,7 +66,7 @@
 
                 <tfoot>
                     <tr>
-                        <th>Id</th>
+                        <th>ID</th>
                         <th>Nama Mitra</th>
                         <th>Tingkat</th>
                         <th>Aksi</th>
@@ -87,8 +91,8 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <p>Apakah anda yakin ingin menghapus data ini?</p>
+                    <div class="modal-body" id="mb-konfirmasi">
+
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
@@ -106,6 +110,9 @@
         $('.btn-hapus').click(function() {
             let id = $(this).attr('data-id');
             $('#formDelete').attr('action', '/mitras/' + id);
+
+            let namaMitra = $(this).attr('data-namaMitra');
+            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus mitra " + namaMitra + " ?")
         })
 
         // jika tombol Ya, hapus ditekan, submit form hapus

@@ -84,6 +84,7 @@ class UsulanController extends Controller
     public function show(Usulan $usulan)
     {
         //
+        return view('usulan.show')->with('usulan', $usulan);
     }
 
     /**

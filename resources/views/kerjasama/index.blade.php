@@ -6,7 +6,7 @@
         <div class="card-header">
             <!-- <h3 class="card-title">Tabel Daftar Kerja Sama</h3> -->
             {{-- Button Tambah --}}
-            <a href="{{ url('/kerjasamas/create') }}" class='btn btn-primary'>Tambah Kerjasama</a>
+            <a href="{{ url('/kerjasamas/create') }}" class='btn btn-primary'>Tambah Kerja Sama</a>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -32,7 +32,7 @@
 
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>ID</th>
                         <th>Nama Kerja Sama</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
@@ -54,13 +54,18 @@
                             <td>{{ $data->kategori->nama_kategori }}</td>
                             <td>{{ $data->status->nama_status }}</td>
                             <td>
+                                {{-- Button Tampil --}}
+                                <a href="{{ url('kerjasamas/' . $data->id) }}"
+                                    class="btn btn-block btn-primary">Tampil</a>
+
                                 {{-- Button Ubah --}}
                                 <a href="{{ route('kerjasamas.edit', ['kerjasama' => $data->id]) }}"
-                                    class="btn btn-block btn-primary">Ubah</a>
+                                    class="btn btn-block btn-warning">Ubah</a>
 
                                 {{-- Button Hapus --}}
                                 <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                    data-toggle="modal" data-target="#modal-sm">Hapus</button>
+                                    data-namaKerjasama="{{ $data->nama_kerja_sama }}" data-toggle="modal"
+                                    data-target="#modal-sm">Hapus</button>
                             </td>
                         </tr>
                     @endforeach
@@ -68,7 +73,7 @@
 
                 <tfoot>
                     <tr>
-                        <th>Id</th>
+                        <th>ID</th>
                         <th>Nama Kerja Sama</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
@@ -98,8 +103,8 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <p>Apakah anda yakin ingin menghapus data ini?</p>
+                    <div class="modal-body" id="mb-konfirmasi">
+                        {{-- <p>Apakah anda yakin ingin menghapus data ini?</p> --}}
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
@@ -117,6 +122,9 @@
         $('.btn-hapus').click(function() {
             let id = $(this).attr('data-id');
             $('#formDelete').attr('action', '/kerjasamas/' + id);
+
+            let namaKerjasama = $(this).attr('data-namaKerjasama');
+            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus kerja sama " + namaKerjasama + " ?")
         })
 
         // jika tombol Ya, hapus ditekan, submit form hapus
