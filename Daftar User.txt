@@ -3,3 +3,11 @@ Daftar User yang sudah terdaftar dan bisa dipakai untuk sementara
 Name : Admin
 Email : admin@gmail.com
 Password : admin123
+
+Name : Admin2
+Email : admin2@gmail.com
+Password : admin123
+
+Name : Dosen
+Email : dosen@gmail.com
+Password : dosen123

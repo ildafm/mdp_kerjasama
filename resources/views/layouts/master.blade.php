@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css?v=3.2.0') }}">
+
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -181,13 +182,15 @@
                         <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
                             alt="User Image">
                     </div>
+
                     <div class="info">
+
                         <a href="#" class="d-block">{{ Auth::user()->name }}</a>
 
                         {{-- logout button --}}
                         <a href="{{ route('logout') }}" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
-                            <i class="nav-icon fas fa-right-from-bracket"></i>
+                            {{-- <i class="nav-icon fas fa-arrow-right-from-bracket"></i> --}}
                             Logout
                         </a>
                         {{-- logout form --}}

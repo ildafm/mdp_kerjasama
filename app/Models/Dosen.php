@@ -17,5 +17,5 @@ class Dosen extends Model
         return $this->hasMany(Usulan::class);
     }
 
-    protected $fillable = ['kode_dosen', 'nama_dosen'];
+    protected $fillable = ['nama_dosen'];
 }

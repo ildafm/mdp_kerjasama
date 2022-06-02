@@ -85,25 +85,13 @@ class MitraController extends Controller
     public function update(Request $request, Mitra $mitra)
     {
         //
-
-        // dump($mitra);
-        $this->validate($request, [
+        $validateData = $request->validate([
             'nama_mitra' => 'required',
             'tingkat' => 'required'
         ]);
 
-        $mitra = Mitra::findOrFail($mitra->id);
+        Mitra::where('id', $mitra->id)->update($validateData);
 
-        $mitra->update([
-            'nama_mitra' => $request->nama_mitra,
-            'tingkat' => $request->tingkat
-        ]);
-
-        // $mitra->nama_mitra = $validateData['nama_mitra'];
-        // $mitra->tingkat = $validateData['tingkat'];
-
-        // $mitra->save();
-         
         $request->session()->flash('pesan', 'Perubahan data berhasil');
         return redirect()->route('mitras.index');
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Dosen;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class DosenController extends Controller
 {
@@ -88,16 +89,10 @@ class DosenController extends Controller
     {
         //
         $validateData = $request->validate([
-            'kode_dosen' => 'required | max:6 | unique:dosens',
             'nama_dosen' => 'required'
         ]);
 
-        $dosen = Dosen::findOrFail($dosen->id);
-        $dosen->update([
-            'kode_dosen' => $request->kode_dosen,
-            'nama_dosen' => $request->nama_dosen,
-        ]);
-
+        Dosen::where('id', $dosen->id)->update($validateData);
         $request->session()->flash('pesan', 'Perubahan data berhasil');
         return redirect()->route('dosens.index');
     }

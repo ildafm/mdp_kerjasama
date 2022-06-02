@@ -84,7 +84,8 @@ class KerjasamaController extends Controller
     public function show(Kerjasama $kerjasama)
     {
         //
-        return view('kerjasama.show')->with('kerjasama', $kerjasama);
+        return view('kerjasama.show')
+            ->with('kerjasama', $kerjasama);
     }
 
     /**

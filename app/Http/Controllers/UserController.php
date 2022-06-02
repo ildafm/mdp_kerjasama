@@ -47,7 +47,7 @@ class UserController extends Controller
         //
         $validateData = $request->validate([
             'name' => 'required | string',
-            'email' => 'required | unique:users | email | max:255 | string',
+            'email' => 'required | unique:users| email | max:255 | string',
             'password' => 'required | min:8 | confirmed | string',
             'level' => 'required'
         ]);
@@ -80,9 +80,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user) //User $user = $id
     {
         //
+        return view('user.edit')->with('user', $user);
     }
 
     /**
@@ -92,9 +93,26 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user) //User $user = $id
     {
         //
+        $validateData = $request->validate([
+            'name' => 'required | string',
+            'email' => 'required | unique:users| email | max:255 | string',
+            'password' => 'required | min:8 | confirmed | string',
+            'level' => 'required'
+        ]);
+
+        $user = User::findOrFail($user->id);
+        $user->update([
+            'nama_mitra' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password = Hash::make($validateData['password']),
+            'level' => $request->level
+        ]);
+
+        $request->session()->flash('pesan', 'Perubahan data berhasil');
+        return redirect()->route('users.index');
     }
 
     /**
@@ -103,8 +121,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user) //User $user = $id
     {
         //
+        $user->delete();
+        return redirect()->route('users.index')->with('pesan', "Hapus data $user->name berhasil");
     }
 }

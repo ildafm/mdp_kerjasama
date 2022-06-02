@@ -18,6 +18,7 @@
             </div>
         </div>
         <div class="card-body">
+            {{-- Tampilkan Pesan --}}
             @if (session()->has('pesan'))
                 <div class='alert alert-success'>
                     {{ session()->get('pesan') }}
@@ -26,7 +27,7 @@
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>ID</th>
                         <th>Nama Pengguna</th>
                         <th>Email</th>
                         <th>Level</th>
@@ -40,25 +41,22 @@
                             <td>{{ $data->name }}</td>
                             <td>{{ $data->email }}</td>
                             <td>{{ $data->level }}</td>
-                            {{-- <td>
+                            <td>
+                                {{-- Button Edit --}}
                                 <a href="{{ route('users.edit', ['user' => $data->id]) }}"
-                                    class="btn btn-block btn-primary">Ubah</a>
+                                    class="btn btn-block btn-warning">Ubah</a>
 
-                                <form method="POST" action="{{ route('users.destroy', ['user' => $data->id]) }}">
-                                    {{ csrf_field() }}
-                                    {{ method_field('DELETE') }}
-
-                                    <div class="form-group">
-                                        <input type="submit" class="btn btn-danger btn-block delete-user" value="Hapus">
-                                    </div>
-                                </form>
-                            </td> --}}
+                                {{-- Button Hapus --}}
+                                <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                    data-toggle="modal" data-target="#modal-sm"
+                                    data-namaUser="{{ $data->name }}">Hapus</button>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>Id</th>
+                        <th>ID</th>
                         <th>Nama Pengguna</th>
                         <th>Email</th>
                         <th>Level</th>
@@ -69,4 +67,48 @@
 
         </div>
     </div>
+
+    {{-- Modal Layout --}}
+    <div class="modal fade" id="modal-sm">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <form action="" method="POST" id="formDelete">
+                    @method('DELETE')
+                    @csrf
+                    <div class="modal-header">
+                        <h4 class="modal-title">Peringatan !!!</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="mb-konfirmasi">
+
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
+                        <button type="submit" class="btn btn-primary">Iya</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+    <script>
+        // jika tombol hapus ditekan, generate alamat URL untuk proses hapus
+        // id disini adalah id user
+        $('.btn-hapus').click(function() {
+            let id = $(this).attr('data-id');
+            $('#formDelete').attr('action', '/users/' + id);
+
+            let namaUser = $(this).attr('data-namaUser');
+            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus data " + namaUser + " ?")
+        })
+
+        // jika tombol Ya, hapus ditekan, submit form hapus
+        $('#formDelete [type="submit"]').click(function() {
+            $('#formDelete').submit();
+        })
+    </script>
+
 @endsection

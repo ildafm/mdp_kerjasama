@@ -73,6 +73,14 @@
                                 data-target="#modal-sm">Hapus</button>
                         </td>
                     </tr>
+
+                    <tr>
+                        <td>Bukti Kerjasama</td>
+                        <td>
+                            {{-- Button tambah bukti --}}
+                            <button class="btn btn-primary btn-md">Tambah</button>
+                        </td>
+                    </tr>
                 </tbody>
 
             </table>

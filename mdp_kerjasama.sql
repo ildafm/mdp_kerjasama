@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 27, 2022 at 04:34 AM
+-- Generation Time: Jun 02, 2022 at 06:33 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -100,12 +100,13 @@ CREATE TABLE `dosens` (
 --
 
 INSERT INTO `dosens` (`id`, `kode_dosen`, `nama_dosen`, `created_at`, `updated_at`) VALUES
-(1, 'D00001', 'Udin', '2022-04-22 07:40:52', '2022-04-27 02:40:12'),
+(1, 'D00001', 'Deka', '2022-04-22 07:40:52', '2022-05-31 03:19:36'),
 (2, 'D00002', 'Aris', '2022-04-22 00:41:01', '2022-04-22 07:43:13'),
 (3, 'D00003', 'Adi', '2022-04-22 00:42:17', '2022-04-22 00:42:17'),
 (4, 'D00004', 'Ada', '2022-04-22 00:43:46', '2022-04-22 00:43:46'),
 (5, 'D00005', 'Lily', '2022-04-22 00:45:45', '2022-04-22 00:45:45'),
-(9, 'D00008', 'Nila', '2022-04-22 08:23:09', '2022-04-22 08:23:09');
+(9, 'D00008', 'Nila', '2022-04-22 08:23:09', '2022-04-22 08:23:09'),
+(10, 'D00007', 'Mas Andre', '2022-05-29 02:02:47', '2022-05-29 02:02:47');
 
 -- --------------------------------------------------------
 
@@ -244,7 +245,7 @@ INSERT INTO `mitras` (`id`, `nama_mitra`, `tingkat`, `created_at`, `updated_at`)
 (2, 'Universitas Palembang', 'N', '2022-04-21 08:19:25', '2022-04-24 08:00:33'),
 (3, 'Universitas Indonesia Sejahtera', 'N', '2022-04-21 08:19:25', '2022-04-24 07:26:30'),
 (4, 'Halaman Berkah', 'W', '2022-04-21 08:19:25', '2022-04-24 07:26:57'),
-(10, 'Vietnam University', 'I', '2022-04-21 01:27:59', '2022-04-21 01:27:59');
+(10, 'Vietnam University Q1', 'I', '2022-04-21 01:27:59', '2022-05-29 03:43:36');
 
 -- --------------------------------------------------------
 
@@ -349,8 +350,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `level`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Muhammad Fadli', 'ildafm4000@mhs.mdp.ac.id', 'A', NULL, '$2y$10$PTMFcAj0xFGrtM32yUvlou.pS.4KAfnu1mwP/C9RIDmx0T.kxTokS', NULL, '2022-05-12 17:25:16', '2022-05-12 17:25:16'),
-(2, 'Admin', 'admin@gmail.com', 'A', NULL, '$2y$10$QJCNAlJ2EBXjxsXYsgZIZu6afA5AJGSFlNNiAv5uBqitIGw.DbTdS', NULL, '2022-05-27 01:55:39', '2022-05-27 01:55:39');
+(2, 'Admin', 'admin@gmail.com', 'A', NULL, '$2y$10$QJCNAlJ2EBXjxsXYsgZIZu6afA5AJGSFlNNiAv5uBqitIGw.DbTdS', NULL, '2022-05-27 01:55:39', '2022-05-27 01:55:39'),
+(3, 'Admin2', 'admin2@gmail.com', 'A', NULL, '$2y$10$xMOvO5lWLyDJfl5j0ai1u.ZsIu4W2BSG0T2jNBNRv.KdZ7dNa6mvu', NULL, '2022-05-29 02:54:17', '2022-05-29 02:54:17'),
+(4, 'Dosen', 'dosen@gmail.com', 'D', NULL, '$2y$10$99Q3pK58iKDaPS8jsBxaM.7E895ooZLKKo0251usp2y//8xlX0p9W', NULL, '2022-05-29 02:59:11', '2022-05-29 02:59:11');
 
 -- --------------------------------------------------------
 
@@ -524,7 +526,7 @@ ALTER TABLE `bukti_kerjasamas`
 -- AUTO_INCREMENT for table `dosens`
 --
 ALTER TABLE `dosens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `kategoris`
@@ -566,7 +568,7 @@ ALTER TABLE `units`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `usulans`
