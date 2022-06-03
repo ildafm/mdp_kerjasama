@@ -13,6 +13,8 @@ use App\Http\Controllers\UsulanController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\UserController;
 
+use App\Http\Controllers\BuktiKerjasamaController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,6 +41,8 @@ Route::resource('usulans', UsulanController::class);
 Route::resource('statuses', StatusController::class);
 Route::resource('kategoris', KategoriController::class);
 Route::resource('users', UserController::class);
+
+Route::resource('buktiKerjasamas', BuktiKerjasamaController::class);
 
 Auth::routes();
 

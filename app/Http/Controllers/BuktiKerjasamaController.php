@@ -15,6 +15,8 @@ class BuktiKerjasamaController extends Controller
     public function index()
     {
         //
+        $buktiKerjasama = BuktiKerjasama::all();
+        return view('buktiKerjasama.create')->with('buktiKerjasama', $buktiKerjasama);
     }
 
     /**
@@ -36,6 +38,25 @@ class BuktiKerjasamaController extends Controller
     public function store(Request $request)
     {
         //
+        // 1. validasi input data kosong
+        $validateData = $request->validate([
+            'foto' => 'required | file | image | max:50000'
+        ]);
+
+        //ambil extensi //png / jpg / gif
+        $ext = $request->foto->getClientOriginalExtension();
+        //ubah nama file foto
+        $rename_file = 'DocumentBuktiKerjasama-'.time().".".$ext; //contoh file : foto-waktu.jpg
+        //upload foler ke dalam folder public
+        $request->foto->storeAs('public/kerjasama', $rename_file); //bisa diletakan difolder lain dengan store ke public/(folderlain)
+        
+
+        // 2. simpan foto
+        $buktiKerjasama = new BuktiKerjasama();
+        $buktiKerjasama->nama_bukti_kerjasama = $rename_file;
+
+        $buktiKerjasama->save(); // simpan ke tabel bukti_kerjasama
+        return redirect()->route('kerjasama.index'); // redirect ke kerjasama.index
     }
 
     /**

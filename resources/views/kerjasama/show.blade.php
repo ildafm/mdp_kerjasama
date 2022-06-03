@@ -78,7 +78,12 @@
                         <td>Bukti Kerjasama</td>
                         <td>
                             {{-- Button tambah bukti --}}
-                            <button class="btn btn-primary btn-md">Tambah</button>
+                            {{-- <button class="btn btn-primary btn-md">Tambah Bukti</button> --}}
+
+                            {{-- <a href="{{ route('buktiKerjasama.create', ['kerjasama' => $kerjasama->id]) }}"
+                                class="btn btn-md btn-primary">Tambah Bukti</a> --}}
+                            <a class="btn btn-primary btn-md" href="{{ url('/buktiKerjasamas') }}">Tambah
+                                Bukti</a>
                         </td>
                     </tr>
                 </tbody>
