@@ -1,7 +1,7 @@
 -> Masalah register/tambahUser
 -> Masalah reset password
 -> Masalah penghapusan data mitra dengan modal (Selesai)
--> Tabel-tabel bukti belum terpakai
+-> Tabel-tabel bukti belum terpakai (Sedang Proses)
 -> Foto user
 -> posisi logout dan ikon logout
 -> Menambahkan komentar (Sedikit)
