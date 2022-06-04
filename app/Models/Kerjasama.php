@@ -25,5 +25,9 @@ class Kerjasama extends Model
         return $this->hasMany(Kegiatan::class);
     }
 
+    public function buktiKerjasama(){
+        return $this->hasMany(BuktiKerjasama::class);
+    }
+
     protected $fillable = ['nama_kerja_sama', 'tanggal_mulai', 'tanggal_sampai', 'mitra_id', 'kategori_id', 'status_id'];
 }

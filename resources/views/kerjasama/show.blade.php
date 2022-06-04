@@ -1,12 +1,12 @@
 @extends('layouts.master')
-@section('title', 'Kerja Sama')
+@section('title', 'Kerjasama')
 
 @section('content')
     <div class="card">
         <div class="card-header">
             <!-- <h3 class="card-title">Tabel Daftar Kerja Sama</h3> -->
             {{-- Button Tambah --}}
-            <a href="{{ url('/kerjasamas/create') }}" class='btn btn-primary'>Tambah Kerja Sama</a>
+            <a href="{{ url('/kerjasamas') }}" class='btn btn-primary'>Kembali</a>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -58,20 +58,6 @@
                     <tr>
                         <td>Status</td>
                         <td>{{ $kerjasama->status->nama_status }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Aksi</td>
-                        <td>
-                            {{-- Button Ubah --}}
-                            <a href="{{ route('kerjasamas.edit', ['kerjasama' => $kerjasama->id]) }}"
-                                class="btn btn-md btn-warning">Ubah</a>
-
-                            {{-- Button Hapus --}}
-                            <button class="btn btn-md btn-danger btn-hapus" data-id="{{ $kerjasama->id }}"
-                                data-namaKerjasama="{{ $kerjasama->nama_kerja_sama }}" data-toggle="modal"
-                                data-target="#modal-sm">Hapus</button>
-                        </td>
                     </tr>
 
                     <tr>

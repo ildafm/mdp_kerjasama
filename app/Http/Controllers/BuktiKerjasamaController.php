@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BuktiKerjasama;
+use App\Models\Kerjasama;
 use Illuminate\Http\Request;
 
 class BuktiKerjasamaController extends Controller
@@ -16,7 +17,10 @@ class BuktiKerjasamaController extends Controller
     {
         //
         $buktiKerjasama = BuktiKerjasama::all();
-        return view('buktiKerjasama.create')->with('buktiKerjasama', $buktiKerjasama);
+        $kerjasama = Kerjasama::all();
+        return view('buktiKerjasama.create')
+            ->with('buktiKerjasama', $buktiKerjasama)
+            ->with('kerjasama', $kerjasama);
     }
 
     /**
@@ -40,20 +44,43 @@ class BuktiKerjasamaController extends Controller
         //
         // 1. validasi input data kosong
         $validateData = $request->validate([
-            'foto' => 'required | file | image | max:50000'
+            'nama_bukti_kerjasama1' => 'required',
+            'foto1' => 'required | file | image | max:50000',
+
+            'nama_bukti_kerjasama2',
+            'foto2' => 'file | image | max:50000',
+            'nama_bukti_kerjasama3',
+            'foto3' => 'file | image | max:50000',
+
+            'kerjasama_id' => 'required',
         ]);
 
         //ambil extensi //png / jpg / gif
-        $ext = $request->foto->getClientOriginalExtension();
+        $ext1 = $request->foto1->getClientOriginalExtension();
+        // $ext2 = $request->foto2->getClientOriginalExtension();
+        // $ext3 = $request->foto3->getClientOriginalExtension();
+
         //ubah nama file foto
-        $rename_file = 'DocumentBuktiKerjasama-'.time().".".$ext; //contoh file : foto-waktu.jpg
+        $rename_file1 = 'DocumentBuktiKerjasama-'.time().".".$ext1; //contoh file : foto-waktu.jpg
+        // $rename_file2 = 'DocumentBuktiKerjasama-'.time().".".$ext2;
+        // $rename_file3 = 'DocumentBuktiKerjasama-'.time().".".$ext3;
+
         //upload foler ke dalam folder public
-        $request->foto->storeAs('public/kerjasama', $rename_file); //bisa diletakan difolder lain dengan store ke public/(folderlain)
+        $request->foto1->storeAs('public/kerjasama', $rename_file1); //bisa diletakan difolder lain dengan store ke public/(folderlain)
+        // $request->foto2->storeAs('public/kerjasama', $rename_file2);
+        // $request->foto3->storeAs('public/kerjasama', $rename_file3);
         
 
         // 2. simpan foto
         $buktiKerjasama = new BuktiKerjasama();
-        $buktiKerjasama->nama_bukti_kerjasama = $rename_file;
+        
+        $buktiKerjasama->nama_bukti_kerjasama = $validateData['nama_bukti_kerjasama1'];
+        $buktiKerjasama->foto = $rename_file1;
+
+        // $buktiKerjasama->nama_bukti_kerjasama = $validateData['nama_bukti_kerjasama2'];
+        // $buktiKerjasama->foto = $rename_file2;
+        // $buktiKerjasama->nama_bukti_kerjasama = $validateData['nama_bukti_kerjasama3'];
+        // $buktiKerjasama->foto = $rename_file3;
 
         $buktiKerjasama->save(); // simpan ke tabel bukti_kerjasama
         return redirect()->route('kerjasama.index'); // redirect ke kerjasama.index

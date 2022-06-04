@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Kerja Sama')
+@section('title', 'Kerjasama')
 
 @section('content')
     <div class="card">
@@ -96,10 +96,9 @@
         <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
-
+        </form>
     </div>
 
 
-    </form>
 
 @endsection
