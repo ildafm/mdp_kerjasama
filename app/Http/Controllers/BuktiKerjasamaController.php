@@ -89,7 +89,8 @@ class BuktiKerjasamaController extends Controller
 
         $buktiKerjasama->save(); // simpan ke tabel bukti_kerjasama
         // return redirect()->route('buktiKerjasama.returnToKerjasama'); // redirect ke kerjasama.index
-        return url('kerjasamas/');
+        // return url('kerjasamas/');
+        return redirect()->route('kerjasamas.index');
     }
 
     /**

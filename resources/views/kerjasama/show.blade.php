@@ -75,7 +75,7 @@
 
                     <tr>
                         @foreach ($buktiKerjasama as $data)
-                            <td><img src="{{ asset('storage/' . $data->foto) }}"
+                            <td><img src="{{ asset('storage/kerjasama/' . $data->foto) }}"
                                     alt="{{ $data->nama_bukti_kerjasama }}"></td>
                         @endforeach
                     </tr>
