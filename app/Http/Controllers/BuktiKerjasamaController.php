@@ -16,11 +16,7 @@ class BuktiKerjasamaController extends Controller
     public function index()
     {
         //
-        $buktiKerjasama = BuktiKerjasama::all();
-        $kerjasama = Kerjasama::all();
-        return view('buktiKerjasama.create')
-            ->with('buktiKerjasama', $buktiKerjasama)
-            ->with('kerjasama', $kerjasama);
+        return redirect()->route('buktiKerjasamas.create');
     }
 
     /**
@@ -28,9 +24,13 @@ class BuktiKerjasamaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(BuktiKerjasama $buktiKerjasama)
     {
         //
+        $kerjasama = Kerjasama::All();
+        return view('buktiKerjasama.create')
+            ->with('kerjasama', $kerjasama)
+            ->with('buktiKerjasama', $buktiKerjasama);
     }
 
     /**
@@ -52,8 +52,12 @@ class BuktiKerjasamaController extends Controller
             'nama_bukti_kerjasama3',
             'foto3' => 'file | image | max:50000',
 
-            'kerjasama_id' => 'required',
+            'nama_kerja_sama' => 'required',
         ]);
+
+        // $this->validate($request, [
+        //     'kerjasama_id' => 'required',
+        // ]);
 
         //ambil extensi //png / jpg / gif
         $ext1 = $request->foto1->getClientOriginalExtension();
@@ -76,6 +80,7 @@ class BuktiKerjasamaController extends Controller
         
         $buktiKerjasama->nama_bukti_kerjasama = $validateData['nama_bukti_kerjasama1'];
         $buktiKerjasama->foto = $rename_file1;
+        $buktiKerjasama->kerjasama_id = $validateData['nama_kerja_sama'];
 
         // $buktiKerjasama->nama_bukti_kerjasama = $validateData['nama_bukti_kerjasama2'];
         // $buktiKerjasama->foto = $rename_file2;
@@ -83,7 +88,8 @@ class BuktiKerjasamaController extends Controller
         // $buktiKerjasama->foto = $rename_file3;
 
         $buktiKerjasama->save(); // simpan ke tabel bukti_kerjasama
-        return redirect()->route('kerjasama.index'); // redirect ke kerjasama.index
+        // return redirect()->route('buktiKerjasama.returnToKerjasama'); // redirect ke kerjasama.index
+        return url('kerjasamas/');
     }
 
     /**

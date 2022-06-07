@@ -72,6 +72,13 @@
                                 Bukti</a>
                         </td>
                     </tr>
+
+                    <tr>
+                        @foreach ($buktiKerjasama as $data)
+                            <td><img src="{{ asset('storage/' . $data->foto) }}"
+                                    alt="{{ $data->nama_bukti_kerjasama }}"></td>
+                        @endforeach
+                    </tr>
                 </tbody>
 
             </table>

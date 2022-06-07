@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BuktiKerjasama;
 use App\Models\Kategori;
 use App\Models\Kerjasama;
 use App\Models\Status;
@@ -84,8 +85,10 @@ class KerjasamaController extends Controller
     public function show(Kerjasama $kerjasama)
     {
         //
+        $buktiKerjasama = BuktiKerjasama::All();
         return view('kerjasama.show')
-            ->with('kerjasama', $kerjasama);
+            ->with('kerjasama', $kerjasama)
+            ->with('buktiKerjasama', $buktiKerjasama);
     }
 
     /**
