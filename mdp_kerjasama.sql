@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 02, 2022 at 06:33 PM
+-- Generation Time: Jun 07, 2022 at 03:27 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -71,15 +71,19 @@ INSERT INTO `bukti_kegiatan_units` (`id`, `units_id`, `bukti_kegiatans_id`) VALU
 
 CREATE TABLE `bukti_kerjasamas` (
   `id` int(11) NOT NULL,
-  `nama_bukti_kerjasama` varchar(45) NOT NULL
+  `nama_bukti_kerjasama` varchar(45) NOT NULL,
+  `foto` varchar(255) NOT NULL,
+  `kerjasama_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `bukti_kerjasamas`
 --
 
-INSERT INTO `bukti_kerjasamas` (`id`, `nama_bukti_kerjasama`) VALUES
-(1, 'Document');
+INSERT INTO `bukti_kerjasamas` (`id`, `nama_bukti_kerjasama`, `foto`, `kerjasama_id`, `created_at`, `updated_at`) VALUES
+(8, 'Bukti Kerjasama 1', 'DocumentBuktiKerjasama-1654342435.png', 1, '2022-06-04 11:33:55', '2022-06-04 11:33:55');
 
 -- --------------------------------------------------------
 
@@ -406,7 +410,8 @@ ALTER TABLE `bukti_kegiatan_units`
 -- Indexes for table `bukti_kerjasamas`
 --
 ALTER TABLE `bukti_kerjasamas`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `kerjasama_id` (`kerjasama_id`);
 
 --
 -- Indexes for table `dosens`
@@ -520,7 +525,7 @@ ALTER TABLE `bukti_kegiatan_units`
 -- AUTO_INCREMENT for table `bukti_kerjasamas`
 --
 ALTER TABLE `bukti_kerjasamas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `dosens`
@@ -593,6 +598,12 @@ ALTER TABLE `bukti_kegiatans`
 ALTER TABLE `bukti_kegiatan_units`
   ADD CONSTRAINT `fk_bukti_kegiatan_units_bukti_kegiatans1` FOREIGN KEY (`bukti_kegiatans_id`) REFERENCES `bukti_kegiatans` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_bukti_kegiatan_units_units1` FOREIGN KEY (`units_id`) REFERENCES `units` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `bukti_kerjasamas`
+--
+ALTER TABLE `bukti_kerjasamas`
+  ADD CONSTRAINT `bukti_kerjasamas_ibfk_1` FOREIGN KEY (`kerjasama_id`) REFERENCES `kerjasamas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `kegiatans`

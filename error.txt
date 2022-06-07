@@ -1,15 +1,33 @@
 -> Masalah register/tambahUser
+
 -> Masalah reset password
+
 -> Masalah penghapusan data mitra dengan modal (Selesai)
+
 -> Tabel-tabel bukti belum terpakai (Sedang Proses)
+
 -> Foto user
+
 -> posisi logout dan ikon logout
+
 -> Menambahkan komentar (Sedikit)
+
 -> Ubah Pesan eror untuk login
+
 -> Memperbaiki Modal (Sedikit)
+
 -> Menambahkan Button Tampil dan menu Show (Sedikit)
+
 -> Modal Status Yang Hanya Mengambil Satu Kata Saja (Selesai)
+
 -> Error kolom uniq tidak bisa di edit (Selesai)
+
 -> Ketika duplikat atribut unik di form ubah tidak menampilkan pesan error tetapi muncul eror
--> memperbaiki database di tabel bukti_kerjasama //tambahkan kolom kerjasama_id, dan daftar foto untuk menampung data file
--> Hapus Button di menu tampil semua menu
+
+-> memperbaiki database di tabel bukti_kerjasama //tambahkan kolom kerjasama_id, dan daftar foto untuk menampung data file (Selesai)
+
+-> Hapus Button di menu tampil semua menu (Baru di menu kerjasama)
+
+-> Bukti belum berhasil route kembali ke menu utama
+
+-> Bukti kerjasama belum berhasil dibuat secara otomatis
