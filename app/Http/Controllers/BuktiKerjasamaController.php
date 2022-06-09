@@ -24,13 +24,16 @@ class BuktiKerjasamaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(BuktiKerjasama $buktiKerjasama)
+    public function create(BuktiKerjasama $buktiKerjasama, Kerjasama $kerjasama)
     {
         //
-        $kerjasama = Kerjasama::All();
+        $kerjasama = Kerjasama::findOrFail($kerjasama->id);
+        // BuktiKerjasama::where('kerjasama_id', $kerjasama->id);
+
         return view('buktiKerjasama.create')
             ->with('kerjasama', $kerjasama)
             ->with('buktiKerjasama', $buktiKerjasama);
+        // dump($kerjasama);
     }
 
     /**
@@ -39,9 +42,10 @@ class BuktiKerjasamaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Kerjasama $kerjasama)
     {
         //
+
         // 1. validasi input data kosong
         $validateData = $request->validate([
             'nama_bukti_kerjasama1' => 'required',
@@ -52,12 +56,13 @@ class BuktiKerjasamaController extends Controller
             'nama_bukti_kerjasama3',
             'foto3' => 'file | image | max:50000',
 
-            'nama_kerja_sama' => 'required',
+            'kerjasama_id' => 'required',
         ]);
 
         // $this->validate($request, [
         //     'kerjasama_id' => 'required',
         // ]);
+
 
         //ambil extensi //png / jpg / gif
         $ext1 = $request->foto1->getClientOriginalExtension();
@@ -80,7 +85,7 @@ class BuktiKerjasamaController extends Controller
         
         $buktiKerjasama->nama_bukti_kerjasama = $validateData['nama_bukti_kerjasama1'];
         $buktiKerjasama->foto = $rename_file1;
-        $buktiKerjasama->kerjasama_id = $validateData['nama_kerja_sama'];
+        $buktiKerjasama->kerjasama_id = $validateData['kerjasama_id'];
 
         // $buktiKerjasama->nama_bukti_kerjasama = $validateData['nama_bukti_kerjasama2'];
         // $buktiKerjasama->foto = $rename_file2;

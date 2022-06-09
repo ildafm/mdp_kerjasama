@@ -93,17 +93,8 @@
 
                 {{-- Kerjasama ID --}}
                 <div class="form-group">
-                    <label for="nama_kerja_sama">Nama Kerjasama</label>
-                    <select class="form-control" name='nama_kerja_sama'>
-                        @foreach ($kerjasama as $data)
-                            {{-- <option value="{{ $data->id }}">{{ $data->id }} - {{ $data->nama_kerja_sama }}
-                            </option> --}}
-                            <option value="{{ $data->id }}"
-                                {{ $data->id == $buktiKerjasama->kerjasama_id ? 'selected' : '' }}>{{ $data->id }} -
-                                {{ $data->nama_kerja_sama }}</option>
-                        @endforeach
-                    </select>
-                    @error('nama_kerja_sama')
+                    <input type="hidden" value="{{ $kerjasama->id }}" name="kerjasama_id">
+                    @error('kerjasama_id')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>

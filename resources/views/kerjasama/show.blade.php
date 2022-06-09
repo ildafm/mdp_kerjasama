@@ -69,19 +69,20 @@
                             {{-- <a href="{{ route('buktiKerjasama.create', ['kerjasama' => $kerjasama->id]) }}"
                                 class="btn btn-md btn-primary">Tambah Bukti</a> --}}
                             <a class="btn btn-primary btn-md" href="{{ url('/buktiKerjasamas') }}">Tambah
-                                Bukti</a>
+                                Bukti Kerjasama</a>
                         </td>
                     </tr>
 
-                    <tr>
-                        @foreach ($buktiKerjasama as $data)
-                            <td><img src="{{ asset('storage/kerjasama/' . $data->foto) }}"
-                                    alt="{{ $data->nama_bukti_kerjasama }}"></td>
-                        @endforeach
-                    </tr>
                 </tbody>
 
             </table>
+
+            <div class="row">
+                @foreach ($buktiKerjasama as $data)
+                    <div class="col-lg-6 col-md-6 col-sm-6"><img src="{{ asset('storage/kerjasama/' . $data->foto) }}"
+                            alt="{{ $data->nama_bukti_kerjasama }}"></div>
+                @endforeach
+            </div>
 
         </div>
 
