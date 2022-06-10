@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2022 at 01:45 AM
+-- Generation Time: Jun 10, 2022 at 06:26 AM
 -- Server version: 10.4.22-MariaDB
--- PHP Version: 7.3.33
+-- PHP Version: 7.4.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -83,7 +83,11 @@ CREATE TABLE `bukti_kerjasamas` (
 --
 
 INSERT INTO `bukti_kerjasamas` (`id`, `nama_bukti_kerjasama`, `foto`, `kerjasama_id`, `created_at`, `updated_at`) VALUES
-(8, 'Bukti Kerjasama 1', 'DocumentBuktiKerjasama-1654342435.png', 1, '2022-06-04 11:33:55', '2022-06-04 11:33:55');
+(9, 'Kerjasama Q1', 'DocumentBuktiKerjasama-1654828303.png', 1, '2022-06-10 02:31:44', '2022-06-10 02:31:44'),
+(10, 'Kerjasama Q2', 'DocumentBuktiKerjasama-1654828328.png', 1, '2022-06-10 02:32:08', '2022-06-10 02:32:08'),
+(11, 'Kerjasama Q3', 'DocumentBuktiKerjasama-1654828341.png', 1, '2022-06-10 02:32:21', '2022-06-10 02:32:21'),
+(12, 'Kerjasama Q4', 'DocumentBuktiKerjasama-1654828481.png', 1, '2022-06-10 02:34:41', '2022-06-10 02:34:41'),
+(13, 'Kerjasama Q5', 'DocumentBuktiKerjasama-1654828543.png', 1, '2022-06-10 02:35:43', '2022-06-10 02:35:43');
 
 -- --------------------------------------------------------
 
@@ -525,7 +529,7 @@ ALTER TABLE `bukti_kegiatan_units`
 -- AUTO_INCREMENT for table `bukti_kerjasamas`
 --
 ALTER TABLE `bukti_kerjasamas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `dosens`
@@ -586,47 +590,11 @@ ALTER TABLE `usulans`
 --
 
 --
--- Constraints for table `bukti_kegiatans`
---
-ALTER TABLE `bukti_kegiatans`
-  ADD CONSTRAINT `fk_bukti_kegiatans_bukti_kerjasamas1` FOREIGN KEY (`bukti_kerjasamas_id`) REFERENCES `bukti_kerjasamas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_bukti_kegiatans_kegiatans1` FOREIGN KEY (`kegiatans_id`) REFERENCES `kegiatans` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
 -- Constraints for table `bukti_kegiatan_units`
 --
 ALTER TABLE `bukti_kegiatan_units`
   ADD CONSTRAINT `fk_bukti_kegiatan_units_bukti_kegiatans1` FOREIGN KEY (`bukti_kegiatans_id`) REFERENCES `bukti_kegiatans` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_bukti_kegiatan_units_units1` FOREIGN KEY (`units_id`) REFERENCES `units` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `bukti_kerjasamas`
---
-ALTER TABLE `bukti_kerjasamas`
-  ADD CONSTRAINT `bukti_kerjasamas_ibfk_1` FOREIGN KEY (`kerjasama_id`) REFERENCES `kerjasamas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `kegiatans`
---
-ALTER TABLE `kegiatans`
-  ADD CONSTRAINT `fk_kegiatans_dosens1` FOREIGN KEY (`dosen_id`) REFERENCES `dosens` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_kegiatans_kerjasamas1` FOREIGN KEY (`kerjasama_id`) REFERENCES `kerjasamas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `kerjasamas`
---
-ALTER TABLE `kerjasamas`
-  ADD CONSTRAINT `fk_kerjasamas_kategoris1` FOREIGN KEY (`kategori_id`) REFERENCES `kategoris` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_kerjasamas_mitras` FOREIGN KEY (`mitra_id`) REFERENCES `mitras` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_kerjasamas_status1` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `usulans`
---
-ALTER TABLE `usulans`
-  ADD CONSTRAINT `fk_usulans_dosens1` FOREIGN KEY (`dosen_id`) REFERENCES `dosens` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_usulans_mitras1` FOREIGN KEY (`mitra_id`) REFERENCES `mitras` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_usulans_units1` FOREIGN KEY (`unit_id`) REFERENCES `units` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
