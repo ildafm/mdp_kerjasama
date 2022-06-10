@@ -35,10 +35,10 @@
 
                     {{-- add file 1 --}}
                     <div class="form-group col-lg-6">
-                        <label for="foto">Bukti Kerjasama 1</label>
-                        <input type="file" class="form-control" name="foto1">
+                        <label for="Bukti Kerjasama 1">Bukti Kerjasama 1</label>
+                        <input type="file" class="form-control" name="Bukti Kerjasama 1">
 
-                        @error('foto')
+                        @error('Bukti Kerjasama 1')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
@@ -93,11 +93,22 @@
 
                 {{-- Kerjasama ID --}}
                 <div class="form-group">
-                    <input type="hidden" value="{{ $kerjasama->id }}" name="kerjasama_id">
+                    <input type="text" value="{{ $buktiKerjasama }}" name="kerjasama_id">
                     @error('kerjasama_id')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
+
+                {{-- <div class="form-group">
+                    <select name="kerjasama_id" id="" class="form-control">
+                        @foreach ($kerjasama as $data)
+                            <option value="{{ $data->id }}">{{ $data->id }} -
+                                {{ $data->nama_kerja_sama }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div> --}}
+
 
 
                 {{-- Button Submit --}}

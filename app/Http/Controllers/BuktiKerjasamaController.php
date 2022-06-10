@@ -24,14 +24,17 @@ class BuktiKerjasamaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(BuktiKerjasama $buktiKerjasama, Kerjasama $kerjasama)
+    public function create($id)
     {
         //
-        $kerjasama = Kerjasama::findOrFail($kerjasama->id);
+        // $kerjasama = Kerjasama::findOrFail($kerjasama->id);
         // BuktiKerjasama::where('kerjasama_id', $kerjasama->id);
 
+        // $kerjasama = Kerjasama::All();
+        // $kerjasama = mdp_kerjasama::table("kerjasamas")->pluck("id");
+dd($id);
         return view('buktiKerjasama.create')
-            ->with('kerjasama', $kerjasama)
+            // ->with('kerjasama', $kerjasama)
             ->with('buktiKerjasama', $buktiKerjasama);
         // dump($kerjasama);
     }
@@ -42,7 +45,7 @@ class BuktiKerjasamaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Kerjasama $kerjasama)
+    public function store(Request $request)
     {
         //
 
@@ -104,9 +107,10 @@ class BuktiKerjasamaController extends Controller
      * @param  \App\Models\BuktiKerjasama  $buktiKerjasama
      * @return \Illuminate\Http\Response
      */
-    public function show(BuktiKerjasama $buktiKerjasama)
+    public function show($id)
     {
         //
+        dd($id);
     }
 
     /**
