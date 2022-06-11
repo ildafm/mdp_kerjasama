@@ -69,7 +69,8 @@
 
                                 {{-- Button Hapus --}}
                                 <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                    data-toggle="modal" data-target="#modal-sm">Hapus</button>
+                                    data-bentukKegiatan="{{ $data->bentuk_kegiatan }}" data-toggle="modal"
+                                    data-target="#modal-sm">Hapus</button>
                             </td>
                         </tr>
                     @endforeach
@@ -129,8 +130,9 @@
             let id = $(this).attr('data-id');
             $('#formDelete').attr('action', '/kegiatans/' + id);
 
-            let dataID = $(this).attr('data-id')
-            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus kegiatan dengan id : " + dataID + " ?")
+            let dataBentukKegiatan = $(this).attr('data-bentukKegiatan')
+            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus kegiatan : " + dataBentukKegiatan +
+                " ?")
         })
 
         // jika tombol Ya, hapus ditekan, submit form hapus

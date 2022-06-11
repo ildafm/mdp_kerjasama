@@ -109,7 +109,7 @@
             $('#formDelete').attr('action', '/kategoris/' + id);
 
             let namaKategori = $(this).attr('data-namaKategori');
-            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus kategori " + namaKategori + " ?")
+            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus kategori : " + namaKategori + " ?")
         })
 
         // jika tombol Ya, hapus ditekan, submit form hapus

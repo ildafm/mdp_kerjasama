@@ -98,18 +98,24 @@ class UserController extends Controller
         //
         $validateData = $request->validate([
             'name' => 'required | string',
-            'email' => 'required | unique:users| email | max:255 | string',
-            'password' => 'required | min:8 | confirmed | string',
-            'level' => 'required'
+            'level' => 'required',
         ]);
 
         $user = User::findOrFail($user->id);
-        $user->update([
-            'nama_mitra' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password = Hash::make($validateData['password']),
-            'level' => $request->level
-        ]);
+        if($request->password != ""){
+            $user->update([
+                'name' => $request->name,
+                'password' => $request->password = Hash::make($validateData['password']),
+                'level' => $request->level
+            ]);   
+        }
+        else{
+            $user->update([
+                'name' => $request->name,
+                'level' => $request->level,
+            ]); 
+        }
+       
 
         $request->session()->flash('pesan', 'Perubahan data berhasil');
         return redirect()->route('users.index');

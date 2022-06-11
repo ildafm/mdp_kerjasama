@@ -23,6 +23,17 @@
                 {{ method_field('PUT') }}
                 @csrf
 
+                {{-- ubah email --}}
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input readonly type="text" name='email' autocomplete="email"
+                        class="form-control @error('email') is-invalid @enderror" placeholder="Masukan Email"
+                        value="{{ $user->email }}">
+                    @error('email')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
                 {{-- ubah nama --}}
                 <div class="form-group">
                     <label for="name">Nama User</label>
@@ -34,23 +45,12 @@
                     @enderror
                 </div>
 
-                {{-- ubah email --}}
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="text" name='email' autocomplete="email"
-                        class="form-control @error('email') is-invalid @enderror" placeholder="Masukan Email"
-                        value="{{ $user->email }}">
-                    @error('email')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
                 {{-- ubah password --}}
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password">Password (Jika tidak mau mengubah, kosongkan input password)</label>
                     <input type="text" name='password' autocomplete="new-password"
-                        class="form-control @error('password') is-invalid @enderror" required placeholder="Masukan Password"
-                        value="{{ $user->password }}">
+                        class="form-control @error('password') is-invalid @enderror" placeholder="Masukan Password"
+                        value="">
                     @error('password')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -59,8 +59,8 @@
                 {{-- konfirmasi password --}}
                 <div class="form-group">
                     <label for="password-confirm">Konfirmasi Password</label>
-                    <input id=" password-confirm" type="text" class="form-control" name="password_confirmation" required
-                        placeholder="Konfirmasi Password" autocomplete="new-password" value="{{ $user->password }}">
+                    <input id=" password-confirm" type="text" class="form-control" name="password_confirmation"
+                        placeholder="Konfirmasi Password" autocomplete="new-password" value="">
                 </div>
 
                 {{-- ubah level --}}

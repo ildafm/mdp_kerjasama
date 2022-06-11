@@ -34,7 +34,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Nama Usulan</th>
-                        <th>Bentuk Kerja Sama</th>
+                        <th>Bentuk Kerjasama</th>
                         <th>Rencana Kegiatan</th>
                         <th>Tanggal Rencana Kegiatan</th>
                         <th>Nama Mitra</th>
@@ -76,7 +76,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Nama Usulan</th>
-                        <th>Bentuk Kerja Sama</th>
+                        <th>Bentuk Kerjasama</th>
                         <th>Rencana Kegiatan</th>
                         <th>Tanggal Rencana Kegiatan</th>
                         <th>Nama Mitra</th>
@@ -126,7 +126,7 @@
             $('#formDelete').attr('action', '/usulans/' + id);
 
             let namaUsulan = $(this).attr('data-namaUsulan');
-            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus usulan " + namaUsulan + " ?")
+            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus usulan : " + namaUsulan + " ?")
         })
 
         // jika tombol Ya, hapus ditekan, submit form hapus

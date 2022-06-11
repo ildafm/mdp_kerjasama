@@ -9,6 +9,8 @@ use App\Models\Status;
 use App\Models\Mitra;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\DB;
+
 class KerjasamaController extends Controller
 {
     /**
@@ -85,7 +87,15 @@ class KerjasamaController extends Controller
     public function show(Kerjasama $kerjasama)
     {
         //
-        $buktiKerjasama = BuktiKerjasama::All();
+        // $buktiKerjasama = BuktiKerjasama::All();
+        // $buktiKerjasama = BuktiKerjasama::where('kerjasama_id', $kerjasama->id);
+        // $kerjasama = Kerjasama::findOrFail($kerjasama->id);
+
+        $buktiKerjasama = DB::select("SELECT bukti_kerjasamas.id, nama_bukti_kerjasama, bukti_kerjasamas.file, LEFT(bukti_kerjasamas.created_at, 10) as tanggalUpload 
+        FROM bukti_kerjasamas
+        JOIN kerjasamas on bukti_kerjasamas.kerjasama_id = kerjasamas.id
+        WHERE bukti_kerjasamas.kerjasama_id = $kerjasama->id");
+
         return view('kerjasama.show')
             ->with('kerjasama', $kerjasama)
             ->with('buktiKerjasama', $buktiKerjasama);

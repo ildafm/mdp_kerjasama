@@ -124,7 +124,7 @@
             $('#formDelete').attr('action', '/kerjasamas/' + id);
 
             let namaKerjasama = $(this).attr('data-namaKerjasama');
-            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus kerja sama " + namaKerjasama + " ?")
+            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus kerjasama : " + namaKerjasama + " ?")
         })
 
         // jika tombol Ya, hapus ditekan, submit form hapus

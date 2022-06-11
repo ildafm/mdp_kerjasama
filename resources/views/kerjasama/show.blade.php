@@ -61,32 +61,138 @@
                     </tr>
 
                     <tr>
-                        <td>Bukti Kerjasama</td>
-                        <td>
-                            {{-- Button tambah bukti --}}
-                            {{-- <button class="btn btn-primary btn-md">Tambah Bukti</button> --}}
-
-                            {{-- <a href="{{ route('buktiKerjasama.create', ['kerjasama' => $kerjasama->id]) }}"
-                                class="btn btn-md btn-primary">Tambah Bukti</a> --}}
-                            <a class="btn btn-primary btn-md"
-                                href="{{ url('/buktiKerjasamas/show/' . $kerjasama->id) }}">Tambah
-                                Bukti Kerjasama</a>
+                        <td colspan="2">
+                            <h2>Tambah Bukti Kerjasama</h2>
                         </td>
                     </tr>
 
+                    {{-- Barisan Menambahkan data Bukti --}}
+                    <form action="{{ route('buktiKerjasamas.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <tr>
+                            <td>
+                                {{-- Nama Bukti Kerjasama --}}
+                                <div class="form-group">
+                                    <label for="Nama_Bukti_Kerjasama">Nama Bukti Kerjasama</label>
+                                    <input type="text" class="form-control" name="Nama_Bukti_Kerjasama"
+                                        placeholder="Enter Nama Bukti Kerjasama">
+
+                                    @error('Nama_Bukti_Kerjasama')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </td>
+                            <td>
+                                {{-- add file --}}
+                                <div class="form-group">
+                                    <label for="Bukti_Kerjasama">Bukti Kerjasama</label>
+                                    <input type="file" class="form-control" name="Bukti_Kerjasama">
+
+                                    @error('Bukti_Kerjasama')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2">
+                                {{-- Kerjasama ID --}}
+                                <input type="hidden" value="{{ $kerjasama->id }}" name="kerjasama_id">
+                                @error('kerjasama_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+
+                                {{-- Button Submit --}}
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">Tambahkan Bukti</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </form>
                 </tbody>
 
             </table>
 
-            <div class="row">
+
+
+
+            {{-- <div class="row">
                 @foreach ($buktiKerjasama as $data)
-                    <div class="col-lg-3 col-md-6 col-sm-12"><img src="{{ asset('storage/kerjasama/' . $data->foto) }}"
-                            alt="{{ $data->nama_bukti_kerjasama }}"></div>
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                        <img src="{{ asset('storage/kerjasama/' . $data->foto) }}"
+                            alt="{{ $data->nama_bukti_kerjasama }}">
+                        <center><button class="btn btn-danger btn-sm">Hapus</button></center>
+                    </div>
                 @endforeach
-            </div>
+            </div> --}}
 
         </div>
 
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Tabel Bukti Kerjasama</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="card-body">
+            {{-- Tabel Data Bukti Kerjasama --}}
+            <table id="example1" class="table table-bordered table-striped">
+
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Bukti Kerjasama</th>
+                        <th>Tanggal Upload</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @php
+                        $nomor = 1;
+                    @endphp
+
+                    @foreach ($buktiKerjasama as $data)
+                        <tr>
+                            <td> {{ $nomor++ }} </td>
+                            <td>{{ $data->nama_bukti_kerjasama }}</td>
+                            <td>{{ $data->tanggalUpload }}</td>
+                            <td>
+                                {{-- Button Tampil --}}
+                                <a href="{{ url('storage/kerjasama/' . $data->file) }}"
+                                    class="btn btn-block btn-primary">Tampil</a>
+
+                                {{-- Button Hapus --}}
+                                <button class="btn btn-block btn-danger btn-hapus" data-file="{{ $data->file }}"
+                                    data-namaBuktiKerjasama="{{ $data->nama_bukti_kerjasama }}" data-toggle="modal"
+                                    data-target="#modal-sm">Hapus</button>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Bukti Kerjasama</th>
+                        <th>Tanggal Upload</th>
+                        <th>Aksi</th>
+                    </tr>
+                </tfoot>
+
+            </table>
+        </div>
     </div>
 
     {{-- Modal Layout --}}
@@ -117,13 +223,13 @@
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <script>
         // jika tombol hapus ditekan, generate alamat URL untuk proses hapus
-        // id disini adalah id kerjasama
+        // file disini adalah file kerjasama
         $('.btn-hapus').click(function() {
-            let id = $(this).attr('data-id');
-            $('#formDelete').attr('action', '/kerjasamas/' + id);
+            let file = $(this).attr('data-file');
+            $('#formDelete').attr('action');
 
-            let namaKerjasama = $(this).attr('data-namaKerjasama');
-            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus kerja sama " + namaKerjasama + " ?")
+            let namaBuktiKerjasama = $(this).attr('data-namaBuktiKerjasama');
+            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus bukti " + namaBuktiKerjasama + " ?")
         })
 
         // jika tombol Ya, hapus ditekan, submit form hapus

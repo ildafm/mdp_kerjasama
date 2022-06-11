@@ -108,7 +108,7 @@
             $('#formDelete').attr('action', '/units/' + id);
 
             let namaUnit = $(this).attr('data-namaUnit');
-            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus unit " + namaUnit + " ?")
+            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus unit : " + namaUnit + " ?")
         })
 
         // jika tombol Ya, hapus ditekan, submit form hapus

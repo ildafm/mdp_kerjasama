@@ -108,7 +108,7 @@
             $('#formDelete').attr('action', '/statuses/' + id);
 
             let namaStatus = $(this).attr('data-namaStatus');
-            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus status " + namaStatus + " ?")
+            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus status : " + namaStatus + " ?")
         })
 
         // jika tombol Ya, hapus ditekan, submit form hapus

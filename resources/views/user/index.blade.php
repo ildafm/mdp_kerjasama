@@ -102,7 +102,7 @@
             $('#formDelete').attr('action', '/users/' + id);
 
             let namaUser = $(this).attr('data-namaUser');
-            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus data " + namaUser + " ?")
+            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus data : " + namaUser + " ?")
         })
 
         // jika tombol Ya, hapus ditekan, submit form hapus

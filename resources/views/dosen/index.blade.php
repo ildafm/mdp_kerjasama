@@ -112,7 +112,7 @@
             $('#formDelete').attr('action', '/dosens/' + id);
 
             let namaDosen = $(this).attr('data-namaDosen');
-            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus dosen " + namaDosen + " ?")
+            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus dosen : " + namaDosen + " ?")
         })
 
         // jika tombol Ya, hapus ditekan, submit form hapus

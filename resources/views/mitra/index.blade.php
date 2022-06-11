@@ -112,7 +112,7 @@
             $('#formDelete').attr('action', '/mitras/' + id);
 
             let namaMitra = $(this).attr('data-namaMitra');
-            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus mitra " + namaMitra + " ?")
+            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus mitra : " + namaMitra + " ?")
         })
 
         // jika tombol Ya, hapus ditekan, submit form hapus
