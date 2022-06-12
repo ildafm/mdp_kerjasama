@@ -54,7 +54,7 @@
                 </div>
                 <div class="form-group">
                     <label for="nama_mitra">Nama Mitra</label>
-                    <select class="form-control" name='nama_mitra'>
+                    <select class="form-control select2" name='nama_mitra'>
                         @foreach ($mitras as $data)
                             <option value="{{ $data->id }}">{{ $data->id }} - {{ $data->nama_mitra }}</option>
                         @endforeach

@@ -5,8 +5,8 @@
     <div class="card">
         <div class="card-header">
 
-            {{-- Button tambah --}}
-            <a href="{{ url('/statuses/create') }}" class='btn btn-primary'>Tambah Status</a>
+            {{-- Button Kembali --}}
+            <a href="{{ url('/statuses') }}" class='btn btn-primary'>Kembali</a>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -33,20 +33,6 @@
                     <tr>
                         <td>Nama Status</td>
                         <td>{{ $status->nama_status }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Aksi</td>
-                        <td>
-                            {{-- Button Ubah --}}
-                            <a href="{{ route('statuses.edit', ['status' => $status->id]) }}"
-                                class="btn btn-md btn-warning">Ubah</a>
-
-                            {{-- Button Hapus --}}
-                            <button class="btn btn-md btn-danger btn-hapus" data-id="{{ $status->id }}"
-                                data-namaStatus="{{ $status->nama_status }}" data-toggle="modal"
-                                data-target="#modal-sm">Hapus</button>
-                        </td>
                     </tr>
 
                 </tbody>

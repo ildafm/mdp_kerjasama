@@ -5,8 +5,8 @@
     <div class="card">
         <div class="card-header">
 
-            {{-- Button Tambah --}}
-            <a href="{{ url('/units/create') }}" class='btn btn-primary'>Tambah Unit</a>
+            {{-- Button Kembali --}}
+            <a href="{{ url('/units') }}" class='btn btn-primary'>Kembali</a>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -35,19 +35,6 @@
                         <td>{{ $unit->nama_unit }}</td>
                     </tr>
 
-                    <tr>
-                        <td>Aksi</td>
-                        <td>
-                            {{-- Button Ubah --}}
-                            <a href="{{ route('units.edit', ['unit' => $unit->id]) }}"
-                                class="btn btn-md btn-warning">Ubah</a>
-
-                            {{-- Button Hapus --}}
-                            <button class="btn btn-md btn-danger btn-hapus" data-id="{{ $unit->id }}"
-                                data-namaUnit="{{ $unit->nama_unit }}" data-toggle="modal"
-                                data-target="#modal-sm">Hapus</button>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
 

@@ -5,8 +5,8 @@
     <div class="card">
         <div class="card-header">
 
-            {{-- Button Tambah --}}
-            <a href="{{ url('/usulans/create') }}" class='btn btn-primary'>Tambah Usulan</a>
+            {{-- Button Kembali --}}
+            <a href="{{ url('/usulans') }}" class='btn btn-primary'>Kembali</a>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -62,20 +62,6 @@
                     <tr>
                         <td>Nama Unit</td>
                         <td>{{ $usulan->unit->nama_unit }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Aksi</td>
-                        <td>
-                            {{-- Button Ubah --}}
-                            <a href="{{ route('usulans.edit', ['usulan' => $usulan->id]) }}"
-                                class="btn btn-md btn-warning">Ubah</a>
-
-                            {{-- Button Hapus --}}
-                            <button class="btn btn-md btn-danger btn-hapus" data-id="{{ $usulan->id }}"
-                                data-namaUsulan="{{ $usulan->nama_usulan }}" data-toggle="modal"
-                                data-target="#modal-sm">Hapus</button>
-                        </td>
                     </tr>
                 </tbody>
             </table>

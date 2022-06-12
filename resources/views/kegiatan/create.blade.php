@@ -62,7 +62,7 @@
 
                     <div class="form-group col-lg-4">
                         <label for="kerjasamas">Kerjasama</label>
-                        <select class="form-control" name="kerjasamas" id="">
+                        <select class="form-control select2" name="kerjasamas" id="">
                             @foreach ($kerjasamas as $data)
                                 <option value="{{ $data->id }}"> {{ $data->id }} - {{ $data->nama_kerja_sama }}
                                 </option>
@@ -75,9 +75,10 @@
 
                     <div class="form-group col-lg-4">
                         <label for="dosens">Dosen</label>
-                        <select class="form-control" name="dosens" id="">
+                        <select class="form-control select2" name="dosens" id="">
                             @foreach ($dosens as $data)
-                                <option value="{{ $data->id }}"> {{ $data->id }} - {{ $data->nama_dosen }}
+                                <option value="{{ $data->id }}"> {{ $data->id }} - {{ $data->kode_dosen }} -
+                                    {{ $data->nama_dosen }}
                                 </option>
                             @endforeach
                         </select>

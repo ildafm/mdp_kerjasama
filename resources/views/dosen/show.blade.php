@@ -5,9 +5,9 @@
 
     <div class="card">
         <div class="card-header">
-            <!-- <h3 class="card-title">Tabel Daftar Dosen</h3> -->
-            {{-- Button Tambah --}}
-            <a href="{{ url('/dosens/create') }}" class='btn btn-primary'>Tambah Dosen</a>
+
+            {{-- Button Kembali --}}
+            <a href="{{ url('/dosens') }}" class='btn btn-primary'>Kembali</a>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -45,20 +45,6 @@
                     <tr>
                         <td>Nama Dosen</td>
                         <td>{{ $dosen->nama_dosen }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Aksi</td>
-                        <td>
-                            {{-- Button Ubah --}}
-                            <a href="{{ route('dosens.edit', ['dosen' => $dosen->id]) }}"
-                                class="btn btn-md btn-warning">Ubah</a>
-
-                            {{-- Button Hapus --}}
-                            <button class="btn btn-md btn-danger btn-hapus" data-id="{{ $dosen->id }}"
-                                data-namaDosen="{{ $dosen->nama_dosen }}" data-toggle="modal"
-                                data-target="#modal-sm">Hapus</button>
-                        </td>
                     </tr>
                 </tbody>
 

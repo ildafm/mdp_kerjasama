@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
 
+    {{-- select2 --}}
+    <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
+
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css?v=3.2.0') }}">
 
 </head>
@@ -31,11 +34,9 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
                             class="fas fa-bars"></i></a>
                 </li>
+
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contact</a>
+                    <a id="date" class="nav-link"></a>
                 </li>
             </ul>
 
@@ -66,25 +67,13 @@
                         </form>
                     </div>
                 </li>
-
-                {{-- <li class="nav-item">
-                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                        <i class="fas fa-expand-arrows-alt"></i>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-                        <i class="fas fa-th-large"></i>
-                    </a>
-                </li> --}}
             </ul>
         </nav>
 
 
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
-            <a href="{{ asset('index3.html') }}" class="brand-link">
+            <a href="{{ url('/dashboard') }}" class="brand-link">
                 <img src="{{ asset('dist/img/logo-UMDP.png') }}" alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">MDP KERMA</span>
@@ -100,16 +89,16 @@
 
                     <div class="info">
                         {{-- Name User --}}
-                        <a href="#" class="d-block">{{ Auth::user()->name }}
-                            <br>
-                            @php
-                                if (Auth::user()->level == 'A') {
-                                    echo 'Admin';
-                                } else {
-                                    echo 'Dosen';
-                                }
-                            @endphp
+                        <a href="#" class="">{{ Auth::user()->name }}
                         </a>
+                        <br>
+                        @php
+                            if (Auth::user()->level == 'A') {
+                                echo '<a>Admin</a>';
+                            } else {
+                                echo '<a>Dosen</a>';
+                            }
+                        @endphp
                     </div>
                 </div>
 
@@ -279,9 +268,23 @@
     <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
+    {{-- select2 --}}
+    <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
+
+    {{-- chart --}}
+    <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
+
+    <script>
+        $(function() {
+            //Initialize Select2 Elements
+            $('.select2').select2()
+        });
+    </script>
+
+
     <script src="{{ asset('dist/js/adminlte.min.js?v=3.2.0') }}"></script>
 
-    <!-- <script src="{{ asset('dist/js/demo.js') }}"></script> -->
+    {{-- <script src="{{ asset('dist/js/demo.js') }}"></script> --}}
 
     <script>
         $(function() {
@@ -301,6 +304,22 @@
                 "responsive": true,
             });
         });
+    </script>
+
+    <script>
+        // getDate
+        n = new Date();
+        y = n.getFullYear();
+        m = n.getMonth() + 1;
+        d = n.getDate();
+
+        // getDay
+        weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+        day = new Date();
+        day = weekday[day.getDay()];
+
+        document.getElementById("date").innerHTML = day + ", " + m + "/" + d + "/" + y;
     </script>
 </body>
 
