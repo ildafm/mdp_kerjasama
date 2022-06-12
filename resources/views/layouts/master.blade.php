@@ -309,17 +309,22 @@
     <script>
         // getDate
         n = new Date();
-        y = n.getFullYear();
-        m = n.getMonth() + 1;
-        d = n.getDate();
+        year = n.getFullYear(); //getYear
+        date = n.getDate(); //getDate
+
+        // getMonth
+        months = ["January", "February", "March", "April", "May", "June", "August", "September", "October", "November",
+            "December"
+        ];
+        month = months[n.getMonth()];
 
         // getDay
         weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        day = weekday[n.getDay()];
 
-        day = new Date();
-        day = weekday[day.getDay()];
 
-        document.getElementById("date").innerHTML = day + ", " + m + "/" + d + "/" + y;
+
+        document.getElementById("date").innerHTML = day + ", " + date + " " + month + " " + year;
     </script>
 </body>
 
