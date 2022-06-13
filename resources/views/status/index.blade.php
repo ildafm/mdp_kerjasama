@@ -32,16 +32,21 @@
 
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Nama Status</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
 
                 <tbody>
+
+                    @php
+                        $nomor = 1;
+                    @endphp
+
                     @foreach ($statuses as $data)
                         <tr>
-                            <td>{{ $data->id }}</td>
+                            <td>{{-- $data->id --}}{{ $nomor++ }}</td>
                             <td>{{ $data->nama_status }}</td>
                             <td>
                                 {{-- Button Tampil --}}
@@ -62,7 +67,7 @@
 
                 <tfoot>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Nama Status</th>
                         <th>Aksi</th>
                     </tr>

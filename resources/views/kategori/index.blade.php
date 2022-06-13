@@ -33,16 +33,21 @@
 
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Nama Kategori</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
 
                 <tbody>
+
+                    @php
+                        $nomor = 1;
+                    @endphp
+
                     @foreach ($kategoris as $data)
                         <tr>
-                            <td>{{ $data->id }}</td>
+                            <td>{{-- $data->id --}}{{ $nomor++ }}</td>
                             <td>{{ $data->nama_kategori }}</td>
                             <td>
                                 {{-- Button Tampil --}}
@@ -63,7 +68,7 @@
 
                 <tfoot>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Nama Kategori</th>
                         <th>Aksi</th>
                     </tr>

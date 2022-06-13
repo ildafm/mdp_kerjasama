@@ -32,7 +32,7 @@
 
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Nama Mitra</th>
                         <th>Tingkat</th>
                         <th>Aksi</th>
@@ -40,9 +40,16 @@
                 </thead>
 
                 <tbody>
+
+                    @php
+                        $nomor = 1;
+                    @endphp
+
                     @foreach ($mitras as $data)
                         <tr>
-                            <td>{{ $data->id }}</td>
+                            <td>{{-- $data->id --}}
+                                {{ $nomor++ }}
+                            </td>
                             <td>{{ $data->nama_mitra }}</td>
                             <td>{{-- $data->tingkat --}}
                                 {{ Status::mitra($data->tingkat) }}
@@ -66,7 +73,7 @@
 
                 <tfoot>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Nama Mitra</th>
                         <th>Tingkat</th>
                         <th>Aksi</th>

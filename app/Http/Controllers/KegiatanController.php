@@ -31,7 +31,6 @@ class KegiatanController extends Controller
         //
         $dosens = Dosen::All();
         $kerjasamas = Kerjasama::All();
-
         return view('kegiatan.create')
             ->with('dosens', $dosens)
             ->with('kerjasamas', $kerjasamas);

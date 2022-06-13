@@ -41,9 +41,14 @@
                 </thead>
 
                 <tbody>
+
+                    @php
+                        $nomor = 1;
+                    @endphp
+
                     @foreach ($dosens as $data)
                         <tr>
-                            <td>{{ $data->id }}</td>
+                            <td>{{-- $data->id --}}{{ $nomor++ }}</td>
                             <td>{{ $data->kode_dosen }}</td>
                             <td>{{ $data->nama_dosen }}</td>
                             <td>

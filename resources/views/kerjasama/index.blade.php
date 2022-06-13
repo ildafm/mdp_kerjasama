@@ -32,7 +32,7 @@
 
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Nama Kerja Sama</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
@@ -44,9 +44,14 @@
                 </thead>
 
                 <tbody>
+
+                    @php
+                        $nomor = 1;
+                    @endphp
+
                     @foreach ($kerjasamas as $data)
                         <tr>
-                            <td>{{ $data->id }}</td>
+                            <td>{{-- $data->id --}} {{ $nomor++ }}</td>
                             <td>{{ $data->nama_kerja_sama }}</td>
                             <td>{{ $data->tanggal_mulai }}</td>
                             <td>{{ $data->tanggal_sampai }}</td>
@@ -73,7 +78,7 @@
 
                 <tfoot>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Nama Kerja Sama</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>

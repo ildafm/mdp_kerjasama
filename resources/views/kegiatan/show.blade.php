@@ -65,6 +65,13 @@
                         <td>Nama Dosen</td>
                         <td>{{ $kegiatan->dosen->nama_dosen }}</td>
                     </tr>
+
+                    <tr>
+                        <td colspan="2">
+                            <h2>Tambah Bukti Kegiatan</h2>
+                        </td>
+                    </tr>
+
                 </tbody>
 
             </table>

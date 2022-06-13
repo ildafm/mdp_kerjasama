@@ -32,7 +32,7 @@
 
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Nama Usulan</th>
                         <th>Bentuk Kerjasama</th>
                         <th>Rencana Kegiatan</th>
@@ -45,9 +45,14 @@
                 </thead>
 
                 <tbody>
+
+                    @php
+                        $nomor = 1;
+                    @endphp
+
                     @foreach ($usulans as $data)
                         <tr>
-                            <td>{{ $data->id }}</td>
+                            <td>{{-- $data->id --}}{{ $nomor++ }}</td>
                             <td>{{ $data->nama_usulan }}</td>
                             <td>{{ $data->bentuk_kerjasama }}</td>
                             <td>{{ $data->rencana_kegiatan }}</td>
@@ -74,7 +79,7 @@
 
                 <tfoot>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Nama Usulan</th>
                         <th>Bentuk Kerjasama</th>
                         <th>Rencana Kegiatan</th>

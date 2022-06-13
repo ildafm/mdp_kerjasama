@@ -27,7 +27,7 @@
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Nama Pengguna</th>
                         <th>Email</th>
                         <th>Level</th>
@@ -35,12 +35,23 @@
                     </tr>
                 </thead>
                 <tbody>
+
+                    @php
+                        $nomor = 1;
+                    @endphp
+
                     @foreach ($users as $data)
                         <tr>
-                            <td>{{ $data->id }}</td>
+                            <td>{{-- $data->id --}}{{ $nomor++ }}</td>
                             <td>{{ $data->name }}</td>
                             <td>{{ $data->email }}</td>
-                            <td>{{ $data->level }}</td>
+                            @php
+                                if ($data->level == 'A') {
+                                    echo '<td>Admin</td>';
+                                } else {
+                                    echo '<td>Dosen</td>';
+                                }
+                            @endphp
                             <td>
                                 {{-- Button Edit --}}
                                 <a href="{{ route('users.edit', ['user' => $data->id]) }}"
@@ -56,7 +67,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Nama Pengguna</th>
                         <th>Email</th>
                         <th>Level</th>

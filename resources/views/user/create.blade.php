@@ -42,35 +42,40 @@
                     @enderror
                 </div>
 
-                {{-- input password --}}
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="text" name='password' autocomplete="new-password"
-                        class="form-control @error('password') is-invalid @enderror" required
-                        placeholder="Masukan Password">
-                    @error('password')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                {{-- password and password confirm and level row --}}
+                <div class="row">
+                    {{-- input password --}}
+                    <div class="form-group col-lg-4 col-sm-12 col-md-12">
+                        <label for="password">Password</label>
+                        <input type="text" name='password' autocomplete="new-password"
+                            class="form-control @error('password') is-invalid @enderror" required
+                            placeholder="Masukan Password">
+                        @error('password')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- konfirmasi password --}}
+                    <div class="form-group col-lg-4 col-sm-12 col-md-12">
+                        <label for="password-confirm">Konfirmasi Password</label>
+                        <input id=" password-confirm" type="text" class="form-control" name="password_confirmation"
+                            required placeholder="Konfirmasi Password" autocomplete="new-password">
+                    </div>
+
+                    {{-- input level --}}
+                    <div class="form-group col-lg-4 col-sm-12 col-md-12">
+                        <label for="level">Level</label>
+                        <select class="form-control" name='level'>
+                            <option value='A'>Admin</option>
+                            <option value='D'>Dosen</option>
+                        </select>
+                        @error('level')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
 
-                {{-- konfirmasi password --}}
-                <div class="form-group">
-                    <label for="password-confirm">Konfirmasi Password</label>
-                    <input id=" password-confirm" type="text" class="form-control" name="password_confirmation" required
-                        placeholder="Konfirmasi Password" autocomplete="new-password">
-                </div>
 
-                {{-- input level --}}
-                <div class="form-group">
-                    <label for="level">Level</label>
-                    <select class="form-control" name='level'>
-                        <option value='A'>Admin</option>
-                        <option value='D'>Dosen</option>
-                    </select>
-                    @error('level')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
 
         </div>
 

@@ -55,8 +55,8 @@
                             <i class="fas fa-user mr-2"></i> Profile
                         </a>
 
-                        {{-- logout button --}}
                         <div class="dropdown-divider"></div>
+                        {{-- logout button --}}
                         <a href="{{ route('logout') }}" onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();" class="dropdown-item">
                             <i class="fas fa-power-off mr-2"></i> Logout
