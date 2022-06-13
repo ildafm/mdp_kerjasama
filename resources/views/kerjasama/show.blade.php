@@ -86,7 +86,16 @@
                                 {{-- add file --}}
                                 <div class="form-group">
                                     <label for="Bukti_Kerjasama">Bukti Kerjasama</label>
-                                    <input type="file" class="form-control" name="Bukti_Kerjasama">
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" name="Bukti_Kerjasama"
+                                                id="exampleInputFile">
+                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                        </div>
+                                        {{-- <div class="input-group-append">
+                                            <span class="input-group-text">Upload</span>
+                                        </div> --}}
+                                    </div>
 
                                     @error('Bukti_Kerjasama')
                                         <div class="text-danger">{{ $message }}</div>
@@ -97,7 +106,7 @@
 
                         <tr>
                             <td colspan="2">
-                                {{-- Kerjasama ID --}}
+                                {{-- getKerjasamaID --}}
                                 <input type="hidden" value="{{ $kerjasama->id }}" name="kerjasama_id">
                                 @error('kerjasama_id')
                                     <div class="text-danger">{{ $message }}</div>
@@ -113,20 +122,6 @@
                 </tbody>
 
             </table>
-
-
-
-
-            {{-- <div class="row">
-                @foreach ($buktiKerjasama as $data)
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <img src="{{ asset('storage/kerjasama/' . $data->foto) }}"
-                            alt="{{ $data->nama_bukti_kerjasama }}">
-                        <center><button class="btn btn-danger btn-sm">Hapus</button></center>
-                    </div>
-                @endforeach
-            </div> --}}
-
         </div>
 
     </div>
@@ -174,7 +169,7 @@
                                     class="btn btn-block btn-primary">Tampil</a>
 
                                 {{-- Button Hapus --}}
-                                <button class="btn btn-block btn-danger btn-hapus" data-file="{{ $data->file }}"
+                                <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
                                     data-namaBuktiKerjasama="{{ $data->nama_bukti_kerjasama }}" data-toggle="modal"
                                     data-target="#modal-sm">Hapus</button>
                             </td>
@@ -223,9 +218,9 @@
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <script>
         // jika tombol hapus ditekan, generate alamat URL untuk proses hapus
-        // file disini adalah file kerjasama
+        // id disini adalah id buktiKerjasama
         $('.btn-hapus').click(function() {
-            let file = $(this).attr('data-file');
+            let id = $(this).attr('data-id');
             $('#formDelete').attr('action');
 
             let namaBuktiKerjasama = $(this).attr('data-namaBuktiKerjasama');
@@ -236,6 +231,12 @@
         $('#formDelete [type="submit"]').click(function() {
             $('#formDelete').submit();
         })
+    </script>
+
+    <script>
+        $(function() {
+            bsCustomFileInput.init();
+        });
     </script>
 
 @endsection

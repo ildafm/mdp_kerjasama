@@ -72,6 +72,79 @@
                         </td>
                     </tr>
 
+                    {{-- Barisan Menambahkan data Bukti --}}
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <tr>
+                            <td>
+                                {{-- Nama Bukti Kegiatan --}}
+                                <div class="form-group">
+                                    <label for="Nama_Bukti_Kegiatan">Nama Bukti Kegiatan</label>
+                                    <input type="text" class="form-control" name="Nama_Bukti_Kegiatan"
+                                        placeholder="Enter Nama Bukti Kegiatan">
+
+                                    @error('Nama_Bukti_Kegiatan')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </td>
+                            <td>
+                                {{-- add file --}}
+                                <div class="form-group">
+                                    <label for="Bukti_Kegiatan">Bukti Kegiatan</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" name="Bukti_Kegiatan"
+                                                id="exampleInputFile">
+                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                        </div>
+                                    </div>
+
+                                    @error('Bukti_Kegiatan')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+
+                            </td>
+                            <td>
+                                <div class="row">
+                                    <div class="form-check col">
+                                        <input class="form-check-input" type="checkbox">
+                                        <label class="form-check-label">APT</label>
+                                    </div>
+                                    <div class="form-check col">
+                                        <input class="form-check-input" type="checkbox">
+                                        <label class="form-check-label">APS</label>
+                                    </div>
+                                    <div class="form-check col">
+                                        <input class="form-check-input" type="checkbox">
+                                        <label class="form-check-label">LAMEMBA</label>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2">
+                                {{-- getKegiatanID --}}
+                                <input type="text" value="{{ $kegiatan->id }}" name="kegiatan_id">
+                                @error('kegiatan_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+
+                                {{-- Button Submit --}}
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">Tambahkan Bukti</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </form>
+
                 </tbody>
 
             </table>

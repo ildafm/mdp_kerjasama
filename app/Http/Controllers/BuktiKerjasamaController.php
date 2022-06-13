@@ -29,16 +29,6 @@ class BuktiKerjasamaController extends Controller
     public function create($id)
     {
         //
-//         // $kerjasama = Kerjasama::findOrFail($kerjasama->id);
-//         // BuktiKerjasama::where('kerjasama_id', $kerjasama->id);
-
-//         // $kerjasama = Kerjasama::All();
-//         // $kerjasama = mdp_kerjasama::table("kerjasamas")->pluck("id");
-// dd($id);
-//         return view('buktiKerjasama.create')
-//             // ->with('kerjasama', $kerjasama)
-//             ->with('buktiKerjasama', $buktiKerjasama);
-//         // dump($kerjasama);
     }
 
     /**

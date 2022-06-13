@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Kerjasama;
 use App\Models\Dosen;
 
+use Illuminate\Support\Facades\DB;
+
 class KegiatanController extends Controller
 {
     /**
@@ -80,7 +82,11 @@ class KegiatanController extends Controller
     public function show(Kegiatan $kegiatan)
     {
         //
-        return view('kegiatan.show')->with('kegiatan', $kegiatan);
+        $buktiKegiatan = DB::select("SELECT bukti_kegiatans.id, bukti_kegiatans.nama_bukti_kegiatan, bukti_kegiatans.file, kegiatans.bentuk_kegiatan, bukti_kerjasamas.nama_bukti_kerjasama, ceklist_apt, ceklist_aps, ceklist_lamemba FROM bukti_kegiatans JOIN kegiatans ON bukti_kegiatans.id = kegiatans.id JOIN bukti_kerjasamas ON bukti_kegiatans.bukti_kerjasamas_id = bukti_kerjasamas.id");
+
+        return view('kegiatan.show')
+            ->with('buktiKegiatan', $buktiKegiatan)
+            ->with('kegiatan', $kegiatan);
     }
 
     /**
