@@ -21,6 +21,13 @@
 
         <div class="card-body">
 
+            {{-- Tampilkan Pesan --}}
+            @if (session()->has('pesan'))
+                <div class='alert alert-success'>
+                    {{ session()->get('pesan') }}
+                </div>
+            @endif
+
             {{-- Tabel Data --}}
             <table id="example1" class="table table-bordered table-striped">
 
@@ -69,9 +76,10 @@
                     {{-- Barisan Menambahkan data Bukti --}}
                     <form action="{{ route('buktiKerjasamas.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
+
+                        {{-- Nama Bukti Kerjasama --}}
                         <tr>
-                            <td>
-                                {{-- Nama Bukti Kerjasama --}}
+                            <td colspan="2">
                                 <div class="form-group">
                                     <label for="Nama_Bukti_Kerjasama">Nama Bukti Kerjasama</label>
                                     <input type="text" class="form-control" name="Nama_Bukti_Kerjasama"
@@ -82,8 +90,11 @@
                                     @enderror
                                 </div>
                             </td>
-                            <td>
-                                {{-- add file --}}
+                        </tr>
+
+                        {{-- add file --}}
+                        <tr>
+                            <td colspan="2">
                                 <div class="form-group">
                                     <label for="Bukti_Kerjasama">Bukti Kerjasama</label>
                                     <div class="input-group">
@@ -92,9 +103,9 @@
                                                 id="exampleInputFile">
                                             <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                         </div>
-                                        {{-- <div class="input-group-append">
+                                        <div class="input-group-append">
                                             <span class="input-group-text">Upload</span>
-                                        </div> --}}
+                                        </div>
                                     </div>
 
                                     @error('Bukti_Kerjasama')
@@ -103,7 +114,6 @@
                                 </div>
                             </td>
                         </tr>
-
                         <tr>
                             <td colspan="2">
                                 {{-- getKerjasamaID --}}
@@ -126,6 +136,7 @@
 
     </div>
 
+    {{-- Tabel Bukti Kerjasama --}}
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Tabel Bukti Kerjasama</h3>
@@ -140,7 +151,7 @@
         </div>
 
         <div class="card-body">
-            {{-- Tabel Data Bukti Kerjasama --}}
+            {{-- Data Tabel Bukti Kerjasama --}}
             <table id="example1" class="table table-bordered table-striped">
 
                 <thead>
@@ -158,23 +169,28 @@
                         $nomor = 1;
                     @endphp
 
-                    @foreach ($buktiKerjasama as $data)
-                        <tr>
-                            <td> {{ $nomor++ }} </td>
-                            <td>{{ $data->nama_bukti_kerjasama }}</td>
-                            <td>{{ $data->tanggalUpload }}</td>
-                            <td>
-                                {{-- Button Tampil --}}
-                                <a href="{{ url('storage/kerjasama/' . $data->file) }}"
-                                    class="btn btn-block btn-primary">Tampil</a>
+                    @if (count($buktiKerjasama) > 0)
+                        @foreach ($buktiKerjasama as $data)
+                            <tr>
+                                <td> {{ $nomor++ }} </td>
+                                <td>{{ $data->nama_bukti_kerjasama }}</td>
+                                <td>{{ $data->tanggalUpload }}</td>
+                                <td>
+                                    {{-- Button Tampil --}}
+                                    <a href="{{ url('storage/kerjasama/' . $data->file) }}"
+                                        class="btn btn-block btn-primary">Tampil</a>
 
-                                {{-- Button Hapus --}}
-                                <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                    data-namaBuktiKerjasama="{{ $data->nama_bukti_kerjasama }}" data-toggle="modal"
-                                    data-target="#modal-sm">Hapus</button>
-                            </td>
-                        </tr>
-                    @endforeach
+                                    {{-- Button Hapus --}}
+                                    <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                        data-namaBuktiKerjasama="{{ $data->nama_bukti_kerjasama }}" data-toggle="modal"
+                                        data-target="#modal-sm">Hapus</button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <td colspan="4">Belum ada data</td>
+                    @endif
+
                 </tbody>
 
                 <tfoot>
@@ -221,7 +237,7 @@
         // id disini adalah id buktiKerjasama
         $('.btn-hapus').click(function() {
             let id = $(this).attr('data-id');
-            $('#formDelete').attr('action');
+            $('#formDelete').attr('action', '/buktiKerjasamas/' + id);
 
             let namaBuktiKerjasama = $(this).attr('data-namaBuktiKerjasama');
             $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus bukti " + namaBuktiKerjasama + " ?")
@@ -231,12 +247,6 @@
         $('#formDelete [type="submit"]').click(function() {
             $('#formDelete').submit();
         })
-    </script>
-
-    <script>
-        $(function() {
-            bsCustomFileInput.init();
-        });
     </script>
 
 @endsection

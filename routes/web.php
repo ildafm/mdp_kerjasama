@@ -14,6 +14,7 @@ use App\Http\Controllers\StatusController;
 use App\Http\Controllers\UserController;
 
 use App\Http\Controllers\BuktiKerjasamaController;
+use App\Http\Controllers\BuktiKegiatanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,7 @@ use App\Http\Controllers\BuktiKerjasamaController;
 */
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    return redirect()->route('dashboard');
 });
 
 // Route::get('/dashboard', [DashboardController::class, 'index']);
@@ -43,6 +44,7 @@ Route::resource('kategoris', KategoriController::class);
 Route::resource('users', UserController::class);
 
 Route::resource('buktiKerjasamas', BuktiKerjasamaController::class);
+Route::resource('buktiKegiatans', BuktiKegiatanController::class);
 
 Auth::routes();
 

@@ -67,6 +67,7 @@ class BuktiKerjasamaController extends Controller
         $buktiKerjasama->kerjasama_id = $validateData['kerjasama_id'];
 
         $buktiKerjasama->save(); // simpan ke tabel bukti_kerjasama
+        $request->session()->flash('pesan', 'Penambahan data bukti berhasil');
         return redirect()->route('kerjasamas.index');
     }
 
@@ -79,7 +80,7 @@ class BuktiKerjasamaController extends Controller
     public function show($id)
     {
         //
-        dd($id);
+        // dd($id);
     }
 
     /**
@@ -115,6 +116,6 @@ class BuktiKerjasamaController extends Controller
     {
         //
         $buktiKerjasama->delete();
-        return redirect()->route('kerjasamas.index')->with('pesan', "Hapus data $buktiKerjasama->nama_bukti_kerjasama berhasil");
+        return redirect()->route('kerjasamas.index')->with('pesan', "Hapus data bukti $buktiKerjasama->nama_bukti_kerjasama berhasil");
     }
 }

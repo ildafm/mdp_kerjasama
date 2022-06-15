@@ -6,7 +6,7 @@ use App\Models\Kegiatan;
 use Illuminate\Http\Request;
 use App\Models\Kerjasama;
 use App\Models\Dosen;
-
+use App\Models\Unit;
 use Illuminate\Support\Facades\DB;
 
 class KegiatanController extends Controller
@@ -82,11 +82,19 @@ class KegiatanController extends Controller
     public function show(Kegiatan $kegiatan)
     {
         //
-        $buktiKegiatan = DB::select("SELECT bukti_kegiatans.id, bukti_kegiatans.nama_bukti_kegiatan, bukti_kegiatans.file, kegiatans.bentuk_kegiatan, bukti_kerjasamas.nama_bukti_kerjasama, ceklist_apt, ceklist_aps, ceklist_lamemba FROM bukti_kegiatans JOIN kegiatans ON bukti_kegiatans.id = kegiatans.id JOIN bukti_kerjasamas ON bukti_kegiatans.bukti_kerjasamas_id = bukti_kerjasamas.id");
+        $buktiKegiatans = DB::select("SELECT bukti_kegiatans.id as id_bukti_kegiatan, bukti_kegiatans.nama_bukti_kegiatan as nama_bukti_kegiatan, kegiatans.keterangan as keterangan_kegiatan, units.nama_unit, ceklist_apt, ceklist_aps, ceklist_lamemba, LEFT(bukti_kegiatans.created_at, 10) as tanggal_upload_bukti, bukti_kegiatans.file as 'file'
+        FROM bukti_kegiatans 
+        JOIN kegiatans ON bukti_kegiatans.kegiatans_id = kegiatans.id
+        JOIN bukti_kegiatan_units ON bukti_kegiatans.id = bukti_kegiatan_units.bukti_kegiatans_id
+        JOIN units ON bukti_kegiatan_units.units_id = units.id
+        WHERE bukti_kegiatans.kegiatans_id = $kegiatan->id");
+
+        $units = Unit::All();
 
         return view('kegiatan.show')
-            ->with('buktiKegiatan', $buktiKegiatan)
-            ->with('kegiatan', $kegiatan);
+            ->with('buktiKegiatans', $buktiKegiatans)
+            ->with('kegiatan', $kegiatan)
+            ->with('units', $units);
     }
 
     /**

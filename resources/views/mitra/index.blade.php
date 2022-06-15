@@ -47,7 +47,8 @@
 
                     @foreach ($mitras as $data)
                         <tr>
-                            <td>{{-- $data->id --}}
+                            <td>
+                                {{-- $data->id --}}
                                 {{ $nomor++ }}
                             </td>
                             <td>{{ $data->nama_mitra }}</td>

@@ -2,7 +2,6 @@
 @section('title', 'Kegiatan')
 
 @section('content')
-
     <div class="card">
         <div class="card-header">
 
@@ -73,74 +72,98 @@
                     </tr>
 
                     {{-- Barisan Menambahkan data Bukti --}}
-                    <form action="" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('buktiKegiatans.store') }}" method="POST" enctype="multipart/form-data"
+                        id="formBuktiKegiatan">
                         @csrf
+
+                        {{-- Nama Bukti Kegiatan --}}
                         <tr>
-                            <td>
-                                {{-- Nama Bukti Kegiatan --}}
+                            <td colspan="2">
                                 <div class="form-group">
-                                    <label for="Nama_Bukti_Kegiatan">Nama Bukti Kegiatan</label>
-                                    <input type="text" class="form-control" name="Nama_Bukti_Kegiatan"
+                                    <label for="nama_bukti_kegiatan">Nama Bukti Kegiatan</label>
+                                    <input type="text" class="form-control" name="nama_bukti_kegiatan"
                                         placeholder="Enter Nama Bukti Kegiatan">
 
-                                    @error('Nama_Bukti_Kegiatan')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </td>
-                            <td>
-                                {{-- add file --}}
-                                <div class="form-group">
-                                    <label for="Bukti_Kegiatan">Bukti Kegiatan</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="Bukti_Kegiatan"
-                                                id="exampleInputFile">
-                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                        </div>
-                                    </div>
-
-                                    @error('Bukti_Kegiatan')
+                                    @error('nama_bukti_kegiatan')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </td>
                         </tr>
 
+                        {{-- add file --}}
                         <tr>
-                            <td>
+                            <td colspan="2">
+                                <div class="form-group">
+                                    <label for="bukti_kegiatan">Bukti Kegiatan</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" name="bukti_kegiatan"
+                                                id="exampleInputFile">
+                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">Upload</span>
+                                        </div>
+                                    </div>
 
-                            </td>
-                            <td>
-                                <div class="row">
-                                    <div class="form-check col">
-                                        <input class="form-check-input" type="checkbox">
-                                        <label class="form-check-label">APT</label>
-                                    </div>
-                                    <div class="form-check col">
-                                        <input class="form-check-input" type="checkbox">
-                                        <label class="form-check-label">APS</label>
-                                    </div>
-                                    <div class="form-check col">
-                                        <input class="form-check-input" type="checkbox">
-                                        <label class="form-check-label">LAMEMBA</label>
-                                    </div>
+                                    @error('bukti_kegiatan')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </td>
                         </tr>
 
                         <tr>
                             <td colspan="2">
-                                {{-- getKegiatanID --}}
-                                <input type="text" value="{{ $kegiatan->id }}" name="kegiatan_id">
-                                @error('kegiatan_id')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
 
-                                {{-- Button Submit --}}
-                                <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Tambahkan Bukti</button>
+                                <div class="row">
+                                    <div class="form-check col">
+                                        <input class="form-check-input" type="checkbox" name="apt">
+                                        <label class="form-check-label">APT</label>
+                                    </div>
+                                    <div class="form-check col">
+                                        <input class="form-check-input" type="checkbox" name="aps">
+                                        <label class="form-check-label">APS</label>
+                                    </div>
+                                    <div class="form-check col">
+                                        <input class="form-check-input" type="checkbox" name="lamemba">
+                                        <label class="form-check-label">LAMEMBA</label>
+                                    </div>
                                 </div>
+                            </td>
+                        </tr>
+
+                        {{-- getUnit --}}
+                        <tr>
+                            <td colspan="2">
+                                <div class="form-group">
+                                    {{-- Nama Unit --}}
+                                    <label for="nama_unit">Nama Unit</label>
+                                    <select class="form-control select2" name='nama_unit'>
+                                        @foreach ($units as $data)
+                                            <option value="{{ $data->id }}">{{ $data->id }} -
+                                                {{ $data->nama_unit }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('nama_unit')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+
+                                    {{-- getKegiatanID --}}
+                                    <input type="hidden" value="{{ $kegiatan->id }}" class="form-control"
+                                        name="kegiatan_id" readonly>
+                                    @error('kegiatan_id')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </td>
+                        </tr>
+
+                        {{-- Button Submit --}}
+                        <tr>
+                            <td colspan="2">
+                                <button type="submit" id="" class="btn btn-primary">Tambahkan Bukti</button>
                             </td>
                         </tr>
                     </form>
@@ -151,6 +174,127 @@
 
         </div>
 
+    </div>
+
+    {{-- Tabel Bukti Kegiatan --}}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Bukti Kegiatan</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+        </div>
+
+        <div class="card-body">
+            {{-- Tampilkan Pesan --}}
+            @if (session()->has('pesan'))
+                <div class='alert alert-success'>
+                    {{ session()->get('pesan') }}
+                </div>
+            @endif
+
+            {{-- Tabel Data --}}
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Bukti Kegiatan</th>
+                        <th>Keterangan Kegiatan</th>
+                        <th>Nama Unit</th>
+                        <th>APT</th>
+                        <th>APS</th>
+                        <th>LAMEMBA</th>
+                        <th>Tanggal Upload</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @php
+                        $nomor = 1;
+                    @endphp
+
+                    @if (count($buktiKegiatans) > 0)
+                        @foreach ($buktiKegiatans as $data)
+                            <tr>
+                                <td>
+                                    {{ $nomor++ }}
+                                </td>
+                                <td>
+                                    {{ $data->nama_bukti_kegiatan }}
+                                </td>
+                                <td>
+                                    {{ $data->keterangan_kegiatan }}
+                                </td>
+                                <td>
+                                    {{ $data->nama_unit }}
+                                </td>
+                                <td>
+                                    @if ($data->ceklist_apt == 'Y')
+                                        Ya
+                                    @else
+                                        Tidak
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($data->ceklist_aps == 'Y')
+                                        Ya
+                                    @else
+                                        Tidak
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($data->ceklist_lamemba == 'Y')
+                                        Ya
+                                    @else
+                                        Tidak
+                                    @endif
+                                </td>
+                                <td>
+                                    {{ $data->tanggal_upload_bukti }}
+                                </td>
+                                <td>
+                                    {{-- Button Tampil --}}
+                                    <a href="{{ url('storage/kegiatan/' . $data->file) }}"
+                                        class="btn btn-block btn-primary">Tampil</a>
+
+                                    {{-- Button Hapus --}}
+                                    {{-- <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                        data-toggle="modal" data-target="#modal-sm"
+                                        data-namaMitra="{{ $data->nama_mitra }}">Hapus</button> --}}
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <td colspan="9">Belum ada Data</td>
+                    @endif
+
+
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Bukti Kegiatan</th>
+                        <th>Keterangan Kegiatan</th>
+                        <th>Nama Unit</th>
+                        <th>APT</th>
+                        <th>APS</th>
+                        <th>LAMEMBA</th>
+                        <th>Tanggal Upload</th>
+                        <th>Aksi</th>
+                    </tr>
+                </tfoot>
+            </table>
+
+        </div>
     </div>
 
     {{-- Modal Layout --}}
@@ -195,6 +339,16 @@
         $('#formDelete [type="submit"]').click(function() {
             $('#formDelete').submit();
         })
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.submitBtn').click(function() {
+                $('#formBuktiKegiatan').submit();
+                $('#formBuktiKegiatanUnit').submit();
+
+            });
+        });
     </script>
 
 @endsection

@@ -11,4 +11,7 @@ class BuktiKegiatan extends Model
     public function kegiatan(){
         return $this->belongsTo(Kegiatan::class);
     }
+    public function buktiKegiatanUnit(){
+        return $this->hasMany(BuktiKegiatanUnit::class);
+    }
 }

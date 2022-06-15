@@ -329,6 +329,12 @@
 
         document.getElementById("date").innerHTML = day + ", " + date + " " + month + " " + year;
     </script>
+
+    <script>
+        $(function() {
+            bsCustomFileInput.init();
+        });
+    </script>
 </body>
 
 </html>

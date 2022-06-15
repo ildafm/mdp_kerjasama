@@ -87,10 +87,6 @@ class KerjasamaController extends Controller
     public function show(Kerjasama $kerjasama)
     {
         //
-        // $buktiKerjasama = BuktiKerjasama::All();
-        // $buktiKerjasama = BuktiKerjasama::where('kerjasama_id', $kerjasama->id);
-        // $kerjasama = Kerjasama::findOrFail($kerjasama->id);
-
         $buktiKerjasama = DB::select("SELECT bukti_kerjasamas.id, nama_bukti_kerjasama, bukti_kerjasamas.file, LEFT(bukti_kerjasamas.created_at, 10) as tanggalUpload 
         FROM bukti_kerjasamas
         JOIN kerjasamas on bukti_kerjasamas.kerjasama_id = kerjasamas.id
