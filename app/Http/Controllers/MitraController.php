@@ -72,6 +72,7 @@ class MitraController extends Controller
     {
         //
         // dump($mitra);
+
         return view('mitra.edit')->with('mitra', $mitra);
     }
 
@@ -85,6 +86,7 @@ class MitraController extends Controller
     public function update(Request $request, Mitra $mitra)
     {
         //
+
         $validateData = $request->validate([
             'nama_mitra' => 'required',
             'tingkat' => 'required'
@@ -105,6 +107,8 @@ class MitraController extends Controller
     public function destroy(Mitra $mitra)
     {
         //
+        $this->authorize('viewAny', User::class);
+
         $mitra->delete();
         return redirect()->route('mitras.index')->with('pesan', "Hapus data $mitra->nama_mitra berhasil");
         // dump($mitra->id);

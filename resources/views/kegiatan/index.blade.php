@@ -72,10 +72,12 @@
                                 <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
                                     class="btn btn-block btn-warning">Ubah</a>
 
-                                {{-- Button Hapus --}}
-                                <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                    data-bentukKegiatan="{{ $data->bentuk_kegiatan }}" data-toggle="modal"
-                                    data-target="#modal-sm">Hapus</button>
+                                @if (Auth::user()->level == 'A')
+                                    {{-- Button Hapus --}}
+                                    <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                        data-bentukKegiatan="{{ $data->bentuk_kegiatan }}" data-toggle="modal"
+                                        data-target="#modal-sm">Hapus</button>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

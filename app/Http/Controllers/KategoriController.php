@@ -16,6 +16,8 @@ class KategoriController extends Controller
     public function index()
     {
         //
+        $this->authorize('viewAny', User::class);
+
         $kategoris = Kategori::All();
         return view('kategori.index')->with('kategoris', $kategoris);
     }
@@ -28,6 +30,8 @@ class KategoriController extends Controller
     public function create()
     {
         //
+        $this->authorize('viewAny', User::class);
+        
         return view('kategori.create');
     }
 
@@ -40,6 +44,8 @@ class KategoriController extends Controller
     public function store(Request $request)
     {
         //
+        $this->authorize('viewAny', User::class);
+
         $validateData = $request->validate([
             'nama_kategori' => 'required'
         ]);
@@ -61,6 +67,8 @@ class KategoriController extends Controller
     public function show(Kategori $kategori)
     {
         //
+        $this->authorize('viewAny', User::class);
+
         return view('kategori.show')->with('kategori', $kategori);
     }
 
@@ -73,6 +81,8 @@ class KategoriController extends Controller
     public function edit(Kategori $kategori)
     {
         //
+        $this->authorize('viewAny', User::class);
+
         return view('kategori.edit')->with('kategori', $kategori);
     }
 
@@ -109,6 +119,8 @@ class KategoriController extends Controller
     public function destroy(Kategori $kategori)
     {
         //
+        $this->authorize('viewAny', User::class);
+
         $kategori->delete();
         return redirect()->route('kategoris.index')->with('pesan', "Hapus data $kategori->nama_kategori berhasil");
     }

@@ -18,6 +18,7 @@ class UserPolicy
     public function viewAny(User $user)
     {
         //
+        return $user->level == 'A';
     }
 
     /**
@@ -89,5 +90,6 @@ class UserPolicy
     public function forceDelete(User $user, User $model)
     {
         //
+
     }
 }

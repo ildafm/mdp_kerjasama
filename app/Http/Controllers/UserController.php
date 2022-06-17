@@ -20,6 +20,7 @@ class UserController extends Controller
     public function index()
     {
         //
+        $this->authorize('viewAny', User::class);
         $users = User::all();
         return view('user.index')
             ->with('users', $users);
@@ -33,6 +34,8 @@ class UserController extends Controller
     public function create()
     {
         //
+        $this->authorize('viewAny', User::class);
+
         return view('user.create');
     }
 
@@ -45,6 +48,9 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
+
+        $this->authorize('viewAny', User::class);
+
         $validateData = $request->validate([
             'name' => 'required | string',
             'email' => 'required | unique:users| email | max:255 | string',
@@ -72,6 +78,8 @@ class UserController extends Controller
     public function show($id)
     {
         //
+        $this->authorize('viewAny', User::class);
+
     }
 
     /**
@@ -83,6 +91,8 @@ class UserController extends Controller
     public function edit(User $user) //User $user = $id
     {
         //
+        $this->authorize('viewAny', User::class);
+
         return view('user.edit')->with('user', $user);
     }
 
@@ -96,6 +106,8 @@ class UserController extends Controller
     public function update(Request $request, User $user) //User $user = $id
     {
         //
+        $this->authorize('viewAny', User::class);
+
         $validateData = $request->validate([
             'name' => 'required | string',
             'level' => 'required',
@@ -130,6 +142,7 @@ class UserController extends Controller
     public function destroy(User $user) //User $user = $id
     {
         //
+        $this->authorize('viewAny', User::class);
         $user->delete();
         return redirect()->route('users.index')->with('pesan', "Hapus data $user->name berhasil");
     }

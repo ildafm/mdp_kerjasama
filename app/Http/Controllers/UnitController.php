@@ -15,6 +15,8 @@ class UnitController extends Controller
     public function index()
     {
         //
+        $this->authorize('viewAny', User::class);
+
         $units = Unit::All();
         return view('unit.index')->with('units', $units);
     }
@@ -27,6 +29,8 @@ class UnitController extends Controller
     public function create()
     {
         //
+        $this->authorize('viewAny', User::class);
+
         return view('unit.create');
     }
 
@@ -39,6 +43,8 @@ class UnitController extends Controller
     public function store(Request $request)
     {
         //
+        $this->authorize('viewAny', User::class);
+
         $validateData = $request->validate([
             
             'nama_unit' => 'required'
@@ -61,6 +67,8 @@ class UnitController extends Controller
     public function show(Unit $unit)
     {
         //
+        $this->authorize('viewAny', User::class);
+
         return view('unit.show')->with('unit', $unit);
     }
 
@@ -73,6 +81,8 @@ class UnitController extends Controller
     public function edit(Unit $unit)
     {
         //
+        $this->authorize('viewAny', User::class);
+
         return view('unit.edit')->with('unit', $unit);
     }
 
@@ -86,6 +96,8 @@ class UnitController extends Controller
     public function update(Request $request, Unit $unit)
     {
         //
+        $this->authorize('viewAny', User::class);
+
         $this->validate($request, [
             'nama_unit' => 'required'
         ]);
@@ -109,6 +121,8 @@ class UnitController extends Controller
     public function destroy(Unit $unit)
     {
         //
+        $this->authorize('viewAny', User::class);
+
         $unit->delete();
         return redirect()->route('units.index')->with('pesan', "Hapus data $unit->nama_unit berhasil");
     }

@@ -63,10 +63,12 @@
                                 <a href="{{ route('mitras.edit', ['mitra' => $data->id]) }}"
                                     class="btn btn-block btn-warning">Ubah</a>
 
-                                {{-- Button Hapus --}}
-                                <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                    data-toggle="modal" data-target="#modal-sm"
-                                    data-namaMitra="{{ $data->nama_mitra }}">Hapus</button>
+                                @if (Auth::user()->level == 'A')
+                                    {{-- Button Hapus --}}
+                                    <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                        data-toggle="modal" data-target="#modal-sm"
+                                        data-namaMitra="{{ $data->nama_mitra }}">Hapus</button>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
