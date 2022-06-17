@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title')</title>
+    <title>@yield('title') @yield('dashboard')</title>
 
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -57,8 +57,10 @@
 
                         <div class="dropdown-divider"></div>
                         {{-- logout button --}}
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();" class="dropdown-item">
+                        <a href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();"
+                            class="dropdown-item">
                             <i class="fas fa-power-off mr-2"></i> Logout
                         </a>
                         {{-- logout form --}}
@@ -151,34 +153,70 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a href="{{ url('/units') }}" class="nav-link">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                    Unit
-                                </p>
-                            </a>
-                        </li>
+                        @php
+                            if (Auth::user()->level == 'A') {
+                                // Units
+                                echo '<li class="nav-item">';
+                                echo '<a href="/units" class="nav-link">';
+                                echo '<i class="nav-icon fas fa-users"></i>';
+                                echo '<p>';
+                                echo '  Unit';
+                                echo '</p>';
+                                echo '</a>';
+                                echo '</li>';
+                            
+                                // Dosens
+                                echo '<li class="nav-item">';
+                                echo '<a href="/dosens" class="nav-link">';
+                                echo '<i class="nav-icon fas fa-user"></i>';
+                                echo '<p>';
+                                echo '  Dosen';
+                                echo '</p>';
+                                echo '</a>';
+                                echo '</li>';
+                            
+                                // Status
+                                echo '<li class="nav-item">';
+                                echo '<a href="/statuses" class="nav-link">';
+                                echo '<i class="nav-icon fas fa-flag"></i>';
+                                echo '<p>';
+                                echo '  Status';
+                                echo '</p>';
+                                echo '</a>';
+                                echo '</li>';
+                            
+                                // Status
+                                echo '<li class="nav-item">';
+                                echo '<a href="/kategoris" class="nav-link">';
+                                echo '<i class="nav-icon fas fa-layer-group"></i>';
+                                echo '<p>';
+                                echo '  Kategori';
+                                echo '</p>';
+                                echo '</a>';
+                                echo '</li>';
+                            
+                                // Users
+                                echo '<li class="nav-item">';
+                                echo '<a href="/users" class="nav-link">';
+                                echo '<i class="nav-icon fas fa-address-card"></i>';
+                                echo '<p>';
+                                echo '  User';
+                                echo '</p>';
+                                echo '</a>';
+                                echo '</li>';
+                            }
+                        @endphp
 
-                        <li class="nav-item">
-                            <a href="{{ url('/dosens') }}" class="nav-link">
-                                <i class="nav-icon fas fa-user"></i>
-                                <p>
-                                    Dosen
-                                </p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="{{ url('/statuses') }}" class="nav-link">
                                 <i class="nav-icon fas fa-flag"></i>
                                 <p>
                                     Status
                                 </p>
                             </a>
-                        </li>
+                        </li> --}}
 
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="{{ url('/kategoris') }}" class="nav-link">
                                 <i class="nav-icon fas fa-layer-group"></i>
                                 <p>
@@ -194,21 +232,9 @@
                                     User
                                 </p>
                             </a>
-                        </li>
-
-                        <li class="nav-item">
-                            {{-- logout button --}}
-                            {{-- <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();" class="nav-link">
-                                <i class="nav-icon fas fa-copy"></i>
-                                Logout
-                            </a> --}}
-                            {{-- logout form --}}
-                            {{-- <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                class="d-none">
-                                @csrf
-                            </form> --}}
-                        </li>
+                        </li> --}}
+                    </ul>
+                </nav>
             </div>
         </aside>
 
@@ -218,12 +244,22 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>@yield('title')</h1>
+                            @if (View::hasSection('dashboard'))
+                                <h1>@yield('dashboard')</h1>
+                            @else
+                                <h1>@yield('title')</h1>
+                            @endif
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
-                                <li class="breadcrumb-item active">@yield('title')</li>
+                                @if (View::hasSection('dashboard'))
+                                    <li class="breadcrumb-item active">@yield('dashboard')</li>
+                                @else
+                                    <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">@yield('title')</li>
+                                @endif
+
                             </ol>
                         </div>
                     </div>
