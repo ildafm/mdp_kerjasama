@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 15, 2022 at 02:56 PM
+-- Generation Time: Jun 20, 2022 at 07:58 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -47,7 +47,8 @@ INSERT INTO `bukti_kegiatans` (`id`, `nama_bukti_kegiatan`, `file`, `kegiatans_i
 (2, 'Bukti kegiatan 1', 'file-1655293003.png', 1, 'Y', 'Y', 'Y', '2022-06-15 11:36:43', '2022-06-15 11:36:43'),
 (6, 'Bukti kegiatan 2', 'file-1655296043.png', 1, 'Y', 'Y', 'Y', '2022-06-15 12:27:23', '2022-06-15 12:27:23'),
 (7, 'Bukti kegiatan 3', 'file-1655297039.png', 1, 'T', 'Y', 'T', '2022-06-15 12:43:59', '2022-06-15 12:43:59'),
-(8, 'Bukti kegiatan Q1', 'file-1655297673.jpg', 2, 'T', 'T', 'Y', '2022-06-15 12:54:33', '2022-06-15 12:54:33');
+(8, 'Bukti kegiatan Q1', 'file-1655297673.jpg', 2, 'T', 'T', 'Y', '2022-06-15 12:54:33', '2022-06-15 12:54:33'),
+(9, 'Bukti kegiatan 4', 'file-1655298011.png', 1, 'Y', 'Y', 'T', '2022-06-15 13:00:11', '2022-06-15 13:00:11');
 
 -- --------------------------------------------------------
 
@@ -71,7 +72,8 @@ INSERT INTO `bukti_kegiatan_units` (`id`, `units_id`, `bukti_kegiatans_id`, `cre
 (2, 2, 2, '2022-06-15 11:45:15', '2022-06-15 11:45:15'),
 (3, 1, 6, '2022-06-15 12:27:23', '2022-06-15 12:27:23'),
 (4, 3, 7, '2022-06-15 12:43:59', '2022-06-15 12:43:59'),
-(5, 4, 8, '2022-06-15 12:54:33', '2022-06-15 12:54:33');
+(5, 4, 8, '2022-06-15 12:54:33', '2022-06-15 12:54:33'),
+(6, 1, 9, '2022-06-15 13:00:11', '2022-06-15 13:00:11');
 
 -- --------------------------------------------------------
 
@@ -122,7 +124,7 @@ CREATE TABLE `dosens` (
 --
 
 INSERT INTO `dosens` (`id`, `kode_dosen`, `nama_dosen`, `created_at`, `updated_at`) VALUES
-(1, 'D00001', 'Deka', '2022-04-22 07:40:52', '2022-05-31 03:19:36'),
+(1, 'D00001', 'Jhonny', '2022-04-22 07:40:52', '2022-06-20 17:55:43'),
 (2, 'D00002', 'Deka', '2022-04-22 00:41:01', '2022-06-11 12:08:50'),
 (3, 'D00003', 'Adi', '2022-04-22 00:42:17', '2022-04-22 00:42:17'),
 (4, 'D00004', 'Ada', '2022-04-22 00:43:46', '2022-04-22 00:43:46'),
@@ -192,7 +194,7 @@ CREATE TABLE `kegiatans` (
 --
 
 INSERT INTO `kegiatans` (`id`, `tanggal_mulai`, `tanggal_sampai`, `bentuk_kegiatan`, `PIC`, `keterangan`, `kerjasama_id`, `dosen_id`, `created_at`, `updated_at`) VALUES
-(1, '2022-04-30', '2022-05-30', 'Daring', 'P', 'Dilakukan secara daring', 3, 2, '2022-04-25 01:57:59', '2022-06-11 12:36:17'),
+(1, '2022-04-30', '2022-05-30', 'Lepas', 'P', 'Dilakukan secara daring', 2, 2, '2022-04-25 01:57:59', '2022-06-17 12:13:48'),
 (2, '2022-04-25', '2022-05-25', 'Bentuk 1', 'P', 'Keterangan 1', 2, 9, '2022-04-25 01:58:07', '2022-04-25 01:58:07'),
 (4, '2022-06-11', '2022-06-17', 'Bentuk Kegiatan Q3', 'P', 'Keterangan Empat Q1', 3, 2, '2022-06-11 12:09:28', '2022-06-11 12:09:28');
 
@@ -354,7 +356,8 @@ INSERT INTO `units` (`id`, `nama_unit`, `created_at`, `updated_at`) VALUES
 (5, 'Unit Q1', '2022-04-22 00:37:07', '2022-04-26 01:16:30'),
 (6, 'Unit S4', '2022-04-27 03:30:03', '2022-04-27 03:36:18'),
 (7, 'Unit S5', '2022-04-27 03:31:00', '2022-04-27 03:36:24'),
-(8, 'Unit S5', '2022-04-27 03:34:34', '2022-04-27 03:36:29');
+(8, 'Unit S5', '2022-04-27 03:34:34', '2022-04-27 03:36:29'),
+(13, 'Unit Baru Q1', '2022-06-17 11:25:36', '2022-06-17 11:25:36');
 
 -- --------------------------------------------------------
 
@@ -381,7 +384,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `level`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (2, 'MainAccount', 'admin@gmail.com', 'A', NULL, '$2y$10$QJCNAlJ2EBXjxsXYsgZIZu6afA5AJGSFlNNiAv5uBqitIGw.DbTdS', NULL, '2022-05-27 01:55:39', '2022-06-13 15:06:09'),
 (3, 'Admin2', 'admin2@gmail.com', 'A', NULL, '$2y$10$xMOvO5lWLyDJfl5j0ai1u.ZsIu4W2BSG0T2jNBNRv.KdZ7dNa6mvu', NULL, '2022-05-29 02:54:17', '2022-05-29 02:54:17'),
-(4, 'Dosen', 'dosen@gmail.com', 'D', NULL, '$2y$10$99Q3pK58iKDaPS8jsBxaM.7E895ooZLKKo0251usp2y//8xlX0p9W', NULL, '2022-05-29 02:59:11', '2022-05-29 02:59:11');
+(4, 'Dosen', 'dosen@gmail.com', 'D', NULL, '$2y$10$99Q3pK58iKDaPS8jsBxaM.7E895ooZLKKo0251usp2y//8xlX0p9W', NULL, '2022-05-29 02:59:11', '2022-05-29 02:59:11'),
+(5, 'Dosen2', 'dosen2@gmail.com', 'D', NULL, '$2y$10$YqNpVetZcCe3JYiH549svO1zG73fP5oh1ZwRtUJ9M5xhmcjb5pyrG', NULL, '2022-06-17 11:32:46', '2022-06-17 11:32:46');
 
 -- --------------------------------------------------------
 
@@ -409,7 +413,7 @@ CREATE TABLE `usulans` (
 INSERT INTO `usulans` (`id`, `nama_usulan`, `bentuk_kerjasama`, `rencana_kegiatan`, `tanggal_rencana_kegiatan`, `mitra_id`, `dosen_id`, `unit_id`, `created_at`, `updated_at`) VALUES
 (1, 'Usulan 1', 'Kerja sama 1', 'Rencana 1', '2022-04-18', 1, 1, 1, '2022-04-25 04:07:10', '2022-04-25 04:07:10'),
 (2, 'Usulan 2', 'Kerja sama 2', 'Rencana 2', '2022-05-10', 2, 2, 1, '2022-04-25 04:10:11', '2022-05-10 02:14:11'),
-(3, 'sgdg', 'gssg', 'sgssgg', '2022-04-14', 2, 1, 5, '2022-04-25 04:10:27', '2022-04-25 04:10:27');
+(3, 'sgdg', 'gssg', 'sgssgg', '2022-04-14', 2, 4, 5, '2022-04-25 04:10:27', '2022-06-17 12:14:44');
 
 --
 -- Indexes for dumped tables
@@ -537,13 +541,13 @@ ALTER TABLE `usulans`
 -- AUTO_INCREMENT for table `bukti_kegiatans`
 --
 ALTER TABLE `bukti_kegiatans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `bukti_kegiatan_units`
 --
 ALTER TABLE `bukti_kegiatan_units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `bukti_kerjasamas`
@@ -591,13 +595,13 @@ ALTER TABLE `statuses`
 -- AUTO_INCREMENT for table `units`
 --
 ALTER TABLE `units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `usulans`

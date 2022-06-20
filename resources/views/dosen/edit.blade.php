@@ -25,6 +25,16 @@
                 {{-- Form Ubah Data --}}
                 <div class="form-group">
 
+                    {{-- Ubah Kode Dosen --}}
+                    <div class="form-group">
+                        <label for="kode_dosen">Kode Dosen</label>
+                        <input type="text" name='kode_dosen' value="{{ $dosen->kode_dosen }}" readonly
+                            class="form-control @error('kode_dosen') is-invalid @enderror" placeholder="Masukan Nama Dosen">
+                        @error('kode_dosen')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     {{-- Ubah Nama Dosen --}}
                     <div class="form-group">
                         <label for="nama_dosen">Nama Dosen</label>

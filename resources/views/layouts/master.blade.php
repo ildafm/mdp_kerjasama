@@ -36,7 +36,7 @@
                 </li>
 
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a id="date" class="nav-link"></a>
+                    <a id="date" style="color:rgb(0, 0, 0)" class="nav-link"></a>
                 </li>
             </ul>
 
@@ -50,6 +50,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 
+                        {{-- Profile --}}
                         <div class="dropdown-divider"></div>
                         <a href="#" class="dropdown-item">
                             <i class="fas fa-user mr-2"></i> Profile
@@ -351,17 +352,17 @@
         year = n.getFullYear(); //getYear
         date = n.getDate(); //getDate
 
-        // getMonth
+        // listMonth
         months = ["January", "February", "March", "April", "May", "June", "August", "September", "October", "November",
             "December"
         ];
+        // getMonth
         month = months[n.getMonth()];
 
-        // getDay
+        // listDay
         weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        // getDay
         day = weekday[n.getDay()];
-
-
 
         document.getElementById("date").innerHTML = day + ", " + date + " " + month + " " + year;
     </script>
