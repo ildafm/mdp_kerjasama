@@ -1,22 +1,16 @@
 -> Masalah register/tambahUser (Selesai)
 
--> Masalah reset password
-
 -> Masalah penghapusan data mitra dengan modal (Selesai)
 
--> Tabel-tabel bukti belum terpakai (Sedang Proses)
-
--> Foto user
+-> Tabel-tabel bukti belum terpakai (Selesai)
 
 -> posisi logout dan ikon logout (Selesai)
 
--> Menambahkan komentar (Sedikit)
+-> Ubah Pesan eror untuk login (Selesai)
 
--> Ubah Pesan eror untuk login
+-> Memperbaiki Modal (Selesai)
 
--> Memperbaiki Modal (Sedikit)
-
--> Menambahkan Button Tampil dan menu Show (Sedikit)
+-> Menambahkan Button Tampil dan menu Show (Selesai)
 
 -> Modal Status Yang Hanya Mengambil Satu Kata Saja (Selesai)
 
@@ -26,10 +20,18 @@
 
 -> memperbaiki database di tabel bukti_kerjasama //tambahkan kolom kerjasama_id, dan daftar foto untuk menampung data file (Selesai)
 
--> Hapus Button di menu tampil semua menu (Baru di menu kerjasama)
+-> Hapus Button di menu tampil semua menu (Selesai)
 
 -> Bukti belum berhasil route kembali ke menu utama (Selesai)
 
 -> Bukti kerjasama belum berhasil dibuat secara otomatis (Selesai)
 
--> Tidak dapat menghapus bukti kerjasama
+-> Tidak dapat menghapus bukti kerjasama (Selesai)
+
+-> old('value') bisa ditambahkan ke edit, tapi tidak bisa di create pada bagian select option (Selesai)
+
+-> Foto user
+-> Menambahkan komentar (Sedikit)
+-> Masalah reset password
+-> Form ubah bukti kegiatan
+-> Button hapus bukti kegiatan

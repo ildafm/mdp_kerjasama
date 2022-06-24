@@ -21,50 +21,65 @@
             <form action="{{ route('usulans.store') }}" method="POST">
                 @csrf
 
-
+                {{-- Nama Usulan --}}
                 <div class="form-group">
                     <label for="nama_usulan">Nama Usulan </label>
                     <input type="text" name='nama_usulan' class="form-control @error('nama_usulan') is-invalid @enderror"
-                        placeholder="Masukan Nama Usulan">
+                        placeholder="Masukan Nama Usulan" value="{{ old('nama_usulan') }}">
                     @error('nama_usulan')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
+                {{-- Bentuk Kerjasama --}}
                 <div class="form-group">
                     <label for="bentuk_kerjasama">Bentuk Kerjasama </label>
                     <input type="text" name='bentuk_kerjasama'
                         class="form-control @error('bentuk_kerjasama') is-invalid @enderror"
-                        placeholder="Masukan Bentuk Kerjasama">
+                        placeholder="Masukan Bentuk Kerjasama" value="{{ old('bentuk_kerjasama') }}">
                     @error('bentuk_kerjasama')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
+                {{-- Rencana Kegiatan --}}
                 <div class="form-group">
                     <label for="rencana_kegiatan">Rencana Kegiatan </label>
                     <input type="text" name='rencana_kegiatan'
                         class="form-control @error('rencana_kegiatan') is-invalid @enderror"
-                        placeholder="Masukan Rencana Kegiatan">
+                        placeholder="Masukan Rencana Kegiatan" value="{{ old('rencana_kegiatan') }}">
                     @error('rencana_kegiatan')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
+                {{-- Tanggal Rencana Kegiatan --}}
                 <div class="row">
                     <div class="form-group col-lg-3">
                         <label for="tanggal_rencana_kegiatan">Tanggal Rencana Kegiatan</label>
-                        <input type="date" name="tanggal_rencana_kegiatan" id="" class="form-control">
+                        <input type="date" name="tanggal_rencana_kegiatan" id="" class="form-control"
+                            value="{{ old('tanggal_rencana_kegiatan') }}">
                         @error('tanggal_rencana_kegiatan')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
+                    {{-- Nama Mitra --}}
                     <div class="form-group col-lg-3">
                         <label for="nama_mitra">Nama Mitra </label>
-                        <select class="form-control" name="nama_mitra" id="">
+
+                        @php
+                            if (old('nama_mitra') !== null) {
+                                $option = old('nama_mitra');
+                            } else {
+                                $option = 1;
+                            }
+                        @endphp
+
+                        <select class="form-control select2" name="nama_mitra" id="">
                             @foreach ($mitras as $data)
-                                <option value="{{ $data->id }}"> {{ $data->id }} - {{ $data->nama_mitra }}
+                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                    {{ $data->id }} - {{ $data->nama_mitra }}
                                 </option>
                             @endforeach
                         </select>
@@ -73,11 +88,22 @@
                         @enderror
                     </div>
 
+                    {{-- Nama Dosen --}}
                     <div class="form-group col-lg-3">
                         <label for="nama_dosen">Nama Dosen </label>
-                        <select class="form-control" name="nama_dosen" id="">
+
+                        @php
+                            if (old('nama_dosen') !== null) {
+                                $option = old('nama_dosen');
+                            } else {
+                                $option = 1;
+                            }
+                        @endphp
+
+                        <select class="form-control select2" name="nama_dosen" id="">
                             @foreach ($dosens as $data)
-                                <option value="{{ $data->id }}"> {{ $data->id }} - {{ $data->nama_dosen }}
+                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                    {{ $data->id }} - {{ $data->kode_dosen }} - {{ $data->nama_dosen }}
                                 </option>
                             @endforeach
                         </select>
@@ -86,11 +112,22 @@
                         @enderror
                     </div>
 
+                    {{-- Nama Unit --}}
                     <div class="form-group col-lg-3">
                         <label for="nama_unit">Nama Unit </label>
-                        <select class="form-control" name="nama_unit" id="">
+
+                        @php
+                            if (old('nama_unit') !== null) {
+                                $option = old('nama_unit');
+                            } else {
+                                $option = 1;
+                            }
+                        @endphp
+
+                        <select class="form-control select2" name="nama_unit" id="">
                             @foreach ($units as $data)
-                                <option value="{{ $data->id }}"> {{ $data->id }} - {{ $data->nama_unit }}
+                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                    {{ $data->id }} - {{ $data->nama_unit }}
                                 </option>
                             @endforeach
                         </select>

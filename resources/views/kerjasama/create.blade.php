@@ -24,7 +24,7 @@
                 {{-- Nama Kerjasama --}}
                 <div class="form-group">
                     <label for="nama_kerja_sama">Nama Kerjasama</label>
-                    <input type="text" name='nama_kerja_sama'
+                    <input type="text" name='nama_kerja_sama' value="{{ old('nama_kerja_sama') }}"
                         class="form-control @error('nama_kerja_sama') is-invalid @enderror"
                         placeholder="Masukan Nama Kerja Sama">
                     @error('nama_kerja_sama')
@@ -35,7 +35,8 @@
                     {{-- Tanggal Mulai --}}
                     <div class="form-group col-lg-6">
                         <label for="tanggal_mulai">Tanggal Mulai : </label>
-                        <input type="date" name="tanggal_mulai" id="" class="form-control">
+                        <input type="date" name="tanggal_mulai" id="" class="form-control"
+                            value="{{ old('tanggal_mulai') }}">
                         @error('tanggal_mulai')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -44,19 +45,34 @@
                     {{-- Tanggal Sampai --}}
                     <div class="form-group col-lg-6">
                         <label for="tanggal_sampai"> Tanggal Sampai : </label>
-                        <input type="date" name="tanggal_sampai" id="" class="form-control">
+                        <input type="date" name="tanggal_sampai" id="" class="form-control"
+                            value="{{ old('tanggal_sampai') }}">
                         @error('tanggal_sampai')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+                </div>
 
+                <div class="row">
                     {{-- Nama Mitra --}}
-                    <div class="form-group">
+                    <div class="form-group col-lg-4 col-sm-12">
                         <label for="nama_mitra">Nama Mitra</label>
                         <select class="form-control select2" name='nama_mitra'>
+
+                            @php
+                                if (old('nama_mitra') !== null) {
+                                    $option = old('nama_mitra');
+                                } else {
+                                    $option = 1;
+                                }
+                            @endphp
+
                             @foreach ($mitras as $data)
-                                <option value="{{ $data->id }}">{{ $data->id }} - {{ $data->nama_mitra }}</option>
+                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                    {{ $data->id }} - {{ $data->nama_mitra }}
+                                </option>
                             @endforeach
+                            {{-- old('nama_mitra', $kerjasama->mitra_id) == $data->id ? 'selected' : '' --}}
                         </select>
                         @error('nama_mitra')
                             <div class="text-danger">{{ $message }}</div>
@@ -64,42 +80,61 @@
                     </div>
 
                     {{-- Nama Kategori --}}
-                    <div class="row">
-                        <div class="form-group col-lg-6">
-                            <label for="nama_kategori">Nama Kategori</label>
-                            <select class="form-control" name='nama_kategori'>
-                                @foreach ($kategoris as $data)
-                                    <option value="{{ $data->id }}">{{ $data->id }} - {{ $data->nama_kategori }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('nama_kategori')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
+                    <div class="form-group col-lg-4 col-sm-12">
+                        <label for="nama_kategori">Nama Kategori</label>
 
-                        {{-- Nama Status --}}
-                        <div class="form-group col-lg-6">
-                            <label for="nama_status">Nama Status</label>
-                            <select class="form-control" name='nama_status'>
-                                @foreach ($statuses as $data)
-                                    <option value="{{ $data->id }}">{{ $data->id }} - {{ $data->nama_status }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('nama_status')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        @php
+                            if (old('nama_kategori') !== null) {
+                                $option = old('nama_kategori');
+                            } else {
+                                $option = 1;
+                            }
+                        @endphp
+
+                        <select class="form-control" name='nama_kategori'>
+                            @foreach ($kategoris as $data)
+                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                    {{ $data->id }} - {{ $data->nama_kategori }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('nama_kategori')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Nama Status --}}
+                    <div class="form-group col-lg-4 col-sm-12">
+                        <label for="nama_status">Nama Status</label>
+
+                        @php
+                            if (old('nama_status') !== null) {
+                                $option = old('nama_status');
+                            } else {
+                                $option = 1;
+                            }
+                        @endphp
+
+                        <select class="form-control" name='nama_status'>
+                            @foreach ($statuses as $data)
+                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                    {{ $data->id }} - {{ $data->nama_status }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('nama_status')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
-
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </form>
         </div>
 
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        </form>
+    </div>
 
 
-    @endsection
+
+@endsection

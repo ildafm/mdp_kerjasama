@@ -39,11 +39,13 @@ class KerjasamaController extends Controller
         $mitras = Mitra::All();
         $kategoris = Kategori::All();
         $statuses = Status::All();
+        $kerjasamas = Kerjasama::All();
         // dump($mitras);
         return view('kerjasama.create')
             ->with('mitras', $mitras)
             ->with('kategoris', $kategoris)
-            ->with('statuses', $statuses);
+            ->with('statuses', $statuses)
+            ->with('kerjasamas', $kerjasamas);
     }
 
     /**
