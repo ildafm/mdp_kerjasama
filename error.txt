@@ -30,6 +30,8 @@
 
 -> old('value') bisa ditambahkan ke edit, tapi tidak bisa di create pada bagian select option (Selesai)
 
+-> Perbaiki Tanggal(Selesai)
+
 -> Foto user
 -> Menambahkan komentar (Sedikit)
 -> Masalah reset password

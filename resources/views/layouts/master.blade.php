@@ -36,25 +36,27 @@
                 </li>
 
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a id="date" style="color:rgb(0, 0, 0)" class="nav-link"></a>
+
                 </li>
             </ul>
 
             <ul class="navbar-nav ml-auto">
-
+                {{-- Tanggal dan Hari --}}
+                <a id="date" style="color:rgb(0, 0, 0)" class="nav-link"></a>
                 {{-- Setting --}}
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="fas fa-user-tie"></i>
-
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 
-                        {{-- Profile --}}
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-user mr-2"></i> Profile
-                        </a>
+                        @if (Auth::user()->level == 'D')
+                            {{-- Profile --}}
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-user mr-2"></i> Profile
+                            </a>
+                        @endif
 
                         <div class="dropdown-divider"></div>
                         {{-- logout button --}}
@@ -86,22 +88,25 @@
 
                 <div class="user-panel mt-3 pb-3 d-flex">
                     <div class="image mt-2">
-                        <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
+                        <img src="{{ asset('dist/img/user_profile.png') }}" class="img-circle elevation-2"
                             alt="User Image">
                     </div>
 
                     <div class="info">
-                        {{-- Name User --}}
-                        <a href="#" class="">{{ Auth::user()->name }}
-                        </a>
+                        {{-- Nama dan Level --}}
+                        @if (Auth::user()->level == 'A')
+                            <a class="" class="">
+                                {{ Auth::user()->name }}<br>
+                                Admin
+                            </a>
+                        @else
+                            <a href="#" class="">
+                                {{ Auth::user()->name }}<br>
+                                Dosen
+                            </a>
+                        @endif
+
                         <br>
-                        @php
-                            if (Auth::user()->level == 'A') {
-                                echo '<a>Admin</a>';
-                            } else {
-                                echo '<a>Dosen</a>';
-                            }
-                        @endphp
                     </div>
                 </div>
 

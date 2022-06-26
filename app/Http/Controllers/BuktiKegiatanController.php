@@ -137,5 +137,10 @@ class BuktiKegiatanController extends Controller
     public function destroy(BuktiKegiatan $buktiKegiatan)
     {
         //
+        $buktiKegiatanUnit = BuktiKegiatanUnit::where('bukti_kegiatans_id', $buktiKegiatan->id);
+        $buktiKegiatanUnit->delete();
+
+        $buktiKegiatan->delete();
+        return redirect()->route('kerjasamas.index')->with('pesan', "Hapus data bukti $buktiKegiatan->nama_bukti_kerjasama berhasil");
     }
 }

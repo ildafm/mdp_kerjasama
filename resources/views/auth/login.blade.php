@@ -61,10 +61,11 @@
 
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <p class="h1"><b>MDP Kerja Sama</b></p>
+                {{-- <p class="h1"><b>MDP Kerjasama</b></p> --}}
+                <img src="{{ asset('dist/img/logo-UMDP.png') }}" alt="Universitas MDP">
             </div>
             <div class="card-body">
-                <p class="login-box-msg">Sign in to start your session</p>
+                <p class="login-box-msg">MDP Kerjasama</p>
 
                 {{-- Form Login --}}
                 <form action="{{ route('login') }}" method="post">

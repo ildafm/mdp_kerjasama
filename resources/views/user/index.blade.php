@@ -28,6 +28,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Kode Dosen</th>
                         <th>Nama Pengguna</th>
                         <th>Email</th>
                         <th>Level</th>
@@ -43,6 +44,7 @@
                     @foreach ($users as $data)
                         <tr>
                             <td>{{-- $data->id --}}{{ $nomor++ }}</td>
+                            <td>{{ $data->kode_dosen }}</td>
                             <td>{{ $data->name }}</td>
                             <td>{{ $data->email }}</td>
                             @php
@@ -53,6 +55,9 @@
                                 }
                             @endphp
                             <td>
+                                {{-- Button Tampil --}}
+                                <a href="{{ url('users/' . $data->id) }}" class="btn btn-block btn-primary">Tampil</a>
+
                                 {{-- Button Edit --}}
                                 <a href="{{ route('users.edit', ['user' => $data->id]) }}"
                                     class="btn btn-block btn-warning">Ubah</a>
@@ -68,6 +73,7 @@
                 <tfoot>
                     <tr>
                         <th>No</th>
+                        <th>Kode Dosen</th>
                         <th>Nama Pengguna</th>
                         <th>Email</th>
                         <th>Level</th>

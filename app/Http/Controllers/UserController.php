@@ -53,6 +53,7 @@ class UserController extends Controller
 
         $validateData = $request->validate([
             'name' => 'required | string',
+            'kode_dosen' => 'required | max:6 | string | unique:users',
             'email' => 'required | unique:users| email | max:255 | string',
             'password' => 'required | min:8 | confirmed | string',
             'level' => 'required'
@@ -60,6 +61,7 @@ class UserController extends Controller
 
         $user = new User();
         $user->name = $validateData['name'];
+        $user->kode_dosen = $validateData['kode_dosen'];
         $user->email = $validateData['email'];
         $user->password = Hash::make($validateData['password']);
         $user->level = $validateData['level'];
@@ -75,10 +77,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
         //
         $this->authorize('viewAny', User::class);
+        
+        return view('user.show')->with('user', $user);
 
     }
 
@@ -110,6 +114,7 @@ class UserController extends Controller
 
         $validateData = $request->validate([
             'name' => 'required | string',
+            'password' => 'required_with:password_confirmation|same:password_confirmation',
             'level' => 'required',
         ]);
 
@@ -128,7 +133,6 @@ class UserController extends Controller
             ]); 
         }
        
-
         $request->session()->flash('pesan', 'Perubahan data berhasil');
         return redirect()->route('users.index');
     }

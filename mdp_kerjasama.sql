@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 20, 2022 at 07:58 PM
+-- Generation Time: Jun 26, 2022 at 04:49 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -44,7 +44,6 @@ CREATE TABLE `bukti_kegiatans` (
 --
 
 INSERT INTO `bukti_kegiatans` (`id`, `nama_bukti_kegiatan`, `file`, `kegiatans_id`, `ceklist_apt`, `ceklist_aps`, `ceklist_lamemba`, `created_at`, `updated_at`) VALUES
-(2, 'Bukti kegiatan 1', 'file-1655293003.png', 1, 'Y', 'Y', 'Y', '2022-06-15 11:36:43', '2022-06-15 11:36:43'),
 (6, 'Bukti kegiatan 2', 'file-1655296043.png', 1, 'Y', 'Y', 'Y', '2022-06-15 12:27:23', '2022-06-15 12:27:23'),
 (7, 'Bukti kegiatan 3', 'file-1655297039.png', 1, 'T', 'Y', 'T', '2022-06-15 12:43:59', '2022-06-15 12:43:59'),
 (8, 'Bukti kegiatan Q1', 'file-1655297673.jpg', 2, 'T', 'T', 'Y', '2022-06-15 12:54:33', '2022-06-15 12:54:33'),
@@ -69,7 +68,6 @@ CREATE TABLE `bukti_kegiatan_units` (
 --
 
 INSERT INTO `bukti_kegiatan_units` (`id`, `units_id`, `bukti_kegiatans_id`, `created_at`, `updated_at`) VALUES
-(2, 2, 2, '2022-06-15 11:45:15', '2022-06-15 11:45:15'),
 (3, 1, 6, '2022-06-15 12:27:23', '2022-06-15 12:27:23'),
 (4, 3, 7, '2022-06-15 12:43:59', '2022-06-15 12:43:59'),
 (5, 4, 8, '2022-06-15 12:54:33', '2022-06-15 12:54:33'),
@@ -194,9 +192,10 @@ CREATE TABLE `kegiatans` (
 --
 
 INSERT INTO `kegiatans` (`id`, `tanggal_mulai`, `tanggal_sampai`, `bentuk_kegiatan`, `PIC`, `keterangan`, `kerjasama_id`, `dosen_id`, `created_at`, `updated_at`) VALUES
-(1, '2022-04-30', '2022-05-30', 'Lepas', 'P', 'Dilakukan secara daring', 2, 2, '2022-04-25 01:57:59', '2022-06-17 12:13:48'),
+(1, '2022-06-24', '2022-07-05', 'Daring', 'F', 'Dilakukan secara daring selama beberapa hari', 1, 1, '2022-04-25 01:57:59', '2022-06-24 12:55:43'),
 (2, '2022-04-25', '2022-05-25', 'Bentuk 1', 'P', 'Keterangan 1', 2, 9, '2022-04-25 01:58:07', '2022-04-25 01:58:07'),
-(4, '2022-06-11', '2022-06-17', 'Bentuk Kegiatan Q3', 'P', 'Keterangan Empat Q1', 3, 2, '2022-06-11 12:09:28', '2022-06-11 12:09:28');
+(4, '2022-06-11', '2022-06-17', 'Bentuk Kegiatan Q3', 'P', 'Keterangan Empat Q1', 3, 2, '2022-06-11 12:09:28', '2022-06-11 12:09:28'),
+(5, '2022-06-24', '2022-06-25', 'Bentuk ke 14', 'P', 'Keterangan ke 14', 3, 10, '2022-06-24 13:23:05', '2022-06-24 13:23:05');
 
 -- --------------------------------------------------------
 
@@ -221,11 +220,12 @@ CREATE TABLE `kerjasamas` (
 --
 
 INSERT INTO `kerjasamas` (`id`, `nama_kerja_sama`, `tanggal_mulai`, `tanggal_sampai`, `mitra_id`, `kategori_id`, `status_id`, `created_at`, `updated_at`) VALUES
-(1, 'Kerja Sama 1', '2022-04-30', '2022-05-30', 1, 1, 1, '2022-04-22 13:10:46', '2022-04-22 13:59:03'),
-(2, 'Kerja Sama 2', '2022-04-23', '2022-04-30', 10, 3, 2, '2022-04-22 13:40:37', '2022-04-22 13:40:37'),
+(1, 'Kerja Sama 1', '2022-06-24', '2022-07-31', 2, 2, 1, '2022-04-22 13:10:46', '2022-06-24 12:16:37'),
+(2, 'Kerja Sama Q123456789', '2022-06-24', '2022-06-25', 3, 2, 1, '2022-04-22 13:40:37', '2022-06-24 12:14:08'),
 (3, 'Kerja Sama 3', '2022-04-23', '2022-04-30', 2, 2, 4, '2022-04-22 13:45:26', '2022-04-22 13:45:26'),
 (5, 'Kerja Sama Q1', '2022-06-11', '2022-06-18', 1, 1, 1, '2022-06-11 11:41:52', '2022-06-11 11:41:52'),
-(6, 'Kerja Sama Q2', '2022-06-11', '2022-06-30', 3, 2, 2, '2022-06-11 11:42:32', '2022-06-11 11:42:32');
+(6, 'Kerja Sama Q2', '2022-06-11', '2022-06-30', 3, 2, 2, '2022-06-11 11:42:32', '2022-06-11 11:42:32'),
+(7, 'Kerja Sama Q11', '2022-06-24', '2022-06-25', 2, 2, 2, '2022-06-24 13:04:41', '2022-06-24 13:04:41');
 
 -- --------------------------------------------------------
 
@@ -349,15 +349,15 @@ CREATE TABLE `units` (
 --
 
 INSERT INTO `units` (`id`, `nama_unit`, `created_at`, `updated_at`) VALUES
-(1, 'Unit 1', '2022-04-21 15:11:07', '2022-04-26 01:16:17'),
-(2, 'Unit 2', '2022-04-21 08:11:14', '2022-04-21 08:11:14'),
-(3, 'Unit 3', '2022-04-21 08:11:30', '2022-04-21 08:11:30'),
-(4, 'Unit S3', '2022-04-27 03:26:29', '2022-04-27 03:36:12'),
-(5, 'Unit Q1', '2022-04-22 00:37:07', '2022-04-26 01:16:30'),
-(6, 'Unit S4', '2022-04-27 03:30:03', '2022-04-27 03:36:18'),
-(7, 'Unit S5', '2022-04-27 03:31:00', '2022-04-27 03:36:24'),
-(8, 'Unit S5', '2022-04-27 03:34:34', '2022-04-27 03:36:29'),
-(13, 'Unit Baru Q1', '2022-06-17 11:25:36', '2022-06-17 11:25:36');
+(1, 'UMDP', '2022-04-21 15:11:07', '2022-06-24 13:28:22'),
+(2, 'FIKR', '2022-04-21 08:11:14', '2022-06-24 13:28:29'),
+(3, 'FEB', '2022-04-21 08:11:30', '2022-06-24 13:28:38'),
+(4, 'IF', '2022-04-27 03:26:29', '2022-06-24 13:28:45'),
+(5, 'SI', '2022-04-22 00:37:07', '2022-06-24 13:28:52'),
+(6, 'TE', '2022-04-27 03:30:03', '2022-06-24 13:28:58'),
+(7, 'MI', '2022-04-27 03:31:00', '2022-06-24 13:29:06'),
+(8, 'AK', '2022-04-27 03:34:34', '2022-06-24 13:29:14'),
+(13, 'MJ', '2022-06-17 11:25:36', '2022-06-24 13:29:21');
 
 -- --------------------------------------------------------
 
@@ -367,9 +367,11 @@ INSERT INTO `units` (`id`, `nama_unit`, `created_at`, `updated_at`) VALUES
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `kode_dosen` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `level` enum('A','D') CHARACTER SET utf8 NOT NULL,
+  `file` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -381,11 +383,12 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `level`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(2, 'MainAccount', 'admin@gmail.com', 'A', NULL, '$2y$10$QJCNAlJ2EBXjxsXYsgZIZu6afA5AJGSFlNNiAv5uBqitIGw.DbTdS', NULL, '2022-05-27 01:55:39', '2022-06-13 15:06:09'),
-(3, 'Admin2', 'admin2@gmail.com', 'A', NULL, '$2y$10$xMOvO5lWLyDJfl5j0ai1u.ZsIu4W2BSG0T2jNBNRv.KdZ7dNa6mvu', NULL, '2022-05-29 02:54:17', '2022-05-29 02:54:17'),
-(4, 'Dosen', 'dosen@gmail.com', 'D', NULL, '$2y$10$99Q3pK58iKDaPS8jsBxaM.7E895ooZLKKo0251usp2y//8xlX0p9W', NULL, '2022-05-29 02:59:11', '2022-05-29 02:59:11'),
-(5, 'Dosen2', 'dosen2@gmail.com', 'D', NULL, '$2y$10$YqNpVetZcCe3JYiH549svO1zG73fP5oh1ZwRtUJ9M5xhmcjb5pyrG', NULL, '2022-06-17 11:32:46', '2022-06-17 11:32:46');
+INSERT INTO `users` (`id`, `kode_dosen`, `name`, `email`, `level`, `file`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(2, '000000', 'MainAccount', 'admin@gmail.com', 'A', NULL, NULL, '$2y$10$1Z/MaxYrXiOtFN5zZdu6.eeDsbt.QqEnmpgKS/WhKnrPEbCYh/qsa', NULL, '2022-05-27 01:55:39', '2022-06-26 02:14:22'),
+(4, 'D00002', 'Dosen', 'dosen@gmail.com', 'D', NULL, NULL, '$2y$10$99Q3pK58iKDaPS8jsBxaM.7E895ooZLKKo0251usp2y//8xlX0p9W', NULL, '2022-05-29 02:59:11', '2022-06-26 02:07:43'),
+(5, 'D00003', 'Dosen2', 'dosen2@gmail.com', 'D', NULL, NULL, '$2y$10$YqNpVetZcCe3JYiH549svO1zG73fP5oh1ZwRtUJ9M5xhmcjb5pyrG', NULL, '2022-06-17 11:32:46', '2022-06-26 02:07:53'),
+(6, 'D00004', 'User123', 'user@mail.com', 'D', NULL, NULL, '$2y$10$SacrjeyyQiDsVoPIqhZwVOBETyIrGS0Dt1gt6.Y0CN/o175/Mu8wy', NULL, '2022-06-26 02:31:14', '2022-06-26 02:45:23'),
+(7, 'D00005', 'User1', 'user1@mail.com', 'D', NULL, NULL, '$2y$10$D5o03G.RX0n3C/0Enfb1t.iUS..Jqh8Gc78x4HE63OjtkWqIn/fwS', NULL, '2022-06-26 02:47:09', '2022-06-26 02:47:09');
 
 -- --------------------------------------------------------
 
@@ -413,7 +416,8 @@ CREATE TABLE `usulans` (
 INSERT INTO `usulans` (`id`, `nama_usulan`, `bentuk_kerjasama`, `rencana_kegiatan`, `tanggal_rencana_kegiatan`, `mitra_id`, `dosen_id`, `unit_id`, `created_at`, `updated_at`) VALUES
 (1, 'Usulan 1', 'Kerja sama 1', 'Rencana 1', '2022-04-18', 1, 1, 1, '2022-04-25 04:07:10', '2022-04-25 04:07:10'),
 (2, 'Usulan 2', 'Kerja sama 2', 'Rencana 2', '2022-05-10', 2, 2, 1, '2022-04-25 04:10:11', '2022-05-10 02:14:11'),
-(3, 'sgdg', 'gssg', 'sgssgg', '2022-04-14', 2, 4, 5, '2022-04-25 04:10:27', '2022-06-17 12:14:44');
+(3, 'sgdg', 'gssg', 'sgssgg', '2022-04-14', 2, 4, 5, '2022-04-25 04:10:27', '2022-06-17 12:14:44'),
+(5, 'Usulan Delapan', 'Bentuk Delapan', 'Rencana Baru', '2022-06-24', 4, 4, 4, '2022-06-24 13:37:30', '2022-06-24 13:37:30');
 
 --
 -- Indexes for dumped tables
@@ -553,7 +557,7 @@ ALTER TABLE `bukti_kegiatan_units`
 -- AUTO_INCREMENT for table `bukti_kerjasamas`
 --
 ALTER TABLE `bukti_kerjasamas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `dosens`
@@ -571,13 +575,13 @@ ALTER TABLE `kategoris`
 -- AUTO_INCREMENT for table `kegiatans`
 --
 ALTER TABLE `kegiatans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `kerjasamas`
 --
 ALTER TABLE `kerjasamas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `mitras`
@@ -601,13 +605,13 @@ ALTER TABLE `units`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `usulans`
 --
 ALTER TABLE `usulans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
@@ -623,7 +627,7 @@ ALTER TABLE `bukti_kegiatans`
 -- Constraints for table `bukti_kegiatan_units`
 --
 ALTER TABLE `bukti_kegiatan_units`
-  ADD CONSTRAINT `fk_bukti_kegiatan_units_bukti_kegiatans1` FOREIGN KEY (`bukti_kegiatans_id`) REFERENCES `bukti_kegiatans` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_bukti_kegiatan_units_bukti_kegiatans1` FOREIGN KEY (`bukti_kegiatans_id`) REFERENCES `bukti_kegiatans` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_bukti_kegiatan_units_units1` FOREIGN KEY (`units_id`) REFERENCES `units` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
