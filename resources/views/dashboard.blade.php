@@ -9,7 +9,7 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">
-                    <i class="fas fa-circle-info mr-1"></i>
+                    <i class="fas fa-copy mr-1"></i>
                     Info Box
                 </h3>
                 <div class="card-tools">
@@ -22,15 +22,19 @@
                 </div>
             </div>
             <div class="card-body">
-
+                {{-- Info Mitra, Kerjasama, Kegiatan, Usulan --}}
                 <div class="row">
+                    {{-- Total Mitra --}}
                     <div class="col-lg-3 col-6">
-
                         <div class="small-box bg-info">
                             <div class="inner">
-                                @foreach ($getJumlahMitra as $data)
-                                    <h3>{{ $data->jumlahMitra }}</h3>
-                                @endforeach
+                                @if (count($getJumlahMitra) > 0)
+                                    @foreach ($getJumlahMitra as $data)
+                                        <h3>{{ $data->jumlahMitra }}</h3>
+                                    @endforeach
+                                @else
+                                    0
+                                @endif
                                 <p>Total Mitra</p>
                             </div>
                             <div class="icon">
@@ -41,14 +45,18 @@
                         </div>
                     </div>
 
+                    {{-- Total Kerjasama --}}
                     <div class="col-lg-3 col-6">
-
                         <div class="small-box bg-success">
                             <div class="inner">
-                                @foreach ($getJumlahKerjasama as $data)
-                                    <h3>{{ $data->jumlahKerjasama }}</h3>
-                                    {{-- <sup style="font-size: 20px">%</sup> --}}
-                                @endforeach
+                                @if (count($getJumlahKerjasama) > 0)
+                                    @foreach ($getJumlahKerjasama as $data)
+                                        <h3>{{ $data->jumlahKerjasama }}</h3>
+                                        {{-- <sup style="font-size: 20px">%</sup> --}}
+                                    @endforeach
+                                @else
+                                    0
+                                @endif
                                 <p>Total Kerjasama</p>
                             </div>
                             <div class="icon">
@@ -59,13 +67,17 @@
                         </div>
                     </div>
 
+                    {{-- Total Kegiatan --}}
                     <div class="col-lg-3 col-6">
-
                         <div class="small-box bg-warning">
                             <div class="inner">
-                                @foreach ($getJumlahKegiatan as $data)
-                                    <h3>{{ $data->jumlahKegiatan }}</h3>
-                                @endforeach
+                                @if (count($getJumlahKegiatan) > 0)
+                                    @foreach ($getJumlahKegiatan as $data)
+                                        <h3>{{ $data->jumlahKegiatan }}</h3>
+                                    @endforeach
+                                @else
+                                    0
+                                @endif
                                 <p>Total Kegiatan</p>
                             </div>
                             <div class="icon">
@@ -76,13 +88,17 @@
                         </div>
                     </div>
 
+                    {{-- Total Usulan --}}
                     <div class="col-lg-3 col-6">
-
                         <div class="small-box bg-danger">
                             <div class="inner">
-                                @foreach ($getJumlahUsulan as $data)
-                                    <h3>{{ $data->jumlahUsulan }}</h3>
-                                @endforeach
+                                @if (count($getJumlahUsulan) > 0)
+                                    @foreach ($getJumlahUsulan as $data)
+                                        <h3>{{ $data->jumlahUsulan }}</h3>
+                                    @endforeach
+                                @else
+                                    0
+                                @endif
                                 <p>Total Usulan</p>
                             </div>
                             <div class="icon">
@@ -90,6 +106,90 @@
                             </div>
                             <a href="{{ url('/usulans') }}" class="small-box-footer">More info <i
                                     class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Info Status Kerjasama --}}
+                <h5>Jumlah Status Kerjasama</h5>
+                <div class="row">
+
+                    {{-- Aktif --}}
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-thumbs-up"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Aktif</span>
+                                <span class="info-box-number">
+                                    @if (count($countStatusAktif) > 0)
+                                        @foreach ($countStatusAktif as $item)
+                                            {{ $item->jumlah }}
+                                        @endforeach
+                                    @else
+                                        0
+                                    @endif
+
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Dalam Perpanjangan --}}
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <div class="info-box mb-3">
+                            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-bell"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Dalam Perpanjangan</span>
+                                <span class="info-box-number">
+                                    @if (count($countStatusDalamPerpanjangan) > 0)
+                                        @foreach ($countStatusDalamPerpanjangan as $item)
+                                            {{ $item->jumlah }}
+                                        @endforeach
+                                    @else
+                                        0
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="clearfix hidden-md-up"></div>
+                    {{-- Kadaluarsa --}}
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <div class="info-box mb-3">
+                            <span class="info-box-icon bg-warning elevation-1"> <i class="fas fa-exclamation"></i>
+                            </span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Kadaluarsa</span>
+                                <span class="info-box-number">
+                                    @if (count($countStatusKadaluarsa) > 0)
+                                        @foreach ($countStatusKadaluarsa as $item)
+                                            {{ $item->jumlah }}
+                                        @endforeach
+                                    @else
+                                        0
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Tidak Aktif --}}
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <div class="info-box mb-3">
+                            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Tidak Aktif</span>
+                                <span class="info-box-number">
+                                    @if (count($countStatusTidakAktif) > 0)
+                                        @foreach ($countStatusTidakAktif as $item)
+                                            {{ $item->jumlah }}
+                                        @endforeach
+                                    @else
+                                        0
+                                    @endif
+                                </span>
+                            </div>
                         </div>
                     </div>
 

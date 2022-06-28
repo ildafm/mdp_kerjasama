@@ -46,7 +46,7 @@
                 {{-- Setting --}}
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="fas fa-user-tie"></i>
+                        <i class="fas fa-cog"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 
@@ -89,7 +89,7 @@
                 <div class="user-panel mt-3 pb-3 d-flex">
                     <div class="image mt-2">
                         <img src="{{ asset('dist/img/user_profile.png') }}" class="img-circle elevation-2"
-                            alt="User Image">
+                            alt="User_Image">
                     </div>
 
                     <div class="info">
@@ -172,14 +172,14 @@
                                 echo '</li>';
                             
                                 // Dosens
-                                echo '<li class="nav-item">';
-                                echo '<a href="/dosens" class="nav-link">';
-                                echo '<i class="nav-icon fas fa-user"></i>';
-                                echo '<p>';
-                                echo '  Dosen';
-                                echo '</p>';
-                                echo '</a>';
-                                echo '</li>';
+                                // echo '<li class="nav-item">';
+                                // echo '<a href="/dosens" class="nav-link">';
+                                // echo '<i class="nav-icon fas fa-user"></i>';
+                                // echo '<p>';
+                                // echo '  Dosen';
+                                // echo '</p>';
+                                // echo '</a>';
+                                // echo '</li>';
                             
                                 // Status
                                 echo '<li class="nav-item">';
@@ -204,7 +204,7 @@
                                 // Users
                                 echo '<li class="nav-item">';
                                 echo '<a href="/users" class="nav-link">';
-                                echo '<i class="nav-icon fas fa-address-card"></i>';
+                                echo '<i class="nav-icon fas fa-user"></i>';
                                 echo '<p>';
                                 echo '  User';
                                 echo '</p>';
