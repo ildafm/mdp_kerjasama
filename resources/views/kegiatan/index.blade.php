@@ -5,7 +5,6 @@
 
     <div class="card">
         <div class="card-header">
-            <!-- <h3 class="card-title">Tabel Daftar Kegiatan</h3> -->
             {{-- Button Tambah --}}
             <a href="{{ url('/kegiatans/create') }}" class='btn btn-primary'>Tambah Kegiatan</a>
 
@@ -29,18 +28,17 @@
             @endif
 
             {{-- Tabel Data --}}
-            <table id="example1" class="table table-bordered table-striped">
-
+            <table id="example2" class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Tanggal Mulai</th>
-                        <th>Tanggal Sampai</th>
                         <th>Bentuk Kegiatan</th>
+                        <th>Nama Kerja Sama</th>
                         <th>PIC</th>
                         <th>Keterangan</th>
-                        <th>Nama Kerja Sama</th>
                         <th>Nama Dosen</th>
+                        <th>Tanggal Mulai</th>
+                        <th>Tanggal Sampai</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -53,16 +51,14 @@
 
                     @foreach ($kegiatans as $data)
                         <tr>
-                            <td>{{-- $data->id --}} {{ $nomor++ }}</td>
+                            <td>{{ $nomor++ }}</td>
+                            <td>{{ $data->bentuk_kegiatan }}</td>
+                            <td>{{ $data->kerjasama->nama_kerja_sama }}</td>
+                            <td>{{ Status::kegiatan($data->PIC) }}</td>
+                            <td>{{ $data->keterangan }}</td>
+                            <td>{{ $data->dosen->nama_dosen }}</td>
                             <td>{{ $data->tanggal_mulai }}</td>
                             <td>{{ $data->tanggal_sampai }}</td>
-                            <td>{{ $data->bentuk_kegiatan }}</td>
-                            <td>{{-- $data->PIC --}}
-                                {{ Status::kegiatan($data->PIC) }}
-                            </td>
-                            <td>{{ $data->keterangan }}</td>
-                            <td>{{ $data->kerjasama->nama_kerja_sama }}</td>
-                            <td>{{ $data->dosen->nama_dosen }}</td>
                             <td>
                                 {{-- Button Tampil --}}
                                 <a href="{{ url('kegiatans/' . $data->id) }}"
@@ -86,13 +82,13 @@
                 <tfoot>
                     <tr>
                         <th>No</th>
-                        <th>Tanggal Mulai</th>
-                        <th>Tanggal Sampai</th>
                         <th>Bentuk Kegiatan</th>
+                        <th>Nama Kerja Sama</th>
                         <th>PIC</th>
                         <th>Keterangan</th>
-                        <th>Nama Kerja Sama</th>
                         <th>Nama Dosen</th>
+                        <th>Tanggal Mulai</th>
+                        <th>Tanggal Sampai</th>
                         <th>Aksi</th>
                     </tr>
                 </tfoot>

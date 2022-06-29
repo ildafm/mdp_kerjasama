@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 29, 2022 at 05:08 AM
+-- Generation Time: Jun 29, 2022 at 08:11 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -39,16 +39,6 @@ CREATE TABLE `bukti_kegiatans` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `bukti_kegiatans`
---
-
-INSERT INTO `bukti_kegiatans` (`id`, `nama_bukti_kegiatan`, `file`, `kegiatans_id`, `ceklist_apt`, `ceklist_aps`, `ceklist_lamemba`, `created_at`, `updated_at`) VALUES
-(6, 'Bukti kegiatan 2', 'file-1655296043.png', 1, 'Y', 'Y', 'Y', '2022-06-15 12:27:23', '2022-06-15 12:27:23'),
-(7, 'Bukti kegiatan 3', 'file-1655297039.png', 1, 'T', 'Y', 'T', '2022-06-15 12:43:59', '2022-06-15 12:43:59'),
-(8, 'Bukti kegiatan Q1', 'file-1655297673.jpg', 2, 'T', 'T', 'Y', '2022-06-15 12:54:33', '2022-06-15 12:54:33'),
-(9, 'Bukti kegiatan 4', 'file-1655298011.png', 1, 'Y', 'Y', 'T', '2022-06-15 13:00:11', '2022-06-15 13:00:11');
-
 -- --------------------------------------------------------
 
 --
@@ -62,16 +52,6 @@ CREATE TABLE `bukti_kegiatan_units` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `bukti_kegiatan_units`
---
-
-INSERT INTO `bukti_kegiatan_units` (`id`, `units_id`, `bukti_kegiatans_id`, `created_at`, `updated_at`) VALUES
-(3, 1, 6, '2022-06-15 12:27:23', '2022-06-15 12:27:23'),
-(4, 3, 7, '2022-06-15 12:43:59', '2022-06-15 12:43:59'),
-(5, 4, 8, '2022-06-15 12:54:33', '2022-06-15 12:54:33'),
-(6, 1, 9, '2022-06-15 13:00:11', '2022-06-15 13:00:11');
 
 -- --------------------------------------------------------
 
@@ -192,10 +172,7 @@ CREATE TABLE `kegiatans` (
 --
 
 INSERT INTO `kegiatans` (`id`, `tanggal_mulai`, `tanggal_sampai`, `bentuk_kegiatan`, `PIC`, `keterangan`, `kerjasama_id`, `dosen_id`, `created_at`, `updated_at`) VALUES
-(1, '2022-06-24', '2022-07-05', 'Daring', 'F', 'Dilakukan secara daring selama beberapa hari', 1, 1, '2022-04-25 01:57:59', '2022-06-24 12:55:43'),
-(2, '2022-04-25', '2022-05-25', 'Bentuk 1', 'P', 'Keterangan 1', 2, 9, '2022-04-25 01:58:07', '2022-04-25 01:58:07'),
-(4, '2022-06-11', '2022-06-17', 'Bentuk Kegiatan Q3', 'P', 'Keterangan Empat Q1', 3, 2, '2022-06-11 12:09:28', '2022-06-11 12:09:28'),
-(5, '2022-06-24', '2022-06-25', 'Bentuk ke 14', 'P', 'Keterangan ke 14', 3, 10, '2022-06-24 13:23:05', '2022-06-24 13:23:05');
+(7, '2022-06-30', '2022-07-02', 'Daring', 'P', 'Dilakukan secara daring selama beberapa hari', 2, 2, '2022-06-29 17:56:01', '2022-06-29 17:56:01');
 
 -- --------------------------------------------------------
 
@@ -546,13 +523,13 @@ ALTER TABLE `usulans`
 -- AUTO_INCREMENT for table `bukti_kegiatans`
 --
 ALTER TABLE `bukti_kegiatans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `bukti_kegiatan_units`
 --
 ALTER TABLE `bukti_kegiatan_units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `bukti_kerjasamas`
@@ -576,7 +553,7 @@ ALTER TABLE `kategoris`
 -- AUTO_INCREMENT for table `kegiatans`
 --
 ALTER TABLE `kegiatans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `kerjasamas`
@@ -622,7 +599,7 @@ ALTER TABLE `usulans`
 -- Constraints for table `bukti_kegiatans`
 --
 ALTER TABLE `bukti_kegiatans`
-  ADD CONSTRAINT `fk_bukti_kegiatans_kegiatans1` FOREIGN KEY (`kegiatans_id`) REFERENCES `kegiatans` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_bukti_kegiatans_kegiatans1` FOREIGN KEY (`kegiatans_id`) REFERENCES `kegiatans` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `bukti_kegiatan_units`

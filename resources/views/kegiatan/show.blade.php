@@ -26,6 +26,16 @@
 
                 <tbody>
                     <tr>
+                        <td>Nama Kerjasama</td>
+                        <td>{{ $kegiatan->kerjasama->nama_kerja_sama }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Bentuk Kegiatan</td>
+                        <td>{{ $kegiatan->bentuk_kegiatan }}</td>
+                    </tr>
+
+                    <tr>
                         <td>Tanggal Mulai</td>
                         <td>{{ $kegiatan->tanggal_mulai }}</td>
                     </tr>
@@ -36,28 +46,18 @@
                     </tr>
 
                     <tr>
-                        <td>Bentuk Kegiatan</td>
-                        <td>{{ $kegiatan->bentuk_kegiatan }}</td>
-                    </tr>
-
-                    <tr>
                         <td>PIC</td>
                         <td>{{ Status::kegiatan($kegiatan->PIC) }}</td>
                     </tr>
 
                     <tr>
-                        <td>Keterangan</td>
-                        <td>{{ $kegiatan->keterangan }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Nama Kerja Sama</td>
-                        <td>{{ $kegiatan->kerjasama->nama_kerja_sama }}</td>
-                    </tr>
-
-                    <tr>
                         <td>Nama Dosen</td>
                         <td>{{ $kegiatan->dosen->nama_dosen }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Keterangan</td>
+                        <td>{{ $kegiatan->keterangan }}</td>
                     </tr>
 
                     <tr>
@@ -218,18 +218,10 @@
                     @if (count($buktiKegiatans) > 0)
                         @foreach ($buktiKegiatans as $data)
                             <tr>
-                                <td>
-                                    {{ $nomor++ }}
-                                </td>
-                                <td>
-                                    {{ $data->nama_bukti_kegiatan }}
-                                </td>
-                                <td>
-                                    {{ $data->keterangan_kegiatan }}
-                                </td>
-                                <td>
-                                    {{ $data->nama_unit }}
-                                </td>
+                                <td> {{ $nomor++ }} </td>
+                                <td> {{ $data->nama_bukti_kegiatan }} </td>
+                                <td> {{ $data->keterangan_kegiatan }} </td>
+                                <td> {{ $data->nama_unit }} </td>
                                 <td>
                                     @if ($data->ceklist_apt == 'Y')
                                         Ya
@@ -251,9 +243,7 @@
                                         Tidak
                                     @endif
                                 </td>
-                                <td>
-                                    {{ $data->tanggal_upload_bukti }}
-                                </td>
+                                <td> {{ $data->tanggal_upload_bukti }} </td>
                                 <td>
                                     {{-- Button Tampil --}}
                                     <a href="{{ url('storage/kegiatan/' . $data->file) }}"
@@ -268,10 +258,8 @@
                             </tr>
                         @endforeach
                     @else
-                        <td colspan="9">Belum ada Data</td>
+                        {{-- <td colspan="9">Belum ada Data</td> --}}
                     @endif
-
-
                 </tbody>
 
                 <tfoot>
@@ -324,7 +312,7 @@
         // id disini adalah id bukti kegiatan
         $('.btn-hapus').click(function() {
             let id = $(this).attr('data-id');
-            $('#formDelete').attr('action', '/kegiatans/' + id);
+            $('#formDelete').attr('action', '/buktiKegiatans/' + id);
 
             let dataNamaBuktiKegiatan = $(this).attr('data-namaBuktiKegiatan')
             $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus bukti kegiatan : " + dataNamaBuktiKegiatan +

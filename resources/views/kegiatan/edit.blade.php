@@ -22,26 +22,26 @@
             @method('PUT')
             @csrf
             <div class="card-body">
-                {{-- Tanggal Mulai --}}
-                <div class="row">
-                    <div class="form-group col-lg-6">
-                        <label for="tanggal_mulai">Tanggal Mulai</label>
-                        <input type="date" name="tanggal_mulai" id="" class="form-control"
-                            value='{{ old('tanggal_mulai', $kegiatans->tanggal_mulai) }}'>
-                        @error('tanggal_mulai')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
+                {{-- Kerjasama --}}
+                <div class="form-group">
+                    <label for="kerjasamas">Kerjasama</label>
+                    @php
+                        if (old('kerjasamas') !== null) {
+                            $option = old('kerjasamas');
+                        } else {
+                            $option = $kegiatans->kerjasama_id;
+                        }
+                    @endphp
 
-                    {{-- Tanggal Sampai --}}
-                    <div class="form-group col-lg-6">
-                        <label for="tanggal_sampai">Tanggal Sampai</label>
-                        <input type="date" name="tanggal_sampai" id="" class="form-control"
-                            value="{{ old('tanggal_sampai', $kegiatans->tanggal_sampai) }}">
-                        @error('tanggal_sampai')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
+                    <select class="form-control select2" name="kerjasamas" id="">
+                        @foreach ($kerjasamas as $data)
+                            <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                {{ $data->mitra->nama_mitra }} - {{ $data->nama_kerja_sama }}</option>
+                        @endforeach
+                    </select>
+                    @error('kerjasamas')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 {{-- Bentuk Kegiatan --}}
@@ -57,8 +57,28 @@
                 </div>
 
                 <div class="row">
+                    {{-- Tanggal Mulai --}}
+                    <div class="form-group col-lg-4">
+                        <label for="tanggal_mulai">Tanggal Mulai</label>
+                        <input type="date" name="tanggal_mulai" id="" class="form-control"
+                            value='{{ old('tanggal_mulai', $kegiatans->tanggal_mulai) }}'>
+                        @error('tanggal_mulai')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Tanggal Sampai --}}
+                    <div class="form-group col-lg-4">
+                        <label for="tanggal_sampai">Tanggal Sampai</label>
+                        <input type="date" name="tanggal_sampai" id="" class="form-control"
+                            value="{{ old('tanggal_sampai', $kegiatans->tanggal_sampai) }}">
+                        @error('tanggal_sampai')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     {{-- PIC --}}
-                    <div class="form-group col-lg-2">
+                    <div class="form-group col-lg-4">
                         <label for="PIC">PIC</label>
 
                         @php
@@ -77,29 +97,11 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+                </div>
 
-                    {{-- Kerjasama --}}
-                    <div class="form-group col-lg-6">
-                        <label for="kerjasamas">Kerjasama</label>
 
-                        @php
-                            if (old('kerjasamas') !== null) {
-                                $option = old('kerjasamas');
-                            } else {
-                                $option = $kegiatans->kerjasama_id;
-                            }
-                        @endphp
 
-                        <select class="form-control select2" name="kerjasamas" id="">
-                            @foreach ($kerjasamas as $data)
-                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                    {{ $data->mitra->nama_mitra }} - {{ $data->nama_kerja_sama }}</option>
-                            @endforeach
-                        </select>
-                        @error('kerjasamas')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
+                <div class="row">
 
                     {{-- Dosen --}}
                     <div class="form-group col-lg-4">

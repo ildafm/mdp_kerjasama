@@ -160,6 +160,6 @@ class KegiatanController extends Controller
     {
         //
         $kegiatan->delete();
-        return redirect()->route('kegiatans.index')->with('pesan', "Hapus data kegiatan dengan id : $kegiatan->id berhasil");
+        return redirect()->route('kegiatans.index')->with('pesan', "Hapus data kegiatan : $kegiatan->bentuk_kegiatan berhasil");
     }
 }

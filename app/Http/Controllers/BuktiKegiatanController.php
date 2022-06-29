@@ -138,6 +138,6 @@ class BuktiKegiatanController extends Controller
     {
         //
         $buktiKegiatan->delete();
-        return redirect()->route('kerjasamas.index')->with('pesan', "Hapus data bukti $buktiKegiatan->nama_bukti_kerjasama berhasil");
+        return redirect()->route('kegiatans.index')->with('pesan', "Hapus data bukti $buktiKegiatan->nama_bukti_kerjasama berhasil");
     }
 }

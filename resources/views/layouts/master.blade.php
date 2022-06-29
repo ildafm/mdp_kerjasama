@@ -212,33 +212,6 @@
                                 echo '</li>';
                             }
                         @endphp
-
-                        {{-- <li class="nav-item">
-                            <a href="{{ url('/statuses') }}" class="nav-link">
-                                <i class="nav-icon fas fa-flag"></i>
-                                <p>
-                                    Status
-                                </p>
-                            </a>
-                        </li> --}}
-
-                        {{-- <li class="nav-item">
-                            <a href="{{ url('/kategoris') }}" class="nav-link">
-                                <i class="nav-icon fas fa-layer-group"></i>
-                                <p>
-                                    Kategori
-                                </p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="{{ url('/users') }}" class="nav-link">
-                                <i class="nav-icon fas fa-address-card"></i>
-                                <p>
-                                    User
-                                </p>
-                            </a>
-                        </li> --}}
                     </ul>
                 </nav>
             </div>
