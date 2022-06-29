@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 26, 2022 at 04:49 AM
+-- Generation Time: Jun 29, 2022 at 05:08 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -220,12 +220,12 @@ CREATE TABLE `kerjasamas` (
 --
 
 INSERT INTO `kerjasamas` (`id`, `nama_kerja_sama`, `tanggal_mulai`, `tanggal_sampai`, `mitra_id`, `kategori_id`, `status_id`, `created_at`, `updated_at`) VALUES
-(1, 'Kerja Sama 1', '2022-06-24', '2022-07-31', 2, 2, 1, '2022-04-22 13:10:46', '2022-06-24 12:16:37'),
-(2, 'Kerja Sama Q123456789', '2022-06-24', '2022-06-25', 3, 2, 1, '2022-04-22 13:40:37', '2022-06-24 12:14:08'),
+(1, 'Kerja Sama 31', '2022-06-28', '2022-06-29', 1, 1, 3, '2022-04-22 13:10:46', '2022-06-28 02:37:42'),
+(2, 'Kerja Sama Q123456789', '2022-06-24', '2022-06-25', 3, 2, 3, '2022-04-22 13:40:37', '2022-06-28 02:37:51'),
 (3, 'Kerja Sama 3', '2022-04-23', '2022-04-30', 2, 2, 4, '2022-04-22 13:45:26', '2022-04-22 13:45:26'),
-(5, 'Kerja Sama Q1', '2022-06-11', '2022-06-18', 1, 1, 1, '2022-06-11 11:41:52', '2022-06-11 11:41:52'),
+(5, 'Kerja Sama Q1', '2022-06-11', '2022-06-18', 1, 1, 3, '2022-06-11 11:41:52', '2022-06-28 02:37:58'),
 (6, 'Kerja Sama Q2', '2022-06-11', '2022-06-30', 3, 2, 2, '2022-06-11 11:42:32', '2022-06-11 11:42:32'),
-(7, 'Kerja Sama Q11', '2022-06-24', '2022-06-25', 2, 2, 2, '2022-06-24 13:04:41', '2022-06-24 13:04:41');
+(7, 'Kerja Sama Q12', '2022-06-28', '2022-06-29', 4, 2, 3, '2022-06-24 13:04:41', '2022-06-28 02:35:11');
 
 -- --------------------------------------------------------
 
@@ -276,7 +276,8 @@ INSERT INTO `mitras` (`id`, `nama_mitra`, `tingkat`, `created_at`, `updated_at`)
 (15, 'UI', 'W', '2022-06-11 08:23:14', '2022-06-11 08:23:14'),
 (16, 'Universitas A', 'I', '2022-06-11 11:28:37', '2022-06-11 11:28:37'),
 (17, 'Universitas B', 'I', '2022-06-11 11:30:00', '2022-06-11 11:30:00'),
-(18, 'Universitas C', 'I', '2022-06-11 11:30:56', '2022-06-11 11:30:56');
+(18, 'Universitas C', 'I', '2022-06-11 11:30:56', '2022-06-11 11:30:56'),
+(19, 'White House', 'I', '2022-06-29 02:41:08', '2022-06-29 02:43:02');
 
 -- --------------------------------------------------------
 
@@ -349,7 +350,7 @@ CREATE TABLE `units` (
 --
 
 INSERT INTO `units` (`id`, `nama_unit`, `created_at`, `updated_at`) VALUES
-(1, 'UMDP', '2022-04-21 15:11:07', '2022-06-24 13:28:22'),
+(1, 'UMDP', '2022-04-21 15:11:07', '2022-06-29 03:02:14'),
 (2, 'FIKR', '2022-04-21 08:11:14', '2022-06-24 13:28:29'),
 (3, 'FEB', '2022-04-21 08:11:30', '2022-06-24 13:28:38'),
 (4, 'IF', '2022-04-27 03:26:29', '2022-06-24 13:28:45'),
@@ -587,7 +588,7 @@ ALTER TABLE `kerjasamas`
 -- AUTO_INCREMENT for table `mitras`
 --
 ALTER TABLE `mitras`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `statuses`
@@ -599,7 +600,7 @@ ALTER TABLE `statuses`
 -- AUTO_INCREMENT for table `units`
 --
 ALTER TABLE `units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `users`

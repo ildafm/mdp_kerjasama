@@ -26,11 +26,6 @@
 
                 <tbody>
                     <tr>
-                        <td>ID</td>
-                        <td>{{ $status->id }}</td>
-                    </tr>
-
-                    <tr>
                         <td>Nama Status</td>
                         <td>{{ $status->nama_status }}</td>
                     </tr>

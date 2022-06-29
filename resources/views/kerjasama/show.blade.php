@@ -33,11 +33,6 @@
 
                 <tbody>
                     <tr>
-                        <td>ID</td>
-                        <td>{{ $kerjasama->id }}</td>
-                    </tr>
-
-                    <tr>
                         <td>Nama Kerja Sama</td>
                         <td>{{ $kerjasama->nama_kerja_sama }}</td>
                     </tr>
@@ -114,6 +109,7 @@
                                 </div>
                             </td>
                         </tr>
+
                         <tr>
                             <td colspan="2">
                                 {{-- getKerjasamaID --}}

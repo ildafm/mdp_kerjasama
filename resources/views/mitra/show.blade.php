@@ -26,11 +26,6 @@
 
                 <tbody>
                     <tr>
-                        <td>ID</td>
-                        <td>{{ $mitra->id }}</td>
-                    </tr>
-
-                    <tr>
                         <td>Nama Mitra</td>
                         <td>{{ $mitra->nama_mitra }}</td>
                     </tr>

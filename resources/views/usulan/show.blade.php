@@ -25,11 +25,6 @@
             <table id="example1" class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <td>ID</td>
-                        <td>{{ $usulan->id }}</td>
-                    </tr>
-
-                    <tr>
                         <td>Nama Usulan</td>
                         <td>{{ $usulan->nama_usulan }}</td>
                     </tr>

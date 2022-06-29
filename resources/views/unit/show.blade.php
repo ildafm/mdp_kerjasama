@@ -26,11 +26,6 @@
 
                 <tbody>
                     <tr>
-                        <td>ID</td>
-                        <td>{{ $unit->id }}</td>
-                    </tr>
-
-                    <tr>
                         <td>Nama Unit</td>
                         <td>{{ $unit->nama_unit }}</td>
                     </tr>

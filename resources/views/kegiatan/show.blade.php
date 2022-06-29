@@ -26,11 +26,6 @@
 
                 <tbody>
                     <tr>
-                        <td>ID</td>
-                        <td>{{ $kegiatan->id }}</td>
-                    </tr>
-
-                    <tr>
                         <td>Tanggal Mulai</td>
                         <td>{{ $kegiatan->tanggal_mulai }}</td>
                     </tr>
@@ -140,10 +135,9 @@
                                 <div class="form-group">
                                     {{-- Nama Unit --}}
                                     <label for="nama_unit">Nama Unit</label>
-                                    <select class="form-control select2" name='nama_unit'>
+                                    <select class="form-control select2" name="nama_unit">
                                         @foreach ($units as $data)
-                                            <option value="{{ $data->id }}">{{ $data->id }} -
-                                                {{ $data->nama_unit }}</option>
+                                            <option value="{{ $data->id }}">{{ $data->nama_unit }}</option>
                                         @endforeach
                                     </select>
                                     @error('nama_unit')
@@ -266,9 +260,10 @@
                                         class="btn btn-block btn-primary">Tampil</a>
 
                                     {{-- Button Hapus --}}
-                                    {{-- <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                        data-toggle="modal" data-target="#modal-sm"
-                                        data-namaMitra="{{ $data->nama_mitra }}">Hapus</button> --}}
+                                    <button class="btn btn-block btn-danger btn-hapus"
+                                        data-id="{{ $data->id_bukti_kegiatan }}" data-toggle="modal"
+                                        data-target="#modal-sm"
+                                        data-namaBuktiKegiatan="{{ $data->nama_bukti_kegiatan }}">Hapus</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -326,13 +321,14 @@
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <script>
         // jika tombol hapus ditekan, generate alamat URL untuk proses hapus
-        // id disini adalah id kegiatan
+        // id disini adalah id bukti kegiatan
         $('.btn-hapus').click(function() {
             let id = $(this).attr('data-id');
             $('#formDelete').attr('action', '/kegiatans/' + id);
 
-            let dataID = $(this).attr('data-id')
-            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus kegiatan dengan id : " + dataID + " ?")
+            let dataNamaBuktiKegiatan = $(this).attr('data-namaBuktiKegiatan')
+            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus bukti kegiatan : " + dataNamaBuktiKegiatan +
+                " ?")
         })
 
         // jika tombol Ya, hapus ditekan, submit form hapus

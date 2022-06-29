@@ -57,7 +57,7 @@
                 <div class="row">
 
                     {{-- PIC --}}
-                    <div class="form-group col-lg-4">
+                    <div class="form-group col-lg-2">
                         <label for="PIC">PIC</label>
 
                         @php
@@ -78,7 +78,7 @@
                     </div>
 
                     {{-- Kerjasama --}}
-                    <div class="form-group col-lg-4">
+                    <div class="form-group col-lg-6">
                         <label for="kerjasamas">Kerjasama</label>
 
                         @php
@@ -92,7 +92,7 @@
                         <select class="form-control select2" name="kerjasamas" id="">
                             @foreach ($kerjasamas as $data)
                                 <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                    {{ $data->id }} - {{ $data->nama_kerja_sama }}
+                                    {{ $data->mitra->nama_mitra }} - {{ $data->nama_kerja_sama }}
                                 </option>
                             @endforeach
                         </select>
@@ -142,6 +142,8 @@
 
         <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
+            &nbsp;
+            <a href="/kegiatans" class="btn btn-outline-dark">Kembali</a>
         </div>
 
     </div>

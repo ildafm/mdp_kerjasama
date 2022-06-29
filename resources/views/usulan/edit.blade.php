@@ -17,11 +17,11 @@
             </div>
         </div>
 
-        <div class="card-body">
-            <form action="{{ route('usulans.update', ['usulan' => $usulans->id]) }}" method="POST">
-                @method('PUT')
-                @csrf
-
+        {{-- Form ubah data --}}
+        <form action="{{ route('usulans.update', ['usulan' => $usulans->id]) }}" method="POST">
+            @method('PUT')
+            @csrf
+            <div class="card-body">
                 {{-- Nama usulan --}}
                 <div class="form-group">
                     <label for="nama_usulan">Nama Usulan </label>
@@ -82,11 +82,35 @@
                         <select class="form-control select2" name="nama_mitra" id="">
                             @foreach ($mitras as $data)
                                 <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                    {{ $data->id }} - {{ $data->nama_mitra }}
+                                    {{ $data->nama_mitra }}
                                 </option>
                             @endforeach
                         </select>
                         @error('nama_mitra')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Nama Unit --}}
+                    <div class="form-group col-lg-3">
+                        <label for="nama_unit">Nama Unit</label>
+
+                        @php
+                            if (old('nama_unit') !== null) {
+                                $option = old('nama_unit');
+                            } else {
+                                $option = $usulans->unit_id;
+                            }
+                        @endphp
+
+                        <select class="form-control select2" name="nama_unit" id="">
+                            @foreach ($units as $data)
+                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                    {{ $data->nama_unit }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('nama_unit')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
@@ -115,43 +139,14 @@
                         @enderror
                     </div>
 
-                    {{-- Nama Unit --}}
-                    <div class="form-group col-lg-3 select2">
-                        <label for="nama_unit">Nama Unit</label>
-
-                        @php
-                            if (old('nama_unit') !== null) {
-                                $option = old('nama_unit');
-                            } else {
-                                $option = $usulans->unit_id;
-                            }
-                        @endphp
-
-                        <select class="form-control select2" name="nama_unit" id="">
-                            @foreach ($units as $data)
-                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                    {{ $data->id }} - {{ $data->nama_unit }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('nama_unit')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
                 </div>
+            </div>
 
-        </div>
-
-
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                &nbsp;
+                <a href="/usulans" class="btn btn-outline-dark">Kembali</a>
+            </div>
+        </form>
     </div>
-
-    <div class="card-footer">
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-
-    </div>
-
-
-    </form>
-
 @endsection

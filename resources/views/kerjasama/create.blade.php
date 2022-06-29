@@ -69,7 +69,7 @@
 
                             @foreach ($mitras as $data)
                                 <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                    {{ $data->id }} - {{ $data->nama_mitra }}
+                                    {{ $data->nama_mitra }}
                                 </option>
                             @endforeach
                             {{-- old('nama_mitra', $kerjasama->mitra_id) == $data->id ? 'selected' : '' --}}
@@ -94,7 +94,7 @@
                         <select class="form-control" name='nama_kategori'>
                             @foreach ($kategoris as $data)
                                 <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                    {{ $data->id }} - {{ $data->nama_kategori }}
+                                    {{ $data->nama_kategori }}
                                 </option>
                             @endforeach
                         </select>
@@ -118,7 +118,7 @@
                         <select class="form-control" name='nama_status'>
                             @foreach ($statuses as $data)
                                 <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                    {{ $data->id }} - {{ $data->nama_status }}
+                                    {{ $data->nama_status }}
                                 </option>
                             @endforeach
                         </select>
@@ -131,6 +131,8 @@
 
         <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
+            &nbsp;
+            <a href="/kerjasamas" class="btn btn-outline-dark">Kembali</a>
         </div>
         </form>
     </div>

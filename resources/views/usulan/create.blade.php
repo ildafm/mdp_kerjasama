@@ -17,10 +17,10 @@
             </div>
         </div>
 
-        <div class="card-body">
-            <form action="{{ route('usulans.store') }}" method="POST">
-                @csrf
-
+        {{-- Form Tambah Data --}}
+        <form action="{{ route('usulans.store') }}" method="POST">
+            @csrf
+            <div class="card-body">
                 {{-- Nama Usulan --}}
                 <div class="form-group">
                     <label for="nama_usulan">Nama Usulan </label>
@@ -79,7 +79,7 @@
                         <select class="form-control select2" name="nama_mitra" id="">
                             @foreach ($mitras as $data)
                                 <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                    {{ $data->id }} - {{ $data->nama_mitra }}
+                                    {{ $data->nama_mitra }}
                                 </option>
                             @endforeach
                         </select>
@@ -103,7 +103,7 @@
                         <select class="form-control select2" name="nama_dosen" id="">
                             @foreach ($dosens as $data)
                                 <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                    {{ $data->id }} - {{ $data->kode_dosen }} - {{ $data->nama_dosen }}
+                                    {{ $data->kode_dosen }} - {{ $data->nama_dosen }}
                                 </option>
                             @endforeach
                         </select>
@@ -127,7 +127,7 @@
                         <select class="form-control select2" name="nama_unit" id="">
                             @foreach ($units as $data)
                                 <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                    {{ $data->id }} - {{ $data->nama_unit }}
+                                    {{ $data->nama_unit }}
                                 </option>
                             @endforeach
                         </select>
@@ -136,19 +136,14 @@
                         @enderror
                     </div>
                 </div>
+            </div>
 
-        </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                &nbsp;
+                <a href="/usulans" class="btn btn-outline-dark">Kembali</a>
+            </div>
 
-
+        </form>
     </div>
-
-    <div class="card-footer">
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-
-    </div>
-
-
-    </form>
-
 @endsection

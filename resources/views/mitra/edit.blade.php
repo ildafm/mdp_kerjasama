@@ -17,12 +17,12 @@
             </div>
         </div>
 
-        <div class="card-body">
-            {{-- Form Ubah Data --}}
-            <form action="{{ route('mitras.update', ['mitra' => $mitra->id]) }}" method="POST">
-                {{ method_field('PUT') }}
-                @csrf
+        {{-- Form Ubah Data --}}
+        <form action="{{ route('mitras.update', ['mitra' => $mitra->id]) }}" method="POST">
+            @method('PUT')
+            @csrf
 
+            <div class="card-body">
                 {{-- ubah nama --}}
                 <div class="form-group">
                     <label for="nama_mitra">Nama Mitra</label>
@@ -46,16 +46,15 @@
                     @enderror
                 </div>
 
-        </div>
+            </div>
 
-        {{-- Button Submit --}}
-        <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-
+            {{-- Button Submit --}}
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                &nbsp;
+                <a href="/mitras" class="btn btn-outline-dark">Kembali</a>
+            </div>
+        </form>
     </div>
-
-
-    </form>
 
 @endsection
