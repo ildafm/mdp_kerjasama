@@ -13,13 +13,13 @@ class Usulan extends Model
         return $this->belongsTo(Mitra::class);
     }
 
-    public function dosen(){
-        return $this->belongsTo(Dosen::class);
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 
     public function unit(){
         return $this->belongsTo(Unit::class);
     }
 
-    protected $fillable = ['nama_usulan', 'bentuk_kerjasama', 'rencana_kegiatan', 'tanggal_rencana_kegiatan', 'mitra_id', 'dosen_id', 'unit_id'];
+    protected $fillable = ['nama_usulan', 'bentuk_kerjasama', 'rencana_kegiatan', 'tanggal_rencana_kegiatan', 'mitra_id', 'user_id', 'unit_id'];
 }

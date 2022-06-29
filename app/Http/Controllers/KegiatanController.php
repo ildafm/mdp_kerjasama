@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Kegiatan;
 use Illuminate\Http\Request;
 use App\Models\Kerjasama;
-use App\Models\Dosen;
+use App\Models\User;
 use App\Models\Unit;
+
 use Illuminate\Support\Facades\DB;
 
 class KegiatanController extends Controller
@@ -31,10 +32,10 @@ class KegiatanController extends Controller
     public function create()
     {
         //
-        $dosens = Dosen::All();
+        $users = User::All();
         $kerjasamas = Kerjasama::All();
         return view('kegiatan.create')
-            ->with('dosens', $dosens)
+            ->with('users', $users)
             ->with('kerjasamas', $kerjasamas);
     }
 
@@ -53,7 +54,7 @@ class KegiatanController extends Controller
             'bentuk_kegiatan' => 'required',
             'PIC' => 'required',
             'kerjasamas' => 'required',
-            'dosens' => 'required',
+            'user' => 'required',
             'keterangan' => 'required'
         ]);
 
@@ -64,7 +65,7 @@ class KegiatanController extends Controller
         $kegiatan->bentuk_kegiatan = $validateData['bentuk_kegiatan'];
         $kegiatan->PIC = $validateData['PIC'];
         $kegiatan->kerjasama_id = $validateData['kerjasamas'];
-        $kegiatan->dosen_id = $validateData['dosens'];
+        $kegiatan->user_id = $validateData['user'];
         $kegiatan->keterangan =$validateData['keterangan'];
 
         $kegiatan->save();
@@ -107,11 +108,11 @@ class KegiatanController extends Controller
     {
         //
         $kerjasamas = Kerjasama::All();
-        $dosens = Dosen::All();
+        $users = User::All();
         return view('kegiatan.edit')
             ->with('kerjasamas', $kerjasamas)
             ->with('kegiatans', $kegiatan)
-            ->with('dosens', $dosens);
+            ->with('users', $users);
     }
 
     /**
@@ -131,7 +132,7 @@ class KegiatanController extends Controller
             'PIC' => 'required',
             'keterangan' => 'required',
             'kerjasamas' => 'required',
-            'dosens' => 'required',
+            // 'user' => 'required',
         ]);
 
         $kegiatan = Kegiatan::findOrFail($kegiatan->id);
@@ -143,7 +144,7 @@ class KegiatanController extends Controller
             'PIC' => $request->PIC,
             'keterangan' => $request->keterangan,
             'kerjasama_id' => $request->kerjasamas,
-            'dosen_id' => $request->dosens
+            // 'user_id' => $request->user
         ]);
 
         $request->session()->flash('pesan', 'Perubahan data berhasil');

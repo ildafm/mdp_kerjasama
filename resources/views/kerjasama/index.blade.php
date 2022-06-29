@@ -4,7 +4,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <!-- <h3 class="card-title">Tabel Daftar Kerja Sama</h3> -->
+            <!-- <h3 class="card-title">Tabel Daftar Kerjasama</h3> -->
             {{-- Button Tambah --}}
             <a href="{{ url('/kerjasamas/create') }}" class='btn btn-primary'>Tambah Kerjasama</a>
 
@@ -33,7 +33,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama Kerja Sama</th>
+                        <th>Nama Kerjasama</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
                         <th>Nama Mitra</th>
@@ -81,7 +81,7 @@
                 <tfoot>
                     <tr>
                         <th>No</th>
-                        <th>Nama Kerja Sama</th>
+                        <th>Nama Kerjasama</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
                         <th>Nama Mitra</th>

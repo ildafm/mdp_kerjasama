@@ -99,36 +99,6 @@
                     </div>
                 </div>
 
-
-
-                <div class="row">
-
-                    {{-- Dosen --}}
-                    <div class="form-group col-lg-4">
-                        <label for="dosens">Dosen</label>
-
-                        @php
-                            if (old('dosens') !== null) {
-                                $option = old('dosens');
-                            } else {
-                                $option = $kegiatans->dosen_id;
-                            }
-                        @endphp
-
-                        <select class="form-control select2" name="dosens" id="">
-                            @foreach ($dosens as $data)
-                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                    {{ $data->id }} -
-                                    {{ $data->kode_dosen }} - {{ $data->nama_dosen }}</option>
-                            @endforeach
-                        </select>
-                        @error('dosens')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                </div>
-
                 {{-- Keterangan --}}
                 <div class="form-group">
                     <label for="keterangan">Keterangan</label>

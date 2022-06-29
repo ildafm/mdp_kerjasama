@@ -51,7 +51,7 @@
 
                     <tr>
                         <td>Nama Dosen</td>
-                        <td>{{ $usulan->dosen->nama_dosen }}</td>
+                        <td>{{ $usulan->user->name }}</td>
                     </tr>
 
                     <tr>

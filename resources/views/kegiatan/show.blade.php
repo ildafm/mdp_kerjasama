@@ -129,7 +129,6 @@
                             </td>
                         </tr>
 
-                        {{-- getUnit --}}
                         <tr>
                             <td colspan="2">
                                 <div class="form-group">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 29, 2022 at 08:11 PM
+-- Generation Time: Jun 29, 2022 at 09:28 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -67,21 +67,6 @@ CREATE TABLE `bukti_kerjasamas` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `bukti_kerjasamas`
---
-
-INSERT INTO `bukti_kerjasamas` (`id`, `nama_bukti_kerjasama`, `file`, `kerjasama_id`, `created_at`, `updated_at`) VALUES
-(8, 'Bukti Kerjasama 1', 'DocumentBuktiKerjasama-1654342435.png', 1, '2022-06-04 11:33:55', '2022-06-04 11:33:55'),
-(9, 'Bukti Kerjasama Q2', 'DocumentBuktiKerjasama-1654849011.png', 1, '2022-06-10 08:16:51', '2022-06-10 08:16:51'),
-(10, 'Bukti Kerjasama Q3', 'DocumentBuktiKerjasama-1654849085.png', 1, '2022-06-10 08:18:05', '2022-06-10 08:18:05'),
-(14, 'Bukti Kerjasama Z1', 'DocumentBuktiKerjasama-1654854388.png', 2, '2022-06-10 09:46:28', '2022-06-10 09:46:28'),
-(17, 'Kerjasama 3 Punya Bukti Bernama Bukti Y1', 'file-1655288413.png', 3, '2022-06-15 10:20:13', '2022-06-15 10:20:13'),
-(18, 'Kerjasama 3 Punya Bukti Bernama Bukti Y2', 'file-1655288773.png', 3, '2022-06-15 10:26:13', '2022-06-15 10:26:13'),
-(20, 'Ini Bukti Kerjasama 4 Namanya R4', 'file-1655288945.png', 5, '2022-06-15 10:29:05', '2022-06-15 10:29:05'),
-(21, 'Ini file pdf Q1', 'file-1655288996.pdf', 1, '2022-06-15 10:29:56', '2022-06-15 10:29:56'),
-(22, 'Ini file pdf Q2', 'file-1655292568.pdf', 1, '2022-06-15 11:29:28', '2022-06-15 11:29:28');
 
 -- --------------------------------------------------------
 
@@ -162,7 +147,7 @@ CREATE TABLE `kegiatans` (
   `PIC` enum('F','P') NOT NULL,
   `keterangan` text NOT NULL,
   `kerjasama_id` int(11) NOT NULL,
-  `dosen_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -171,8 +156,8 @@ CREATE TABLE `kegiatans` (
 -- Dumping data for table `kegiatans`
 --
 
-INSERT INTO `kegiatans` (`id`, `tanggal_mulai`, `tanggal_sampai`, `bentuk_kegiatan`, `PIC`, `keterangan`, `kerjasama_id`, `dosen_id`, `created_at`, `updated_at`) VALUES
-(7, '2022-06-30', '2022-07-02', 'Daring', 'P', 'Dilakukan secara daring selama beberapa hari', 2, 2, '2022-06-29 17:56:01', '2022-06-29 17:56:01');
+INSERT INTO `kegiatans` (`id`, `tanggal_mulai`, `tanggal_sampai`, `bentuk_kegiatan`, `PIC`, `keterangan`, `kerjasama_id`, `user_id`, `created_at`, `updated_at`) VALUES
+(8, '2022-06-30', '2022-07-02', 'Daring 1', 'P', 'Dilakukan secara daring selama beberapa hari', 8, 2, '2022-06-29 19:21:32', '2022-06-29 19:23:33');
 
 -- --------------------------------------------------------
 
@@ -197,12 +182,7 @@ CREATE TABLE `kerjasamas` (
 --
 
 INSERT INTO `kerjasamas` (`id`, `nama_kerja_sama`, `tanggal_mulai`, `tanggal_sampai`, `mitra_id`, `kategori_id`, `status_id`, `created_at`, `updated_at`) VALUES
-(1, 'Kerja Sama 31', '2022-06-28', '2022-06-29', 1, 1, 3, '2022-04-22 13:10:46', '2022-06-28 02:37:42'),
-(2, 'Kerja Sama Q123456789', '2022-06-24', '2022-06-25', 3, 2, 3, '2022-04-22 13:40:37', '2022-06-28 02:37:51'),
-(3, 'Kerja Sama 3', '2022-04-23', '2022-04-30', 2, 2, 4, '2022-04-22 13:45:26', '2022-04-22 13:45:26'),
-(5, 'Kerja Sama Q1', '2022-06-11', '2022-06-18', 1, 1, 3, '2022-06-11 11:41:52', '2022-06-28 02:37:58'),
-(6, 'Kerja Sama Q2', '2022-06-11', '2022-06-30', 3, 2, 2, '2022-06-11 11:42:32', '2022-06-11 11:42:32'),
-(7, 'Kerja Sama Q12', '2022-06-28', '2022-06-29', 4, 2, 3, '2022-06-24 13:04:41', '2022-06-28 02:35:11');
+(8, 'Kerja Sama Q1', '2022-06-30', '2022-07-07', 1, 1, 1, '2022-06-29 19:20:18', '2022-06-29 19:20:18');
 
 -- --------------------------------------------------------
 
@@ -344,7 +324,7 @@ INSERT INTO `units` (`id`, `nama_unit`, `created_at`, `updated_at`) VALUES
 --
 
 CREATE TABLE `users` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+  `id` int(11) NOT NULL,
   `kode_dosen` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -381,7 +361,7 @@ CREATE TABLE `usulans` (
   `rencana_kegiatan` text NOT NULL,
   `tanggal_rencana_kegiatan` date NOT NULL,
   `mitra_id` int(11) NOT NULL,
-  `dosen_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `unit_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -391,11 +371,8 @@ CREATE TABLE `usulans` (
 -- Dumping data for table `usulans`
 --
 
-INSERT INTO `usulans` (`id`, `nama_usulan`, `bentuk_kerjasama`, `rencana_kegiatan`, `tanggal_rencana_kegiatan`, `mitra_id`, `dosen_id`, `unit_id`, `created_at`, `updated_at`) VALUES
-(1, 'Usulan 1', 'Kerja sama 1', 'Rencana 1', '2022-04-18', 1, 1, 1, '2022-04-25 04:07:10', '2022-04-25 04:07:10'),
-(2, 'Usulan 2', 'Kerja sama 2', 'Rencana 2', '2022-05-10', 2, 2, 1, '2022-04-25 04:10:11', '2022-05-10 02:14:11'),
-(3, 'sgdg', 'gssg', 'sgssgg', '2022-04-14', 2, 4, 5, '2022-04-25 04:10:27', '2022-06-17 12:14:44'),
-(5, 'Usulan Delapan', 'Bentuk Delapan', 'Rencana Baru', '2022-06-24', 4, 4, 4, '2022-06-24 13:37:30', '2022-06-24 13:37:30');
+INSERT INTO `usulans` (`id`, `nama_usulan`, `bentuk_kerjasama`, `rencana_kegiatan`, `tanggal_rencana_kegiatan`, `mitra_id`, `user_id`, `unit_id`, `created_at`, `updated_at`) VALUES
+(9, 'Usulan Q1', 'Kerja sama Q1', 'Rencana Q1', '2022-06-29', 1, 2, 3, '2022-06-29 19:24:11', '2022-06-29 19:24:11');
 
 --
 -- Indexes for dumped tables
@@ -450,7 +427,7 @@ ALTER TABLE `kategoris`
 ALTER TABLE `kegiatans`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_kegiatans_kerjasamas1_idx` (`kerjasama_id`),
-  ADD KEY `fk_kegiatans_dosens1_idx` (`dosen_id`);
+  ADD KEY `fk_kegiatans_dosens1_idx` (`user_id`);
 
 --
 -- Indexes for table `kerjasamas`
@@ -512,8 +489,8 @@ ALTER TABLE `users`
 ALTER TABLE `usulans`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_usulans_mitras1_idx` (`mitra_id`),
-  ADD KEY `fk_usulans_dosens1_idx` (`dosen_id`),
-  ADD KEY `fk_usulans_units1_idx` (`unit_id`);
+  ADD KEY `fk_usulans_units1_idx` (`unit_id`),
+  ADD KEY `fk_usulans_users1` (`user_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -523,13 +500,13 @@ ALTER TABLE `usulans`
 -- AUTO_INCREMENT for table `bukti_kegiatans`
 --
 ALTER TABLE `bukti_kegiatans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `bukti_kegiatan_units`
 --
 ALTER TABLE `bukti_kegiatan_units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `bukti_kerjasamas`
@@ -553,13 +530,13 @@ ALTER TABLE `kategoris`
 -- AUTO_INCREMENT for table `kegiatans`
 --
 ALTER TABLE `kegiatans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `kerjasamas`
 --
 ALTER TABLE `kerjasamas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `mitras`
@@ -583,13 +560,13 @@ ALTER TABLE `units`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `usulans`
 --
 ALTER TABLE `usulans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
@@ -612,14 +589,14 @@ ALTER TABLE `bukti_kegiatan_units`
 -- Constraints for table `bukti_kerjasamas`
 --
 ALTER TABLE `bukti_kerjasamas`
-  ADD CONSTRAINT `bukti_kerjasamas_ibfk_1` FOREIGN KEY (`kerjasama_id`) REFERENCES `kerjasamas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `bukti_kerjasamas_ibfk_1` FOREIGN KEY (`kerjasama_id`) REFERENCES `kerjasamas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `kegiatans`
 --
 ALTER TABLE `kegiatans`
-  ADD CONSTRAINT `fk_kegiatans_dosens1` FOREIGN KEY (`dosen_id`) REFERENCES `dosens` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_kegiatans_kerjasamas1` FOREIGN KEY (`kerjasama_id`) REFERENCES `kerjasamas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_kegiatans_kerjasamas1` FOREIGN KEY (`kerjasama_id`) REFERENCES `kerjasamas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_kegiatans_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `kerjasamas`
@@ -633,9 +610,9 @@ ALTER TABLE `kerjasamas`
 -- Constraints for table `usulans`
 --
 ALTER TABLE `usulans`
-  ADD CONSTRAINT `fk_usulans_dosens1` FOREIGN KEY (`dosen_id`) REFERENCES `dosens` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_usulans_mitras1` FOREIGN KEY (`mitra_id`) REFERENCES `mitras` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_usulans_units1` FOREIGN KEY (`unit_id`) REFERENCES `units` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_usulans_units1` FOREIGN KEY (`unit_id`) REFERENCES `units` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_usulans_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

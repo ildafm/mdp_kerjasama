@@ -513,7 +513,7 @@
                                         data: [
                                             @foreach ($getJumlahUsulanDosen as $data)
                                                 {
-                                                    name: '{{ $data->kode_dosen }} - {{ $data->nama_dosen }}',
+                                                    name: '{{ $data->kode_dosen }} - {{ $data->name }}',
                                                     y: {{ $data->jumlahUsulan }},
                                                     sliced: false,
                                                     selected: false

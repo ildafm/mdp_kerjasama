@@ -33,7 +33,7 @@
                     <tr>
                         <th>No</th>
                         <th>Bentuk Kegiatan</th>
-                        <th>Nama Kerja Sama</th>
+                        <th>Nama Kerjasama</th>
                         <th>PIC</th>
                         <th>Keterangan</th>
                         <th>Nama Dosen</th>
@@ -56,7 +56,7 @@
                             <td>{{ $data->kerjasama->nama_kerja_sama }}</td>
                             <td>{{ Status::kegiatan($data->PIC) }}</td>
                             <td>{{ $data->keterangan }}</td>
-                            <td>{{ $data->dosen->nama_dosen }}</td>
+                            <td>{{ $data->user->name }}</td>
                             <td>{{ $data->tanggal_mulai }}</td>
                             <td>{{ $data->tanggal_sampai }}</td>
                             <td>
@@ -83,7 +83,7 @@
                     <tr>
                         <th>No</th>
                         <th>Bentuk Kegiatan</th>
-                        <th>Nama Kerja Sama</th>
+                        <th>Nama Kerjasama</th>
                         <th>PIC</th>
                         <th>Keterangan</th>
                         <th>Nama Dosen</th>

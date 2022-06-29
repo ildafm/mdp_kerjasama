@@ -58,7 +58,7 @@
 
                 <div class="row">
                     {{-- Tanggal Rencana Kegiatan --}}
-                    <div class="form-group col-lg-3">
+                    <div class="form-group col-lg-4">
                         <label for="tanggal_rencana_kegiatan">Tanggal Rencana Kegiatan</label>
                         <input type="date" name="tanggal_rencana_kegiatan" id="" class="form-control"
                             value="{{ old('tanggal_rencana_kegiatan', $usulans->tanggal_rencana_kegiatan) }}">
@@ -68,7 +68,7 @@
                     </div>
 
                     {{-- Nama Mitra --}}
-                    <div class="form-group col-lg-3">
+                    <div class="form-group col-lg-4">
                         <label for="nama_mitra">Nama Mitra </label>
 
                         @php
@@ -92,7 +92,7 @@
                     </div>
 
                     {{-- Nama Unit --}}
-                    <div class="form-group col-lg-3">
+                    <div class="form-group col-lg-4">
                         <label for="nama_unit">Nama Unit</label>
 
                         @php
@@ -116,7 +116,7 @@
                     </div>
 
                     {{-- Nama Dosen --}}
-                    <div class="form-group col-lg-3">
+                    {{-- <div class="form-group col-lg-3">
                         <label for="nama_dosen">Nama Dosen </label>
 
                         @php
@@ -137,7 +137,7 @@
                         @error('nama_dosen')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
-                    </div>
+                    </div> --}}
 
                 </div>
             </div>

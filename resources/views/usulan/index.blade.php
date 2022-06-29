@@ -52,13 +52,13 @@
 
                     @foreach ($usulans as $data)
                         <tr>
-                            <td>{{-- $data->id --}}{{ $nomor++ }}</td>
+                            <td>{{ $nomor++ }}</td>
                             <td>{{ $data->nama_usulan }}</td>
                             <td>{{ $data->bentuk_kerjasama }}</td>
                             <td>{{ $data->rencana_kegiatan }}</td>
                             <td>{{ $data->tanggal_rencana_kegiatan }}</td>
                             <td>{{ $data->mitra->nama_mitra }}</td>
-                            <td>{{ $data->dosen->nama_dosen }}</td>
+                            <td>{{ $data->user->name }}</td>
                             <td>{{ $data->unit->nama_unit }}</td>
                             <td>
                                 {{-- BUtton Tampil --}}

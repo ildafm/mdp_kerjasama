@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Usulan;
 use Illuminate\Http\Request;
-use App\Models\Dosen;
+use App\Models\User;
 use App\Models\Mitra;
 use App\Models\Unit;
+
+use Illuminate\Support\Facades\DB;
 
 class UsulanController extends Controller
 {
@@ -19,7 +21,8 @@ class UsulanController extends Controller
     {
         //
         $usulans = Usulan::All();
-        return view('usulan.index')->with('usulans', $usulans);
+        return view('usulan.index')
+        ->with('usulans', $usulans);
     }
 
     /**
@@ -30,12 +33,12 @@ class UsulanController extends Controller
     public function create()
     {
         //
-        $dosens = Dosen::All();
+        $users = User::All();
         $mitras = Mitra::All();
         $units  = Unit::All();
 
         return view('usulan.create')
-            ->with('dosens', $dosens)
+            ->with('users', $users)
             ->with('mitras', $mitras)
             ->with('units', $units);
     }
@@ -66,7 +69,7 @@ class UsulanController extends Controller
         $usulan->rencana_kegiatan = $validateData['rencana_kegiatan'];
         $usulan->tanggal_rencana_kegiatan = $validateData['tanggal_rencana_kegiatan'];
         $usulan->mitra_id = $validateData['nama_mitra'];
-        $usulan->dosen_id = $validateData['nama_dosen'];
+        $usulan->user_id = $validateData['nama_dosen'];
         $usulan->unit_id =$validateData['nama_unit'];
 
         $usulan->save();
@@ -96,12 +99,12 @@ class UsulanController extends Controller
     public function edit(Usulan $usulan)
     {
         //
-        $dosens = Dosen::All();
+        // $dosens = Dosen::All();
         $mitras = Mitra::All();
         $units  = Unit::All();
 
         return view('usulan.edit')
-            ->with('dosens', $dosens)
+            // ->with('dosens', $dosens)
             ->with('mitras', $mitras)
             ->with('units', $units)
             ->with('usulans', $usulan);
@@ -123,7 +126,7 @@ class UsulanController extends Controller
             'rencana_kegiatan' => 'required',
             'tanggal_rencana_kegiatan' => 'required',
             'nama_mitra' => 'required',
-            'nama_dosen' => 'required',
+            // 'nama_dosen' => 'required',
             'nama_unit' => 'required'
         ]);
 
@@ -135,7 +138,7 @@ class UsulanController extends Controller
             'rencana_kegiatan' => $request->rencana_kegiatan,
             'tanggal_rencana_kegiatan' => $request->tanggal_rencana_kegiatan,
             'mitra_id' => $request->nama_mitra,
-            'dosen_id' => $request->nama_dosen,
+            // 'dosen_id' => $request->nama_dosen,
             'unit_id' => $request->nama_unit
         ]);
 

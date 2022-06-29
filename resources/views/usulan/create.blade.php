@@ -55,7 +55,7 @@
 
                 {{-- Tanggal Rencana Kegiatan --}}
                 <div class="row">
-                    <div class="form-group col-lg-3">
+                    <div class="form-group col-lg-4">
                         <label for="tanggal_rencana_kegiatan">Tanggal Rencana Kegiatan</label>
                         <input type="date" name="tanggal_rencana_kegiatan" id="" class="form-control"
                             value="{{ old('tanggal_rencana_kegiatan') }}">
@@ -65,7 +65,7 @@
                     </div>
 
                     {{-- Nama Mitra --}}
-                    <div class="form-group col-lg-3">
+                    <div class="form-group col-lg-4">
                         <label for="nama_mitra">Nama Mitra </label>
 
                         @php
@@ -88,32 +88,8 @@
                         @enderror
                     </div>
 
-                    {{-- Nama Dosen --}}
-                    <div class="form-group col-lg-3">
-                        <label for="nama_dosen">Nama Dosen </label>
-
-                        @php
-                            if (old('nama_dosen') !== null) {
-                                $option = old('nama_dosen');
-                            } else {
-                                $option = 1;
-                            }
-                        @endphp
-
-                        <select class="form-control select2" name="nama_dosen" id="">
-                            @foreach ($dosens as $data)
-                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                    {{ $data->kode_dosen }} - {{ $data->nama_dosen }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('nama_dosen')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-
                     {{-- Nama Unit --}}
-                    <div class="form-group col-lg-3">
+                    <div class="form-group col-lg-4">
                         <label for="nama_unit">Nama Unit </label>
 
                         @php
@@ -136,6 +112,8 @@
                         @enderror
                     </div>
                 </div>
+                {{-- get Dosen/User --}}
+                <input type="hidden" name="nama_dosen" value="{{ Auth::user()->id }}" class="form-control" readonly>
             </div>
 
             <div class="card-footer">
