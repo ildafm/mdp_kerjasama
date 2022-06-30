@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'User')
+@section('title', 'Profile')
 
 @section('content')
     <div class="card">
@@ -18,18 +18,62 @@
         </div>
 
         {{-- Form Ubah Data --}}
-        <form action="{{ route('users.update', ['user' => $user->id]) }}" method="POST">
+        <form action="{{ route('profiles.update', ['profile' => Auth::user()->id]) }}" method="POST"
+            enctype="multipart/form-data">
             @method('PUT')
             @csrf
 
             <div class="card-body">
+                {{-- Tampilkan Pesan --}}
+                @if (session()->has('pesan'))
+                    <div class='alert alert-success'>
+                        {{ session()->get('pesan') }}
+                    </div>
+                @endif
+
+                {{-- Edit Gambar --}}
+                <div class="form-group">
+                    <center>
+                        <p>
+                        <div class="image">
+                            @if (Auth::user()->file == null)
+                                <img src="{{ asset('dist/img/user_profile.png') }}"
+                                    class="img-circle elevation-2 img-fluid " alt="User_Image">
+                            @else
+                                <img src="{{ asset('storage/profile/' . Auth::user()->file) }}" alt="Foto Profile"
+                                    class="img-circle elevation-2 img-fluid">
+                            @endif
+                        </div>
+                        </p>
+                    </center>
+
+                    {{-- add file --}}
+                    <div class="form-group">
+                        <label for="file">Foto Profile(Max:500kb)</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
+                                <label class="custom-file-label" for="exampleInputFile" align="left">Choose file
+                                </label>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text">Upload</span>
+                            </div>
+                        </div>
+
+                        @error('file')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
                 <div class="row">
                     {{-- ubah email --}}
                     <div class="form-group col-lg-6 col-sm-12">
                         <label for="email">Email</label>
                         <input readonly type="text" name='email' autocomplete="email"
                             class="form-control @error('email') is-invalid @enderror" placeholder="Masukan Email"
-                            value="{{ $user->email }}">
+                            value="{{ Auth::user()->email }}">
                         @error('email')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -40,7 +84,7 @@
                         <label for="kode_dosen">Kode Dosen</label>
                         <input readonly type="text" name='kode_dosen' autocomplete="kode_dosen"
                             class="form-control @error('kode_dosen') is-invalid @enderror" placeholder="Masukan Kode Dosen"
-                            value="{{ $user->kode_dosen }}">
+                            value="{{ Auth::user()->kode_dosen }}">
                         @error('kode_dosen')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -51,8 +95,8 @@
                 <div class="form-group">
                     <label for="name">Nama User</label>
                     <input type="text" name='name' autocomplete="name" autofocus
-                        value="{{ old('name', $user->name) }}" class="form-control @error('name') is-invalid @enderror"
-                        placeholder="Masukan Nama User">
+                        value="{{ old('name', Auth::user()->name) }}"
+                        class="form-control @error('name') is-invalid @enderror" placeholder="Masukan Nama User">
                     @error('name')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -78,27 +122,6 @@
                             placeholder="Konfirmasi Password" autocomplete="new-password" value="">
                     </div>
                 </div>
-
-                {{-- ubah level --}}
-                <div class="form-group">
-                    <label for="level">Level</label>
-
-                    @php
-                        if (old('level') !== null) {
-                            $option = old('level');
-                        } else {
-                            $option = $user->level;
-                        }
-                    @endphp
-
-                    <select class="form-control" name='level'>
-                        <option value='A' <?= $option == 'A' ? 'selected' : '' ?>>Admin</option>
-                        <option value='D' <?= $option == 'D' ? 'selected' : '' ?>>Dosen</option>
-                    </select>
-                    @error('level')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
             </div>
 
             <div class="card-footer">
@@ -107,7 +130,8 @@
                 {{-- Spasi --}}
                 &ensp;
                 {{-- Button Kembali --}}
-                <a href="/users" class="btn btn-outline-secondary">Kembali</a>
+                {{-- <a href="{{ URL::previous() }}" class="btn btn-outline-secondary">Kembali</a> --}}
+                <a href="/dashboard" class="btn btn-outline-secondary">Kembali</a>
             </div>
         </form>
     </div>

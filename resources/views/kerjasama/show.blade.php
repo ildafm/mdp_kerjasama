@@ -91,7 +91,7 @@
                         <tr>
                             <td colspan="2">
                                 <div class="form-group">
-                                    <label for="Bukti_Kerjasama">Bukti Kerjasama</label>
+                                    <label for="Bukti_Kerjasama">Bukti Kerjasama(Max:50mb)</label>
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="Bukti_Kerjasama"

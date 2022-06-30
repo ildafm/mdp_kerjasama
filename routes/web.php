@@ -15,6 +15,7 @@ use App\Http\Controllers\UserController;
 
 use App\Http\Controllers\BuktiKerjasamaController;
 use App\Http\Controllers\BuktiKegiatanController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,7 @@ Route::resource('usulans', UsulanController::class);
 Route::resource('statuses', StatusController::class);
 Route::resource('kategoris', KategoriController::class);
 Route::resource('users', UserController::class);
+Route::resource('profiles', ProfileController::class);
 
 Route::resource('buktiKerjasamas', BuktiKerjasamaController::class);
 Route::resource('buktiKegiatans', BuktiKegiatanController::class);

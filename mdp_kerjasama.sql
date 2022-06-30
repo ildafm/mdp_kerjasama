@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 29, 2022 at 09:28 PM
+-- Generation Time: Jun 30, 2022 at 10:24 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -345,7 +345,7 @@ INSERT INTO `users` (`id`, `kode_dosen`, `name`, `email`, `level`, `file`, `emai
 (2, '000000', 'MainAccount', 'admin@gmail.com', 'A', NULL, NULL, '$2y$10$1Z/MaxYrXiOtFN5zZdu6.eeDsbt.QqEnmpgKS/WhKnrPEbCYh/qsa', NULL, '2022-05-27 01:55:39', '2022-06-26 02:14:22'),
 (4, 'D00002', 'Dosen', 'dosen@gmail.com', 'D', NULL, NULL, '$2y$10$99Q3pK58iKDaPS8jsBxaM.7E895ooZLKKo0251usp2y//8xlX0p9W', NULL, '2022-05-29 02:59:11', '2022-06-26 02:07:43'),
 (5, 'D00003', 'Dosen2', 'dosen2@gmail.com', 'D', NULL, NULL, '$2y$10$YqNpVetZcCe3JYiH549svO1zG73fP5oh1ZwRtUJ9M5xhmcjb5pyrG', NULL, '2022-06-17 11:32:46', '2022-06-26 02:07:53'),
-(6, 'D00004', 'User123', 'user@mail.com', 'D', NULL, NULL, '$2y$10$SacrjeyyQiDsVoPIqhZwVOBETyIrGS0Dt1gt6.Y0CN/o175/Mu8wy', NULL, '2022-06-26 02:31:14', '2022-06-26 02:45:23'),
+(6, 'D00004', 'User123', 'user@mail.com', 'D', 'file-D00004-User123.png', NULL, '$2y$10$SacrjeyyQiDsVoPIqhZwVOBETyIrGS0Dt1gt6.Y0CN/o175/Mu8wy', NULL, '2022-06-26 02:31:14', '2022-06-30 20:08:58'),
 (7, 'D00005', 'User1', 'user1@mail.com', 'D', NULL, NULL, '$2y$10$D5o03G.RX0n3C/0Enfb1t.iUS..Jqh8Gc78x4HE63OjtkWqIn/fwS', NULL, '2022-06-26 02:47:09', '2022-06-26 02:47:09');
 
 -- --------------------------------------------------------
@@ -372,7 +372,8 @@ CREATE TABLE `usulans` (
 --
 
 INSERT INTO `usulans` (`id`, `nama_usulan`, `bentuk_kerjasama`, `rencana_kegiatan`, `tanggal_rencana_kegiatan`, `mitra_id`, `user_id`, `unit_id`, `created_at`, `updated_at`) VALUES
-(9, 'Usulan Q1', 'Kerja sama Q1', 'Rencana Q1', '2022-06-29', 1, 2, 3, '2022-06-29 19:24:11', '2022-06-29 19:24:11');
+(9, 'Usulan Q1', 'Kerja sama Q1', 'Rencana Q1', '2022-06-29', 1, 2, 3, '2022-06-29 19:24:11', '2022-06-29 19:24:11'),
+(10, 'Usulan Q1', 'Kerja sama Q1', 'Rencana Q1', '2022-07-01', 2, 6, 2, '2022-06-30 20:24:21', '2022-06-30 20:24:21');
 
 --
 -- Indexes for dumped tables
@@ -566,7 +567,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `usulans`
 --
 ALTER TABLE `usulans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables

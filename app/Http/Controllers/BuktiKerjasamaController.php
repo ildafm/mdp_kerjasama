@@ -44,26 +44,26 @@ class BuktiKerjasamaController extends Controller
         // 1. validasi input data kosong
         $validateData = $request->validate([
             'Nama_Bukti_Kerjasama' => 'required',
-            'Bukti_Kerjasama' => 'required | file |mimes:pdf,jpg,png,docx,doc| max:5000',
+            'Bukti_Kerjasama' => 'required | file |mimes:pdf,jpg,png,docx,doc| max:50000',
             'kerjasama_id' => 'required',
         ]);
 
 
         //ambil extensi //png / jpg / gif
-        $ext1 = $request->Bukti_Kerjasama->getClientOriginalExtension();
+        $ext = $request->Bukti_Kerjasama->getClientOriginalExtension();
 
         //ubah nama file file
-        $rename_file1 = 'file-'.time().".".$ext1; //contoh file : file-timestamp.jpg
+        $rename_file = 'file-'.time().".".$ext; //contoh file : file-timestamp.jpg
 
         //upload foler ke dalam folder public
-        $request->Bukti_Kerjasama->storeAs('public/kerjasama', $rename_file1); //bisa diletakan difolder lain dengan store ke public/(folderlain)
+        $request->Bukti_Kerjasama->storeAs('public/kerjasama', $rename_file); //bisa diletakan difolder lain dengan store ke public/(folderlain)
         
 
         // 2. simpan file
         $buktiKerjasama = new BuktiKerjasama();
         
         $buktiKerjasama->nama_bukti_kerjasama = $validateData['Nama_Bukti_Kerjasama'];
-        $buktiKerjasama->file = $rename_file1;
+        $buktiKerjasama->file = $rename_file;
         $buktiKerjasama->kerjasama_id = $validateData['kerjasama_id'];
 
         $buktiKerjasama->save(); // simpan ke tabel bukti_kerjasama

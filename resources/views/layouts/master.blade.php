@@ -53,7 +53,8 @@
                         @if (Auth::user()->level == 'D')
                             {{-- Profile --}}
                             <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
+                            <a href="{{ route('profiles.edit', ['profile' => Auth::user()->id]) }}"
+                                class="dropdown-item">
                                 <i class="fas fa-user mr-2"></i> Profile
                             </a>
                         @endif
@@ -79,7 +80,7 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
             <a href="{{ url('/dashboard') }}" class="brand-link">
-                <img src="{{ asset('dist/img/logo-UMDP.png') }}" alt="AdminLTE Logo"
+                <img src="{{ asset('dist/img/logo-UMDP.png') }}" alt="UMDP"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">MDP KERMA</span>
             </a>
@@ -88,8 +89,14 @@
 
                 <div class="user-panel mt-3 pb-3 d-flex">
                     <div class="image mt-2">
-                        <img src="{{ asset('dist/img/user_profile.png') }}" class="img-circle elevation-2"
-                            alt="User_Image">
+                        @if (empty(Auth::user()->file))
+                            <img src="{{ asset('dist/img/user_profile.png') }}" class="img-circle elevation-2"
+                                alt="User Image">
+                        @else
+                            <img src="{{ asset('storage/profile/' . Auth::user()->file) }}"
+                                class="img-circle elevation-2" alt="User Image">
+                        @endif
+
                     </div>
 
                     <div class="info">
@@ -100,7 +107,7 @@
                                 Admin
                             </a>
                         @else
-                            <a href="#" class="">
+                            <a href="{{ route('profiles.edit', ['profile' => Auth::user()->id]) }}" class="">
                                 {{ Auth::user()->name }}<br>
                                 Dosen
                             </a>
@@ -299,10 +306,7 @@
         });
     </script>
 
-
     <script src="{{ asset('dist/js/adminlte.min.js?v=3.2.0') }}"></script>
-
-    {{-- <script src="{{ asset('dist/js/demo.js') }}"></script> --}}
 
     <script>
         $(function() {
@@ -331,8 +335,8 @@
         date = n.getDate(); //getDate
 
         // listMonth
-        months = ["January", "February", "March", "April", "May", "June", "August", "September", "October", "November",
-            "December"
+        months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
+            "November", "December"
         ];
         // getMonth
         month = months[n.getMonth()];

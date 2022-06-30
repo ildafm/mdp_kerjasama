@@ -95,9 +95,9 @@ class UserController extends Controller
     public function edit(User $user) //User $user = $id
     {
         //
-        $this->authorize('viewAny', User::class);
+            $this->authorize('viewAny', User::class);
 
-        return view('user.edit')->with('user', $user);
+            return view('user.edit')->with('user', $user);
     }
 
     /**
@@ -149,5 +149,9 @@ class UserController extends Controller
         $this->authorize('viewAny', User::class);
         $user->delete();
         return redirect()->route('users.index')->with('pesan', "Hapus data $user->name berhasil");
+    }
+
+    public function profile(User $user){
+        return view('user.profile')->with('user', $user);
     }
 }
