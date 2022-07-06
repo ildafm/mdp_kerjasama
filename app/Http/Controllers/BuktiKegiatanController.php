@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\BuktiKegiatan;
 use App\Models\BuktiKegiatanUnit;
+use App\Models\Kegiatan;
+use App\Models\Unit;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class BuktiKegiatanController extends Controller
 {
@@ -114,6 +118,32 @@ class BuktiKegiatanController extends Controller
     public function edit(BuktiKegiatan $buktiKegiatan)
     {
         //
+
+        $getUserID = DB::select("SELECT kegiatans.id AS 'id_kegiatan', kegiatans.user_id AS 'user_id', bukti_kegiatans.id AS 'id_bukti_kegiatan', kegiatans_id AS 'id_kegiatan_di_bukti_kegiatan'
+        FROM bukti_kegiatans
+        JOIN kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
+        WHERE bukti_kegiatans.id = $buktiKegiatan->id");
+
+        // $getUserID = Kegiatan::where('kegiatans', 'user_id')->first();
+        // $getUserID = Kegiatan::where('user_id', Auth::user()->id)->first();
+
+
+        if(Auth::user()->id != $getUserID[0]->user_id){
+            $this->authorize('viewAny', User::class);
+        }
+        
+        $units = Unit::All();
+        
+        $buktiKegiatanUnits = DB::select("SELECT bukti_kegiatans.id AS 'id_bukti_kegiatan', nama_bukti_kegiatan, bukti_kegiatan_units.id AS 'id_bukti_kegiatan_unit', bukti_kegiatan_units.bukti_kegiatans_id, bukti_kegiatan_units.units_id AS 'units_id'
+        FROM bukti_kegiatans
+        JOIN bukti_kegiatan_units ON bukti_kegiatan_units.bukti_kegiatans_id = $buktiKegiatan->id");
+
+        // $buktiKegiatanUnits = BuktiKegiatanUnit::All();
+
+        return view('kegiatan.editBukti')
+        ->with('units', $units)
+        ->with('buktiKegiatanUnits', $buktiKegiatanUnits)
+        ->with('buktiKegiatan', $buktiKegiatan);
     }
 
     /**
@@ -126,6 +156,55 @@ class BuktiKegiatanController extends Controller
     public function update(Request $request, BuktiKegiatan $buktiKegiatan)
     {
         //
+        $this->validate($request, [
+            'nama_bukti_kegiatan' => 'required',
+            // 'bukti_kegiatan' => 'required | file |mimes:pdf,jpg,png,docx,doc| max:5000',
+            'apt' => '',
+            'aps' => '',
+            'lamemba' => '',
+            'nama_unit' => 'required',
+        ]);
+
+        $buktiKegiatan = BuktiKegiatan::findOrFail($buktiKegiatan->id);
+
+        // checkbox apt
+        if(!empty($request->apt)){
+            $option_apt = 'Y';
+        }
+        else{
+            $option_apt = 'T';
+        }
+
+        // checkbox aps
+        if(!empty($request->aps)){
+            $option_aps = 'Y';
+        }
+        else{
+            $option_aps = 'T';
+        }
+
+        // checkbox lamemba
+        if(!empty($request->lamemba)){
+            $option_lamemba = 'Y';
+        }
+        else{
+            $option_lamemba = 'T';
+        }
+
+        $buktiKegiatan->update([
+            'nama_bukti_kegiatan' => $request->nama_bukti_kegiatan,
+            'ceklist_apt' => $option_apt,
+            'ceklist_aps' => $option_aps,
+            'ceklist_lamemba' => $option_lamemba,
+        ]);
+
+        DB::update("UPDATE bukti_kegiatan_units
+        JOIN bukti_kegiatans ON bukti_kegiatan_units.bukti_kegiatans_id = bukti_kegiatans.id
+        SET units_id = $request->nama_unit
+        WHERE bukti_kegiatans_id = $buktiKegiatan->id");
+
+        $request->session()->flash('pesan', 'Perubahan data berhasil');
+        return redirect()->route('kegiatans.index');
     }
 
     /**

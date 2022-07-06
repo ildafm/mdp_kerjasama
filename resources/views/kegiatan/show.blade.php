@@ -198,7 +198,6 @@
                     <tr>
                         <th>No</th>
                         <th>Nama Bukti Kegiatan</th>
-                        <th>Keterangan Kegiatan</th>
                         <th>Nama Unit</th>
                         <th>APT</th>
                         <th>APS</th>
@@ -219,7 +218,6 @@
                             <tr>
                                 <td> {{ $nomor++ }} </td>
                                 <td> {{ $data->nama_bukti_kegiatan }} </td>
-                                <td> {{ $data->keterangan_kegiatan }} </td>
                                 <td> {{ $data->nama_unit }} </td>
                                 <td>
                                     @if ($data->ceklist_apt == 'Y')
@@ -248,6 +246,10 @@
                                     <a href="{{ url('storage/kegiatan/' . $data->file) }}"
                                         class="btn btn-block btn-primary">Tampil</a>
 
+                                    {{-- Button Ubah --}}
+                                    <a href="{{ route('buktiKegiatans.edit', ['buktiKegiatan' => $data->id_bukti_kegiatan]) }}"
+                                        class="btn btn-block btn-warning">Ubah</a>
+
                                     {{-- Button Hapus --}}
                                     <button class="btn btn-block btn-danger btn-hapus"
                                         data-id="{{ $data->id_bukti_kegiatan }}" data-toggle="modal"
@@ -265,7 +267,6 @@
                     <tr>
                         <th>No</th>
                         <th>Nama Bukti Kegiatan</th>
-                        <th>Keterangan Kegiatan</th>
                         <th>Nama Unit</th>
                         <th>APT</th>
                         <th>APS</th>

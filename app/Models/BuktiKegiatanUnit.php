@@ -12,4 +12,6 @@ class BuktiKegiatanUnit extends Model
     public function buktiKegiatan(){
         return $this->hasMany(BuktiKegiatan::class);
     }
+
+    protected $fillable = ['unit_id'];
 }
