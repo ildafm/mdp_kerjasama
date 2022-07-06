@@ -91,7 +91,7 @@ class KerjasamaController extends Controller
         //
         $buktiKerjasama = DB::select("SELECT bukti_kerjasamas.id, nama_bukti_kerjasama, bukti_kerjasamas.file, LEFT(bukti_kerjasamas.created_at, 10) as tanggalUpload 
         FROM bukti_kerjasamas
-        JOIN kerjasamas on bukti_kerjasamas.kerjasama_id = kerjasamas.id
+        JOIN kerjasamas ON bukti_kerjasamas.kerjasama_id = kerjasamas.id
         WHERE bukti_kerjasamas.kerjasama_id = $kerjasama->id");
 
         return view('kerjasama.show')

@@ -28,7 +28,7 @@
             @endif
 
             {{-- Tabel Data --}}
-            <table id="example2" class="table table-bordered table-striped">
+            <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -49,34 +49,59 @@
                         $nomor = 1;
                     @endphp
 
-                    @foreach ($kegiatans as $data)
-                        <tr>
-                            <td>{{ $nomor++ }}</td>
-                            <td>{{ $data->bentuk_kegiatan }}</td>
-                            <td>{{ $data->kerjasama->nama_kerja_sama }}</td>
-                            <td>{{ Status::kegiatan($data->PIC) }}</td>
-                            <td>{{ $data->keterangan }}</td>
-                            <td>{{ $data->user->name }}</td>
-                            <td>{{ $data->tanggal_mulai }}</td>
-                            <td>{{ $data->tanggal_sampai }}</td>
-                            <td>
-                                {{-- Button Tampil --}}
-                                <a href="{{ url('kegiatans/' . $data->id) }}"
-                                    class="btn btn-block btn-primary">Tampil</a>
+                    @if (Auth::user()->level == 'A')
+                        {{-- Login Admin --}}
+                        @foreach ($kegiatans as $data)
+                            <tr>
+                                <td>{{ $nomor++ }}</td>
+                                <td>{{ $data->bentuk_kegiatan }}</td>
+                                <td>{{ $data->kerjasama->nama_kerja_sama }}</td>
+                                <td>{{ Status::kegiatan($data->PIC) }}</td>
+                                <td>{{ $data->keterangan }}</td>
+                                <td>{{ $data->user->name }}</td>
+                                <td>{{ $data->tanggal_mulai }}</td>
+                                <td>{{ $data->tanggal_sampai }}</td>
+                                <td>
+                                    {{-- Button Tampil --}}
+                                    <a href="{{ url('kegiatans/' . $data->id) }}"
+                                        class="btn btn-block btn-primary">Tampil</a>
 
-                                {{-- Button Ubah --}}
-                                <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
-                                    class="btn btn-block btn-warning">Ubah</a>
+                                    {{-- Button Ubah --}}
+                                    <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
+                                        class="btn btn-block btn-warning">Ubah</a>
 
-                                @if (Auth::user()->level == 'A')
                                     {{-- Button Hapus --}}
                                     <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
                                         data-bentukKegiatan="{{ $data->bentuk_kegiatan }}" data-toggle="modal"
                                         data-target="#modal-sm">Hapus</button>
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        {{-- Login Dosen --}}
+                        @foreach ($kegiatans as $data)
+                            <tr>
+                                <td>{{ $nomor++ }}</td>
+                                <td>{{ $data->bentuk_kegiatan }}</td>
+                                <td>{{ $data->nama_kerja_sama }}</td>
+                                <td>{{ Status::kegiatan($data->PIC) }}</td>
+                                <td>{{ $data->keterangan }}</td>
+                                <td>{{ $data->name }}</td>
+                                <td>{{ $data->tanggal_mulai }}</td>
+                                <td>{{ $data->tanggal_sampai }}</td>
+                                <td>
+                                    {{-- Button Tampil --}}
+                                    <a href="{{ url('kegiatans/' . $data->id) }}"
+                                        class="btn btn-block btn-primary">Tampil</a>
+
+                                    {{-- Button Ubah --}}
+                                    <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
+                                        class="btn btn-block btn-warning">Ubah</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
+
                 </tbody>
 
                 <tfoot>
@@ -116,7 +141,7 @@
                         {{-- <p>Apakah anda yakin ingin menghapus data ini?</p> --}}
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
+                        <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Tidak</button>
                         <button type="submit" class="btn btn-danger">Iya, Hapus</button>
                     </div>
                 </form>

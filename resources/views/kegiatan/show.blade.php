@@ -52,7 +52,7 @@
 
                     <tr>
                         <td>Nama Dosen</td>
-                        <td>{{ $kegiatan->dosen->nama_dosen }}</td>
+                        <td>{{ $kegiatan->user->name }}</td>
                     </tr>
 
                     <tr>
@@ -296,7 +296,7 @@
                         {{-- <p>Apakah anda yakin ingin menghapus data ini?</p> --}}
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
+                        <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Tidak</button>
                         <button type="submit" class="btn btn-danger">Iya, Hapus</button>
                     </div>
                 </form>

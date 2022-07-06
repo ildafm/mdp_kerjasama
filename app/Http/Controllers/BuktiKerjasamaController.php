@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\BuktiKerjasama;
 use App\Models\Kerjasama;
 use Illuminate\Http\Request;
-use Image;
 
 
 class BuktiKerjasamaController extends Controller
@@ -44,7 +43,7 @@ class BuktiKerjasamaController extends Controller
         // 1. validasi input data kosong
         $validateData = $request->validate([
             'Nama_Bukti_Kerjasama' => 'required',
-            'Bukti_Kerjasama' => 'required | file |mimes:pdf,jpg,png,docx,doc| max:50000',
+            'Bukti_Kerjasama' => 'required | file |mimes:pdf,jpg,png,docx,doc| max:5000',
             'kerjasama_id' => 'required',
         ]);
 
@@ -68,7 +67,7 @@ class BuktiKerjasamaController extends Controller
 
         $buktiKerjasama->save(); // simpan ke tabel bukti_kerjasama
         $request->session()->flash('pesan', 'Penambahan data bukti berhasil');
-        return redirect()->route('kerjasamas.index');
+        return redirect()->route('kerjasamas.show', $buktiKerjasama->kerjasama_id);
     }
 
     /**
@@ -116,6 +115,6 @@ class BuktiKerjasamaController extends Controller
     {
         //
         $buktiKerjasama->delete();
-        return redirect()->route('kerjasamas.index')->with('pesan', "Hapus data bukti $buktiKerjasama->nama_bukti_kerjasama berhasil");
+        return redirect()->route('kerjasamas.show', $buktiKerjasama->kerjasama_id)->with('pesan', "Hapus data bukti $buktiKerjasama->nama_bukti_kerjasama berhasil");
     }
 }

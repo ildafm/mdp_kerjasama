@@ -2,6 +2,12 @@
 @section('title', 'Kerjasama')
 
 @section('content')
+
+    {{-- css table --}}
+    <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+
     <div class="card">
         <div class="card-header">
             <!-- <h3 class="card-title">Tabel Daftar Kerja Sama</h3> -->
@@ -78,7 +84,8 @@
                                 <div class="form-group">
                                     <label for="Nama_Bukti_Kerjasama">Nama Bukti Kerjasama</label>
                                     <input type="text" class="form-control" name="Nama_Bukti_Kerjasama"
-                                        placeholder="Enter Nama Bukti Kerjasama">
+                                        placeholder="Enter Nama Bukti Kerjasama"
+                                        value="{{ old('Nama_Bukti_Kerjasama') }}">
 
                                     @error('Nama_Bukti_Kerjasama')
                                         <div class="text-danger">{{ $message }}</div>
@@ -91,7 +98,7 @@
                         <tr>
                             <td colspan="2">
                                 <div class="form-group">
-                                    <label for="Bukti_Kerjasama">Bukti Kerjasama(Max:50mb)</label>
+                                    <label for="Bukti_Kerjasama">Bukti Kerjasama(Max:5mb)</label>
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="Bukti_Kerjasama"
@@ -148,7 +155,7 @@
 
         <div class="card-body">
             {{-- Data Tabel Bukti Kerjasama --}}
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="example2" class="table table-bordered table-striped">
 
                 <thead>
                     <tr>
@@ -165,27 +172,23 @@
                         $nomor = 1;
                     @endphp
 
-                    @if (count($buktiKerjasama) > 0)
-                        @foreach ($buktiKerjasama as $data)
-                            <tr>
-                                <td> {{ $nomor++ }} </td>
-                                <td>{{ $data->nama_bukti_kerjasama }}</td>
-                                <td>{{ $data->tanggalUpload }}</td>
-                                <td>
-                                    {{-- Button Tampil --}}
-                                    <a href="{{ url('storage/kerjasama/' . $data->file) }}"
-                                        class="btn btn-block btn-primary">Tampil</a>
+                    @foreach ($buktiKerjasama as $data)
+                        <tr>
+                            <td> {{ $nomor++ }} </td>
+                            <td>{{ $data->nama_bukti_kerjasama }}</td>
+                            <td>{{ $data->tanggalUpload }}</td>
+                            <td>
+                                {{-- Button Tampil --}}
+                                <a href="{{ url('storage/kerjasama/' . $data->file) }}"
+                                    class="btn btn-block btn-primary">Tampil</a>
 
-                                    {{-- Button Hapus --}}
-                                    <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                        data-namaBuktiKerjasama="{{ $data->nama_bukti_kerjasama }}" data-toggle="modal"
-                                        data-target="#modal-sm">Hapus</button>
-                                </td>
-                            </tr>
-                        @endforeach
-                    @else
-                        <td colspan="4">Belum ada data</td>
-                    @endif
+                                {{-- Button Hapus --}}
+                                <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                    data-namaBuktiKerjasama="{{ $data->nama_bukti_kerjasama }}" data-toggle="modal"
+                                    data-target="#modal-sm">Hapus</button>
+                            </td>
+                        </tr>
+                    @endforeach
 
                 </tbody>
 
@@ -216,10 +219,10 @@
                         </button>
                     </div>
                     <div class="modal-body" id="mb-konfirmasi">
-                        {{-- <p>Apakah anda yakin ingin menghapus data ini?</p> --}}
+                        {{-- <p id="text_modal"></p> --}}
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
+                        <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Tidak</button>
                         <button type="submit" class="btn btn-danger">Iya, Hapus</button>
                     </div>
                 </form>
@@ -237,12 +240,49 @@
 
             let namaBuktiKerjasama = $(this).attr('data-namaBuktiKerjasama');
             $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus bukti " + namaBuktiKerjasama + " ?")
+
+            // document.getElementById("text_modal").innerHTML = "Apakah anda yakin ingin menghapus bukti " +
+            //     namaBuktiKerjasama + " ?";
         })
 
         // jika tombol Ya, hapus ditekan, submit form hapus
         $('#formDelete [type="submit"]').click(function() {
             $('#formDelete').submit();
         })
+    </script>
+
+    {{-- Data Tables --}}
+    <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('plugins/jszip/jszip.min.js') }}"></script>
+    <script src="{{ asset('plugins/pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('plugins/pdfmake/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+
+    <script>
+        $(function() {
+            $("#exampleQ1").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#exampleQ1_wrapper .col-md-6:eq(0)');
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
     </script>
 
 @endsection

@@ -50,33 +50,59 @@
                         $nomor = 1;
                     @endphp
 
-                    @foreach ($usulans as $data)
-                        <tr>
-                            <td>{{ $nomor++ }}</td>
-                            <td>{{ $data->nama_usulan }}</td>
-                            <td>{{ $data->bentuk_kerjasama }}</td>
-                            <td>{{ $data->rencana_kegiatan }}</td>
-                            <td>{{ $data->tanggal_rencana_kegiatan }}</td>
-                            <td>{{ $data->mitra->nama_mitra }}</td>
-                            <td>{{ $data->user->name }}</td>
-                            <td>{{ $data->unit->nama_unit }}</td>
-                            <td>
-                                {{-- BUtton Tampil --}}
-                                <a href="{{ url('usulans/' . $data->id) }}" class="btn btn-block btn-primary">Tampil</a>
+                    @if (Auth::user()->level == 'A')
+                        {{-- Jika Login admin --}}
+                        @foreach ($usulans as $data)
+                            <tr>
+                                <td>{{ $nomor++ }}</td>
+                                <td>{{ $data->nama_usulan }}</td>
+                                <td>{{ $data->bentuk_kerjasama }}</td>
+                                <td>{{ $data->rencana_kegiatan }}</td>
+                                <td>{{ $data->tanggal_rencana_kegiatan }}</td>
+                                <td>{{ $data->mitra->nama_mitra }}</td>
+                                <td>{{ $data->user->name }}</td>
+                                <td>{{ $data->unit->nama_unit }}</td>
+                                <td>
+                                    {{-- BUtton Tampil --}}
+                                    <a href="{{ url('usulans/' . $data->id) }}"
+                                        class="btn btn-block btn-primary">Tampil</a>
 
-                                {{-- Button Ubah --}}
-                                <a href="{{ route('usulans.edit', ['usulan' => $data->id]) }}"
-                                    class="btn btn-block btn-warning">Ubah</a>
+                                    {{-- Button Ubah --}}
+                                    <a href="{{ route('usulans.edit', ['usulan' => $data->id]) }}"
+                                        class="btn btn-block btn-warning">Ubah</a>
 
-                                @if (Auth::user()->level == 'A')
                                     {{-- Button Hapus --}}
                                     <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
                                         data-namaUsulan="{{ $data->nama_usulan }}" data-toggle="modal"
                                         data-target="#modal-sm">Hapus</button>
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        {{-- Jika Login dosen --}}
+                        @foreach ($usulans as $data)
+                            <tr>
+                                <td>{{ $nomor++ }}</td>
+                                <td>{{ $data->nama_usulan }}</td>
+                                <td>{{ $data->bentuk_kerjasama }}</td>
+                                <td>{{ $data->rencana_kegiatan }}</td>
+                                <td>{{ $data->tanggal_rencana_kegiatan }}</td>
+                                <td>{{ $data->nama_mitra }}</td>
+                                <td>{{ $data->name }}</td>
+                                <td>{{ $data->nama_unit }}</td>
+                                <td>
+                                    {{-- BUtton Tampil --}}
+                                    <a href="{{ url('usulans/' . $data->id) }}"
+                                        class="btn btn-block btn-primary">Tampil</a>
+
+                                    {{-- Button Ubah --}}
+                                    <a href="{{ route('usulans.edit', ['usulan' => $data->id]) }}"
+                                        class="btn btn-block btn-warning">Ubah</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
+
                 </tbody>
 
                 <tfoot>
@@ -116,7 +142,7 @@
                         {{-- <p>Apakah anda yakin ingin menghapus data ini?</p> --}}
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
+                        <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Tidak</button>
                         <button type="submit" class="btn btn-danger">Iya, Hapus</button>
                     </div>
                 </form>

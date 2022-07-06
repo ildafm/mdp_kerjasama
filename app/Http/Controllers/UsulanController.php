@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Mitra;
 use App\Models\Unit;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UsulanController extends Controller
@@ -20,7 +20,13 @@ class UsulanController extends Controller
     public function index()
     {
         //
-        $usulans = Usulan::All();
+        if(Auth::user()->level == 'A'){
+            $usulans = Usulan::All();
+        }
+        else{
+            $getUserId = Auth::user()->id;
+            $usulans = DB::select("SELECT usulans.id AS 'id', nama_usulan, bentuk_kerjasama, rencana_kegiatan, tanggal_rencana_kegiatan, nama_mitra, name, nama_unit FROM usulans JOIN users ON usulans.user_id = users.id JOIN mitras ON usulans.mitra_id = mitras.id JOIN units ON usulans.unit_id = units.id WHERE usulans.user_id = $getUserId");
+        }
         return view('usulan.index')
         ->with('usulans', $usulans);
     }
@@ -87,6 +93,11 @@ class UsulanController extends Controller
     public function show(Usulan $usulan)
     {
         //
+
+        if($usulan->user_id != Auth::user()->id){
+            $this->authorize('viewAny', User::class);
+        }
+
         return view('usulan.show')->with('usulan', $usulan);
     }
 
@@ -99,12 +110,15 @@ class UsulanController extends Controller
     public function edit(Usulan $usulan)
     {
         //
-        // $dosens = Dosen::All();
+        
+        if($usulan->user_id != Auth::user()->id){
+            $this->authorize('viewAny', User::class);
+        }
+
         $mitras = Mitra::All();
         $units  = Unit::All();
 
         return view('usulan.edit')
-            // ->with('dosens', $dosens)
             ->with('mitras', $mitras)
             ->with('units', $units)
             ->with('usulans', $usulan);
@@ -155,6 +169,8 @@ class UsulanController extends Controller
     public function destroy(Usulan $usulan)
     {
         //
+        $this->authorize('viewAny', User::class);
+
         $usulan->delete();
         return redirect()->route('usulans.index')->with('pesan', "Hapus data usulan $usulan->nama_usulan berhasil");
     }

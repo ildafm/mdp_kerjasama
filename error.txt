@@ -32,8 +32,14 @@
 
 -> Perbaiki Tanggal(Selesai)
 
--> Foto user
+-> Foto user(Selesai)
+
+-> Button hapus bukti kegiatan(Selesai)
+
+-> Ubah class button hapus di modal (Selesai)
+
 -> Menambahkan komentar (Sedikit)
--> Masalah reset password
+-> Perbaiki modal di semua menu jika login menggunakan smartphone
+-> Masalah reset password (bisa dari profile untuk login dosen, belum bisa dari login)
 -> Form ubah bukti kegiatan
--> Button hapus bukti kegiatan
+
