@@ -38,8 +38,9 @@
 
 -> Ubah class button hapus di modal (Selesai)
 
+-> Tambahkan 1 kolom baru di tabel bukti_kegiatans bernama kolom bidang : Pendidikan, penelitian, pengabdian, lain-lain(Selesai) 
+
 -> Menambahkan komentar (Sedikit)
 -> Perbaiki modal di semua menu jika login menggunakan smartphone
 -> Masalah reset password (bisa dari profile untuk login dosen, belum bisa dari login)
 -> Form ubah bukti kegiatan
--> Tambahkan 1 kolom baru di tabel bukti_kegiatans bernama kolom bidang : Pendidikan, penelitian, pengabdian, lain-lain

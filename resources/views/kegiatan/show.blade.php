@@ -90,7 +90,7 @@
                         <tr>
                             <td colspan="2">
                                 <div class="form-group">
-                                    <label for="bukti_kegiatan">Bukti Kegiatan</label>
+                                    <label for="bukti_kegiatan">Bukti Kegiatan(Max:5mb)</label>
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="bukti_kegiatan"
@@ -131,17 +131,34 @@
 
                         <tr>
                             <td colspan="2">
-                                <div class="form-group">
+                                <div class="row">
                                     {{-- Nama Unit --}}
-                                    <label for="nama_unit">Nama Unit</label>
-                                    <select class="form-control select2" name="nama_unit">
-                                        @foreach ($units as $data)
-                                            <option value="{{ $data->id }}">{{ $data->nama_unit }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('nama_unit')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <div class="form-group col-lg-6">
+                                        <label for="nama_unit">Nama Unit</label>
+                                        <select class="form-control select2" name="nama_unit">
+                                            @foreach ($units as $data)
+                                                <option value="{{ $data->id }}">{{ $data->nama_unit }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('nama_unit')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    {{-- Bidang --}}
+                                    <div class="form-group col-lg-6">
+                                        <label for="bidang">Bidang</label>
+                                        <select class="form-control" name="bidang">
+                                            <option value='P'>Pendidikan</option>
+                                            <option value='N'>Penelitian</option>
+                                            <option value='B'>Pengabdian</option>
+                                            <option value='L'>Lain-lain</option>
+                                        </select>
+                                        @error('bidang')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
 
                                     {{-- getKegiatanID --}}
                                     <input type="hidden" value="{{ $kegiatan->id }}" class="form-control"
@@ -199,6 +216,7 @@
                         <th>No</th>
                         <th>Aksi</th>
                         <th>Nama Bukti Kegiatan</th>
+                        <th>Bidang</th>
                         <th>Nama Unit</th>
                         <th>APT</th>
                         <th>APS</th>
@@ -218,8 +236,8 @@
                             <td> {{ $nomor++ }} </td>
                             <td>
                                 {{-- Button Tampil --}}
-                                <a href="{{ url('storage/kegiatan/' . $data->file) }}" class="btn btn-sm btn-primary"><i
-                                        class="nav-icon fas fa-eye" title="Tampil"></i></a>
+                                <a href="{{ url('storage/kegiatan/' . $data->file) }}"
+                                    class="btn btn-sm btn-primary"><i class="nav-icon fas fa-eye" title="Tampil"></i></a>
 
                                 {{-- Button Ubah --}}
                                 <a href="{{ route('buktiKegiatans.edit', ['buktiKegiatan' => $data->id_bukti_kegiatan]) }}"
@@ -234,6 +252,20 @@
                                         class="nav-icon fas fa-trash" title="Hapus"></i></button>
                             </td>
                             <td> {{ $data->nama_bukti_kegiatan }} </td>
+                            <td>
+                                @if ($data->bidang == 'P')
+                                    Pendidikan
+                                @endif
+                                @if ($data->bidang == 'N')
+                                    Penelitian
+                                @endif
+                                @if ($data->bidang == 'B')
+                                    Pengabdian
+                                @endif
+                                @if ($data->bidang == 'L')
+                                    Lain-lain
+                                @endif
+                            </td>
                             <td> {{ $data->nama_unit }} </td>
                             <td>
                                 @if ($data->ceklist_apt == 'Y')
@@ -266,6 +298,7 @@
                         <th>No</th>
                         <th>Aksi</th>
                         <th>Nama Bukti Kegiatan</th>
+                        <th>Bidang</th>
                         <th>Nama Unit</th>
                         <th>APT</th>
                         <th>APS</th>

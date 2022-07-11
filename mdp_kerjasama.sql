@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 01, 2022 at 07:18 AM
+-- Generation Time: Jul 11, 2022 at 03:51 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -35,6 +35,7 @@ CREATE TABLE `bukti_kegiatans` (
   `ceklist_apt` enum('Y','T') NOT NULL DEFAULT 'T',
   `ceklist_aps` enum('Y','T') NOT NULL DEFAULT 'T',
   `ceklist_lamemba` enum('Y','T') NOT NULL DEFAULT 'T',
+  `bidang` char(1) NOT NULL DEFAULT 'P',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -43,8 +44,13 @@ CREATE TABLE `bukti_kegiatans` (
 -- Dumping data for table `bukti_kegiatans`
 --
 
-INSERT INTO `bukti_kegiatans` (`id`, `nama_bukti_kegiatan`, `file`, `kegiatans_id`, `ceklist_apt`, `ceklist_aps`, `ceklist_lamemba`, `created_at`, `updated_at`) VALUES
-(13, 'Bukti kegiatan Lepas 1', 'file-1656650543.png', 10, 'Y', 'T', 'T', '2022-07-01 04:42:23', '2022-07-01 04:42:23');
+INSERT INTO `bukti_kegiatans` (`id`, `nama_bukti_kegiatan`, `file`, `kegiatans_id`, `ceklist_apt`, `ceklist_aps`, `ceklist_lamemba`, `bidang`, `created_at`, `updated_at`) VALUES
+(13, 'Bukti kegiatan Lepas 1', 'file-1656650543.png', 10, 'Y', 'T', 'T', 'P', '2022-07-01 04:42:23', '2022-07-01 04:42:23'),
+(14, 'Bukti kegiatan Q2', 'file-1657089740.pdf', 8, 'T', 'Y', 'Y', 'P', '2022-07-06 06:42:20', '2022-07-11 01:21:24'),
+(15, 'Bukti kegiatan Q3', 'file-1657089773.docx', 8, 'Y', 'T', 'Y', 'L', '2022-07-06 06:42:53', '2022-07-11 13:45:36'),
+(16, 'Bukti kegiatan 3', 'file-1657096474.docx', 10, 'Y', 'T', 'T', 'P', '2022-07-06 08:34:34', '2022-07-06 08:34:34'),
+(17, 'Bukti kegiatan 4', 'file-1657097581.pdf', 9, 'Y', 'T', 'T', 'P', '2022-07-06 08:53:01', '2022-07-06 08:53:01'),
+(18, 'Bukti Kegiatan Q4', 'file-1657546530.png', 8, 'T', 'T', 'Y', 'N', '2022-07-11 13:35:30', '2022-07-11 13:35:30');
 
 -- --------------------------------------------------------
 
@@ -65,7 +71,12 @@ CREATE TABLE `bukti_kegiatan_units` (
 --
 
 INSERT INTO `bukti_kegiatan_units` (`id`, `units_id`, `bukti_kegiatans_id`, `created_at`, `updated_at`) VALUES
-(10, 2, 13, '2022-07-01 04:42:24', '2022-07-01 04:42:24');
+(10, 2, 13, '2022-07-01 04:42:24', '2022-07-06 07:46:19'),
+(11, 4, 14, '2022-07-06 06:42:20', '2022-07-11 12:57:26'),
+(12, 1, 15, '2022-07-06 06:42:53', '2022-07-06 07:48:01'),
+(13, 4, 16, '2022-07-06 08:34:34', '2022-07-06 08:34:34'),
+(14, 4, 17, '2022-07-06 08:53:01', '2022-07-06 08:53:01'),
+(15, 8, 18, '2022-07-11 13:35:30', '2022-07-11 13:35:30');
 
 -- --------------------------------------------------------
 
@@ -273,6 +284,13 @@ CREATE TABLE `password_resets` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `password_resets`
+--
+
+INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
+('admin@gmail.com', '$2y$10$MkahvDf0MASCchRTHEgGr.px6cIoMqJ2b5jQzC4tfxz5lt06jqXrS', '2022-07-06 06:40:00');
+
 -- --------------------------------------------------------
 
 --
@@ -340,7 +358,7 @@ INSERT INTO `units` (`id`, `nama_unit`, `created_at`, `updated_at`) VALUES
 (6, 'TE', '2022-04-27 03:30:03', '2022-06-24 13:28:58'),
 (7, 'MI', '2022-04-27 03:31:00', '2022-06-24 13:29:06'),
 (8, 'AK', '2022-04-27 03:34:34', '2022-06-24 13:29:14'),
-(13, 'MJ', '2022-06-17 11:25:36', '2022-06-24 13:29:21');
+(15, 'MJ', '2022-07-11 13:04:14', '2022-07-11 13:04:14');
 
 -- --------------------------------------------------------
 
@@ -368,8 +386,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `kode_dosen`, `name`, `email`, `level`, `file`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (2, '000000', 'MainAccount', 'admin@gmail.com', 'A', NULL, NULL, '$2y$10$1Z/MaxYrXiOtFN5zZdu6.eeDsbt.QqEnmpgKS/WhKnrPEbCYh/qsa', NULL, '2022-05-27 01:55:39', '2022-06-26 02:14:22'),
-(4, 'D00002', 'Akun Dosen', 'dosen@gmail.com', 'D', NULL, NULL, '$2y$10$Rk9WruJrJqv/WJ7a5vhw8uV3cw96IbybCGoqIxYA.pwtLtfsYxZsG', NULL, '2022-05-29 02:59:11', '2022-07-01 04:17:53'),
-(5, 'D00003', 'Dosen2', 'dosen2@gmail.com', 'D', NULL, NULL, '$2y$10$YqNpVetZcCe3JYiH549svO1zG73fP5oh1ZwRtUJ9M5xhmcjb5pyrG', NULL, '2022-06-17 11:32:46', '2022-06-26 02:07:53'),
+(4, 'D00002', 'Account Dosen', 'dosen@gmail.com', 'D', 'file-D00002-Main Account Dosen 1.jpg', NULL, '$2y$10$Rk9WruJrJqv/WJ7a5vhw8uV3cw96IbybCGoqIxYA.pwtLtfsYxZsG', NULL, '2022-05-29 02:59:11', '2022-07-11 01:52:00'),
 (6, 'D00004', 'User123', 'user@mail.com', 'D', 'file-D00004-User123.png', NULL, '$2y$10$SacrjeyyQiDsVoPIqhZwVOBETyIrGS0Dt1gt6.Y0CN/o175/Mu8wy', NULL, '2022-06-26 02:31:14', '2022-06-30 20:08:58'),
 (7, 'D00005', 'User1', 'user1@mail.com', 'D', NULL, NULL, '$2y$10$D5o03G.RX0n3C/0Enfb1t.iUS..Jqh8Gc78x4HE63OjtkWqIn/fwS', NULL, '2022-06-26 02:47:09', '2022-06-26 02:47:09');
 
@@ -400,7 +417,8 @@ INSERT INTO `usulans` (`id`, `nama_usulan`, `bentuk_kerjasama`, `rencana_kegiata
 (9, 'Usulan Q1', 'Kerja sama Q1', 'Rencana Q1', '2022-06-29', 1, 2, 3, '2022-06-29 19:24:11', '2022-06-29 19:24:11'),
 (10, 'Usulan Q1', 'Kerja sama Q1', 'Rencana Q1', '2022-07-01', 2, 6, 2, '2022-06-30 20:24:21', '2022-06-30 20:24:21'),
 (11, 'Usulan Q3', 'Kerja sama Q3', 'Rencana Q3', '2022-08-09', 15, 4, 3, '2022-07-01 03:51:15', '2022-07-01 03:51:15'),
-(12, 'Usulan Delapan', 'Bentuk Delapan', 'Rencana Baru', '2022-07-01', 3, 4, 5, '2022-07-01 04:08:22', '2022-07-01 04:08:22');
+(12, 'Usulan Delapan', 'Bentuk Delapan', 'Rencana Baru', '2022-07-01', 3, 4, 5, '2022-07-01 04:08:22', '2022-07-01 04:08:22'),
+(13, 'Usulan Baru 24', 'Kerjasama 24', 'Rencana 24', '2022-10-11', 4, 6, 3, '2022-07-11 13:02:36', '2022-07-11 13:02:36');
 
 --
 -- Indexes for dumped tables
@@ -528,13 +546,13 @@ ALTER TABLE `usulans`
 -- AUTO_INCREMENT for table `bukti_kegiatans`
 --
 ALTER TABLE `bukti_kegiatans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `bukti_kegiatan_units`
 --
 ALTER TABLE `bukti_kegiatan_units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `bukti_kerjasamas`
@@ -582,19 +600,19 @@ ALTER TABLE `statuses`
 -- AUTO_INCREMENT for table `units`
 --
 ALTER TABLE `units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `usulans`
 --
 ALTER TABLE `usulans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables

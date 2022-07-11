@@ -50,6 +50,7 @@ class BuktiKegiatanController extends Controller
             'aps' => '',
             'lamemba' => '',
             'nama_unit' => 'required',
+            'bidang' => 'required',
             'kegiatan_id' => 'required',
         ]);
 
@@ -81,6 +82,7 @@ class BuktiKegiatanController extends Controller
             $buktiKegiatan->ceklist_lamemba = 'Y';
         }
 
+        $buktiKegiatan->bidang = $validateData['bidang'];
         $buktiKegiatan->kegiatans_id = $validateData['kegiatan_id'];
 
         $buktiKegiatan->save(); // simpan ke tabel bukti_kegiatan
@@ -161,6 +163,7 @@ class BuktiKegiatanController extends Controller
             'aps' => '',
             'lamemba' => '',
             'nama_unit' => 'required',
+            'bidang' => 'required',
         ]);
 
         $buktiKegiatan = BuktiKegiatan::findOrFail($buktiKegiatan->id);
@@ -194,6 +197,7 @@ class BuktiKegiatanController extends Controller
             'ceklist_apt' => $option_apt,
             'ceklist_aps' => $option_aps,
             'ceklist_lamemba' => $option_lamemba,
+            'bidang' => $request->bidang,
         ]);
 
         DB::update("UPDATE bukti_kegiatan_units

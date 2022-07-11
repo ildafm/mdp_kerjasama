@@ -108,28 +108,49 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="row">
                     {{-- Nama Unit --}}
-                    @php
-                        if (old('nama_unit') != null) {
-                            $option = old('nama_unit');
-                        } else {
-                            $option = $buktiKegiatanUnits->units_id;
-                        }
-                        // echo $buktiKegiatanUnits->units_id;
-                    @endphp
+                    <div class="form-group col-lg-6">
+                        @php
+                            if (old('nama_unit') != null) {
+                                $option = old('nama_unit');
+                            } else {
+                                $option = $buktiKegiatanUnits->units_id;
+                            }
+                            // echo $buktiKegiatanUnits->units_id;
+                        @endphp
 
-                    <label for="nama_unit">Nama Unit</label>
-                    <select class="form-control select2" name="nama_unit">
-                        @foreach ($units as $data)
-                            <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                {{ $data->nama_unit }}</option>
-                        @endforeach
-                    </select>
-                    @error('nama_unit')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                        <label for="nama_unit">Nama Unit</label>
+                        <select class="form-control select2" name="nama_unit">
+                            @foreach ($units as $data)
+                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                    {{ $data->nama_unit }}</option>
+                            @endforeach
+                        </select>
+                        @error('nama_unit')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Bidang --}}
+                    <div class="form-group col-lg-6">
+                        <label for="bidang">Bidang</label>
+                        <select class="form-control" name="bidang">
+                            <option value='P' <?= $buktiKegiatan->bidang == 'P' ? 'selected' : '' ?>>
+                                Pendidikan</option>
+                            <option value='N' <?= $buktiKegiatan->bidang == 'N' ? 'selected' : '' ?>>
+                                Penelitian</option>
+                            <option value='B' <?= $buktiKegiatan->bidang == 'B' ? 'selected' : '' ?>>
+                                Pengabdian</option>
+                            <option value='L' <?= $buktiKegiatan->bidang == 'L' ? 'selected' : '' ?>>
+                                Lain-lain</option>
+                        </select>
+                        @error('bidang')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
+
             </div>
 
             <div class="card-footer">
