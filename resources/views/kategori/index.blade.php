@@ -34,8 +34,8 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama Kategori</th>
                         <th>Aksi</th>
+                        <th>Nama Kategori</th>
                     </tr>
                 </thead>
 
@@ -47,21 +47,22 @@
 
                     @foreach ($kategoris as $data)
                         <tr>
-                            <td>{{-- $data->id --}}{{ $nomor++ }}</td>
-                            <td>{{ $data->nama_kategori }}</td>
+                            <td>{{ $nomor++ }}</td>
                             <td>
                                 {{-- Button Tampil --}}
-                                <a href="{{ url('kategoris/' . $data->id) }}" class="btn btn-block btn-primary">Tampil</a>
+                                {{-- <a href="{{ url('kategoris/' . $data->id) }}" class="btn btn-sm btn-primary"><i
+                                        class="nav-icon fas fa-eye" title="Tampil"></i></a> --}}
 
                                 {{-- Button Ubah --}}
                                 <a href="{{ route('kategoris.edit', ['kategori' => $data->id]) }}"
-                                    class="btn btn-block btn-warning">Ubah</a>
+                                    class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit" title="Edit"></i></a>
 
                                 {{-- Button Hapus --}}
-                                <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
                                     data-namaKategori="{{ $data->nama_kategori }}" data-toggle="modal"
-                                    data-target="#modal-sm">Hapus</button>
+                                    data-target="#modal-sm"><i class="nav-icon fas fa-trash" title="Hapus"></i></button>
                             </td>
+                            <td>{{ $data->nama_kategori }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -69,8 +70,8 @@
                 <tfoot>
                     <tr>
                         <th>No</th>
-                        <th>Nama Kategori</th>
                         <th>Aksi</th>
+                        <th>Nama Kategori</th>
                     </tr>
                 </tfoot>
 

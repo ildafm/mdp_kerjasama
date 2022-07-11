@@ -134,15 +134,13 @@ class BuktiKegiatanController extends Controller
         
         $units = Unit::All();
         
-        $buktiKegiatanUnits = DB::select("SELECT bukti_kegiatans.id AS 'id_bukti_kegiatan', nama_bukti_kegiatan, bukti_kegiatan_units.id AS 'id_bukti_kegiatan_unit', bukti_kegiatan_units.bukti_kegiatans_id, bukti_kegiatan_units.units_id AS 'units_id'
-        FROM bukti_kegiatans
-        JOIN bukti_kegiatan_units ON bukti_kegiatan_units.bukti_kegiatans_id = $buktiKegiatan->id");
+        $buktiKegiatanUnits = DB::select("SELECT bukti_kegiatans.id AS 'id_bukti_kegiatan', nama_bukti_kegiatan, bukti_kegiatan_units.id AS 'id_bukti_kegiatan_unit', bukti_kegiatan_units.bukti_kegiatans_id, bukti_kegiatan_units.units_id AS 'units_id' FROM bukti_kegiatans JOIN bukti_kegiatan_units ON bukti_kegiatan_units.bukti_kegiatans_id = bukti_kegiatans.id WHERE bukti_kegiatans.id = $buktiKegiatan->id");
 
         // $buktiKegiatanUnits = BuktiKegiatanUnit::All();
 
         return view('kegiatan.editBukti')
         ->with('units', $units)
-        ->with('buktiKegiatanUnits', $buktiKegiatanUnits)
+        ->with('buktiKegiatanUnits', $buktiKegiatanUnits[0])
         ->with('buktiKegiatan', $buktiKegiatan);
     }
 

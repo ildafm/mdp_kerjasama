@@ -111,17 +111,18 @@
                 <div class="form-group">
                     {{-- Nama Unit --}}
                     @php
-                        // if (old('nama_unit') != null) {
-                        //     $option = old('nama_unit');
-                        // } else {
-                        //     $option = $buktiKegiatanUnits->units_id;
-                        // }
+                        if (old('nama_unit') != null) {
+                            $option = old('nama_unit');
+                        } else {
+                            $option = $buktiKegiatanUnits->units_id;
+                        }
+                        // echo $buktiKegiatanUnits->units_id;
                     @endphp
 
                     <label for="nama_unit">Nama Unit</label>
                     <select class="form-control select2" name="nama_unit">
                         @foreach ($units as $data)
-                            <option value="{{ $data->id }}" {{-- $option==$data->id?'selected':'' --}}>
+                            <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
                                 {{ $data->nama_unit }}</option>
                         @endforeach
                     </select>
@@ -135,7 +136,7 @@
                 {{-- Button Submit --}}
                 <button type="submit" class="btn btn-primary">Submit</button>
                 &nbsp;
-                <a href="{{ url()->previous() }}" class="btn btn-outline-dark">Kembali</a>
+                <a href="{{ url("kegiatans/$buktiKegiatan->kegiatans_id") }}" class="btn btn-outline-dark">Kembali</a>
             </div>
 
         </form>

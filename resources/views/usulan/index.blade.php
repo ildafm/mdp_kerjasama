@@ -33,6 +33,8 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Aksi</th>
+
                         <th>Nama Usulan</th>
                         <th>Bentuk Kerjasama</th>
                         <th>Rencana Kegiatan</th>
@@ -40,7 +42,6 @@
                         <th>Nama Mitra</th>
                         <th>Nama Dosen</th>
                         <th>Nama Unit</th>
-                        <th>Aksi</th>
                     </tr>
                 </thead>
 
@@ -50,64 +51,48 @@
                         $nomor = 1;
                     @endphp
 
-                    @if (Auth::user()->level == 'A')
-                        {{-- Jika Login admin --}}
-                        @foreach ($usulans as $data)
-                            <tr>
-                                <td>{{ $nomor++ }}</td>
-                                <td>{{ $data->nama_usulan }}</td>
-                                <td>{{ $data->bentuk_kerjasama }}</td>
-                                <td>{{ $data->rencana_kegiatan }}</td>
-                                <td>{{ $data->tanggal_rencana_kegiatan }}</td>
+                    @foreach ($usulans as $data)
+                        <tr>
+                            <td>{{ $nomor++ }}</td>
+                            <td>
+                                {{-- BUtton Tampil --}}
+                                <a href="{{ url('usulans/' . $data->id) }}" class="btn btn-sm btn-primary"><i
+                                        class="nav-icon fas fa-eye" title="Tampil"></i></a>
+
+                                {{-- Button Ubah --}}
+                                <a href="{{ route('usulans.edit', ['usulan' => $data->id]) }}"
+                                    class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit" title="Edit"></i></a>
+
+                                @if (Auth::user()->level == 'A')
+                                    {{-- Button Hapus --}}
+                                    <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                        data-namaUsulan="{{ $data->nama_usulan }}" data-toggle="modal"
+                                        data-target="#modal-sm"><i class="nav-icon fas fa-trash"
+                                            title="Hapus"></i></button>
+                                @endif
+                            </td>
+                            <td>{{ $data->nama_usulan }}</td>
+                            <td>{{ $data->bentuk_kerjasama }}</td>
+                            <td>{{ $data->rencana_kegiatan }}</td>
+                            <td>{{ $data->tanggal_rencana_kegiatan }}</td>
+                            @if (Auth::user()->level == 'A')
                                 <td>{{ $data->mitra->nama_mitra }}</td>
                                 <td>{{ $data->user->name }}</td>
                                 <td>{{ $data->unit->nama_unit }}</td>
-                                <td>
-                                    {{-- BUtton Tampil --}}
-                                    <a href="{{ url('usulans/' . $data->id) }}"
-                                        class="btn btn-block btn-primary">Tampil</a>
-
-                                    {{-- Button Ubah --}}
-                                    <a href="{{ route('usulans.edit', ['usulan' => $data->id]) }}"
-                                        class="btn btn-block btn-warning">Ubah</a>
-
-                                    {{-- Button Hapus --}}
-                                    <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                        data-namaUsulan="{{ $data->nama_usulan }}" data-toggle="modal"
-                                        data-target="#modal-sm">Hapus</button>
-                                </td>
-                            </tr>
-                        @endforeach
-                    @else
-                        {{-- Jika Login dosen --}}
-                        @foreach ($usulans as $data)
-                            <tr>
-                                <td>{{ $nomor++ }}</td>
-                                <td>{{ $data->nama_usulan }}</td>
-                                <td>{{ $data->bentuk_kerjasama }}</td>
-                                <td>{{ $data->rencana_kegiatan }}</td>
-                                <td>{{ $data->tanggal_rencana_kegiatan }}</td>
+                            @else
                                 <td>{{ $data->nama_mitra }}</td>
                                 <td>{{ $data->name }}</td>
                                 <td>{{ $data->nama_unit }}</td>
-                                <td>
-                                    {{-- BUtton Tampil --}}
-                                    <a href="{{ url('usulans/' . $data->id) }}"
-                                        class="btn btn-block btn-primary">Tampil</a>
-
-                                    {{-- Button Ubah --}}
-                                    <a href="{{ route('usulans.edit', ['usulan' => $data->id]) }}"
-                                        class="btn btn-block btn-warning">Ubah</a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    @endif
+                            @endif
+                        </tr>
+                    @endforeach
 
                 </tbody>
 
                 <tfoot>
                     <tr>
                         <th>No</th>
+                        <th>Aksi</th>
                         <th>Nama Usulan</th>
                         <th>Bentuk Kerjasama</th>
                         <th>Rencana Kegiatan</th>
@@ -115,7 +100,6 @@
                         <th>Nama Mitra</th>
                         <th>Nama Dosen</th>
                         <th>Nama Unit</th>
-                        <th>Aksi</th>
                     </tr>
                 </tfoot>
 

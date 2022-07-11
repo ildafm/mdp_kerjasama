@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login</title>
+    <title>MDP Kerjasama | Login</title>
 
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -114,11 +114,11 @@
                         {{-- remember me --}}
                         <div class="col-8">
                             <div class="icheck-primary">
-                                <input class="form-check-input" type="checkbox" name="remember" id="remember"
+                                {{-- <input class="form-check-input" type="checkbox" name="remember" id="remember"
                                     {{ old('remember') ? 'checked' : '' }}>
                                 <label for="remember">
                                     Remember Me
-                                </label>
+                                </label> --}}
                             </div>
                         </div>
 
@@ -131,11 +131,11 @@
                 </form>
 
                 {{-- lupa password --}}
-                @if (Route::has('password.request'))
+                {{-- @if (Route::has('password.request'))
                     <p class="mb-1">
                         <a href="{{ route('password.request') }}">Forgot my password</a>
                     </p>
-                @endif
+                @endif --}}
 
                 {{-- register
                 <p class="mb-0">

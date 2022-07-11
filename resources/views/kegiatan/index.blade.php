@@ -32,6 +32,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Aksi</th>
                         <th>Bentuk Kegiatan</th>
                         <th>Nama Kerjasama</th>
                         <th>PIC</th>
@@ -39,7 +40,6 @@
                         <th>Nama Dosen</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
-                        <th>Aksi</th>
                     </tr>
                 </thead>
 
@@ -49,64 +49,57 @@
                         $nomor = 1;
                     @endphp
 
-                    @if (Auth::user()->level == 'A')
-                        {{-- Login Admin --}}
-                        @foreach ($kegiatans as $data)
-                            <tr>
-                                <td>{{ $nomor++ }}</td>
-                                <td>{{ $data->bentuk_kegiatan }}</td>
-                                <td>{{ $data->kerjasama->nama_kerja_sama }}</td>
-                                <td>{{ Status::kegiatan($data->PIC) }}</td>
-                                <td>{{ $data->keterangan }}</td>
-                                <td>{{ $data->user->name }}</td>
-                                <td>{{ $data->tanggal_mulai }}</td>
-                                <td>{{ $data->tanggal_sampai }}</td>
-                                <td>
-                                    {{-- Button Tampil --}}
-                                    <a href="{{ url('kegiatans/' . $data->id) }}"
-                                        class="btn btn-block btn-primary">Tampil</a>
+                    @foreach ($kegiatans as $data)
+                        <tr>
+                            <td>{{ $nomor++ }}</td>
 
-                                    {{-- Button Ubah --}}
-                                    <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
-                                        class="btn btn-block btn-warning">Ubah</a>
+                            <td>
+                                {{-- Button Tampil --}}
+                                <a href="{{ url('kegiatans/' . $data->id) }}" class="btn btn-sm btn-primary"><i
+                                        class="nav-icon fas fa-eye" title="Tampil"></i></a>
 
+                                {{-- Button Ubah --}}
+                                <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
+                                    class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit" title="Edit"></i></a>
+
+                                @if (Auth::user()->level == 'A')
                                     {{-- Button Hapus --}}
-                                    <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                    <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
                                         data-bentukKegiatan="{{ $data->bentuk_kegiatan }}" data-toggle="modal"
-                                        data-target="#modal-sm">Hapus</button>
-                                </td>
-                            </tr>
-                        @endforeach
-                    @else
-                        {{-- Login Dosen --}}
-                        @foreach ($kegiatans as $data)
-                            <tr>
-                                <td>{{ $nomor++ }}</td>
-                                <td>{{ $data->bentuk_kegiatan }}</td>
+                                        data-target="#modal-sm"><i class="nav-icon fas fa-trash"
+                                            title="Hapus"></i></button>
+                                @endif
+                            </td>
+
+                            <td>{{ $data->bentuk_kegiatan }}</td>
+
+                            @if (Auth::user()->level == 'A')
+                                <td>{{ $data->kerjasama->nama_kerja_sama }}</td>
+                            @else
                                 <td>{{ $data->nama_kerja_sama }}</td>
-                                <td>{{ Status::kegiatan($data->PIC) }}</td>
-                                <td>{{ $data->keterangan }}</td>
+                            @endif
+
+                            <td>{{ Status::kegiatan($data->PIC) }}</td>
+
+                            <td>{{ $data->keterangan }}</td>
+
+                            @if (Auth::user()->level == 'A')
+                                <td>{{ $data->user->name }}</td>
+                            @else
                                 <td>{{ $data->name }}</td>
-                                <td>{{ $data->tanggal_mulai }}</td>
-                                <td>{{ $data->tanggal_sampai }}</td>
-                                <td>
-                                    {{-- Button Tampil --}}
-                                    <a href="{{ url('kegiatans/' . $data->id) }}"
-                                        class="btn btn-block btn-primary">Tampil</a>
+                            @endif
 
-                                    {{-- Button Ubah --}}
-                                    <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
-                                        class="btn btn-block btn-warning">Ubah</a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    @endif
+                            <td>{{ $data->tanggal_mulai }}</td>
 
+                            <td>{{ $data->tanggal_sampai }}</td>
+                        </tr>
+                    @endforeach
                 </tbody>
 
                 <tfoot>
                     <tr>
                         <th>No</th>
+                        <th>Aksi</th>
                         <th>Bentuk Kegiatan</th>
                         <th>Nama Kerjasama</th>
                         <th>PIC</th>
@@ -114,7 +107,6 @@
                         <th>Nama Dosen</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
-                        <th>Aksi</th>
                     </tr>
                 </tfoot>
 

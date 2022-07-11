@@ -28,11 +28,11 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Aksi</th>
                         <th>Kode Dosen</th>
                         <th>Nama Pengguna</th>
                         <th>Email</th>
                         <th>Level</th>
-                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,29 +43,30 @@
 
                     @foreach ($users as $data)
                         <tr>
-                            <td>{{-- $data->id --}}{{ $nomor++ }}</td>
-                            <td>{{ $data->kode_dosen }}</td>
-                            <td>{{ $data->name }}</td>
-                            <td>{{ $data->email }}</td>
-                            @php
-                                if ($data->level == 'A') {
-                                    echo '<td>Admin</td>';
-                                } else {
-                                    echo '<td>Dosen</td>';
-                                }
-                            @endphp
+                            <td>{{ $nomor++ }}</td>
                             <td>
                                 {{-- Button Tampil --}}
-                                <a href="{{ url('users/' . $data->id) }}" class="btn btn-block btn-primary">Tampil</a>
+                                {{-- <a href="{{ url('users/' . $data->id) }}" class="btn btn-sm btn-primary"><i
+                                        class="nav-icon fas fa-eye" title="Tampil"></i></a> --}}
 
                                 {{-- Button Edit --}}
                                 <a href="{{ route('users.edit', ['user' => $data->id]) }}"
-                                    class="btn btn-block btn-warning">Ubah</a>
+                                    class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit" title="Edit"></i></a>
 
                                 {{-- Button Hapus --}}
-                                <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                    data-toggle="modal" data-target="#modal-sm"
-                                    data-namaUser="{{ $data->name }}">Hapus</button>
+                                <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                    data-toggle="modal" data-target="#modal-sm" data-namaUser="{{ $data->name }}"><i
+                                        class="nav-icon fas fa-trash" title="Hapus"></i></button>
+                            </td>
+                            <td>{{ $data->kode_dosen }}</td>
+                            <td>{{ $data->name }}</td>
+                            <td>{{ $data->email }}</td>
+                            <td>
+                                @if ($data->level == 'A')
+                                    Admin
+                                @else
+                                    Dosen
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -73,11 +74,11 @@
                 <tfoot>
                     <tr>
                         <th>No</th>
+                        <th>Aksi</th>
                         <th>Kode Dosen</th>
                         <th>Nama Pengguna</th>
                         <th>Email</th>
                         <th>Level</th>
-                        <th>Aksi</th>
                     </tr>
                 </tfoot>
             </table>

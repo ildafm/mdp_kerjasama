@@ -33,9 +33,9 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Aksi</th>
                         <th>Nama Mitra</th>
                         <th>Tingkat</th>
-                        <th>Aksi</th>
                     </tr>
                 </thead>
 
@@ -51,25 +51,28 @@
                                 {{-- $data->id --}}
                                 {{ $nomor++ }}
                             </td>
+                            <td>
+                                {{-- Button Tampil --}}
+                                {{-- <a href="{{ url('mitras/' . $data->id) }}" class="btn btn-sm btn-primary"
+                                    title="Tampil"><i class="nav-icon fas fa-eye"></i></a> --}}
+
+                                {{-- Button Ubah --}}
+                                <a href="{{ route('mitras.edit', ['mitra' => $data->id]) }}"
+                                    class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit" title="Edit"></i></a>
+
+                                @if (Auth::user()->level == 'A')
+                                    {{-- Button Hapus --}}
+                                    <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                        data-toggle="modal" data-target="#modal-sm"
+                                        data-namaMitra="{{ $data->nama_mitra }}"><i
+                                            class="nav-icon fas fa-trash"></i></button>
+                                @endif
+                            </td>
                             <td>{{ $data->nama_mitra }}</td>
                             <td>{{-- $data->tingkat --}}
                                 {{ Status::mitra($data->tingkat) }}
                             </td>
-                            <td>
-                                {{-- Button Tampil --}}
-                                <a href="{{ url('mitras/' . $data->id) }}" class="btn btn-block btn-primary">Tampil</a>
 
-                                {{-- Button Ubah --}}
-                                <a href="{{ route('mitras.edit', ['mitra' => $data->id]) }}"
-                                    class="btn btn-block btn-warning">Ubah</a>
-
-                                @if (Auth::user()->level == 'A')
-                                    {{-- Button Hapus --}}
-                                    <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                        data-toggle="modal" data-target="#modal-sm"
-                                        data-namaMitra="{{ $data->nama_mitra }}">Hapus</button>
-                                @endif
-                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -77,9 +80,9 @@
                 <tfoot>
                     <tr>
                         <th>No</th>
+                        <th>Aksi</th>
                         <th>Nama Mitra</th>
                         <th>Tingkat</th>
-                        <th>Aksi</th>
                     </tr>
                 </tfoot>
 

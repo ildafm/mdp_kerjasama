@@ -33,13 +33,13 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Aksi</th>
                         <th>Nama Kerjasama</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
                         <th>Nama Mitra</th>
                         <th>Nama Kategori</th>
                         <th>Status</th>
-                        <th>Aksi</th>
                     </tr>
                 </thead>
 
@@ -52,28 +52,29 @@
                     @foreach ($kerjasamas as $data)
                         <tr>
                             <td>{{ $nomor++ }}</td>
+                            <td>
+                                {{-- Button Tampil --}}
+                                <a href="{{ url('kerjasamas/' . $data->id) }}" class="btn btn-sm btn-primary"><i
+                                        class="nav-icon fas fa-eye" title="Tampil"></i></a>
+
+                                {{-- Button Ubah --}}
+                                <a href="{{ route('kerjasamas.edit', ['kerjasama' => $data->id]) }}"
+                                    class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit" title="Edit"></i></a>
+
+                                @if (Auth::user()->level == 'A')
+                                    {{-- Button Hapus --}}
+                                    <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                        data-namaKerjasama="{{ $data->nama_kerja_sama }}" data-toggle="modal"
+                                        data-target="#modal-sm"><i class="nav-icon fas fa-trash"
+                                            title="Hapus"></i></button>
+                                @endif
+                            </td>
                             <td>{{ $data->nama_kerja_sama }}</td>
                             <td>{{ $data->tanggal_mulai }}</td>
                             <td>{{ $data->tanggal_sampai }}</td>
                             <td>{{ $data->mitra->nama_mitra }}</td>
                             <td>{{ $data->kategori->nama_kategori }}</td>
                             <td>{{ $data->status->nama_status }}</td>
-                            <td>
-                                {{-- Button Tampil --}}
-                                <a href="{{ url('kerjasamas/' . $data->id) }}"
-                                    class="btn btn-block btn-primary">Tampil</a>
-
-                                {{-- Button Ubah --}}
-                                <a href="{{ route('kerjasamas.edit', ['kerjasama' => $data->id]) }}"
-                                    class="btn btn-block btn-warning">Ubah</a>
-
-                                @if (Auth::user()->level == 'A')
-                                    {{-- Button Hapus --}}
-                                    <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                        data-namaKerjasama="{{ $data->nama_kerja_sama }}" data-toggle="modal"
-                                        data-target="#modal-sm">Hapus</button>
-                                @endif
-                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -81,13 +82,13 @@
                 <tfoot>
                     <tr>
                         <th>No</th>
+                        <th>Aksi</th>
                         <th>Nama Kerjasama</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
                         <th>Nama Mitra</th>
                         <th>Nama Kategori</th>
                         <th>Status</th>
-                        <th>Aksi</th>
                     </tr>
                 </tfoot>
 

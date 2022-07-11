@@ -33,7 +33,7 @@
                                         <h3>{{ $data->jumlahMitra }}</h3>
                                     @endforeach
                                 @else
-                                    0
+                                    <h3>0</h3>
                                 @endif
                                 <p>Total Mitra</p>
                             </div>
@@ -55,7 +55,7 @@
                                         {{-- <sup style="font-size: 20px">%</sup> --}}
                                     @endforeach
                                 @else
-                                    0
+                                    <h3>0</h3>
                                 @endif
                                 <p>Total Kerjasama</p>
                             </div>
@@ -76,7 +76,7 @@
                                         <h3>{{ $data->jumlahKegiatan }}</h3>
                                     @endforeach
                                 @else
-                                    0
+                                    <h3>0</h3>
                                 @endif
                                 <p>Total Kegiatan</p>
                             </div>
@@ -97,7 +97,7 @@
                                         <h3>{{ $data->jumlahUsulan }}</h3>
                                     @endforeach
                                 @else
-                                    0
+                                    <h3>0</h3>
                                 @endif
                                 <p>Total Usulan</p>
                             </div>

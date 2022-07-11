@@ -37,10 +37,11 @@
                         <p>
                         <div class="image">
                             @if (Auth::user()->file == null)
-                                <img src="{{ asset('dist/img/user_profile.png') }}"
+                                <img style="width: 250px; height: 250px" src="{{ asset('dist/img/user_profile.png') }}"
                                     class="img-circle elevation-2 img-fluid " alt="User_Image">
                             @else
-                                <img src="{{ asset('storage/profile/' . Auth::user()->file) }}" alt="Foto Profile"
+                                <img style="width: 250px; height: 250px"
+                                    src="{{ asset('storage/profile/' . Auth::user()->file) }}" alt="Foto Profile"
                                     class="img-circle elevation-2 img-fluid">
                             @endif
                         </div>
@@ -127,11 +128,7 @@
             <div class="card-footer">
                 {{-- Button Submit --}}
                 <button type="submit" class="btn btn-primary">Submit</button>
-                {{-- Spasi --}}
-                &ensp;
-                {{-- Button Kembali --}}
-                {{-- <a href="{{ URL::previous() }}" class="btn btn-outline-secondary">Kembali</a> --}}
-                <a href="/dashboard" class="btn btn-outline-secondary">Kembali</a>
+
             </div>
         </form>
     </div>

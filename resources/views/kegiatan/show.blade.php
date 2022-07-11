@@ -22,7 +22,7 @@
         <div class="card-body">
 
             {{-- Tabel Data --}}
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="" class="table table-bordered table-striped">
 
                 <tbody>
                     <tr>
@@ -197,13 +197,13 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Aksi</th>
                         <th>Nama Bukti Kegiatan</th>
                         <th>Nama Unit</th>
                         <th>APT</th>
                         <th>APS</th>
                         <th>LAMEMBA</th>
                         <th>Tanggal Upload</th>
-                        <th>Aksi</th>
                     </tr>
                 </thead>
 
@@ -213,66 +213,64 @@
                         $nomor = 1;
                     @endphp
 
-                    @if (count($buktiKegiatans) > 0)
-                        @foreach ($buktiKegiatans as $data)
-                            <tr>
-                                <td> {{ $nomor++ }} </td>
-                                <td> {{ $data->nama_bukti_kegiatan }} </td>
-                                <td> {{ $data->nama_unit }} </td>
-                                <td>
-                                    @if ($data->ceklist_apt == 'Y')
-                                        Ya
-                                    @else
-                                        Tidak
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($data->ceklist_aps == 'Y')
-                                        Ya
-                                    @else
-                                        Tidak
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($data->ceklist_lamemba == 'Y')
-                                        Ya
-                                    @else
-                                        Tidak
-                                    @endif
-                                </td>
-                                <td> {{ $data->tanggal_upload_bukti }} </td>
-                                <td>
-                                    {{-- Button Tampil --}}
-                                    <a href="{{ url('storage/kegiatan/' . $data->file) }}"
-                                        class="btn btn-block btn-primary">Tampil</a>
+                    @foreach ($buktiKegiatans as $data)
+                        <tr>
+                            <td> {{ $nomor++ }} </td>
+                            <td>
+                                {{-- Button Tampil --}}
+                                <a href="{{ url('storage/kegiatan/' . $data->file) }}" class="btn btn-sm btn-primary"><i
+                                        class="nav-icon fas fa-eye" title="Tampil"></i></a>
 
-                                    {{-- Button Ubah --}}
-                                    <a href="{{ route('buktiKegiatans.edit', ['buktiKegiatan' => $data->id_bukti_kegiatan]) }}"
-                                        class="btn btn-block btn-warning">Ubah</a>
+                                {{-- Button Ubah --}}
+                                <a href="{{ route('buktiKegiatans.edit', ['buktiKegiatan' => $data->id_bukti_kegiatan]) }}"
+                                    class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
+                                        title="Edit"></i></a>
 
-                                    {{-- Button Hapus --}}
-                                    <button class="btn btn-block btn-danger btn-hapus"
-                                        data-id="{{ $data->id_bukti_kegiatan }}" data-toggle="modal"
-                                        data-target="#modal-sm"
-                                        data-namaBuktiKegiatan="{{ $data->nama_bukti_kegiatan }}">Hapus</button>
-                                </td>
-                            </tr>
-                        @endforeach
-                    @else
-                        {{-- <td colspan="9">Belum ada Data</td> --}}
-                    @endif
+                                {{-- Button Hapus --}}
+                                <button class="btn btn-sm btn-danger btn-hapus"
+                                    data-id="{{ $data->id_bukti_kegiatan }}" data-toggle="modal"
+                                    data-target="#modal-sm"
+                                    data-namaBuktiKegiatan="{{ $data->nama_bukti_kegiatan }}"><i
+                                        class="nav-icon fas fa-trash" title="Hapus"></i></button>
+                            </td>
+                            <td> {{ $data->nama_bukti_kegiatan }} </td>
+                            <td> {{ $data->nama_unit }} </td>
+                            <td>
+                                @if ($data->ceklist_apt == 'Y')
+                                    Ya
+                                @else
+                                    Tidak
+                                @endif
+                            </td>
+                            <td>
+                                @if ($data->ceklist_aps == 'Y')
+                                    Ya
+                                @else
+                                    Tidak
+                                @endif
+                            </td>
+                            <td>
+                                @if ($data->ceklist_lamemba == 'Y')
+                                    Ya
+                                @else
+                                    Tidak
+                                @endif
+                            </td>
+                            <td> {{ $data->tanggal_upload_bukti }} </td>
+                        </tr>
+                    @endforeach
                 </tbody>
 
                 <tfoot>
                     <tr>
                         <th>No</th>
+                        <th>Aksi</th>
                         <th>Nama Bukti Kegiatan</th>
                         <th>Nama Unit</th>
                         <th>APT</th>
                         <th>APS</th>
                         <th>LAMEMBA</th>
                         <th>Tanggal Upload</th>
-                        <th>Aksi</th>
                     </tr>
                 </tfoot>
             </table>

@@ -80,7 +80,7 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
             <a href="{{ url('/dashboard') }}" class="brand-link">
-                <img src="{{ asset('dist/img/logo-UMDP.png') }}" alt="UMDP"
+                <img style="width: 38px; height: 38px" src="{{ asset('dist/img/logo-UMDP.png') }}" alt="UMDP"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">MDP KERMA</span>
             </a>
@@ -90,10 +90,11 @@
                 <div class="user-panel mt-3 pb-3 d-flex">
                     <div class="image mt-2">
                         @if (empty(Auth::user()->file))
-                            <img src="{{ asset('dist/img/user_profile.png') }}" class="img-circle elevation-2"
-                                alt="User Image">
+                            <img style="width: 45px; height: 45px" src="{{ asset('dist/img/user_profile.png') }}"
+                                class="img-circle elevation-2" alt="User Image">
                         @else
-                            <img src="{{ asset('storage/profile/' . Auth::user()->file) }}"
+                            <img style="width: 45px; height: 45px"
+                                src="{{ asset('storage/profile/' . Auth::user()->file) }}"
                                 class="img-circle elevation-2" alt="User Image">
                         @endif
 

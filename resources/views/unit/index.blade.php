@@ -33,8 +33,8 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama Unit</th>
                         <th>Aksi</th>
+                        <th>Nama Unit</th>
                     </tr>
                 </thead>
 
@@ -46,21 +46,22 @@
 
                     @foreach ($units as $data)
                         <tr>
-                            <td>{{-- $data->id --}}{{ $nomor++ }}</td>
-                            <td>{{ $data->nama_unit }}</td>
+                            <td>{{ $nomor++ }}</td>
                             <td>
                                 {{-- Button Tampil --}}
-                                <a href="{{ url('units/' . $data->id) }}" class="btn btn-block btn-primary">Tampil</a>
+                                {{-- <a href="{{ url('units/' . $data->id) }}" class="btn btn-sm btn-primary"><i
+                                        class="nav-icon fas fa-eye" title="Tampil"></i></a> --}}
 
                                 {{-- Button Ubah --}}
                                 <a href="{{ route('units.edit', ['unit' => $data->id]) }}"
-                                    class="btn btn-block btn-warning">Ubah</a>
+                                    class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit" title="Edit"></i></a>
 
                                 {{-- Button Hapus --}}
-                                <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                    data-namaUnit="{{ $data->nama_unit }}" data-toggle="modal"
-                                    data-target="#modal-sm">Hapus</button>
+                                <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                    data-namaUnit="{{ $data->nama_unit }}" data-toggle="modal" data-target="#modal-sm"><i
+                                        class="nav-icon fas fa-trash" title="Hapus"></i></button>
                             </td>
+                            <td>{{ $data->nama_unit }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -68,8 +69,8 @@
                 <tfoot>
                     <tr>
                         <th>No</th>
-                        <th>Nama Unit</th>
                         <th>Aksi</th>
+                        <th>Nama Unit</th>
                     </tr>
                 </tfoot>
 

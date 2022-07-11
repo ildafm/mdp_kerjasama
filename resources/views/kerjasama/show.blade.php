@@ -2,12 +2,6 @@
 @section('title', 'Kerjasama')
 
 @section('content')
-
-    {{-- css table --}}
-    <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
-
     <div class="card">
         <div class="card-header">
             <!-- <h3 class="card-title">Tabel Daftar Kerja Sama</h3> -->
@@ -35,7 +29,7 @@
             @endif
 
             {{-- Tabel Data --}}
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="" class="table table-bordered table-striped">
 
                 <tbody>
                     <tr>
@@ -155,14 +149,14 @@
 
         <div class="card-body">
             {{-- Data Tabel Bukti Kerjasama --}}
-            <table id="example2" class="table table-bordered table-striped">
+            <table id="example1" class="table table-bordered table-striped">
 
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Aksi</th>
                         <th>Nama Bukti Kerjasama</th>
                         <th>Tanggal Upload</th>
-                        <th>Aksi</th>
                     </tr>
                 </thead>
 
@@ -175,18 +169,18 @@
                     @foreach ($buktiKerjasama as $data)
                         <tr>
                             <td> {{ $nomor++ }} </td>
-                            <td>{{ $data->nama_bukti_kerjasama }}</td>
-                            <td>{{ $data->tanggalUpload }}</td>
                             <td>
                                 {{-- Button Tampil --}}
-                                <a href="{{ url('storage/kerjasama/' . $data->file) }}"
-                                    class="btn btn-block btn-primary">Tampil</a>
+                                <a href="{{ url('storage/kerjasama/' . $data->file) }}" class="btn btn-sm btn-primary"><i
+                                        class="nav-icon fas fa-eye" title="Tampil"></i></a>
 
                                 {{-- Button Hapus --}}
-                                <button class="btn btn-block btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
                                     data-namaBuktiKerjasama="{{ $data->nama_bukti_kerjasama }}" data-toggle="modal"
-                                    data-target="#modal-sm">Hapus</button>
+                                    data-target="#modal-sm"><i class="nav-icon fas fa-trash" title="Hapus"></i></button>
                             </td>
+                            <td>{{ $data->nama_bukti_kerjasama }}</td>
+                            <td>{{ $data->tanggalUpload }}</td>
                         </tr>
                     @endforeach
 
@@ -195,9 +189,9 @@
                 <tfoot>
                     <tr>
                         <th>No</th>
+                        <th>Aksi</th>
                         <th>Nama Bukti Kerjasama</th>
                         <th>Tanggal Upload</th>
-                        <th>Aksi</th>
                     </tr>
                 </tfoot>
 
@@ -249,40 +243,6 @@
         $('#formDelete [type="submit"]').click(function() {
             $('#formDelete').submit();
         })
-    </script>
-
-    {{-- Data Tables --}}
-    <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('plugins/jszip/jszip.min.js') }}"></script>
-    <script src="{{ asset('plugins/pdfmake/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('plugins/pdfmake/vfs_fonts.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-
-    <script>
-        $(function() {
-            $("#exampleQ1").DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#exampleQ1_wrapper .col-md-6:eq(0)');
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
-        });
     </script>
 
 @endsection
