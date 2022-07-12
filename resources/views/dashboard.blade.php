@@ -392,7 +392,7 @@
                                         }
                                     },
                                     series: [{
-                                        name: 'Jumlah Kerjasama',
+                                        name: 'Jumlah',
                                         colorByPoint: true,
                                         data: [
                                             @foreach ($getJumlahKerjasamaDenganMitra as $data)
@@ -450,7 +450,7 @@
                                         }
                                     },
                                     series: [{
-                                        name: 'Jumlah Kegiatan',
+                                        name: 'Jumlah',
                                         colorByPoint: true,
                                         data: [
                                             @foreach ($getJumlahKegiatanBerdasarkanKerjasama as $data)
@@ -508,7 +508,7 @@
                                         }
                                     },
                                     series: [{
-                                        name: 'Jumlah Usulan',
+                                        name: 'Jumlah',
                                         colorByPoint: true,
                                         data: [
                                             @foreach ($getJumlahUsulanDosen as $data)
