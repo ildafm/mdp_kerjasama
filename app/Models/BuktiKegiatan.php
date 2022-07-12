@@ -15,5 +15,5 @@ class BuktiKegiatan extends Model
         return $this->hasMany(BuktiKegiatanUnit::class);
     }
 
-    protected $fillable = ['nama_bukti_kegiatan', 'ceklist_apt', 'ceklist_aps', 'ceklist_lamemba', 'bidang'];
+    protected $fillable = ['nama_bukti_kegiatan', 'file', 'ceklist_apt', 'ceklist_aps', 'ceklist_lamemba', 'bidang'];
 }

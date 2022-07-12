@@ -45,7 +45,7 @@ class BuktiKegiatanController extends Controller
         // 1. validasi input data kosong
         $validateData = $request->validate([
             'nama_bukti_kegiatan' => 'required',
-            'bukti_kegiatan' => 'required | file |mimes:pdf,jpg,png,docx,doc| max:5000',
+            'file' => 'required | file |mimes:pdf,jpg,png,docx,doc| max:5120',
             'apt' => '',
             'aps' => '',
             'lamemba' => '',
@@ -55,20 +55,20 @@ class BuktiKegiatanController extends Controller
         ]);
 
         //ambil extensi //png / jpg / gif
-        $ext1 = $request->bukti_kegiatan->getClientOriginalExtension();
+        $ext = $request->file->getClientOriginalExtension();
 
         //ubah nama file file
-        $rename_file1 = 'file-'.time().".".$ext1; //contoh file : file-timestamp.jpg
+        $rename_file = 'file-'.time().".".$ext; //contoh file : file-timestamp.jpg
 
         //upload foler ke dalam folder public
-        $request->bukti_kegiatan->storeAs('public/kegiatan', $rename_file1); //bisa diletakan difolder lain dengan store ke public/(folderlain)
+        $request->file->storeAs('public/kegiatan', $rename_file); //bisa diletakan difolder lain dengan store ke public/(folderlain)
         
 
-        // 2. simpan file
         $buktiKegiatan = new BuktiKegiatan();
-        
+
+        // 2. simpan file
         $buktiKegiatan->nama_bukti_kegiatan = $validateData['nama_bukti_kegiatan'];
-        $buktiKegiatan->file = $rename_file1;
+        $buktiKegiatan->file = $rename_file;
 
         if(!empty($validateData['apt'])){
             $buktiKegiatan->ceklist_apt = 'Y';
@@ -126,10 +126,6 @@ class BuktiKegiatanController extends Controller
         JOIN kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
         WHERE bukti_kegiatans.id = $buktiKegiatan->id");
 
-        // $getUserID = Kegiatan::where('kegiatans', 'user_id')->first();
-        // $getUserID = Kegiatan::where('user_id', Auth::user()->id)->first();
-
-
         if(Auth::user()->id != $getUserID[0]->user_id){
             $this->authorize('viewAny', User::class);
         }
@@ -137,8 +133,6 @@ class BuktiKegiatanController extends Controller
         $units = Unit::All();
         
         $buktiKegiatanUnits = DB::select("SELECT bukti_kegiatans.id AS 'id_bukti_kegiatan', nama_bukti_kegiatan, bukti_kegiatan_units.id AS 'id_bukti_kegiatan_unit', bukti_kegiatan_units.bukti_kegiatans_id, bukti_kegiatan_units.units_id AS 'units_id' FROM bukti_kegiatans JOIN bukti_kegiatan_units ON bukti_kegiatan_units.bukti_kegiatans_id = bukti_kegiatans.id WHERE bukti_kegiatans.id = $buktiKegiatan->id");
-
-        // $buktiKegiatanUnits = BuktiKegiatanUnit::All();
 
         return view('kegiatan.editBukti')
         ->with('units', $units)
@@ -158,7 +152,7 @@ class BuktiKegiatanController extends Controller
         //
         $this->validate($request, [
             'nama_bukti_kegiatan' => 'required',
-            // 'bukti_kegiatan' => 'required | file |mimes:pdf,jpg,png,docx,doc| max:5000',
+            'file' => 'file |mimes:pdf,jpg,png,docx,doc| max:5120',
             'apt' => '',
             'aps' => '',
             'lamemba' => '',
@@ -192,13 +186,39 @@ class BuktiKegiatanController extends Controller
             $option_lamemba = 'T';
         }
 
-        $buktiKegiatan->update([
-            'nama_bukti_kegiatan' => $request->nama_bukti_kegiatan,
-            'ceklist_apt' => $option_apt,
-            'ceklist_aps' => $option_aps,
-            'ceklist_lamemba' => $option_lamemba,
-            'bidang' => $request->bidang,
-        ]);
+        if($request->file != ""){
+
+            if($buktiKegiatan->file != null || $buktiKegiatan->file != ''){
+                unlink(storage_path('app/public/kegiatan/'.$buktiKegiatan->file));
+            }
+
+            //ambil extensi //png / jpg / gif
+            $ext = $request->file->getClientOriginalExtension();
+
+            //ubah nama file file
+            $rename_file = 'file-'.time().".".$ext; //contoh file : file-timestamp.jpg
+
+            //upload foler ke dalam folder public
+            $request->file->storeAs('public/kegiatan', $rename_file); //bisa diletakan difolder lain dengan store ke public/(folderlain)
+
+            $buktiKegiatan->update([
+                'nama_bukti_kegiatan' => $request->nama_bukti_kegiatan,
+                'ceklist_apt' => $option_apt,
+                'ceklist_aps' => $option_aps,
+                'ceklist_lamemba' => $option_lamemba,
+                'bidang' => $request->bidang,
+                'file' => $rename_file,
+            ]); 
+        }
+        else{
+            $buktiKegiatan->update([
+                'nama_bukti_kegiatan' => $request->nama_bukti_kegiatan,
+                'ceklist_apt' => $option_apt,
+                'ceklist_aps' => $option_aps,
+                'ceklist_lamemba' => $option_lamemba,
+                'bidang' => $request->bidang,
+            ]);
+        }
 
         DB::update("UPDATE bukti_kegiatan_units
         JOIN bukti_kegiatans ON bukti_kegiatan_units.bukti_kegiatans_id = bukti_kegiatans.id

@@ -77,8 +77,7 @@
                                 <div class="form-group">
                                     <label for="nama_bukti_kegiatan">Nama Bukti Kegiatan</label>
                                     <input type="text" class="form-control" name="nama_bukti_kegiatan"
-                                        placeholder="Enter Nama Bukti Kegiatan">
-
+                                        placeholder="Enter Nama Bukti Kegiatan" value="{{ old('nama_bukti_kegiatan') }}">
                                     @error('nama_bukti_kegiatan')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -90,10 +89,10 @@
                         <tr>
                             <td colspan="2">
                                 <div class="form-group">
-                                    <label for="bukti_kegiatan">Bukti Kegiatan(Max:5mb)</label>
+                                    <label for="file">Bukti Kegiatan(Max:5mb)</label>
                                     <div class="input-group">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="bukti_kegiatan"
+                                            <input type="file" class="custom-file-input" name="file"
                                                 id="exampleInputFile">
                                             <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                         </div>
@@ -102,7 +101,7 @@
                                         </div>
                                     </div>
 
-                                    @error('bukti_kegiatan')
+                                    @error('file')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -114,15 +113,18 @@
 
                                 <div class="row">
                                     <div class="form-check col">
-                                        <input class="form-check-input" type="checkbox" name="apt">
+                                        <input class="form-check-input" type="checkbox" name="apt"
+                                            @if (old('apt') == 'on') checked @endif>
                                         <label class="form-check-label">APT</label>
                                     </div>
                                     <div class="form-check col">
-                                        <input class="form-check-input" type="checkbox" name="aps">
+                                        <input class="form-check-input" type="checkbox" name="aps"
+                                            @if (old('aps') == 'on') checked @endif>
                                         <label class="form-check-label">APS</label>
                                     </div>
                                     <div class="form-check col">
-                                        <input class="form-check-input" type="checkbox" name="lamemba">
+                                        <input class="form-check-input" type="checkbox" name="lamemba"
+                                            @if (old('lamemba') == 'on') checked @endif>
                                         <label class="form-check-label">LAMEMBA</label>
                                     </div>
                                 </div>
@@ -132,12 +134,19 @@
                         <tr>
                             <td colspan="2">
                                 <div class="row">
+
                                     {{-- Nama Unit --}}
+                                    @php
+                                        $option = old('nama_unit');
+                                    @endphp
+
                                     <div class="form-group col-lg-6">
                                         <label for="nama_unit">Nama Unit</label>
                                         <select class="form-control select2" name="nama_unit">
                                             @foreach ($units as $data)
-                                                <option value="{{ $data->id }}">{{ $data->nama_unit }}</option>
+                                                <option value="{{ $data->id }}"
+                                                    {{ $option == $data->id ? 'selected' : '' }}>
+                                                    {{ $data->nama_unit }}</option>
                                             @endforeach
                                         </select>
                                         @error('nama_unit')
@@ -145,14 +154,23 @@
                                         @enderror
                                     </div>
 
+
                                     {{-- Bidang --}}
+                                    @php
+                                        $option = old('bidang');
+                                    @endphp
+
                                     <div class="form-group col-lg-6">
                                         <label for="bidang">Bidang</label>
                                         <select class="form-control" name="bidang">
-                                            <option value='P'>Pendidikan</option>
-                                            <option value='N'>Penelitian</option>
-                                            <option value='B'>Pengabdian</option>
-                                            <option value='L'>Lain-lain</option>
+                                            <option value='P' {{ $option == 'P' ? 'selected' : '' }}>
+                                                Pendidikan</option>
+                                            <option value='N' {{ $option == 'N' ? 'selected' : '' }}>
+                                                Penelitian</option>
+                                            <option value='B' {{ $option == 'B' ? 'selected' : '' }}>
+                                                Pengabdian</option>
+                                            <option value='L' {{ $option == 'L' ? 'selected' : '' }}>Lain-lain
+                                            </option>
                                         </select>
                                         @error('bidang')
                                             <div class="text-danger">{{ $message }}</div>

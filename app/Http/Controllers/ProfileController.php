@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use PhpParser\Node\Expr\BinaryOp\Equal;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -91,6 +91,10 @@ class ProfileController extends Controller
 
         // kondisi jika input gambar tidak kosong
         if(!empty($request->file)){
+
+            if($user->file != null || $user->file != ''){
+                unlink(storage_path('app/public/profile/'.$user->file));
+            }
         
             //ambil extensi //png / jpg
             $ext = $request->file->getClientOriginalExtension();
@@ -99,7 +103,7 @@ class ProfileController extends Controller
             $rename_file = 'file-'.Auth::user()->kode_dosen.'-'.Auth::user()->name.".".$ext; //contoh file : file-D00001.jpg
 
             //upload file ke dalam folder public
-            $request->file->storeAs('public/profile', $rename_file); //bisa diletakan difolder lain dengan store ke public/(folderlain)
+            $request->file->storeAs('public/profile', $rename_file);
 
             $user->file = $rename_file;
         }

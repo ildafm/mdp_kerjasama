@@ -65,10 +65,11 @@
                     {{-- APT --}}
                     @php
                         if (old('apt') != null) {
-                            $option_apt = old('apt');
+                            $option_apt = old('aps');
                         } else {
                             $option_apt = $buktiKegiatan->ceklist_apt;
                         }
+                        $nomor = 0;
                     @endphp
 
                     <div class="form-check col">
@@ -133,22 +134,47 @@
                     </div>
 
                     {{-- Bidang --}}
+                    @php
+                        if (old('bidang') != null) {
+                            $option = old('bidang');
+                        } else {
+                            $option = $buktiKegiatan->bidang;
+                        }
+                    @endphp
+
                     <div class="form-group col-lg-6">
                         <label for="bidang">Bidang</label>
                         <select class="form-control" name="bidang">
-                            <option value='P' <?= $buktiKegiatan->bidang == 'P' ? 'selected' : '' ?>>
+                            <option value='P' <?= $option == 'P' ? 'selected' : '' ?>>
                                 Pendidikan</option>
-                            <option value='N' <?= $buktiKegiatan->bidang == 'N' ? 'selected' : '' ?>>
+                            <option value='N' <?= $option == 'N' ? 'selected' : '' ?>>
                                 Penelitian</option>
-                            <option value='B' <?= $buktiKegiatan->bidang == 'B' ? 'selected' : '' ?>>
+                            <option value='B' <?= $option == 'B' ? 'selected' : '' ?>>
                                 Pengabdian</option>
-                            <option value='L' <?= $buktiKegiatan->bidang == 'L' ? 'selected' : '' ?>>
+                            <option value='L' <?= $option == 'L' ? 'selected' : '' ?>>
                                 Lain-lain</option>
                         </select>
                         @error('bidang')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="file">Bukti Kegiatan(Max:5mb | Kosongkan jika tidak ingin mengubah)</label>
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
+                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                        </div>
+                        <div class="input-group-append">
+                            <span class="input-group-text">Upload</span>
+                        </div>
+                    </div>
+
+                    @error('file')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
             </div>
@@ -159,7 +185,6 @@
                 &nbsp;
                 <a href="{{ url("kegiatans/$buktiKegiatan->kegiatans_id") }}" class="btn btn-outline-dark">Kembali</a>
             </div>
-
         </form>
 
     </div>

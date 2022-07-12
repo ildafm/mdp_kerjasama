@@ -7,12 +7,10 @@ use App\Http\Controllers\DosenController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\KerjasamaController;
-use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UsulanController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\UserController;
-
 use App\Http\Controllers\BuktiKerjasamaController;
 use App\Http\Controllers\BuktiKegiatanController;
 use App\Http\Controllers\ProfileController;
@@ -32,8 +30,6 @@ Route::get('/', function () {
     return redirect()->route('dashboard');
 });
 
-// Route::get('/dashboard', [DashboardController::class, 'index']);
-
 Route::resource('mitras', MitraController::class);
 Route::resource('dosens', DosenController::class);
 Route::resource('kegiatans', KegiatanController::class);
@@ -50,7 +46,4 @@ Route::resource('buktiKegiatans', BuktiKegiatanController::class);
 
 Auth::routes();
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
-
-// Route::get('/reset2', function(){return view('reset2');});
