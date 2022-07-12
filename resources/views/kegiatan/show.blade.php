@@ -21,6 +21,13 @@
 
         <div class="card-body">
 
+            {{-- Tampilkan Pesan --}}
+            @if (session()->has('pesan'))
+                <div class='alert alert-success'>
+                    {{ session()->get('pesan') }}
+                </div>
+            @endif
+
             {{-- Tabel Data --}}
             <table id="" class="table table-bordered table-striped">
 
@@ -220,12 +227,6 @@
         </div>
 
         <div class="card-body">
-            {{-- Tampilkan Pesan --}}
-            @if (session()->has('pesan'))
-                <div class='alert alert-success'>
-                    {{ session()->get('pesan') }}
-                </div>
-            @endif
 
             {{-- Tabel Data --}}
             <table id="example1" class="table table-bordered table-striped">

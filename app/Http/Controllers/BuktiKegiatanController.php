@@ -97,7 +97,7 @@ class BuktiKegiatanController extends Controller
         $buktiKegiatanUnit->save();
 
         $request->session()->flash('pesan', 'Penambahan data bukti berhasil');
-        return redirect()->route('kegiatans.index');
+        return redirect()->route('kegiatans.show', $buktiKegiatan->kegiatans_id);
     }
 
     /**
@@ -226,7 +226,7 @@ class BuktiKegiatanController extends Controller
         WHERE bukti_kegiatans_id = $buktiKegiatan->id");
 
         $request->session()->flash('pesan', 'Perubahan data berhasil');
-        return redirect()->route('kegiatans.index');
+        return redirect()->route('kegiatans.show', $buktiKegiatan->kegiatans_id);
     }
 
     /**
@@ -238,7 +238,12 @@ class BuktiKegiatanController extends Controller
     public function destroy(BuktiKegiatan $buktiKegiatan)
     {
         //
+        
+        if($buktiKegiatan->file != null || $buktiKegiatan->file != ''){
+            unlink(storage_path('app/public/kegiatan/'.$buktiKegiatan->file));
+        }
+
         $buktiKegiatan->delete();
-        return redirect()->route('kegiatans.index')->with('pesan', "Hapus data bukti $buktiKegiatan->nama_bukti_kerjasama berhasil");
+        return redirect()->route('kegiatans.show', $buktiKegiatan->kegiatans_id)->with('pesan', "Hapus data bukti $buktiKegiatan->nama_bukti_kerjasama berhasil");
     }
 }

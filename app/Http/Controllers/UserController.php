@@ -147,6 +147,11 @@ class UserController extends Controller
     {
         //
         $this->authorize('viewAny', User::class);
+
+        if($user->file != null || $user->file != ''){
+            unlink(storage_path('app/public/profile/'.$user->file));
+        }
+
         $user->delete();
         return redirect()->route('users.index')->with('pesan', "Hapus data $user->name berhasil");
     }

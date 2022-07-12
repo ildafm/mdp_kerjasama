@@ -137,7 +137,7 @@ class BuktiKerjasamaController extends Controller
         }
 
         $request->session()->flash('pesan', 'Perubahan data berhasil');
-        return redirect()->route('kerjasamas.index');
+        return redirect()->route('kerjasamas.show', $buktiKerjasama->kerjasama_id);
     }
 
     /**
@@ -149,6 +149,10 @@ class BuktiKerjasamaController extends Controller
     public function destroy(BuktiKerjasama $buktiKerjasama)
     {
         //
+        if($buktiKerjasama->file != null || $buktiKerjasama->file != ''){
+            unlink(storage_path('app/public/kerjasama/'.$buktiKerjasama->file));
+        }
+        
         $buktiKerjasama->delete();
         return redirect()->route('kerjasamas.show', $buktiKerjasama->kerjasama_id)->with('pesan', "Hapus data bukti $buktiKerjasama->nama_bukti_kerjasama berhasil");
     }

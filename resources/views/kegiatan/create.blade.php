@@ -23,7 +23,7 @@
 
                 {{-- Kerjasama --}}
                 <div class="form-group">
-                    <label for="kerjasamas">Kerjasama</label>
+                    <label for="kerjasamas">Nama Kerjasama</label>
 
                     @php
                         if (old('kerjasamas') !== null) {

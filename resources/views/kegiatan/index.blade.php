@@ -33,8 +33,8 @@
                     <tr>
                         <th>No</th>
                         <th>Aksi</th>
-                        <th>Bentuk Kegiatan</th>
                         <th>Nama Kerjasama</th>
+                        <th>Bentuk Kegiatan</th>
                         <th>PIC</th>
                         <th>Keterangan</th>
                         <th>Nama Dosen</th>
@@ -71,13 +71,13 @@
                                 @endif
                             </td>
 
-                            <td>{{ $data->bentuk_kegiatan }}</td>
-
                             @if (Auth::user()->level == 'A')
                                 <td>{{ $data->kerjasama->nama_kerja_sama }}</td>
                             @else
                                 <td>{{ $data->nama_kerja_sama }}</td>
                             @endif
+
+                            <td>{{ $data->bentuk_kegiatan }}</td>
 
                             <td>{{ Status::kegiatan($data->PIC) }}</td>
 
@@ -100,8 +100,8 @@
                     <tr>
                         <th>No</th>
                         <th>Aksi</th>
-                        <th>Bentuk Kegiatan</th>
                         <th>Nama Kerjasama</th>
+                        <th>Bentuk Kegiatan</th>
                         <th>PIC</th>
                         <th>Keterangan</th>
                         <th>Nama Dosen</th>

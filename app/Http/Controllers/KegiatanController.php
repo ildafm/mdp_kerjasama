@@ -147,7 +147,6 @@ class KegiatanController extends Controller
             'PIC' => 'required',
             'keterangan' => 'required',
             'kerjasamas' => 'required',
-            // 'user' => 'required',
         ]);
 
         $kegiatan = Kegiatan::findOrFail($kegiatan->id);
@@ -159,7 +158,6 @@ class KegiatanController extends Controller
             'PIC' => $request->PIC,
             'keterangan' => $request->keterangan,
             'kerjasama_id' => $request->kerjasamas,
-            // 'user_id' => $request->user
         ]);
 
         $request->session()->flash('pesan', 'Perubahan data berhasil');
@@ -175,6 +173,15 @@ class KegiatanController extends Controller
     public function destroy(Kegiatan $kegiatan)
     {
         //
+        $getBuktiKegiatan = DB::select("SELECT id, nama_bukti_kegiatan, bukti_kegiatans.file AS 'file', kegiatans_id FROM bukti_kegiatans WHERE kegiatans_id = $kegiatan->id");
+
+        // unlink semua file sekaligus
+        if(count($getBuktiKegiatan) > 0){
+            for ($i = 0; $i < count($getBuktiKegiatan); $i++) {
+                unlink(storage_path('app/public/kegiatan/'.$getBuktiKegiatan[$i]->file));
+            }
+        }
+        
         $kegiatan->delete();
         return redirect()->route('kegiatans.index')->with('pesan', "Hapus data kegiatan : $kegiatan->bentuk_kegiatan berhasil");
     }
