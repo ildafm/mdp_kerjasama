@@ -42,26 +42,26 @@ class BuktiKerjasamaController extends Controller
 
         // 1. validasi input data kosong
         $validateData = $request->validate([
-            'Nama_Bukti_Kerjasama' => 'required',
-            'Bukti_Kerjasama' => 'required | file |mimes:pdf,jpg,png,docx,doc| max:5000',
+            'nama_bukti_kerjasama' => 'required',
+            'file' => 'required | file |mimes:pdf,jpg,png,docx,doc| max:5000',
             'kerjasama_id' => 'required',
         ]);
 
 
         //ambil extensi //png / jpg / gif
-        $ext = $request->Bukti_Kerjasama->getClientOriginalExtension();
+        $ext = $request->file->getClientOriginalExtension();
 
         //ubah nama file file
         $rename_file = 'file-'.time().".".$ext; //contoh file : file-timestamp.jpg
 
         //upload foler ke dalam folder public
-        $request->Bukti_Kerjasama->storeAs('public/kerjasama', $rename_file); //bisa diletakan difolder lain dengan store ke public/(folderlain)
+        $request->file->storeAs('public/kerjasama', $rename_file); //bisa diletakan difolder lain dengan store ke public/(folderlain)
         
 
         // 2. simpan file
         $buktiKerjasama = new BuktiKerjasama();
         
-        $buktiKerjasama->nama_bukti_kerjasama = $validateData['Nama_Bukti_Kerjasama'];
+        $buktiKerjasama->nama_bukti_kerjasama = $validateData['nama_bukti_kerjasama'];
         $buktiKerjasama->file = $rename_file;
         $buktiKerjasama->kerjasama_id = $validateData['kerjasama_id'];
 
@@ -79,7 +79,6 @@ class BuktiKerjasamaController extends Controller
     public function show($id)
     {
         //
-        // dd($id);
     }
 
     /**
@@ -91,6 +90,7 @@ class BuktiKerjasamaController extends Controller
     public function edit(BuktiKerjasama $buktiKerjasama)
     {
         //
+        return view('kerjasama.editBukti')->with('buktiKerjasama', $buktiKerjasama);
     }
 
     /**
@@ -103,6 +103,41 @@ class BuktiKerjasamaController extends Controller
     public function update(Request $request, BuktiKerjasama $buktiKerjasama)
     {
         //
+        $this->validate($request, [
+            'nama_bukti_kerjasama' => 'required',
+            'file' => 'file |mimes:pdf,jpg,png,docx,doc| max:5120',
+        ]);
+
+        $buktiKerjasama = BuktiKerjasama::findOrFail($buktiKerjasama->id);
+
+        if($request->file != ""){
+
+            if($buktiKerjasama->file != null || $buktiKerjasama->file != ''){
+                unlink(storage_path('app/public/kerjasama/'.$buktiKerjasama->file));
+            }
+
+            //ambil extensi //png / jpg / gif
+            $ext = $request->file->getClientOriginalExtension();
+
+            //ubah nama file file
+            $rename_file = 'file-'.time().".".$ext; //contoh file : file-timestamp.jpg
+
+            //upload foler ke dalam folder public
+            $request->file->storeAs('public/kerjasama', $rename_file); //bisa diletakan difolder lain dengan store ke public/(folderlain)
+
+            $buktiKerjasama->update([
+                'nama_bukti_kerjasama' => $request->nama_bukti_kerjasama,
+                'file' => $rename_file,
+            ]); 
+        }
+        else{
+            $buktiKerjasama->update([
+                'nama_bukti_kerjasama' => $request->nama_bukti_kerjasama,
+            ]);
+        }
+
+        $request->session()->flash('pesan', 'Perubahan data berhasil');
+        return redirect()->route('kerjasamas.index');
     }
 
     /**

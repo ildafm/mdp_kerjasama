@@ -14,7 +14,6 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-
         </div>
 
         {{-- Barisan edit data Bukti --}}
@@ -36,29 +35,6 @@
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
-
-                {{-- edit file --}}
-                {{-- <tr>
-                    <td colspan="2">
-                        <div class="form-group">
-                            <label for="bukti_kegiatan">Bukti Kegiatan</label>
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" name="bukti_kegiatan"
-                                        id="exampleInputFile">
-                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                </div>
-                                <div class="input-group-append">
-                                    <span class="input-group-text">Upload</span>
-                                </div>
-                            </div>
-
-                            @error('bukti_kegiatan')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </td>
-                </tr> --}}
 
                 {{-- APT, APS, LAMEMBA --}}
                 <div class="row">

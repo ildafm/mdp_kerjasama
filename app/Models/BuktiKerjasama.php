@@ -12,4 +12,6 @@ class BuktiKerjasama extends Model
     public function kerjasama(){
         return $this->belongsTo(Kerjasama::class);
     }
+
+    protected $fillable = ['nama_bukti_kerjasama', 'file'];
 }

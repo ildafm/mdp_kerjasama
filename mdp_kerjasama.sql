@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 11, 2022 at 03:51 PM
+-- Generation Time: Jul 12, 2022 at 08:46 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -50,7 +50,8 @@ INSERT INTO `bukti_kegiatans` (`id`, `nama_bukti_kegiatan`, `file`, `kegiatans_i
 (15, 'Bukti kegiatan Q3', 'file-1657089773.docx', 8, 'Y', 'T', 'Y', 'L', '2022-07-06 06:42:53', '2022-07-11 13:45:36'),
 (16, 'Bukti kegiatan 3', 'file-1657096474.docx', 10, 'Y', 'T', 'T', 'P', '2022-07-06 08:34:34', '2022-07-06 08:34:34'),
 (17, 'Bukti kegiatan 4', 'file-1657097581.pdf', 9, 'Y', 'T', 'T', 'P', '2022-07-06 08:53:01', '2022-07-06 08:53:01'),
-(18, 'Bukti Kegiatan Q4', 'file-1657546530.png', 8, 'T', 'T', 'Y', 'N', '2022-07-11 13:35:30', '2022-07-11 13:35:30');
+(18, 'Bukti Kegiatan Q4', 'file-1657546530.png', 8, 'T', 'T', 'Y', 'N', '2022-07-11 13:35:30', '2022-07-11 13:35:30'),
+(20, 'Bukti Kegiatan Q4 Dari Q2', 'file-1657615366.png', 9, 'Y', 'T', 'T', 'N', '2022-07-12 08:39:49', '2022-07-12 08:43:17');
 
 -- --------------------------------------------------------
 
@@ -76,7 +77,8 @@ INSERT INTO `bukti_kegiatan_units` (`id`, `units_id`, `bukti_kegiatans_id`, `cre
 (12, 1, 15, '2022-07-06 06:42:53', '2022-07-06 07:48:01'),
 (13, 4, 16, '2022-07-06 08:34:34', '2022-07-06 08:34:34'),
 (14, 4, 17, '2022-07-06 08:53:01', '2022-07-06 08:53:01'),
-(15, 8, 18, '2022-07-11 13:35:30', '2022-07-11 13:35:30');
+(15, 8, 18, '2022-07-11 13:35:30', '2022-07-11 13:35:30'),
+(17, 2, 20, '2022-07-12 08:39:49', '2022-07-12 08:43:17');
 
 -- --------------------------------------------------------
 
@@ -99,7 +101,9 @@ CREATE TABLE `bukti_kerjasamas` (
 
 INSERT INTO `bukti_kerjasamas` (`id`, `nama_bukti_kerjasama`, `file`, `kerjasama_id`, `created_at`, `updated_at`) VALUES
 (24, 'Bukti Kerjasama Q1', 'file-1656651006.png', 8, '2022-07-01 04:50:06', '2022-07-01 04:50:06'),
-(27, 'Upload FIle PDF', 'file-1656651201.pdf', 8, '2022-07-01 04:53:21', '2022-07-01 04:53:21');
+(27, 'Upload FIle PDF', 'file-1656651201.pdf', 8, '2022-07-01 04:53:21', '2022-07-01 04:53:21'),
+(28, 'Bukti Kerjasama Dari Kerja Sama Q12', 'file-1657650172.png', 9, '2022-07-12 18:22:52', '2022-07-12 18:22:52'),
+(29, 'Bukti Kerjasama', 'file-1657651442.png', 8, '2022-07-12 18:29:07', '2022-07-12 18:44:44');
 
 -- --------------------------------------------------------
 
@@ -387,7 +391,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `kode_dosen`, `name`, `email`, `level`, `file`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (2, '000000', 'MainAccount', 'admin@gmail.com', 'A', NULL, NULL, '$2y$10$1Z/MaxYrXiOtFN5zZdu6.eeDsbt.QqEnmpgKS/WhKnrPEbCYh/qsa', NULL, '2022-05-27 01:55:39', '2022-06-26 02:14:22'),
 (4, 'D00002', 'Account Dosen', 'dosen@gmail.com', 'D', 'file-D00002-Main Account Dosen 1.jpg', NULL, '$2y$10$Rk9WruJrJqv/WJ7a5vhw8uV3cw96IbybCGoqIxYA.pwtLtfsYxZsG', NULL, '2022-05-29 02:59:11', '2022-07-11 01:52:00'),
-(6, 'D00004', 'User123', 'user@mail.com', 'D', 'file-D00004-User123.png', NULL, '$2y$10$SacrjeyyQiDsVoPIqhZwVOBETyIrGS0Dt1gt6.Y0CN/o175/Mu8wy', NULL, '2022-06-26 02:31:14', '2022-06-30 20:08:58'),
+(6, 'D00004', 'User123', 'user@mail.com', 'D', 'file-D00004-User123.jpg', NULL, '$2y$10$SacrjeyyQiDsVoPIqhZwVOBETyIrGS0Dt1gt6.Y0CN/o175/Mu8wy', NULL, '2022-06-26 02:31:14', '2022-07-12 07:18:55'),
 (7, 'D00005', 'User1', 'user1@mail.com', 'D', NULL, NULL, '$2y$10$D5o03G.RX0n3C/0Enfb1t.iUS..Jqh8Gc78x4HE63OjtkWqIn/fwS', NULL, '2022-06-26 02:47:09', '2022-06-26 02:47:09');
 
 -- --------------------------------------------------------
@@ -546,19 +550,19 @@ ALTER TABLE `usulans`
 -- AUTO_INCREMENT for table `bukti_kegiatans`
 --
 ALTER TABLE `bukti_kegiatans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `bukti_kegiatan_units`
 --
 ALTER TABLE `bukti_kegiatan_units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `bukti_kerjasamas`
 --
 ALTER TABLE `bukti_kerjasamas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `dosens`

@@ -76,12 +76,12 @@
                         <tr>
                             <td colspan="2">
                                 <div class="form-group">
-                                    <label for="Nama_Bukti_Kerjasama">Nama Bukti Kerjasama</label>
-                                    <input type="text" class="form-control" name="Nama_Bukti_Kerjasama"
+                                    <label for="nama_bukti_kerjasama">Nama Bukti Kerjasama</label>
+                                    <input type="text" class="form-control" name="nama_bukti_kerjasama"
                                         placeholder="Enter Nama Bukti Kerjasama"
-                                        value="{{ old('Nama_Bukti_Kerjasama') }}">
+                                        value="{{ old('nama_bukti_kerjasama') }}">
 
-                                    @error('Nama_Bukti_Kerjasama')
+                                    @error('nama_bukti_kerjasama')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -92,10 +92,10 @@
                         <tr>
                             <td colspan="2">
                                 <div class="form-group">
-                                    <label for="Bukti_Kerjasama">Bukti Kerjasama(Max:5mb)</label>
+                                    <label for="file">Bukti Kerjasama(Max:5mb)</label>
                                     <div class="input-group">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="Bukti_Kerjasama"
+                                            <input type="file" class="custom-file-input" name="file"
                                                 id="exampleInputFile">
                                             <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                         </div>
@@ -104,7 +104,7 @@
                                         </div>
                                     </div>
 
-                                    @error('Bukti_Kerjasama')
+                                    @error('file')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -171,8 +171,12 @@
                             <td> {{ $nomor++ }} </td>
                             <td>
                                 {{-- Button Tampil --}}
-                                <a href="{{ url('storage/kerjasama/' . $data->file) }}" class="btn btn-sm btn-primary"><i
-                                        class="nav-icon fas fa-eye" title="Tampil"></i></a>
+                                <a href="{{ url('storage/kerjasama/' . $data->file) }}" class="btn btn-sm btn-primary">
+                                    <i class="nav-icon fas fa-eye" title="Tampil"></i></a>
+
+                                {{-- Button Ubah --}}
+                                <a href="{{ route('buktiKerjasamas.edit', ['buktiKerjasama' => $data->id]) }}"
+                                    class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit" title="Edit"></i></a>
 
                                 {{-- Button Hapus --}}
                                 <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
