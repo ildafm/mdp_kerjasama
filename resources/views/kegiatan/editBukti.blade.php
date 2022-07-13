@@ -40,19 +40,52 @@
                 <div class="row">
                     {{-- APT --}}
                     @php
-                        if (old('apt') != null) {
-                            $option_apt = old('aps');
+                        // if (old('apt') != null) {
+                        // $option_apt = old('apt');
+                        // } else {
+                        //     $option_apt = $buktiKegiatan->ceklist_apt;
+                        //     if ($option_apt == null) {
+                        //         $option_apt = old('apt');
+                        //         // $option_apt = $buktiKegiatan->ceklist_apt;
+                        //     }
+                        // }
+                        
+                        // echo $option_apt;
+                        
+                        $route;
+                        if (old('apt') == null) {
+                            echo 'null';
+                            $route = 0;
                         } else {
-                            $option_apt = $buktiKegiatan->ceklist_apt;
+                            echo 'on';
+                            $route = 1;
                         }
-                        $nomor = 0;
+                        
+                        if ($route == 0) {
+                            $option_apt = $buktiKegiatan->ceklist_apt;
+                        } else {
+                            $option_apt = old('apt');
+                        }
                     @endphp
 
-                    <div class="form-check col">
+                    @if ($option_apt == 'Y')
+                        <div class="form-check col">
+                            <input class="form-check-input" type="checkbox" name="apt" checked>
+                            <label class="form-check-label">APT</label>
+                        </div>
+                    @else
+                        <div class="form-check col">
+                            <input class="form-check-input" type="checkbox" name="apt"
+                                @if ($option_apt == 'on') checked @endif>
+                            <label class="form-check-label">APT</label>
+                        </div>
+                    @endif
+
+                    {{-- <div class="form-check col">
                         <input class="form-check-input" type="checkbox" name="apt"
                             @if ($option_apt == 'Y') checked @endif>
                         <label class="form-check-label">APT</label>
-                    </div>
+                    </div> --}}
 
                     {{-- APS --}}
                     @php
@@ -61,6 +94,7 @@
                         } else {
                             $option_aps = $buktiKegiatan->ceklist_aps;
                         }
+                        echo $option_aps;
                     @endphp
 
                     <div class="form-check col">
@@ -76,6 +110,7 @@
                         } else {
                             $option_lamemba = $buktiKegiatan->ceklist_lamemba;
                         }
+                        echo $option_lamemba;
                     @endphp
 
                     <div class="form-check col">

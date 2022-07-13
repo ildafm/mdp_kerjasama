@@ -30,19 +30,19 @@ Route::get('/', function () {
     return redirect()->route('dashboard');
 });
 
-Route::resource('mitras', MitraController::class);
-Route::resource('dosens', DosenController::class);
-Route::resource('kegiatans', KegiatanController::class);
-Route::resource('kerjasamas', KerjasamaController::class);
-Route::resource('units', UnitController::class);
-Route::resource('usulans', UsulanController::class);
-Route::resource('statuses', StatusController::class);
-Route::resource('kategoris', KategoriController::class);
-Route::resource('users', UserController::class);
-Route::resource('profiles', ProfileController::class);
+Route::resource('mitras', MitraController::class)->middleware(['auth']);
+Route::resource('dosens', DosenController::class)->middleware(['auth']);
+Route::resource('kegiatans', KegiatanController::class)->middleware(['auth']);
+Route::resource('kerjasamas', KerjasamaController::class)->middleware(['auth']);
+Route::resource('units', UnitController::class)->middleware(['auth']);
+Route::resource('usulans', UsulanController::class)->middleware(['auth']);
+Route::resource('statuses', StatusController::class)->middleware(['auth']);
+Route::resource('kategoris', KategoriController::class)->middleware(['auth']);
+Route::resource('users', UserController::class)->middleware(['auth']);
+Route::resource('profiles', ProfileController::class)->middleware(['auth']);
 
-Route::resource('buktiKerjasamas', BuktiKerjasamaController::class);
-Route::resource('buktiKegiatans', BuktiKegiatanController::class);
+Route::resource('buktiKerjasamas', BuktiKerjasamaController::class)->middleware(['auth']);
+Route::resource('buktiKegiatans', BuktiKegiatanController::class)->middleware(['auth']);
 
 Auth::routes();
 
