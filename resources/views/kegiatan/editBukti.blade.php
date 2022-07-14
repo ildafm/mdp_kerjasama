@@ -41,60 +41,38 @@
                     {{-- APT --}}
                     @php
                         // if (old('apt') != null) {
-                        // $option_apt = old('apt');
+                        //     $option_apt = old('apt');
                         // } else {
                         //     $option_apt = $buktiKegiatan->ceklist_apt;
-                        //     if ($option_apt == null) {
-                        //         $option_apt = old('apt');
-                        //         // $option_apt = $buktiKegiatan->ceklist_apt;
-                        //     }
                         // }
-                        
                         // echo $option_apt;
                         
-                        $route;
-                        if (old('apt') == null) {
-                            echo 'null';
-                            $route = 0;
-                        } else {
-                            echo 'on';
-                            $route = 1;
-                        }
-                        
-                        if ($route == 0) {
-                            $option_apt = $buktiKegiatan->ceklist_apt;
-                        } else {
-                            $option_apt = old('apt');
-                        }
+                        $option_apt = $buktiKegiatan->ceklist_apt;
+                        // if (old('apt') == null) {
+                        //     $old_value = 'on';
+                        // } else {
+                        //     $old_value = 'off';
+                        // }
+                        // echo "$option_apt ";
+                        // echo "$old_value ";
                     @endphp
 
-                    @if ($option_apt == 'Y')
-                        <div class="form-check col">
-                            <input class="form-check-input" type="checkbox" name="apt" checked>
-                            <label class="form-check-label">APT</label>
-                        </div>
-                    @else
-                        <div class="form-check col">
-                            <input class="form-check-input" type="checkbox" name="apt"
-                                @if ($option_apt == 'on') checked @endif>
-                            <label class="form-check-label">APT</label>
-                        </div>
-                    @endif
-
-                    {{-- <div class="form-check col">
+                    <div class="form-check col">
                         <input class="form-check-input" type="checkbox" name="apt"
                             @if ($option_apt == 'Y') checked @endif>
                         <label class="form-check-label">APT</label>
-                    </div> --}}
+                    </div>
 
                     {{-- APS --}}
                     @php
-                        if (old('aps') != null) {
-                            $option_aps = old('aps');
-                        } else {
-                            $option_aps = $buktiKegiatan->ceklist_aps;
-                        }
-                        echo $option_aps;
+                        // if (old('aps') != null) {
+                        //     $option_aps = old('aps');
+                        // } else {
+                        //     $option_aps = $buktiKegiatan->ceklist_aps;
+                        // }
+                        // echo $option_aps;
+                        
+                        $option_aps = $buktiKegiatan->ceklist_aps;
                     @endphp
 
                     <div class="form-check col">
@@ -105,12 +83,14 @@
 
                     {{-- LAMEMBA --}}
                     @php
-                        if (old('lamemba') != null) {
-                            $option_lamemba = old('lamemba');
-                        } else {
-                            $option_lamemba = $buktiKegiatan->ceklist_lamemba;
-                        }
-                        echo $option_lamemba;
+                        // if (old('lamemba') != null) {
+                        //     $option_lamemba = old('lamemba');
+                        // } else {
+                        //     $option_lamemba = $buktiKegiatan->ceklist_lamemba;
+                        // }
+                        // echo $option_lamemba;
+                        
+                        $option_lamemba = $buktiKegiatan->ceklist_lamemba;
                     @endphp
 
                     <div class="form-check col">
@@ -129,7 +109,6 @@
                             } else {
                                 $option = $buktiKegiatanUnits->units_id;
                             }
-                            // echo $buktiKegiatanUnits->units_id;
                         @endphp
 
                         <label for="nama_unit">Nama Unit</label>

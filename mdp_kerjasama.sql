@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 14, 2022 at 02:23 AM
+-- Generation Time: Jul 14, 2022 at 06:57 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -45,7 +45,7 @@ CREATE TABLE `bukti_kegiatans` (
 --
 
 INSERT INTO `bukti_kegiatans` (`id`, `nama_bukti_kegiatan`, `file`, `kegiatans_id`, `ceklist_apt`, `ceklist_aps`, `ceklist_lamemba`, `bidang`, `created_at`, `updated_at`) VALUES
-(14, 'Bukti kegiatan Q2', 'file-1657089740.pdf', 8, 'T', 'Y', 'Y', 'P', '2022-07-06 06:42:20', '2022-07-11 01:21:24'),
+(14, 'Bukti kegiatan Q2', 'file-1657089740.pdf', 8, 'Y', 'Y', 'Y', 'P', '2022-07-06 06:42:20', '2022-07-14 04:48:33'),
 (15, 'Bukti kegiatan Q3', 'file-1657089773.docx', 8, 'Y', 'T', 'Y', 'L', '2022-07-06 06:42:53', '2022-07-13 08:07:44'),
 (30, 'Bukti Kegiatan Q4', 'file-1657654084.png', 8, 'T', 'Y', 'T', 'B', '2022-07-12 19:28:04', '2022-07-12 19:28:04'),
 (34, 'Bukti 1', 'file-1657655394.png', 8, 'Y', 'Y', 'T', 'N', '2022-07-12 19:49:54', '2022-07-13 07:29:04'),
