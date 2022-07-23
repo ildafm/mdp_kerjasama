@@ -2,9 +2,25 @@
 @section('title', 'Kerjasama')
 
 @section('content')
+    <script>
+        function getStatus(status) {
+            let nk = document.getElementById("nama_kategori")
+
+            let no_mou = document.getElementById("no_mou")
+
+            no_mou.readOnly = false
+            if (nk.value == "1") {
+                no_mou.readOnly = false
+            } else {
+                no_mou.value = ""
+                no_mou.readOnly = true
+            }
+        }
+    </script>
+
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Tambah Kerja Sama</h3>
+            <h3 class="card-title">Tambah Kerjasama</h3>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -17,9 +33,45 @@
             </div>
         </div>
 
-        <div class="card-body">
-            <form action="{{ route('kerjasamas.store') }}" method="POST">
-                @csrf
+        {{-- Form tambah data --}}
+        <form action="{{ route('kerjasamas.store') }}" method="POST">
+            @csrf
+            <div class="card-body">
+                <div class="row">
+                    {{-- Nomor MoU --}}
+                    <div class="form-group col-lg-6">
+                        <label for="no_mou">Nomor MoU</label>
+                        <input type="text" id="no_mou" name='no_mou' value="{{ old('no_mou') }}"
+                            class="form-control @error('no_mou') is-invalid @enderror" placeholder="Masukan Nomor MoU">
+                        @error('no_mou')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Kategori --}}
+                    <div class="form-group col-lg-6 col-sm-12">
+                        <label for="nama_kategori">Kategori</label>
+
+                        @php
+                            if (old('nama_kategori') !== null) {
+                                $option = old('nama_kategori');
+                            } else {
+                                $option = 1;
+                            }
+                        @endphp
+
+                        <select class="form-control" id="nama_kategori" name='nama_kategori' onchange="getStatus(this)">
+                            @foreach ($kategoris as $data)
+                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                    {{ $data->nama_kategori }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('nama_kategori')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
 
                 {{-- Nama Kerjasama --}}
                 <div class="form-group">
@@ -54,9 +106,9 @@
                 </div>
 
                 <div class="row">
-                    {{-- Nama Mitra --}}
-                    <div class="form-group col-lg-4 col-sm-12">
-                        <label for="nama_mitra">Nama Mitra</label>
+                    {{-- Mitra --}}
+                    <div class="form-group col-lg-3 col-sm-12">
+                        <label for="nama_mitra">Mitra</label>
                         <select class="form-control select2" name='nama_mitra'>
 
                             @php
@@ -79,33 +131,11 @@
                         @enderror
                     </div>
 
-                    {{-- Nama Kategori --}}
-                    <div class="form-group col-lg-4 col-sm-12">
-                        <label for="nama_kategori">Nama Kategori</label>
 
-                        @php
-                            if (old('nama_kategori') !== null) {
-                                $option = old('nama_kategori');
-                            } else {
-                                $option = 1;
-                            }
-                        @endphp
-
-                        <select class="form-control" name='nama_kategori'>
-                            @foreach ($kategoris as $data)
-                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                    {{ $data->nama_kategori }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('nama_kategori')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
 
                     {{-- Nama Status --}}
-                    <div class="form-group col-lg-4 col-sm-12">
-                        <label for="nama_status">Nama Status</label>
+                    <div class="form-group col-lg-3 col-sm-12">
+                        <label for="nama_status">Status</label>
 
                         @php
                             if (old('nama_status') !== null) {
@@ -126,14 +156,39 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                </div>
-        </div>
 
-        <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
-            &nbsp;
-            <a href="/kerjasamas" class="btn btn-outline-dark">Kembali</a>
-        </div>
+                    {{-- Usulan --}}
+                    <div class="form-group col-lg-6 col-sm-12">
+                        <label for="usulan">Usulan</label>
+                        <select class="form-control select2" name='usulan'>
+
+                            @php
+                                if (old('usulan') !== null) {
+                                    $option = old('usulan');
+                                } else {
+                                    $option = 1;
+                                }
+                            @endphp
+
+                            @foreach ($usulans as $data)
+                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                    {{ $data->usulan }}
+                                </option>
+                            @endforeach
+                            {{-- old('usulan', $kerjasama->mitra_id) == $data->id ? 'selected' : '' --}}
+                        </select>
+                        @error('usulan')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                &nbsp;
+                <a href="/kerjasamas" class="btn btn-outline-dark">Kembali</a>
+            </div>
         </form>
     </div>
 

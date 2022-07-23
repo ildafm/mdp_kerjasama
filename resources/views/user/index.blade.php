@@ -50,8 +50,8 @@
                                         class="nav-icon fas fa-eye" title="Tampil"></i></a> --}}
 
                                 {{-- Button Edit --}}
-                                <a href="{{ route('users.edit', ['user' => $data->id]) }}"
-                                    class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit" title="Edit"></i></a>
+                                <a href="{{ route('users.edit', ['user' => $data->id]) }}" class="btn btn-sm btn-warning"><i
+                                        class="nav-icon fas fa-edit" title="Edit"></i></a>
 
                                 {{-- Button Hapus --}}
                                 <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
@@ -62,11 +62,19 @@
                             <td>{{ $data->name }}</td>
                             <td>{{ $data->email }}</td>
                             <td>
-                                @if ($data->level == 'A')
-                                    Admin
-                                @else
-                                    Dosen
-                                @endif
+                                @php
+                                    if ($data->level == 'A') {
+                                        echo 'Admin';
+                                    } elseif ($data->level == 'E') {
+                                        echo 'Dekan';
+                                    } elseif ($data->level == 'K') {
+                                        echo 'Kaprodi';
+                                    } elseif ($data->level == 'U') {
+                                        echo 'Kelapa Unit';
+                                    } else {
+                                        echo 'Dosen';
+                                    }
+                                @endphp
                             </td>
                         </tr>
                     @endforeach

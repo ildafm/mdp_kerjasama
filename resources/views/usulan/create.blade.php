@@ -23,23 +23,36 @@
             <div class="card-body">
                 {{-- Nama Usulan --}}
                 <div class="form-group">
-                    <label for="nama_usulan">Nama Usulan </label>
-                    <input type="text" name='nama_usulan' class="form-control @error('nama_usulan') is-invalid @enderror"
-                        placeholder="Masukan Nama Usulan" value="{{ old('nama_usulan') }}">
-                    @error('nama_usulan')
+                    <label for="usulan">Usulan </label>
+                    <input type="text" name='usulan' class="form-control @error('usulan') is-invalid @enderror"
+                        placeholder="Masukan Nama Usulan" value="{{ old('usulan') }}">
+                    @error('usulan')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
-                {{-- Bentuk Kerjasama --}}
-                <div class="form-group">
-                    <label for="bentuk_kerjasama">Bentuk Kerjasama </label>
-                    <input type="text" name='bentuk_kerjasama'
-                        class="form-control @error('bentuk_kerjasama') is-invalid @enderror"
-                        placeholder="Masukan Bentuk Kerjasama" value="{{ old('bentuk_kerjasama') }}">
-                    @error('bentuk_kerjasama')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                <div class="row">
+                    {{-- Bentuk Kerjasama --}}
+                    <div class="form-group col-lg-6">
+                        <label for="bentuk_kerjasama">Bentuk Kerjasama </label>
+                        <input type="text" name='bentuk_kerjasama'
+                            class="form-control @error('bentuk_kerjasama') is-invalid @enderror"
+                            placeholder="Masukan Bentuk Kerjasama" value="{{ old('bentuk_kerjasama') }}">
+                        @error('bentuk_kerjasama')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Kontak Kerjasama --}}
+                    <div class="form-group col-lg-6">
+                        <label for="kontak_kerjasama">Kontak Kerjasama </label>
+                        <input type="text" name='kontak_kerjasama'
+                            class="form-control @error('kontak_kerjasama') is-invalid @enderror"
+                            placeholder="Masukan Kontak Kerjasama" value="{{ old('kontak_kerjasama') }}">
+                        @error('kontak_kerjasama')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
 
                 {{-- Rencana Kegiatan --}}
@@ -53,19 +66,32 @@
                     @enderror
                 </div>
 
-                {{-- Tanggal Rencana Kegiatan --}}
                 <div class="row">
-                    <div class="form-group col-lg-4">
-                        <label for="tanggal_rencana_kegiatan">Tanggal Rencana Kegiatan</label>
-                        <input type="date" name="tanggal_rencana_kegiatan" id="" class="form-control"
-                            value="{{ old('tanggal_rencana_kegiatan') }}">
-                        @error('tanggal_rencana_kegiatan')
+                    {{-- Nama Pengusul --}}
+                    <div class="form-group col-lg-3">
+                        <label for="nama_pengusul">Nama Pengusul</label>
+                        @php
+                            if (old('nama_pengusul') !== null) {
+                                $option = old('nama_pengusul');
+                            } else {
+                                $option = 1;
+                            }
+                        @endphp
+
+                        <select class="form-control select2" name="nama_pengusul" id="">
+                            @foreach ($users as $data)
+                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                    {{ $data->kode_dosen }} - {{ $data->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('nama_pengusul')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
                     {{-- Nama Mitra --}}
-                    <div class="form-group col-lg-4">
+                    <div class="form-group col-lg-3">
                         <label for="nama_mitra">Nama Mitra </label>
 
                         @php
@@ -89,7 +115,7 @@
                     </div>
 
                     {{-- Nama Unit --}}
-                    <div class="form-group col-lg-4">
+                    <div class="form-group col-lg-3">
                         <label for="nama_unit">Nama Unit </label>
 
                         @php
@@ -111,9 +137,28 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
+                    {{-- Type --}}
+                    <div class="form-group col-lg-3">
+                        <label for="type">Type</label>
+                        @php
+                            if (old('type') !== null) {
+                                $option = old('type');
+                            } else {
+                                $option = 'I';
+                            }
+                        @endphp
+
+                        <select class="form-control" name="type" id="">
+                            <option value="I" <?= $option == 'I' ? 'selected' : '' ?>>IN</option>
+                            <option value="O" <?= $option == 'O' ? 'selected' : '' ?>>OUT</option>
+                        </select>
+                        @error('type')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
-                {{-- get Dosen/User --}}
-                <input type="hidden" name="nama_dosen" value="{{ Auth::user()->id }}" class="form-control" readonly>
+
             </div>
 
             <div class="card-footer">

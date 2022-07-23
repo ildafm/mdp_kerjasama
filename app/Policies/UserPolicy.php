@@ -18,7 +18,7 @@ class UserPolicy
     public function viewAny(User $user)
     {
         //
-        return $user->level == 'A';
+        return $user->level != 'D';
     }
 
     /**

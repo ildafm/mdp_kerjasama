@@ -20,6 +20,10 @@ class Kerjasama extends Model
     public function status(){
         return $this->belongsTo(Status::class);
     }
+    
+    public function usulan(){
+        return $this->belongsTo(Usulan::class);
+    }
 
     public function kegiatans(){
         return $this->hasMany(Kegiatan::class);
@@ -28,6 +32,7 @@ class Kerjasama extends Model
     public function buktiKerjasama(){
         return $this->hasMany(BuktiKerjasama::class);
     }
+    
 
-    protected $fillable = ['nama_kerja_sama', 'tanggal_mulai', 'tanggal_sampai', 'mitra_id', 'kategori_id', 'status_id'];
+    protected $fillable = ['nama_kerja_sama', 'tanggal_mulai', 'tanggal_sampai', 'mitra_id', 'kategori_id', 'status_id', 'usulan_id'];
 }

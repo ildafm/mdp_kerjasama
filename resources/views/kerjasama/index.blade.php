@@ -35,11 +35,13 @@
                         <th>No</th>
                         <th>Aksi</th>
                         <th>Nama Kerjasama</th>
+                        <th>Nomor MoU</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
                         <th>Nama Mitra</th>
-                        <th>Nama Kategori</th>
+                        <th>Kategori</th>
                         <th>Status</th>
+                        <th>Usulan</th>
                     </tr>
                 </thead>
 
@@ -70,11 +72,19 @@
                                 @endif
                             </td>
                             <td>{{ $data->nama_kerja_sama }}</td>
+                            <td>
+                                @if ($data->no_mou == '')
+                                    Tanpa MoU
+                                @else
+                                    {{ $data->no_mou }}
+                                @endif
+                            </td>
                             <td>{{ $data->tanggal_mulai }}</td>
                             <td>{{ $data->tanggal_sampai }}</td>
                             <td>{{ $data->mitra->nama_mitra }}</td>
                             <td>{{ $data->kategori->nama_kategori }}</td>
                             <td>{{ $data->status->nama_status }}</td>
+                            <td>{{ $data->usulan->usulan }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -84,11 +94,13 @@
                         <th>No</th>
                         <th>Aksi</th>
                         <th>Nama Kerjasama</th>
+                        <th>Nomor MoU</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
                         <th>Nama Mitra</th>
-                        <th>Nama Kategori</th>
+                        <th>Kategori</th>
                         <th>Status</th>
+                        <th>Usulan</th>
                     </tr>
                 </tfoot>
 

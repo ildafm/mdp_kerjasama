@@ -88,6 +88,9 @@
 
                         <select class="form-control" name='level'>
                             <option value='A' <?= $option == 'A' ? 'selected' : '' ?>>Admin</option>
+                            <option value='E' <?= $option == 'E' ? 'selected' : '' ?>>Dekan</option>
+                            <option value='K' <?= $option == 'K' ? 'selected' : '' ?>>Kaprodi</option>
+                            <option value='U' <?= $option == 'U' ? 'selected' : '' ?>>Kepala Unit</option>
                             <option value='D' <?= $option == 'D' ? 'selected' : '' ?>>Dosen</option>
                         </select>
                         @error('level')

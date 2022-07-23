@@ -4,8 +4,8 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <!-- <h3 class="card-title">Tabel Daftar Kerja Sama</h3> -->
-            {{-- Button Tambah --}}
+
+            {{-- Button Kembali --}}
             <a href="{{ url('/kerjasamas') }}" class='btn btn-primary'>Kembali</a>
 
             <div class="card-tools">
@@ -20,7 +20,6 @@
         </div>
 
         <div class="card-body">
-
             {{-- Tampilkan Pesan --}}
             @if (session()->has('pesan'))
                 <div class='alert alert-success'>
@@ -35,6 +34,17 @@
                     <tr>
                         <td>Nama Kerja Sama</td>
                         <td>{{ $kerjasama->nama_kerja_sama }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Nomor Mou</td>
+                        <td>
+                            @if ($kerjasama->no_mou == '')
+                                Tanpa MoU
+                            @else
+                                {{ $kerjasama->no_mou }}
+                            @endif
+                        </td>
                     </tr>
 
                     <tr>
@@ -53,7 +63,7 @@
                     </tr>
 
                     <tr>
-                        <td>Nama Kategori</td>
+                        <td>Kategori</td>
                         <td>{{ $kerjasama->kategori->nama_kategori }}</td>
                     </tr>
 
@@ -63,74 +73,75 @@
                     </tr>
 
                     <tr>
-                        <td colspan="2">
-                            <h2>Tambah Bukti Kerjasama</h2>
-                        </td>
+                        <td>Usulan</td>
+                        <td>{{ $kerjasama->usulan->usulan }}</td>
                     </tr>
-
-                    {{-- Barisan Menambahkan data Bukti --}}
-                    <form action="{{ route('buktiKerjasamas.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-
-                        {{-- Nama Bukti Kerjasama --}}
-                        <tr>
-                            <td colspan="2">
-                                <div class="form-group">
-                                    <label for="nama_bukti_kerjasama">Nama Bukti Kerjasama</label>
-                                    <input type="text" class="form-control" name="nama_bukti_kerjasama"
-                                        placeholder="Enter Nama Bukti Kerjasama"
-                                        value="{{ old('nama_bukti_kerjasama') }}">
-
-                                    @error('nama_bukti_kerjasama')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </td>
-                        </tr>
-
-                        {{-- add file --}}
-                        <tr>
-                            <td colspan="2">
-                                <div class="form-group">
-                                    <label for="file">Bukti Kerjasama(Max:5mb)</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="file"
-                                                id="exampleInputFile">
-                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                        </div>
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">Upload</span>
-                                        </div>
-                                    </div>
-
-                                    @error('file')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="2">
-                                {{-- getKerjasamaID --}}
-                                <input type="hidden" value="{{ $kerjasama->id }}" name="kerjasama_id">
-                                @error('kerjasama_id')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-
-                                {{-- Button Submit --}}
-                                <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Tambahkan Bukti</button>
-                                </div>
-                            </td>
-                        </tr>
-                    </form>
                 </tbody>
-
             </table>
         </div>
+    </div>
 
+    {{-- card tambah bukti --}}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Tambah Bukti Kerjasama</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        {{-- Form Menambahkan data Bukti --}}
+        <form action="{{ route('buktiKerjasamas.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+
+            <div class="card-body">
+                {{-- Nama Bukti Kerjasama --}}
+                <div class="form-group">
+                    <label for="nama_bukti_kerjasama">Nama Bukti Kerjasama</label>
+                    <input type="text" class="form-control" name="nama_bukti_kerjasama"
+                        placeholder="Enter Nama Bukti Kerjasama" value="{{ old('nama_bukti_kerjasama') }}">
+
+                    @error('nama_bukti_kerjasama')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                {{-- add file --}}
+                <div class="form-group">
+                    <label for="file">Bukti Kerjasama(Max:5mb)</label>
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
+                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                        </div>
+                        <div class="input-group-append">
+                            <span class="input-group-text">Upload</span>
+                        </div>
+                    </div>
+
+                    @error('file')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                {{-- getKerjasamaID --}}
+                <input type="hidden" value="{{ $kerjasama->id }}" name="kerjasama_id">
+                @error('kerjasama_id')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+
+            </div>
+
+            {{-- Button Submit --}}
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Tambahkan Bukti</button>
+            </div>
+        </form>
     </div>
 
     {{-- Tabel Bukti Kerjasama --}}

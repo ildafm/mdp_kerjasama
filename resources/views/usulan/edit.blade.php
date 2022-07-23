@@ -4,7 +4,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Ubah Data Usulan {{ $usulans->nama_usulan }}</h3>
+            <h3 class="card-title">Ubah Data Usulan {{ $usulans->usulan }}</h3>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -22,27 +22,42 @@
             @method('PUT')
             @csrf
             <div class="card-body">
-                {{-- Nama usulan --}}
+                {{-- usulan --}}
                 <div class="form-group">
-                    <label for="nama_usulan">Nama Usulan </label>
-                    <input type="text" name='nama_usulan' class="form-control @error('nama_usulan') is-invalid @enderror"
-                        placeholder="Masukan Nama Usulan" value="{{ old('nama_usulan', $usulans->nama_usulan) }}">
-                    @error('nama_usulan')
+                    <label for="usulan">Usulan </label>
+                    <input type="text" name='usulan' class="form-control @error('usulan') is-invalid @enderror"
+                        placeholder="Masukan Usulan" value="{{ old('usulan', $usulans->usulan) }}">
+                    @error('usulan')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
-                {{-- Bentuk Kerjasama --}}
-                <div class="form-group">
-                    <label for="bentuk_kerjasama">Bentuk Kerjasama </label>
-                    <input type="text" name='bentuk_kerjasama'
-                        class="form-control @error('bentuk_kerjasama') is-invalid @enderror"
-                        placeholder="Masukan Bentuk Kerjasama"
-                        value="{{ old('bentuk_kerjasama', $usulans->bentuk_kerjasama) }}">
-                    @error('bentuk_kerjasama')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                <div class="row">
+                    {{-- Bentuk Kerjasama --}}
+                    <div class="form-group col-lg-6">
+                        <label for="bentuk_kerjasama">Bentuk Kerjasama </label>
+                        <input type="text" name='bentuk_kerjasama'
+                            class="form-control @error('bentuk_kerjasama') is-invalid @enderror"
+                            placeholder="Masukan Bentuk Kerjasama"
+                            value="{{ old('bentuk_kerjasama', $usulans->bentuk_kerjasama) }}">
+                        @error('bentuk_kerjasama')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Kontak Kerjasama --}}
+                    <div class="form-group col-lg-6">
+                        <label for="kontak_kerjasama">Kontak Kerjasama </label>
+                        <input type="text" name='kontak_kerjasama'
+                            class="form-control @error('kontak_kerjasama') is-invalid @enderror"
+                            placeholder="Masukan Kontak Kerjasama"
+                            value="{{ old('kontak_kerjasama', $usulans->kontak_kerjasama) }}">
+                        @error('kontak_kerjasama')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
+
 
                 {{-- Rencana Kegiatan --}}
                 <div class="form-group">
@@ -57,12 +72,26 @@
                 </div>
 
                 <div class="row">
-                    {{-- Tanggal Rencana Kegiatan --}}
+                    {{-- Nama Pengusulan --}}
                     <div class="form-group col-lg-4">
-                        <label for="tanggal_rencana_kegiatan">Tanggal Rencana Kegiatan</label>
-                        <input type="date" name="tanggal_rencana_kegiatan" id="" class="form-control"
-                            value="{{ old('tanggal_rencana_kegiatan', $usulans->tanggal_rencana_kegiatan) }}">
-                        @error('tanggal_rencana_kegiatan')
+                        <label for="nama_pengusul">Nama Pengusul</label>
+
+                        @php
+                            if (old('nama_pengusul') !== null) {
+                                $option = old('nama_pengusul');
+                            } else {
+                                $option = $usulans->user_id;
+                            }
+                        @endphp
+
+                        <select class="form-control select2" name="nama_pengusul" id="">
+                            @foreach ($users as $data)
+                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                    {{ $data->kode_dosen }} - {{ $data->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('nama_pengusul')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
@@ -114,32 +143,45 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+                </div>
 
-                    {{-- Nama Dosen --}}
-                    {{-- <div class="form-group col-lg-3">
-                        <label for="nama_dosen">Nama Dosen </label>
+                <div class="row">
+                    {{-- Hasil Penjajakan --}}
+                    @php
+                        if (old('hasil_penjajakan') !== null) {
+                            $option = old('hasil_penjajakan');
+                        } else {
+                            $option = $usulans->hasil_penjajakan;
+                        }
+                    @endphp
 
-                        @php
-                            if (old('nama_dosen') !== null) {
-                                $option = old('nama_dosen');
-                            } else {
-                                $option = $usulans->dosen_id;
-                            }
-                        @endphp
-
-                        <select class="form-control select2" name="nama_dosen" id="">
-                            @foreach ($dosens as $data)
-                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                    {{ $data->id }} - {{ $data->nama_dosen }}
-                                </option>
-                            @endforeach
+                    <div class="form-group col-lg-4">
+                        <label for="hasil_penjajakan">Hasil Penjajakan</label>
+                        <select class="form-control" name='hasil_penjajakan'>
+                            <option value='B' <?= $option == 'B' ? 'selected' : '' ?>>Belum Ditentukan</option>
+                            <option value='L' <?= $option == 'L' ? 'selected' : '' ?>>Lanjut
+                            </option>
+                            <option value='T' <?= $option == 'T' ? 'selected' : '' ?>>Tidak Lanjut
+                            </option>
                         </select>
-                        @error('nama_dosen')
+                        @error('hasil_penjajakan')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
-                    </div> --}}
+                    </div>
 
+                    {{-- Keterangan Hasil Penjajakan --}}
+                    <div class="form-group col-lg-8">
+                        <label for="keterangan_hasil_penajajakan">Keterangan Hasil Penjajakan</label>
+                        <input type="text" name='keterangan_hasil_penajajakan'
+                            class="form-control @error('keterangan_hasil_penajajakan') is-invalid @enderror"
+                            placeholder="Masukan Keterangan Dari Hasil Penjajakan"
+                            value="{{ old('keterangan_hasil_penajajakan', $usulans->keterangan) }}">
+                        @error('keterangan_hasil_penajajakan')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
+                {{-- end card-body --}}
             </div>
 
             <div class="card-footer">

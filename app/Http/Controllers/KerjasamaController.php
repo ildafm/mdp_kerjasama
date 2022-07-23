@@ -7,6 +7,7 @@ use App\Models\Kategori;
 use App\Models\Kerjasama;
 use App\Models\Status;
 use App\Models\Mitra;
+use App\Models\Usulan;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
@@ -40,12 +41,14 @@ class KerjasamaController extends Controller
         $kategoris = Kategori::All();
         $statuses = Status::All();
         $kerjasamas = Kerjasama::All();
+        $usulans = Usulan::All();
         // dump($mitras);
         return view('kerjasama.create')
             ->with('mitras', $mitras)
             ->with('kategoris', $kategoris)
             ->with('statuses', $statuses)
-            ->with('kerjasamas', $kerjasamas);
+            ->with('kerjasamas', $kerjasamas)
+            ->with('usulans', $usulans);
     }
 
     /**
@@ -63,16 +66,33 @@ class KerjasamaController extends Controller
             'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
             'nama_mitra' => 'required',
             'nama_kategori' => 'required',
-            'nama_status' => 'required'
+            'nama_status' => 'required',
+            'usulan' => 'required',
+            
         ]);
 
+        if($request->nama_kategori == '1'){
+            $validateData = $request->validate([
+                'no_mou' => 'required',
+            ]);
+        }
+
         $kerjasama = new Kerjasama();
+
+        if($request->no_mou != '' || $request->no_mou != null){
+            $kerjasama->no_mou = $validateData['no_mou'];
+        }
+        else{
+            $kerjasama->no_mou = '';
+        }
+
         $kerjasama->nama_kerja_sama = $validateData['nama_kerja_sama'];
         $kerjasama->tanggal_mulai = $validateData['tanggal_mulai'];
         $kerjasama->tanggal_sampai = $validateData['tanggal_sampai'];
         $kerjasama->mitra_id = $validateData['nama_mitra'];
         $kerjasama->kategori_id = $validateData['nama_kategori'];
         $kerjasama->status_id = $validateData['nama_status'];
+        $kerjasama->usulan_id = $validateData['usulan'];
 
         $kerjasama->save();
 
@@ -111,11 +131,13 @@ class KerjasamaController extends Controller
         $mitras = Mitra::All();
         $kategoris = Kategori::All();
         $statuses = Status::All();
+        $usulans = Usulan::All();
         return view('kerjasama.edit')
             ->with('kerjasama', $kerjasama)
             ->with('mitras', $mitras)
             ->with('kategoris', $kategoris)
-            ->with('statuses', $statuses);
+            ->with('statuses', $statuses)
+            ->with('usulans', $usulans);
     }
 
     /**

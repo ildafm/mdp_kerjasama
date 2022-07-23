@@ -20,13 +20,8 @@ class UsulanController extends Controller
     public function index()
     {
         //
-        if(Auth::user()->level == 'A'){
-            $usulans = Usulan::All();
-        }
-        else{
-            $getUserId = Auth::user()->id;
-            $usulans = DB::select("SELECT usulans.id AS 'id', nama_usulan, bentuk_kerjasama, rencana_kegiatan, tanggal_rencana_kegiatan, nama_mitra, name, nama_unit FROM usulans JOIN users ON usulans.user_id = users.id JOIN mitras ON usulans.mitra_id = mitras.id JOIN units ON usulans.unit_id = units.id WHERE usulans.user_id = $getUserId");
-        }
+        $usulans = Usulan::All();
+
         return view('usulan.index')
         ->with('usulans', $usulans);
     }
@@ -39,6 +34,8 @@ class UsulanController extends Controller
     public function create()
     {
         //
+        $this->authorize('viewAny', User::class);
+
         $users = User::All();
         $mitras = Mitra::All();
         $units  = Unit::All();
@@ -58,24 +55,27 @@ class UsulanController extends Controller
     public function store(Request $request)
     {
         //
+        $this->authorize('viewAny', User::class);
+        
         $validateData = $request->validate([
-            'nama_usulan' => 'required',
+            'usulan' => 'required',
             'bentuk_kerjasama' => 'required',
+            'kontak_kerjasama' => 'required|max:13|min:11',
             'rencana_kegiatan' => 'required',
-            'tanggal_rencana_kegiatan' => 'required',
             'nama_mitra' => 'required',
-            'nama_dosen' => 'required',
-            'nama_unit' => 'required'
+            'nama_pengusul' => 'required',
+            'nama_unit' => 'required',
+            'type' => 'required',
         ]);
 
         $usulan = new Usulan();
-
-        $usulan->nama_usulan = $validateData['nama_usulan'];
+        $usulan->usulan = $validateData['usulan'];
         $usulan->bentuk_kerjasama = $validateData['bentuk_kerjasama'];
+        $usulan->kontak_kerjasama = $validateData['kontak_kerjasama'];
         $usulan->rencana_kegiatan = $validateData['rencana_kegiatan'];
-        $usulan->tanggal_rencana_kegiatan = $validateData['tanggal_rencana_kegiatan'];
+        $usulan->type = $validateData['type'];
         $usulan->mitra_id = $validateData['nama_mitra'];
-        $usulan->user_id = $validateData['nama_dosen'];
+        $usulan->user_id = $validateData['nama_pengusul'];
         $usulan->unit_id =$validateData['nama_unit'];
 
         $usulan->save();
@@ -93,11 +93,6 @@ class UsulanController extends Controller
     public function show(Usulan $usulan)
     {
         //
-
-        if($usulan->user_id != Auth::user()->id){
-            $this->authorize('viewAny', User::class);
-        }
-
         return view('usulan.show')->with('usulan', $usulan);
     }
 
@@ -111,17 +106,17 @@ class UsulanController extends Controller
     {
         //
         
-        if($usulan->user_id != Auth::user()->id){
-            $this->authorize('viewAny', User::class);
-        }
+        $this->authorize('viewAny', User::class);
 
         $mitras = Mitra::All();
         $units  = Unit::All();
+        $users = User::All();
 
         return view('usulan.edit')
             ->with('mitras', $mitras)
             ->with('units', $units)
-            ->with('usulans', $usulan);
+            ->with('usulans', $usulan)
+            ->with('users', $users);
     }
 
     /**
@@ -134,26 +129,37 @@ class UsulanController extends Controller
     public function update(Request $request, Usulan $usulan)
     {
         //
+        $this->authorize('viewAny', User::class);
+
         $this->validate($request, [
-            'nama_usulan' => 'required',
+            'usulan' => 'required',
             'bentuk_kerjasama' => 'required',
+            'kontak_kerjasama' => 'required|max:13|min:11',
             'rencana_kegiatan' => 'required',
-            'tanggal_rencana_kegiatan' => 'required',
             'nama_mitra' => 'required',
-            // 'nama_dosen' => 'required',
-            'nama_unit' => 'required'
+            'nama_pengusul' => 'required',
+            'nama_unit' => 'required',
+            'hasil_penjajakan' => 'required',
         ]);
 
+        if ($request->hasil_penjajakan != 'B') {
+            $this->validate($request, [
+                'keterangan_hasil_penajajakan' => 'required',
+            ]);
+        }
+        
         $usulan = Usulan::findOrFail($usulan->id);
 
         $usulan->update([
-            'nama_usulan' => $request->nama_usulan,
+            'usulan' => $request->usulan,
             'bentuk_kerjasama' => $request->bentuk_kerjasama,
+            'kontak_kerjasama' => $request->kontak_kerjasama,
             'rencana_kegiatan' => $request->rencana_kegiatan,
-            'tanggal_rencana_kegiatan' => $request->tanggal_rencana_kegiatan,
             'mitra_id' => $request->nama_mitra,
-            // 'dosen_id' => $request->nama_dosen,
-            'unit_id' => $request->nama_unit
+            'user_id' => $request->nama_pengusul,
+            'unit_id' => $request->nama_unit,
+            'hasil_penjajakan' => $request->hasil_penjajakan,
+            'keterangan' => $request->keterangan_hasil_penajajakan,
         ]);
 
         $request->session()->flash('pesan', 'Perubahan data berhasil');

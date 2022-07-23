@@ -21,5 +21,9 @@ class Usulan extends Model
         return $this->belongsTo(Unit::class);
     }
 
-    protected $fillable = ['nama_usulan', 'bentuk_kerjasama', 'rencana_kegiatan', 'tanggal_rencana_kegiatan', 'mitra_id', 'user_id', 'unit_id'];
+    public function kerjasamas(){
+        return $this->hasMany(Unit::class);
+    }
+
+    protected $fillable = ['usulan', 'bentuk_kerjasama', 'rencana_kegiatan', 'kontak_kerjasama', 'mitra_id', 'user_id', 'unit_id', 'keterangan', 'hasil_penjajakan'];
 }

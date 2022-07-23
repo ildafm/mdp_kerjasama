@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 14, 2022 at 06:57 AM
+-- Generation Time: Jul 24, 2022 at 12:25 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -103,7 +103,8 @@ INSERT INTO `bukti_kerjasamas` (`id`, `nama_bukti_kerjasama`, `file`, `kerjasama
 (24, 'Bukti Kerjasama Q1', 'file-1656651006.png', 8, '2022-07-01 04:50:06', '2022-07-01 04:50:06'),
 (27, 'Upload FIle PDF', 'file-1656651201.pdf', 8, '2022-07-01 04:53:21', '2022-07-01 04:53:21'),
 (28, 'Bukti Kerjasama Dari Kerja Sama Q12', 'file-1657650172.png', 9, '2022-07-12 18:22:52', '2022-07-12 18:22:52'),
-(29, 'Bukti Kerjasama', 'file-1657651442.png', 8, '2022-07-12 18:29:07', '2022-07-12 18:44:44');
+(29, 'Bukti Kerjasama', 'file-1657651442.png', 8, '2022-07-12 18:29:07', '2022-07-12 18:44:44'),
+(39, 'abc', 'file-1658615018.docx', 8, '2022-07-23 22:23:38', '2022-07-23 22:23:38');
 
 -- --------------------------------------------------------
 
@@ -167,7 +168,7 @@ CREATE TABLE `kategoris` (
 
 INSERT INTO `kategoris` (`id`, `nama_kategori`, `created_at`, `updated_at`) VALUES
 (1, 'MoU', '2022-04-22 13:07:30', '2022-04-23 02:41:01'),
-(2, 'SPK', '2022-04-22 13:07:35', '2022-04-23 02:41:14'),
+(2, 'Tanpa MoU', '2022-04-22 13:07:35', '2022-07-22 03:09:36'),
 (3, '...', '2022-04-22 13:08:06', '2022-04-23 02:44:27');
 
 -- --------------------------------------------------------
@@ -181,7 +182,7 @@ CREATE TABLE `kegiatans` (
   `tanggal_mulai` date NOT NULL,
   `tanggal_sampai` date NOT NULL,
   `bentuk_kegiatan` text NOT NULL,
-  `PIC` enum('F','P') NOT NULL,
+  `PIC` enum('F','P') DEFAULT NULL,
   `keterangan` text NOT NULL,
   `kerjasama_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -207,11 +208,13 @@ INSERT INTO `kegiatans` (`id`, `tanggal_mulai`, `tanggal_sampai`, `bentuk_kegiat
 CREATE TABLE `kerjasamas` (
   `id` int(11) NOT NULL,
   `nama_kerja_sama` varchar(100) NOT NULL,
+  `no_mou` varchar(255) NOT NULL,
   `tanggal_mulai` date NOT NULL,
   `tanggal_sampai` date NOT NULL,
   `mitra_id` int(11) NOT NULL,
   `kategori_id` int(11) NOT NULL,
   `status_id` int(11) NOT NULL,
+  `usulan_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -220,9 +223,12 @@ CREATE TABLE `kerjasamas` (
 -- Dumping data for table `kerjasamas`
 --
 
-INSERT INTO `kerjasamas` (`id`, `nama_kerja_sama`, `tanggal_mulai`, `tanggal_sampai`, `mitra_id`, `kategori_id`, `status_id`, `created_at`, `updated_at`) VALUES
-(8, 'Kerja Sama Q1', '2022-06-30', '2022-07-07', 1, 1, 1, '2022-06-29 19:20:18', '2022-06-29 19:20:18'),
-(9, 'Kerja Sama Q2', '2022-07-01', '2022-08-01', 2, 1, 2, '2022-07-01 04:34:11', '2022-07-13 23:57:16');
+INSERT INTO `kerjasamas` (`id`, `nama_kerja_sama`, `no_mou`, `tanggal_mulai`, `tanggal_sampai`, `mitra_id`, `kategori_id`, `status_id`, `usulan_id`, `created_at`, `updated_at`) VALUES
+(8, 'Kerja Sama Q1', 'MoU001', '2022-06-30', '2022-07-22', 1, 1, 1, 17, '2022-06-29 19:20:18', '2022-07-23 22:06:15'),
+(9, 'Kerja Sama Q2', '', '2022-07-01', '2022-07-02', 2, 2, 3, 17, '2022-07-01 04:34:11', '2022-07-23 21:38:46'),
+(15, 'Kerjasama Q3', '', '2022-07-22', '2022-07-30', 2, 3, 1, 17, '2022-07-21 17:50:54', '2022-07-23 21:38:46'),
+(16, 'Kerjasama Q3', '', '2022-07-23', '2022-07-24', 2, 2, 1, 21, '2022-07-23 21:49:13', '2022-07-23 21:49:13'),
+(17, 'Kerja Sama Q2', '', '2022-07-24', '2022-07-31', 4, 2, 1, 18, '2022-07-23 22:13:12', '2022-07-23 22:13:12');
 
 -- --------------------------------------------------------
 
@@ -334,8 +340,7 @@ CREATE TABLE `statuses` (
 INSERT INTO `statuses` (`id`, `nama_status`, `created_at`, `updated_at`) VALUES
 (1, 'Aktif', '2022-04-22 07:48:14', '2022-04-22 07:48:14'),
 (2, 'Kadaluarsa', '2022-04-22 00:48:32', '2022-04-23 02:44:51'),
-(3, 'Dalam Perpanjangan', '2022-04-22 00:53:30', '2022-04-23 03:10:22'),
-(4, 'Tidak Aktif', '2022-04-22 00:54:56', '2022-04-23 03:10:32');
+(3, 'Dalam Perpanjangan', '2022-04-22 00:53:30', '2022-04-23 03:10:22');
 
 -- --------------------------------------------------------
 
@@ -376,7 +381,7 @@ CREATE TABLE `users` (
   `kode_dosen` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `level` enum('A','D') CHARACTER SET utf8 NOT NULL,
+  `level` char(1) CHARACTER SET utf8 NOT NULL,
   `file` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -392,7 +397,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `kode_dosen`, `name`, `email`, `level`, `file`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (2, '000000', 'MainAccount', 'admin@gmail.com', 'A', NULL, NULL, '$2y$10$1Z/MaxYrXiOtFN5zZdu6.eeDsbt.QqEnmpgKS/WhKnrPEbCYh/qsa', NULL, '2022-05-27 01:55:39', '2022-06-26 02:14:22'),
 (4, 'D00002', 'Account Dosen', 'dosen@gmail.com', 'D', 'file-D00002-Main Account Dosen 1.jpg', NULL, '$2y$10$Rk9WruJrJqv/WJ7a5vhw8uV3cw96IbybCGoqIxYA.pwtLtfsYxZsG', NULL, '2022-05-29 02:59:11', '2022-07-11 01:52:00'),
-(6, 'D00004', 'Main Account User', 'user@mail.com', 'D', 'file-D00004-User123.jpg', NULL, '$2y$10$LGiWSlpAmY29qI8yYpJ.PuwxLHK4SaXBS2uWLTU6BgR0UQBNwFvaK', NULL, '2022-06-26 02:31:14', '2022-07-14 00:23:27');
+(6, 'D00004', 'Main Account User', 'user@mail.com', 'K', 'file-D00004-User123.jpg', NULL, '$2y$10$LGiWSlpAmY29qI8yYpJ.PuwxLHK4SaXBS2uWLTU6BgR0UQBNwFvaK', NULL, '2022-06-26 02:31:14', '2022-07-23 21:22:37'),
+(11, 'D00003', 'Dekan', 'dekan@gmail.com', 'E', NULL, NULL, '$2y$10$DSPCZBtaRwe.9yfO0XR9j.bHsiIS7IV8R/OHhObOgnlt/49x8Ko0m', NULL, '2022-07-21 17:21:28', '2022-07-21 17:21:28');
 
 -- --------------------------------------------------------
 
@@ -402,13 +408,16 @@ INSERT INTO `users` (`id`, `kode_dosen`, `name`, `email`, `level`, `file`, `emai
 
 CREATE TABLE `usulans` (
   `id` int(11) NOT NULL,
-  `nama_usulan` varchar(45) NOT NULL,
+  `usulan` varchar(45) NOT NULL,
   `bentuk_kerjasama` text NOT NULL,
   `rencana_kegiatan` text NOT NULL,
-  `tanggal_rencana_kegiatan` date NOT NULL,
+  `kontak_kerjasama` varchar(13) DEFAULT NULL,
+  `type` char(1) NOT NULL,
   `mitra_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `unit_id` int(11) NOT NULL,
+  `hasil_penjajakan` char(1) DEFAULT 'B',
+  `keterangan` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -417,12 +426,12 @@ CREATE TABLE `usulans` (
 -- Dumping data for table `usulans`
 --
 
-INSERT INTO `usulans` (`id`, `nama_usulan`, `bentuk_kerjasama`, `rencana_kegiatan`, `tanggal_rencana_kegiatan`, `mitra_id`, `user_id`, `unit_id`, `created_at`, `updated_at`) VALUES
-(9, 'Usulan Q1', 'Kerja sama Q1', 'Rencana Q1', '2022-06-29', 1, 2, 3, '2022-06-29 19:24:11', '2022-06-29 19:24:11'),
-(10, 'Usulan Q1', 'Kerja sama Q1', 'Rencana Q1', '2022-07-01', 2, 6, 2, '2022-06-30 20:24:21', '2022-06-30 20:24:21'),
-(11, 'Usulan Q3', 'Kerja sama Q3', 'Rencana Q3', '2022-08-09', 15, 4, 3, '2022-07-01 03:51:15', '2022-07-01 03:51:15'),
-(12, 'Usulan Delapan', 'Bentuk Delapan', 'Rencana Baru', '2022-07-01', 3, 4, 5, '2022-07-01 04:08:22', '2022-07-01 04:08:22'),
-(13, 'Usulan Baru 24', 'Kerjasama 24', 'Rencana 24', '2022-10-11', 4, 6, 3, '2022-07-11 13:02:36', '2022-07-11 13:02:36');
+INSERT INTO `usulans` (`id`, `usulan`, `bentuk_kerjasama`, `rencana_kegiatan`, `kontak_kerjasama`, `type`, `mitra_id`, `user_id`, `unit_id`, `hasil_penjajakan`, `keterangan`, `created_at`, `updated_at`) VALUES
+(17, 'Pengusulan Tentang Nomor 1', 'Membentuk Kerjasama Nomor 1', 'Rencanakan Nomor 1', '081335888815', 'I', 2, 4, 2, 'L', 'Kesepakatan Disetujui', '2022-07-18 16:42:43', '2022-07-23 21:06:52'),
+(18, 'Pengusulan Tentang Nomor 2', 'Membentuk Kerjasama Nomor 2', 'Rencanakan Nomor 2', '0813358888131', 'O', 2, 6, 3, 'T', 'Kesepakatan Tidak Disetujui', '2022-07-18 17:03:52', '2022-07-23 21:06:52'),
+(19, 'Pengusulan Tentang Nomor Q2', 'Membentuk Kerjasama Nomor Q2', 'Rencanakan Nomor Q2', '081335888814', 'I', 15, 6, 4, 'B', NULL, '2022-07-18 17:35:40', '2022-07-23 21:06:52'),
+(20, 'Pengusulan Tentang Nomor 3', 'Membentuk Kerjasama Nomor 3', 'Rencanakan Nomor 3', '081335888812', '', 2, 11, 2, 'B', NULL, '2022-07-21 17:29:36', '2022-07-21 17:31:39'),
+(21, 'Pengusulan Tentang Nomor Q2', 'Membentuk Kerjasama Nomor Q2', 'Rencana Q2', '081335888813', 'O', 3, 11, 2, 'B', NULL, '2022-07-23 21:15:09', '2022-07-23 21:15:09');
 
 --
 -- Indexes for dumped tables
@@ -486,7 +495,8 @@ ALTER TABLE `kerjasamas`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_kerjasamas_mitras_idx` (`mitra_id`),
   ADD KEY `fk_kerjasamas_kategoris1_idx` (`kategori_id`),
-  ADD KEY `fk_kerjasamas_status1_idx` (`status_id`);
+  ADD KEY `fk_kerjasamas_status1_idx` (`status_id`),
+  ADD KEY `fk_kerjasamas_usulan1` (`usulan_id`);
 
 --
 -- Indexes for table `migrations`
@@ -562,7 +572,7 @@ ALTER TABLE `bukti_kegiatan_units`
 -- AUTO_INCREMENT for table `bukti_kerjasamas`
 --
 ALTER TABLE `bukti_kerjasamas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `dosens`
@@ -586,7 +596,7 @@ ALTER TABLE `kegiatans`
 -- AUTO_INCREMENT for table `kerjasamas`
 --
 ALTER TABLE `kerjasamas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `mitras`
@@ -610,13 +620,13 @@ ALTER TABLE `units`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `usulans`
 --
 ALTER TABLE `usulans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Constraints for dumped tables
@@ -654,7 +664,8 @@ ALTER TABLE `kegiatans`
 ALTER TABLE `kerjasamas`
   ADD CONSTRAINT `fk_kerjasamas_kategoris1` FOREIGN KEY (`kategori_id`) REFERENCES `kategoris` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_kerjasamas_mitras` FOREIGN KEY (`mitra_id`) REFERENCES `mitras` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_kerjasamas_status1` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_kerjasamas_status1` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_kerjasamas_usulan1` FOREIGN KEY (`usulan_id`) REFERENCES `usulans` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `usulans`
@@ -663,6 +674,16 @@ ALTER TABLE `usulans`
   ADD CONSTRAINT `fk_usulans_mitras1` FOREIGN KEY (`mitra_id`) REFERENCES `mitras` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_usulans_units1` FOREIGN KEY (`unit_id`) REFERENCES `units` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_usulans_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+DELIMITER $$
+--
+-- Events
+--
+CREATE DEFINER=`root`@`localhost` EVENT `auto_update_status_kerjasama` ON SCHEDULE EVERY 1 DAY STARTS '2022-07-22 00:35:05' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE kerjasamas
+SET status_id = 2
+WHERE tanggal_sampai < NOW() and NOT status_id = 3$$
+
+DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

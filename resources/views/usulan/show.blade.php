@@ -22,11 +22,11 @@
         <div class="card-body">
 
             {{-- Tabel Data --}}
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="" class="table table-bordered table-striped">
                 <tbody>
                     <tr>
-                        <td>Nama Usulan</td>
-                        <td>{{ $usulan->nama_usulan }}</td>
+                        <td>Usulan</td>
+                        <td>{{ $usulan->usulan }}</td>
                     </tr>
 
                     <tr>
@@ -40,17 +40,17 @@
                     </tr>
 
                     <tr>
-                        <td>Tanggal Rencana Kegiatan</td>
-                        <td>{{ $usulan->tanggal_rencana_kegiatan }}</td>
-                    </tr>
-
-                    <tr>
                         <td>Nama Mitra</td>
                         <td>{{ $usulan->mitra->nama_mitra }}</td>
                     </tr>
 
                     <tr>
-                        <td>Nama Dosen</td>
+                        <td>Kontak Kerjasama</td>
+                        <td>{{ $usulan->kontak_kerjasama }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Nama Pengusul</td>
                         <td>{{ $usulan->user->name }}</td>
                     </tr>
 
@@ -58,8 +58,54 @@
                         <td>Nama Unit</td>
                         <td>{{ $usulan->unit->nama_unit }}</td>
                     </tr>
+
+                    <tr>
+                        <td>Hasil Penajajakan</td>
+                        <td>
+                            @php
+                                if ($usulan->hasil_penjajakan == null || $usulan->hasil_penjajakan == '') {
+                                    echo 'Belum Ditentukan';
+                                } elseif ($usulan->hasil_penjajakan == 'L') {
+                                    echo 'Lanjut';
+                                } else {
+                                    echo 'Tidak Lanjut';
+                                }
+                            @endphp
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Keterangan Hasil Penajajakan</td>
+                        <td>
+                            @if ($usulan->keterangan == null || $usulan->keterangan == '')
+                                Belum ada keterangan
+                            @else
+                                {{ $usulan->keterangan }}
+                            @endif
+                        </td>
+                    </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    {{-- Tabel Daftar Kerjasama --}}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Tabel Daftar Kerjasama</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="card-body">
+            {{-- Tabel Data --}}
+
 
         </div>
 

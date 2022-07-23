@@ -110,7 +110,18 @@
                         @else
                             <a href="{{ route('profiles.edit', ['profile' => Auth::user()->id]) }}" class="">
                                 {{ Auth::user()->name }}<br>
-                                Dosen
+                                @if (Auth::user()->level == 'E')
+                                    Dekan
+                                @endif
+                                @if (Auth::user()->level == 'K')
+                                    Kaprodi
+                                @endif
+                                @if (Auth::user()->level == 'U')
+                                    Kepala Unit
+                                @endif
+                                @if (Auth::user()->level == 'D')
+                                    Dosen
+                                @endif
                             </a>
                         @endif
 
@@ -141,6 +152,15 @@
                         </li>
 
                         <li class="nav-item">
+                            <a href="{{ url('/usulans') }}" class="nav-link">
+                                <i class="nav-icon fas fa-paper-plane"></i>
+                                <p>
+                                    Usulan
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
                             <a href="{{ url('/kerjasamas') }}" class="nav-link">
                                 <i class="nav-icon fas fa-handshake"></i>
                                 <p>
@@ -158,17 +178,8 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a href="{{ url('/usulans') }}" class="nav-link">
-                                <i class="nav-icon fas fa-paper-plane"></i>
-                                <p>
-                                    Usulan
-                                </p>
-                            </a>
-                        </li>
-
                         @php
-                            if (Auth::user()->level == 'A') {
+                            if (Auth::user()->level != 'D') {
                                 // Units
                                 echo '<li class="nav-item">';
                                 echo '<a href="/units" class="nav-link">';
@@ -178,16 +189,6 @@
                                 echo '</p>';
                                 echo '</a>';
                                 echo '</li>';
-                            
-                                // Dosens
-                                // echo '<li class="nav-item">';
-                                // echo '<a href="/dosens" class="nav-link">';
-                                // echo '<i class="nav-icon fas fa-user"></i>';
-                                // echo '<p>';
-                                // echo '  Dosen';
-                                // echo '</p>';
-                                // echo '</a>';
-                                // echo '</li>';
                             
                                 // Status
                                 echo '<li class="nav-item">';

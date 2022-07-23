@@ -115,7 +115,7 @@
                 <div class="row">
 
                     {{-- Aktif --}}
-                    <div class="col-12 col-sm-6 col-md-3">
+                    <div class="col-12 col-sm-12 col-md-4">
                         <div class="info-box">
                             <span class="info-box-icon bg-info elevation-1"><i class="fas fa-thumbs-up"></i></span>
                             <div class="info-box-content">
@@ -135,7 +135,7 @@
                     </div>
 
                     {{-- Dalam Perpanjangan --}}
-                    <div class="col-12 col-sm-6 col-md-3">
+                    <div class="col-12 col-sm-12 col-md-4">
                         <div class="info-box mb-3">
                             <span class="info-box-icon bg-success elevation-1"><i class="fas fa-bell"></i></span>
                             <div class="info-box-content">
@@ -155,7 +155,7 @@
 
                     <div class="clearfix hidden-md-up"></div>
                     {{-- Kadaluarsa --}}
-                    <div class="col-12 col-sm-6 col-md-3">
+                    <div class="col-12 col-sm-12 col-md-4">
                         <div class="info-box mb-3">
                             <span class="info-box-icon bg-warning elevation-1"> <i class="fas fa-exclamation"></i>
                             </span>
@@ -164,25 +164,6 @@
                                 <span class="info-box-number">
                                     @if (count($countStatusKadaluarsa) > 0)
                                         @foreach ($countStatusKadaluarsa as $item)
-                                            {{ $item->jumlah }}
-                                        @endforeach
-                                    @else
-                                        0
-                                    @endif
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- Tidak Aktif --}}
-                    <div class="col-12 col-sm-6 col-md-3">
-                        <div class="info-box mb-3">
-                            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book"></i></span>
-                            <div class="info-box-content">
-                                <span class="info-box-text">Tidak Aktif</span>
-                                <span class="info-box-number">
-                                    @if (count($countStatusTidakAktif) > 0)
-                                        @foreach ($countStatusTidakAktif as $item)
                                             {{ $item->jumlah }}
                                         @endforeach
                                     @else
