@@ -6,7 +6,6 @@ use App\Models\BuktiKerjasama;
 use App\Models\Kategori;
 use App\Models\Kerjasama;
 use App\Models\Status;
-use App\Models\Mitra;
 use App\Models\Usulan;
 use Illuminate\Http\Request;
 
@@ -37,14 +36,12 @@ class KerjasamaController extends Controller
     {
         //
         // return view('kerjasama.create');
-        $mitras = Mitra::All();
         $kategoris = Kategori::All();
         $statuses = Status::All();
         $kerjasamas = Kerjasama::All();
         $usulans = Usulan::All();
         // dump($mitras);
         return view('kerjasama.create')
-            ->with('mitras', $mitras)
             ->with('kategoris', $kategoris)
             ->with('statuses', $statuses)
             ->with('kerjasamas', $kerjasamas)
@@ -64,7 +61,6 @@ class KerjasamaController extends Controller
             'nama_kerja_sama' => 'required',
             'tanggal_mulai' => 'required',
             'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
-            'nama_mitra' => 'required',
             'nama_kategori' => 'required',
             'nama_status' => 'required',
             'usulan' => 'required',
@@ -89,7 +85,6 @@ class KerjasamaController extends Controller
         $kerjasama->nama_kerja_sama = $validateData['nama_kerja_sama'];
         $kerjasama->tanggal_mulai = $validateData['tanggal_mulai'];
         $kerjasama->tanggal_sampai = $validateData['tanggal_sampai'];
-        $kerjasama->mitra_id = $validateData['nama_mitra'];
         $kerjasama->kategori_id = $validateData['nama_kategori'];
         $kerjasama->status_id = $validateData['nama_status'];
         $kerjasama->usulan_id = $validateData['usulan'];
@@ -128,13 +123,11 @@ class KerjasamaController extends Controller
     public function edit(Kerjasama $kerjasama)
     {
         //
-        $mitras = Mitra::All();
         $kategoris = Kategori::All();
         $statuses = Status::All();
         $usulans = Usulan::All();
         return view('kerjasama.edit')
             ->with('kerjasama', $kerjasama)
-            ->with('mitras', $mitras)
             ->with('kategoris', $kategoris)
             ->with('statuses', $statuses)
             ->with('usulans', $usulans);
@@ -154,9 +147,9 @@ class KerjasamaController extends Controller
             'nama_kerja_sama' => 'required',
             'tanggal_mulai' => 'required',
             'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
-            'nama_mitra' => 'required',
             'nama_kategori' => 'required',
-            'nama_status' => 'required'
+            'nama_status' => 'required',
+            'usulan' => 'required'
         ]);
 
         $kerjasama = Kerjasama::findOrFail($kerjasama->id);
@@ -165,9 +158,9 @@ class KerjasamaController extends Controller
             'nama_kerja_sama' => $request->nama_kerja_sama,
             'tanggal_mulai' => $request->tanggal_mulai,
             'tanggal_sampai' => $request->tanggal_sampai,
-            'mitra_id' => $request->nama_mitra,
             'kategori_id' => $request->nama_kategori,
-            'status_id' => $request->nama_status
+            'status_id' => $request->nama_status,
+            'usulan_id' => $request->usulan
         ]);
 
         $request->session()->flash('pesan', 'Perubahan data berhasil');

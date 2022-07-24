@@ -38,7 +38,6 @@
                         <th>Nomor MoU</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
-                        <th>Nama Mitra</th>
                         <th>Kategori</th>
                         <th>Status</th>
                         <th>Usulan</th>
@@ -59,11 +58,13 @@
                                 <a href="{{ url('kerjasamas/' . $data->id) }}" class="btn btn-sm btn-primary"><i
                                         class="nav-icon fas fa-eye" title="Tampil"></i></a>
 
-                                {{-- Button Ubah --}}
-                                <a href="{{ route('kerjasamas.edit', ['kerjasama' => $data->id]) }}"
-                                    class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit" title="Edit"></i></a>
 
-                                @if (Auth::user()->level == 'A')
+                                @if (Auth::user()->level != 'D')
+                                    {{-- Button Ubah --}}
+                                    <a href="{{ route('kerjasamas.edit', ['kerjasama' => $data->id]) }}"
+                                        class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
+                                            title="Edit"></i></a>
+
                                     {{-- Button Hapus --}}
                                     <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
                                         data-namaKerjasama="{{ $data->nama_kerja_sama }}" data-toggle="modal"
@@ -81,7 +82,6 @@
                             </td>
                             <td>{{ $data->tanggal_mulai }}</td>
                             <td>{{ $data->tanggal_sampai }}</td>
-                            <td>{{ $data->mitra->nama_mitra }}</td>
                             <td>{{ $data->kategori->nama_kategori }}</td>
                             <td>{{ $data->status->nama_status }}</td>
                             <td>{{ $data->usulan->usulan }}</td>
@@ -97,7 +97,6 @@
                         <th>Nomor MoU</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
-                        <th>Nama Mitra</th>
                         <th>Kategori</th>
                         <th>Status</th>
                         <th>Usulan</th>

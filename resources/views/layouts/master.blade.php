@@ -100,17 +100,40 @@
 
                     </div>
 
+                    {{-- Nama dan Level --}}
                     <div class="info">
-                        {{-- Nama dan Level --}}
                         @if (Auth::user()->level == 'A')
-                            <a class="" class="">
+                            <a class="">
                                 {{ Auth::user()->name }}<br>
                                 Admin
                             </a>
-                        @else
+                        @endif
+
+                        @if (Auth::user()->level == 'E')
+                            <a class="">
+                                {{ Auth::user()->name }}<br>
+                                Dekan
+                            </a>
+                        @endif
+
+                        @if (Auth::user()->level == 'K')
+                            <a class="">
+                                {{ Auth::user()->name }}<br>
+                                Kaprodi
+                            </a>
+                        @endif
+
+                        @if (Auth::user()->level == 'U')
+                            <a class="">
+                                {{ Auth::user()->name }}<br>
+                                Kepala Unit
+                            </a>
+                        @endif
+
+                        @if (Auth::user()->level == 'D')
                             <a href="{{ route('profiles.edit', ['profile' => Auth::user()->id]) }}" class="">
                                 {{ Auth::user()->name }}<br>
-                                @if (Auth::user()->level == 'E')
+                                {{-- @if (Auth::user()->level == 'E')
                                     Dekan
                                 @endif
                                 @if (Auth::user()->level == 'K')
@@ -118,10 +141,10 @@
                                 @endif
                                 @if (Auth::user()->level == 'U')
                                     Kepala Unit
-                                @endif
-                                @if (Auth::user()->level == 'D')
-                                    Dosen
-                                @endif
+                                @endif --}}
+                                {{-- @if (Auth::user()->level == 'D') --}}
+                                Dosen
+                                {{-- @endif --}}
                             </a>
                         @endif
 

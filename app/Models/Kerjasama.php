@@ -9,10 +9,6 @@ class Kerjasama extends Model
 {
     use HasFactory;
 
-    public function mitra(){
-        return $this->belongsTo(Mitra::class);
-    }
-
     public function kategori(){
         return $this->belongsTo(Kategori::class);
     }
@@ -34,5 +30,5 @@ class Kerjasama extends Model
     }
     
 
-    protected $fillable = ['nama_kerja_sama', 'tanggal_mulai', 'tanggal_sampai', 'mitra_id', 'kategori_id', 'status_id', 'usulan_id'];
+    protected $fillable = ['nama_kerja_sama', 'tanggal_mulai', 'tanggal_sampai', 'kategori_id', 'status_id', 'usulan_id'];
 }

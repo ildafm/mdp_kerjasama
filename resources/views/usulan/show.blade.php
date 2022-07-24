@@ -84,32 +84,98 @@
                             @endif
                         </td>
                     </tr>
+
+                    <tr>
+                        <td>Type</td>
+                        <td>
+                            @if ($usulan->type == 'I')
+                                IN
+                            @else
+                                OUT
+                            @endif
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    {{-- Tabel Daftar Kerjasama --}}
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">Tabel Daftar Kerjasama</h3>
-            <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                    <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                    <i class="fas fa-times"></i>
-                </button>
+    @if ($usulan->hasil_penjajakan == 'L')
+
+
+        {{-- Tabel Daftar Kerjasama --}}
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Tabel Daftar Kerjasama</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
             </div>
+
+            <div class="card-body">
+                {{-- Tabel Data --}}
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Kerjasama</th>
+                            <th>Nomor MoU</th>
+                            <th>Tanggal Mulai</th>
+                            <th>Tanggal Sampai</th>
+                            <th>Kategori</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php
+                            $nomor = 1;
+                        @endphp
+
+                        @foreach ($getKerjasama as $data)
+                            <tr>
+                                <td>
+                                    {{ $nomor++ }}
+                                    {{-- {{ $data->id_kerjasama }} --}}
+                                </td>
+                                <td>{{ $data->nama_kerja_sama }}</td>
+                                <td>
+                                    @if ($data->no_mou == '')
+                                        Tanpa MoU
+                                    @else
+                                        {{ $data->no_mou }}
+                                    @endif
+                                </td>
+                                <td>{{ $data->tanggal_mulai }}</td>
+                                <td>{{ $data->tanggal_sampai }}</td>
+                                <td>{{ $data->nama_kategori }}</td>
+                                <td>{{ $data->nama_status }}</td>
+                                {{-- <td>{{ $data->usulan->usulan }}</td> --}}
+                            </tr>
+                        @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Kerjasama</th>
+                            <th>Nomor MoU</th>
+                            <th>Tanggal Mulai</th>
+                            <th>Tanggal Sampai</th>
+                            <th>Kategori</th>
+                            <th>Status</th>
+                        </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+
         </div>
+    @endif
 
-        <div class="card-body">
-            {{-- Tabel Data --}}
-
-
-        </div>
-
-    </div>
 
     {{-- Modal Layout --}}
     <div class="modal fade" id="modal-sm">

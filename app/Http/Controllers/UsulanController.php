@@ -93,7 +93,17 @@ class UsulanController extends Controller
     public function show(Usulan $usulan)
     {
         //
-        return view('usulan.show')->with('usulan', $usulan);
+        $getKerjasama = DB::select("SELECT kerjasamas.id as 'id_kerjasama', kerjasamas.nama_kerja_sama, kerjasamas.no_mou, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, statuses.nama_status, usulans.usulan, usulans.hasil_penjajakan
+        FROM kerjasamas
+        JOIN kategoris ON kerjasamas.kategori_id = kategoris.id
+        JOIN statuses ON kerjasamas.status_id = statuses.id
+        JOIN usulans ON kerjasamas.usulan_id = usulans.id
+        WHERE kerjasamas.usulan_id = $usulan->id
+        ORDER BY kerjasamas.id");
+
+        return view('usulan.show')
+            ->with('usulan', $usulan)
+            ->with('getKerjasama', $getKerjasama);;
     }
 
     /**

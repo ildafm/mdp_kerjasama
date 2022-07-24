@@ -92,7 +92,7 @@
                                     Belum ditentukan
                                 @else
                                     @if ($data->hasil_penjajakan == 'L')
-                                        Lanjut
+                                        <a href="usulans/{{ $data->id }}">Lanjut</a>
                                     @else
                                         Tidak Lanjut
                                     @endif

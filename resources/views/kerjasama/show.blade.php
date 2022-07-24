@@ -58,11 +58,6 @@
                     </tr>
 
                     <tr>
-                        <td>Nama Mitra</td>
-                        <td>{{ $kerjasama->mitra->nama_mitra }}</td>
-                    </tr>
-
-                    <tr>
                         <td>Kategori</td>
                         <td>{{ $kerjasama->kategori->nama_kategori }}</td>
                     </tr>

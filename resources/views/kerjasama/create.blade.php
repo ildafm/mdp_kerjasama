@@ -106,35 +106,8 @@
                 </div>
 
                 <div class="row">
-                    {{-- Mitra --}}
-                    <div class="form-group col-lg-3 col-sm-12">
-                        <label for="nama_mitra">Mitra</label>
-                        <select class="form-control select2" name='nama_mitra'>
-
-                            @php
-                                if (old('nama_mitra') !== null) {
-                                    $option = old('nama_mitra');
-                                } else {
-                                    $option = 1;
-                                }
-                            @endphp
-
-                            @foreach ($mitras as $data)
-                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                    {{ $data->nama_mitra }}
-                                </option>
-                            @endforeach
-                            {{-- old('nama_mitra', $kerjasama->mitra_id) == $data->id ? 'selected' : '' --}}
-                        </select>
-                        @error('nama_mitra')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-
-
                     {{-- Nama Status --}}
-                    <div class="form-group col-lg-3 col-sm-12">
+                    <div class="form-group col-lg-6 col-sm-12">
                         <label for="nama_status">Status</label>
 
                         @php
@@ -175,7 +148,6 @@
                                     {{ $data->usulan }}
                                 </option>
                             @endforeach
-                            {{-- old('usulan', $kerjasama->mitra_id) == $data->id ? 'selected' : '' --}}
                         </select>
                         @error('usulan')
                             <div class="text-danger">{{ $message }}</div>

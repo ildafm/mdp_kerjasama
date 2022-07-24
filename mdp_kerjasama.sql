@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 24, 2022 at 12:25 AM
+-- Generation Time: Jul 24, 2022 at 01:27 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -211,7 +211,6 @@ CREATE TABLE `kerjasamas` (
   `no_mou` varchar(255) NOT NULL,
   `tanggal_mulai` date NOT NULL,
   `tanggal_sampai` date NOT NULL,
-  `mitra_id` int(11) NOT NULL,
   `kategori_id` int(11) NOT NULL,
   `status_id` int(11) NOT NULL,
   `usulan_id` int(11) NOT NULL,
@@ -223,12 +222,12 @@ CREATE TABLE `kerjasamas` (
 -- Dumping data for table `kerjasamas`
 --
 
-INSERT INTO `kerjasamas` (`id`, `nama_kerja_sama`, `no_mou`, `tanggal_mulai`, `tanggal_sampai`, `mitra_id`, `kategori_id`, `status_id`, `usulan_id`, `created_at`, `updated_at`) VALUES
-(8, 'Kerja Sama Q1', 'MoU001', '2022-06-30', '2022-07-22', 1, 1, 1, 17, '2022-06-29 19:20:18', '2022-07-23 22:06:15'),
-(9, 'Kerja Sama Q2', '', '2022-07-01', '2022-07-02', 2, 2, 3, 17, '2022-07-01 04:34:11', '2022-07-23 21:38:46'),
-(15, 'Kerjasama Q3', '', '2022-07-22', '2022-07-30', 2, 3, 1, 17, '2022-07-21 17:50:54', '2022-07-23 21:38:46'),
-(16, 'Kerjasama Q3', '', '2022-07-23', '2022-07-24', 2, 2, 1, 21, '2022-07-23 21:49:13', '2022-07-23 21:49:13'),
-(17, 'Kerja Sama Q2', '', '2022-07-24', '2022-07-31', 4, 2, 1, 18, '2022-07-23 22:13:12', '2022-07-23 22:13:12');
+INSERT INTO `kerjasamas` (`id`, `nama_kerja_sama`, `no_mou`, `tanggal_mulai`, `tanggal_sampai`, `kategori_id`, `status_id`, `usulan_id`, `created_at`, `updated_at`) VALUES
+(8, 'Kerja Sama Q1', 'MoU001', '2022-06-30', '2022-07-22', 1, 2, 17, '2022-06-29 19:20:18', '2022-07-24 11:25:05'),
+(9, 'Kerja Sama Q2', '', '2022-07-01', '2022-07-02', 2, 3, 17, '2022-07-01 04:34:11', '2022-07-23 21:38:46'),
+(15, 'Kerjasama Q3', '', '2022-07-22', '2022-07-30', 3, 1, 17, '2022-07-21 17:50:54', '2022-07-23 21:38:46'),
+(16, 'Kerjasama Q4', '', '2022-07-23', '2022-07-24', 2, 2, 19, '2022-07-23 21:49:13', '2022-07-24 11:20:55'),
+(17, 'Kerja Sama Q5', '', '2022-07-24', '2022-07-31', 2, 1, 18, '2022-07-23 22:13:12', '2022-07-24 11:19:27');
 
 -- --------------------------------------------------------
 
@@ -398,7 +397,7 @@ INSERT INTO `users` (`id`, `kode_dosen`, `name`, `email`, `level`, `file`, `emai
 (2, '000000', 'MainAccount', 'admin@gmail.com', 'A', NULL, NULL, '$2y$10$1Z/MaxYrXiOtFN5zZdu6.eeDsbt.QqEnmpgKS/WhKnrPEbCYh/qsa', NULL, '2022-05-27 01:55:39', '2022-06-26 02:14:22'),
 (4, 'D00002', 'Account Dosen', 'dosen@gmail.com', 'D', 'file-D00002-Main Account Dosen 1.jpg', NULL, '$2y$10$Rk9WruJrJqv/WJ7a5vhw8uV3cw96IbybCGoqIxYA.pwtLtfsYxZsG', NULL, '2022-05-29 02:59:11', '2022-07-11 01:52:00'),
 (6, 'D00004', 'Main Account User', 'user@mail.com', 'K', 'file-D00004-User123.jpg', NULL, '$2y$10$LGiWSlpAmY29qI8yYpJ.PuwxLHK4SaXBS2uWLTU6BgR0UQBNwFvaK', NULL, '2022-06-26 02:31:14', '2022-07-23 21:22:37'),
-(11, 'D00003', 'Dekan', 'dekan@gmail.com', 'E', NULL, NULL, '$2y$10$DSPCZBtaRwe.9yfO0XR9j.bHsiIS7IV8R/OHhObOgnlt/49x8Ko0m', NULL, '2022-07-21 17:21:28', '2022-07-21 17:21:28');
+(11, 'D00003', 'MainDekan', 'dekan@gmail.com', 'E', NULL, NULL, '$2y$10$DSPCZBtaRwe.9yfO0XR9j.bHsiIS7IV8R/OHhObOgnlt/49x8Ko0m', NULL, '2022-07-21 17:21:28', '2022-07-24 10:25:02');
 
 -- --------------------------------------------------------
 
@@ -428,10 +427,10 @@ CREATE TABLE `usulans` (
 
 INSERT INTO `usulans` (`id`, `usulan`, `bentuk_kerjasama`, `rencana_kegiatan`, `kontak_kerjasama`, `type`, `mitra_id`, `user_id`, `unit_id`, `hasil_penjajakan`, `keterangan`, `created_at`, `updated_at`) VALUES
 (17, 'Pengusulan Tentang Nomor 1', 'Membentuk Kerjasama Nomor 1', 'Rencanakan Nomor 1', '081335888815', 'I', 2, 4, 2, 'L', 'Kesepakatan Disetujui', '2022-07-18 16:42:43', '2022-07-23 21:06:52'),
-(18, 'Pengusulan Tentang Nomor 2', 'Membentuk Kerjasama Nomor 2', 'Rencanakan Nomor 2', '0813358888131', 'O', 2, 6, 3, 'T', 'Kesepakatan Tidak Disetujui', '2022-07-18 17:03:52', '2022-07-23 21:06:52'),
-(19, 'Pengusulan Tentang Nomor Q2', 'Membentuk Kerjasama Nomor Q2', 'Rencanakan Nomor Q2', '081335888814', 'I', 15, 6, 4, 'B', NULL, '2022-07-18 17:35:40', '2022-07-23 21:06:52'),
-(20, 'Pengusulan Tentang Nomor 3', 'Membentuk Kerjasama Nomor 3', 'Rencanakan Nomor 3', '081335888812', '', 2, 11, 2, 'B', NULL, '2022-07-21 17:29:36', '2022-07-21 17:31:39'),
-(21, 'Pengusulan Tentang Nomor Q2', 'Membentuk Kerjasama Nomor Q2', 'Rencana Q2', '081335888813', 'O', 3, 11, 2, 'B', NULL, '2022-07-23 21:15:09', '2022-07-23 21:15:09');
+(18, 'Pengusulan Tentang Nomor 2', 'Membentuk Kerjasama Nomor 2', 'Rencanakan Nomor 2', '0813358888131', 'O', 2, 6, 3, 'L', 'Kesepakatan Disetujui', '2022-07-18 17:03:52', '2022-07-24 10:41:51'),
+(19, 'Pengusulan Tentang Nomor Q2', 'Membentuk Kerjasama Nomor Q2', 'Rencanakan Nomor Q2', '081335888814', 'I', 15, 6, 4, 'L', 'Kesepakatan Disetujui', '2022-07-18 17:35:40', '2022-07-24 10:42:05'),
+(20, 'Pengusulan Tentang Nomor 3', 'Membentuk Kerjasama Nomor 3', 'Rencanakan Nomor 3', '081335888812', '', 2, 11, 2, 'T', 'Kesepakatan Tidak Disetujui', '2022-07-21 17:29:36', '2022-07-24 11:25:11'),
+(21, 'Pengusulan Tentang Nomor Q2', 'Membentuk Kerjasama Nomor Q3', 'Rencana Q2', '081335888813', 'O', 3, 11, 2, 'B', NULL, '2022-07-23 21:15:09', '2022-07-24 11:21:08');
 
 --
 -- Indexes for dumped tables
@@ -493,7 +492,6 @@ ALTER TABLE `kegiatans`
 --
 ALTER TABLE `kerjasamas`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_kerjasamas_mitras_idx` (`mitra_id`),
   ADD KEY `fk_kerjasamas_kategoris1_idx` (`kategori_id`),
   ADD KEY `fk_kerjasamas_status1_idx` (`status_id`),
   ADD KEY `fk_kerjasamas_usulan1` (`usulan_id`);
@@ -663,7 +661,6 @@ ALTER TABLE `kegiatans`
 --
 ALTER TABLE `kerjasamas`
   ADD CONSTRAINT `fk_kerjasamas_kategoris1` FOREIGN KEY (`kategori_id`) REFERENCES `kategoris` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_kerjasamas_mitras` FOREIGN KEY (`mitra_id`) REFERENCES `mitras` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_kerjasamas_status1` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_kerjasamas_usulan1` FOREIGN KEY (`usulan_id`) REFERENCES `usulans` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
@@ -679,7 +676,7 @@ DELIMITER $$
 --
 -- Events
 --
-CREATE DEFINER=`root`@`localhost` EVENT `auto_update_status_kerjasama` ON SCHEDULE EVERY 1 DAY STARTS '2022-07-22 00:35:05' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE kerjasamas
+CREATE DEFINER=`root`@`localhost` EVENT `auto_update_status_kerjasama` ON SCHEDULE EVERY 5 MINUTE STARTS '2022-07-22 00:35:05' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE kerjasamas
 SET status_id = 2
 WHERE tanggal_sampai < NOW() and NOT status_id = 3$$
 

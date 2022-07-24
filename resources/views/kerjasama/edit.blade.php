@@ -20,7 +20,7 @@
 
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Ubah Data Kerja Sama {{ $kerjasama->nama_kerja_sama }}</h3>
+            <h3 class="card-title">Ubah Data Kerjasama {{ $kerjasama->nama_kerja_sama }}</h3>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -42,7 +42,7 @@
                     {{-- Nomor MoU --}}
                     <div class="form-group col-lg-6">
                         <label for="no_mou">Nomor MoU</label>
-                        <input type="text" id="no_mou" name='no_mou' value="{{ old('no_mou') }}"
+                        <input type="text" id="no_mou" name='no_mou' value="{{ old('no_mou', $kerjasama->no_mou) }}"
                             class="form-control @error('no_mou') is-invalid @enderror" placeholder="Masukan Nomor MoU">
                         @error('no_mou')
                             <div class="text-danger">{{ $message }}</div>
@@ -57,7 +57,7 @@
                             if (old('nama_kategori') !== null) {
                                 $option = old('nama_kategori');
                             } else {
-                                $option = 1;
+                                $option = $kerjasama->kategori_id;
                             }
                         @endphp
 
@@ -76,7 +76,7 @@
 
                 {{-- Edit nama Kerjasama --}}
                 <div class="form-group">
-                    <label for="nama_kerja_sama">Nama Kerja Sama</label>
+                    <label for="nama_kerja_sama">Nama Kerjasama</label>
                     <input type="text" value="{{ old('nama_kerja_sama', $kerjasama->nama_kerja_sama) }}"
                         name='nama_kerja_sama' class="form-control @error('nama_kerja_sama') is-invalid @enderror"
                         placeholder="Masukan Nama Kerja Sama">
@@ -84,6 +84,7 @@
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
+
                 <div class="row">
                     {{-- Tanggal Mulai --}}
                     <div class="form-group col-lg-6">
@@ -109,24 +110,8 @@
                 </div>
 
                 <div class="row">
-                    {{-- Edit Nama Mitra --}}
-                    <div class="form-group col-lg-3">
-                        <label for="nama_mitra">Nama Mitra</label>
-                        <select class="form-control select2" name='nama_mitra'>
-                            @foreach ($mitras as $data)
-                                <option value="{{ $data->id }}"
-                                    {{ old('nama_mitra', $kerjasama->mitra_id) == $data->id ? 'selected' : '' }}>
-                                    {{ $data->nama_mitra }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('nama_mitra')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-
                     {{-- Edit Nama Status --}}
-                    <div class="form-group col-lg-3">
+                    <div class="form-group col-lg-6">
                         <label for="nama_status">Status</label>
                         <select class="form-control" name='nama_status'>
                             @foreach ($statuses as $data)
