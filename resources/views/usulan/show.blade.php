@@ -138,7 +138,7 @@
 
                 <div class="card-body">
                     {{-- Form tambah data kerjasamas --}}
-                    <form action="{{ route('kerjasamas.store') }}" method="POST">
+                    <form action="{{ route('usulans.store') }}" method="POST">
                         @csrf
                         <div class="row">
                             {{-- Nomor MoU --}}
@@ -201,7 +201,7 @@
 
                             {{-- Tanggal Sampai --}}
                             <div class="form-group col-lg-4">
-                                <label for="tanggal_sampai"> Tanggal Sampai : </label>
+                                <label for="tanggal_sampai">Tanggal Sampai : </label>
                                 <input type="date" name="tanggal_sampai" id="" class="form-control"
                                     value="{{ old('tanggal_sampai') }}">
                                 @error('tanggal_sampai')
@@ -236,22 +236,18 @@
 
                         {{-- getUsulanID --}}
                         <div class="form-group" hidden>
-                            <label for="usulan">Usulan ID</label>
-                            <input type="text" name='usulan' value="{{ $usulan->id }}"
-                                class="form-control @error('usulan') is-invalid @enderror" placeholder="Masukan Usulan ID"
-                                readonly>
-                            @error('usulan')
+                            <label for="usulan_id">Usulan ID</label>
+                            <input type="text" name='usulan_id' value="{{ $usulan->id }}"
+                                class="form-control @error('usulan_id') is-invalid @enderror"
+                                placeholder="Masukan Usulan ID" readonly>
+                            @error('usulan_id')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+                        <br>
                         {{-- Button Submit --}}
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
-
-                </div>
-
-                <div class="card-footer">
-
                 </div>
             </div>
         @endif

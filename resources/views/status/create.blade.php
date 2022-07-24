@@ -17,10 +17,10 @@
             </div>
         </div>
 
-        {{-- Form tambah data --}}
-        <form action="{{ route('statuses.store') }}" method="POST">
-            @csrf
-            <div class="card-body">
+        <div class="card-body">
+            {{-- Form tambah data --}}
+            <form action="{{ route('statuses.store') }}" method="POST">
+                @csrf
 
                 <div class="form-group">
                     <label for="nama_status">Nama Status</label>
@@ -31,14 +31,12 @@
                     @enderror
                 </div>
 
-            </div>
-
-            <div class="card-footer">
+                <br>
+                {{-- Button --}}
                 <button type="submit" class="btn btn-primary">Submit</button>
                 &nbsp;
                 <a href="/statuses" class="btn btn-outline-dark">Kembali</a>
-            </div>
-
-        </form>
+            </form>
+        </div>
     </div>
 @endsection

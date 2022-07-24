@@ -119,7 +119,7 @@
                         <div class="info-box">
                             <span class="info-box-icon bg-info elevation-1"><i class="fas fa-thumbs-up"></i></span>
                             <div class="info-box-content">
-                                <span class="info-box-text">Aktif</span>
+                                <span class="info-box-text">{{ $countStatusAktif[0]->nama_status }}</span>
                                 <span class="info-box-number">
                                     @if (count($countStatusAktif) > 0)
                                         @foreach ($countStatusAktif as $item)
@@ -139,7 +139,7 @@
                         <div class="info-box mb-3">
                             <span class="info-box-icon bg-success elevation-1"><i class="fas fa-bell"></i></span>
                             <div class="info-box-content">
-                                <span class="info-box-text">Dalam Perpanjangan</span>
+                                <span class="info-box-text">{{ $countStatusDalamPerpanjangan[0]->nama_status }}</span>
                                 <span class="info-box-number">
                                     @if (count($countStatusDalamPerpanjangan) > 0)
                                         @foreach ($countStatusDalamPerpanjangan as $item)
@@ -160,7 +160,7 @@
                             <span class="info-box-icon bg-warning elevation-1"> <i class="fas fa-exclamation"></i>
                             </span>
                             <div class="info-box-content">
-                                <span class="info-box-text">Kadaluarsa</span>
+                                <span class="info-box-text">{{ $countStatusKadaluarsa[0]->nama_status }}</span>
                                 <span class="info-box-number">
                                     @if (count($countStatusKadaluarsa) > 0)
                                         @foreach ($countStatusKadaluarsa as $item)

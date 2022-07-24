@@ -33,11 +33,12 @@
             </div>
         </div>
 
-        {{-- Form edit data --}}
-        <form action="{{ route('kerjasamas.update', ['kerjasama' => $kerjasama->id]) }}" method="POST">
-            @method('PUT')
-            @csrf
-            <div class="card-body">
+        <div class="card-body">
+            {{-- Form edit data --}}
+            <form action="{{ route('kerjasamas.update', ['kerjasama' => $kerjasama->id]) }}" method="POST">
+                @method('PUT')
+                @csrf
+
                 <div class="row">
                     {{-- Nomor MoU --}}
                     <div class="form-group col-lg-6">
@@ -141,15 +142,13 @@
                     </div>
                 </div>
 
-
-            </div>
-
-            <div class="card-footer">
+                <br>
+                {{-- Button --}}
                 <button type="submit" class="btn btn-primary">Submit</button>
                 &nbsp;
                 <a href="/kerjasamas" class="btn btn-outline-dark">Kembali</a>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 
 @endsection

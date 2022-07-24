@@ -18,6 +18,7 @@
         </div>
 
         <div class="card-body">
+            {{-- Form Tambah Data --}}
             <form action="{{ route('kategoris.store') }}" method="POST">
                 @csrf
 
@@ -31,15 +32,12 @@
                     @enderror
                 </div>
 
+                <br>
+                {{-- Button --}}
+                <button type="submit" class="btn btn-primary">Submit</button>
+                &nbsp;
+                <a href="/kategoris" class="btn btn-outline-dark">Kembali</a>
+            </form>
         </div>
-
-        <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-
     </div>
-
-
-    </form>
-
 @endsection

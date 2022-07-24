@@ -36,7 +36,7 @@
                     <select class="form-control select2" name="kerjasamas" id="">
                         @foreach ($kerjasamas as $data)
                             <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                {{ $data->mitra->nama_mitra }} - {{ $data->nama_kerja_sama }}
+                                {{ $data->nama_kerja_sama }} - {{ $data->usulan->mitra->nama_mitra }}
                             </option>
                         @endforeach
                     </select>

@@ -18,10 +18,11 @@
         </div>
 
         <div class="card-body">
+            {{-- Form edit data --}}
             <form action="{{ route('kategoris.update', ['kategori' => $kategori->id]) }}" method="POST">
-                {{-- @csrf --}}
-                {{ csrf_field() }}
-                {{ method_field('PUT') }}
+                @method('PUT')
+                @csrf
+
                 <div class="form-group">
                     <label for="nama_kategori">Nama Kategori</label>
                     <input type="text" value="{{ $kategori->nama_kategori }}" name='nama_kategori'
@@ -32,17 +33,12 @@
                     @enderror
                 </div>
 
-
-
+                <br>
+                {{-- Button --}}
+                <button type="submit" class="btn btn-primary">Submit</button>
+                &nbsp;
+                <a href="/kategoris" class="btn btn-outline-dark">Kembali</a>
+            </form>
         </div>
-
-        <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-
     </div>
-
-
-    </form>
-
 @endsection

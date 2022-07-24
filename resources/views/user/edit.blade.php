@@ -17,12 +17,13 @@
             </div>
         </div>
 
-        {{-- Form Ubah Data --}}
-        <form action="{{ route('users.update', ['user' => $user->id]) }}" method="POST">
-            @method('PUT')
-            @csrf
+        <div class="card-body">
+            {{-- Form Ubah Data --}}
+            <form action="{{ route('users.update', ['user' => $user->id]) }}" method="POST">
+                @method('PUT')
+                @csrf
 
-            <div class="card-body">
+
                 <div class="row">
                     {{-- ubah email --}}
                     <div class="form-group col-lg-6 col-sm-12">
@@ -102,17 +103,16 @@
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
-            </div>
 
-            <div class="card-footer">
+                <br>
                 {{-- Button Submit --}}
                 <button type="submit" class="btn btn-primary">Submit</button>
                 {{-- Spasi --}}
                 &ensp;
                 {{-- Button Kembali --}}
-                <a href="/users" class="btn btn-outline-secondary">Kembali</a>
-            </div>
-        </form>
+                <a href="/users" class="btn btn-outline-dark">Kembali</a>
+            </form>
+        </div>
     </div>
 
 @endsection

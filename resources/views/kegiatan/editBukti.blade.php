@@ -16,13 +16,12 @@
             </div>
         </div>
 
-        {{-- Barisan edit data Bukti --}}
-        <form action="{{ route('buktiKegiatans.update', ['buktiKegiatan' => $buktiKegiatan->id]) }}" method="POST"
-            enctype="multipart/form-data">
-            @method('PUT')
-            @csrf
-
-            <div class="card-body">
+        <div class="card-body">
+            {{-- Barisan edit data Bukti --}}
+            <form action="{{ route('buktiKegiatans.update', ['buktiKegiatan' => $buktiKegiatan->id]) }}" method="POST"
+                enctype="multipart/form-data">
+                @method('PUT')
+                @csrf
 
                 {{-- Nama Bukti Kegiatan --}}
                 <div class="form-group">
@@ -167,15 +166,12 @@
                     @enderror
                 </div>
 
-            </div>
-
-            <div class="card-footer">
-                {{-- Button Submit --}}
+                <br>
+                {{-- Button --}}
                 <button type="submit" class="btn btn-primary">Submit</button>
                 &nbsp;
                 <a href="{{ url("kegiatans/$buktiKegiatan->kegiatans_id") }}" class="btn btn-outline-dark">Kembali</a>
-            </div>
-        </form>
-
+            </form>
+        </div>
     </div>
 @endsection

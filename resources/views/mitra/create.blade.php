@@ -17,10 +17,10 @@
             </div>
         </div>
 
-        <form action="{{ route('mitras.store') }}" method="POST">
-            @csrf
-            <div class="card-body">
-
+        <div class="card-body">
+            {{-- Form Tambah Data --}}
+            <form action="{{ route('mitras.store') }}" method="POST">
+                @csrf
                 <div class="form-group">
                     <label for="nama_mitra">Nama Mitra</label>
                     <input type="text" name='nama_mitra' class="form-control @error('nama_mitra') is-invalid @enderror"
@@ -42,13 +42,12 @@
                     @enderror
                 </div>
 
-            </div>
-
-            <div class="card-footer">
+                <br>
                 <button type="submit" class="btn btn-primary">Submit</button>
                 &nbsp;
                 <a href="/mitras" class="btn btn-outline-dark">Kembali</a>
-            </div>
-        </form>
+
+            </form>
+        </div>
     </div>
 @endsection

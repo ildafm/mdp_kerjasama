@@ -18,10 +18,10 @@
             </div>
         </div>
 
-        {{-- Form Tambah Data --}}
-        <form action="{{ route('units.store') }}" method="POST">
-            @csrf
-            <div class="card-body">
+        <div class="card-body">
+            {{-- Form Tambah Data --}}
+            <form action="{{ route('units.store') }}" method="POST">
+                @csrf
                 <div class="form-group">
                     <label for="nama_unit">Nama Unit</label>
                     <input type="text" name='nama_unit' class="form-control @error('nama_unit') is-invalid @enderror"
@@ -30,14 +30,13 @@
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
-            </div>
 
-            <div class="card-footer">
+                <br>
+                {{-- Button --}}
                 <button type="submit" class="btn btn-primary">Submit</button>
                 &nbsp;
                 <a href="/units" class="btn btn-outline-dark">Kembali</a>
-            </div>
-
-        </form>
+            </form>
+        </div>
     </div>
 @endsection

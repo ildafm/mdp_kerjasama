@@ -90,11 +90,11 @@
             </div>
         </div>
 
-        {{-- Form Menambahkan data Bukti --}}
-        <form action="{{ route('buktiKerjasamas.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+        <div class="card-body">
+            {{-- Form Menambahkan data Bukti --}}
+            <form action="{{ route('buktiKerjasamas.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
 
-            <div class="card-body">
                 {{-- Nama Bukti Kerjasama --}}
                 <div class="form-group">
                     <label for="nama_bukti_kerjasama">Nama Bukti Kerjasama</label>
@@ -130,13 +130,11 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
 
-            </div>
-
-            {{-- Button Submit --}}
-            <div class="card-footer">
+                <br>
+                {{-- Button --}}
                 <button type="submit" class="btn btn-primary">Tambahkan Bukti</button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 
     {{-- Tabel Bukti Kerjasama --}}

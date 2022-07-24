@@ -17,11 +17,12 @@
             </div>
         </div>
 
-        {{-- Form ubah data --}}
-        <form action="{{ route('kegiatans.update', ['kegiatan' => $kegiatans->id]) }}" method="POST">
-            @method('PUT')
-            @csrf
-            <div class="card-body">
+        <div class="card-body">
+            {{-- Form ubah data --}}
+            <form action="{{ route('kegiatans.update', ['kegiatan' => $kegiatans->id]) }}" method="POST">
+                @method('PUT')
+                @csrf
+
                 {{-- Kerjasama --}}
                 <div class="form-group">
                     <label for="kerjasamas">Nama Kerjasama</label>
@@ -36,7 +37,8 @@
                     <select class="form-control select2" name="kerjasamas" id="">
                         @foreach ($kerjasamas as $data)
                             <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                {{ $data->mitra->nama_mitra }} - {{ $data->nama_kerja_sama }}</option>
+                                {{ $data->nama_kerja_sama }} - {{ $data->usulan->mitra->nama_mitra }}
+                            </option>
                         @endforeach
                     </select>
                     @error('kerjasamas')
@@ -110,16 +112,12 @@
                     @enderror
                 </div>
 
-
-            </div>
-
-            {{-- Button Submit dan Kembali --}}
-            <div class="card-footer">
+                <br>
+                {{-- Button --}}
                 <button type="submit" class="btn btn-primary">Submit</button>
                 &nbsp;
                 <a href="/kegiatans" class="btn btn-outline-dark">Kembali</a>
-            </div>
-
-        </form>
+            </form>
+        </div>
     </div>
 @endsection

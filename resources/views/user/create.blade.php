@@ -98,18 +98,16 @@
                         @enderror
                     </div>
                 </div>
-        </div>
 
-        <div class="card-footer">
-            {{-- Button Submit --}}
-            <button type="submit" class="btn btn-primary">Submit</button>
-            {{-- Spasi --}}
-            &ensp;
-            {{-- Button Kembali --}}
-            <a href="/users" class="btn btn-outline-secondary">Kembali</a>
+                <br>
+                {{-- Button Submit --}}
+                <button type="submit" class="btn btn-primary">Submit</button>
+                {{-- Spasi --}}
+                &ensp;
+                {{-- Button Kembali --}}
+                <a href="/users" class="btn btn-outline-dark">Kembali</a>
+            </form>
         </div>
-
     </div>
-    </form>
 
 @endsection

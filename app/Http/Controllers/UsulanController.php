@@ -59,32 +59,77 @@ class UsulanController extends Controller
     {
         //
         $this->authorize('viewAny', User::class);
-        
-        $validateData = $request->validate([
-            'usulan' => 'required',
-            'bentuk_kerjasama' => 'required',
-            'kontak_kerjasama' => 'required|max:13|min:11',
-            'rencana_kegiatan' => 'required',
-            'nama_mitra' => 'required',
-            'nama_pengusul' => 'required',
-            'nama_unit' => 'required',
-            'type' => 'required',
-        ]);
-
-        $usulan = new Usulan();
-        $usulan->usulan = $validateData['usulan'];
-        $usulan->bentuk_kerjasama = $validateData['bentuk_kerjasama'];
-        $usulan->kontak_kerjasama = $validateData['kontak_kerjasama'];
-        $usulan->rencana_kegiatan = $validateData['rencana_kegiatan'];
-        $usulan->type = $validateData['type'];
-        $usulan->mitra_id = $validateData['nama_mitra'];
-        $usulan->user_id = $validateData['nama_pengusul'];
-        $usulan->unit_id =$validateData['nama_unit'];
-
-        $usulan->save();
-
-        $request->session()->flash('pesan', 'Penambahan data berhasil');
-        return redirect()->route('usulans.index');
+        if ($request->usulan != '' || $request->usulan != null) {
+            $validateData = $request->validate([
+                'usulan' => 'required',
+                'bentuk_kerjasama' => 'required',
+                'kontak_kerjasama' => 'required|max:13|min:11',
+                'rencana_kegiatan' => 'required',
+                'nama_mitra' => 'required',
+                'nama_pengusul' => 'required',
+                'nama_unit' => 'required',
+                'type' => 'required',
+            ]);
+    
+            $usulan = new Usulan();
+            $usulan->usulan = $validateData['usulan'];
+            $usulan->bentuk_kerjasama = $validateData['bentuk_kerjasama'];
+            $usulan->kontak_kerjasama = $validateData['kontak_kerjasama'];
+            $usulan->rencana_kegiatan = $validateData['rencana_kegiatan'];
+            $usulan->type = $validateData['type'];
+            $usulan->mitra_id = $validateData['nama_mitra'];
+            $usulan->user_id = $validateData['nama_pengusul'];
+            $usulan->unit_id =$validateData['nama_unit'];
+    
+            $usulan->save();
+    
+            $request->session()->flash('pesan', 'Penambahan data berhasil');
+            return redirect()->route('usulans.index');
+        }
+        else{
+            if($request->nama_kategori == '1'){
+                $validateData = $request->validate([
+                    'nama_kerja_sama' => 'required',
+                    'tanggal_mulai' => 'required',
+                    'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
+                    'nama_kategori' => 'required',
+                    'nama_status' => 'required',
+                    'usulan_id' => 'required',
+                    'no_mou' => 'required',
+                ]);
+            }
+            else{
+                $validateData = $request->validate([
+                    'nama_kerja_sama' => 'required',
+                    'tanggal_mulai' => 'required',
+                    'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
+                    'nama_kategori' => 'required',
+                    'nama_status' => 'required',
+                    'usulan_id' => 'required',
+                ]);
+            }
+    
+            $kerjasama = new Kerjasama();
+    
+            if($request->no_mou != '' || $request->no_mou != null){
+                $kerjasama->no_mou = $validateData['no_mou'];
+            }
+            else{
+                $kerjasama->no_mou = '';
+            }
+    
+            $kerjasama->nama_kerja_sama = $validateData['nama_kerja_sama'];
+            $kerjasama->tanggal_mulai = $validateData['tanggal_mulai'];
+            $kerjasama->tanggal_sampai = $validateData['tanggal_sampai'];
+            $kerjasama->kategori_id = $validateData['nama_kategori'];
+            $kerjasama->status_id = $validateData['nama_status'];
+            $kerjasama->usulan_id = $validateData['usulan_id'];
+    
+            $kerjasama->save();
+    
+            $request->session()->flash('pesan', 'Penambahan data berhasil');
+            return redirect()->route('usulans.show', $kerjasama->usulan_id);
+        }        
     }
 
     /**
@@ -114,53 +159,6 @@ class UsulanController extends Controller
             ->with('statuses', $statuses)
             ->with('kerjasamas', $kerjasamas)
             ->with('getKerjasama', $getKerjasama);;
-    }
-
-    public function addkerjasama(Request $request)
-    {
-        //
-        if($request->nama_kategori == '1'){
-            $validateData = $request->validate([
-                'nama_kerja_sama' => 'required',
-                'tanggal_mulai' => 'required',
-                'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
-                'nama_kategori' => 'required',
-                'nama_status' => 'required',
-                'usulan' => 'required',
-                'no_mou' => 'required',
-            ]);
-        }
-        else{
-            $validateData = $request->validate([
-                'nama_kerja_sama' => 'required',
-                'tanggal_mulai' => 'required',
-                'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
-                'nama_kategori' => 'required',
-                'nama_status' => 'required',
-                'usulan' => 'required',
-            ]);
-        }
-
-        $kerjasama = new Kerjasama();
-
-        if($request->no_mou != '' || $request->no_mou != null){
-            $kerjasama->no_mou = $validateData['no_mou'];
-        }
-        else{
-            $kerjasama->no_mou = '';
-        }
-
-        $kerjasama->nama_kerja_sama = $validateData['nama_kerja_sama'];
-        $kerjasama->tanggal_mulai = $validateData['tanggal_mulai'];
-        $kerjasama->tanggal_sampai = $validateData['tanggal_sampai'];
-        $kerjasama->kategori_id = $validateData['nama_kategori'];
-        $kerjasama->status_id = $validateData['nama_status'];
-        $kerjasama->usulan_id = $validateData['usulan'];
-
-        $kerjasama->save();
-
-        $request->session()->flash('pesan', 'Penambahan data berhasil');
-        return redirect()->route('usulans.show', $kerjasama->usulan_id);
     }
 
     /**

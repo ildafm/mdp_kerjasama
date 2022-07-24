@@ -17,10 +17,11 @@
             </div>
         </div>
 
-        {{-- Form Tambah Data --}}
-        <form action="{{ route('usulans.store') }}" method="POST">
-            @csrf
-            <div class="card-body">
+        <div class="card-body">
+            {{-- Form Tambah Data --}}
+            <form action="{{ route('usulans.store') }}" method="POST">
+                @csrf
+
                 {{-- Nama Usulan --}}
                 <div class="form-group">
                     <label for="usulan">Usulan </label>
@@ -159,14 +160,12 @@
                     </div>
                 </div>
 
-            </div>
-
-            <div class="card-footer">
+                <br>
+                {{-- Button --}}
                 <button type="submit" class="btn btn-primary">Submit</button>
                 &nbsp;
                 <a href="/usulans" class="btn btn-outline-dark">Kembali</a>
-            </div>
-
-        </form>
+            </form>
+        </div>
     </div>
 @endsection
