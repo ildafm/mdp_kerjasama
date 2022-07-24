@@ -20,7 +20,7 @@ class KegiatanController extends Controller
     public function index()
     {
         //
-        if(Auth::user()->level == 'A'){
+        if(Auth::user()->level != 'D'){
             $kegiatans = Kegiatan::All();
         }
         else{

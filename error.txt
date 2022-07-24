@@ -40,7 +40,10 @@
 
 -> Tambahkan 1 kolom baru di tabel bukti_kegiatans bernama kolom bidang : Pendidikan, penelitian, pengabdian, lain-lain(Selesai) 
 
+-> Perbaiki modal di semua menu jika login menggunakan smartphone(Selesai)
+
+-> Masalah reset password (bisa dari profile untuk login dosen, Selesai)
+
+-> Masalah Edit Nomor MoU tidak menjadi readonly meski sudah variabel default adalah tanpa MoU
 -> Menambahkan komentar (Sedikit)
--> Perbaiki modal di semua menu jika login menggunakan smartphone
--> Masalah reset password (bisa dari profile untuk login dosen, belum bisa dari login)
--> Form ubah bukti kegiatan
+-> Form ubah bukti kegiatan(Bagian Checkbox Masih Bermasalah)

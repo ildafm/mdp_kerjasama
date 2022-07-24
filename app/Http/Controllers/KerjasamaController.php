@@ -35,12 +35,11 @@ class KerjasamaController extends Controller
     public function create()
     {
         //
-        // return view('kerjasama.create');
         $kategoris = Kategori::All();
         $statuses = Status::All();
         $kerjasamas = Kerjasama::All();
-        $usulans = Usulan::All();
-        // dump($mitras);
+        $usulans = Usulan::All()->where('hasil_penjajakan', 'L');
+
         return view('kerjasama.create')
             ->with('kategoris', $kategoris)
             ->with('statuses', $statuses)
@@ -57,19 +56,25 @@ class KerjasamaController extends Controller
     public function store(Request $request)
     {
         //
-        $validateData = $request->validate([
-            'nama_kerja_sama' => 'required',
-            'tanggal_mulai' => 'required',
-            'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
-            'nama_kategori' => 'required',
-            'nama_status' => 'required',
-            'usulan' => 'required',
-            
-        ]);
-
         if($request->nama_kategori == '1'){
             $validateData = $request->validate([
+                'nama_kerja_sama' => 'required',
+                'tanggal_mulai' => 'required',
+                'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
+                'nama_kategori' => 'required',
+                'nama_status' => 'required',
+                'usulan' => 'required',
                 'no_mou' => 'required',
+            ]);
+        }
+        else{
+            $validateData = $request->validate([
+                'nama_kerja_sama' => 'required',
+                'tanggal_mulai' => 'required',
+                'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
+                'nama_kategori' => 'required',
+                'nama_status' => 'required',
+                'usulan' => 'required',
             ]);
         }
 
@@ -125,7 +130,8 @@ class KerjasamaController extends Controller
         //
         $kategoris = Kategori::All();
         $statuses = Status::All();
-        $usulans = Usulan::All();
+        $usulans = Usulan::All()->where('hasil_penjajakan', 'L');
+        
         return view('kerjasama.edit')
             ->with('kerjasama', $kerjasama)
             ->with('kategoris', $kategoris)
@@ -143,25 +149,51 @@ class KerjasamaController extends Controller
     public function update(Request $request, Kerjasama $kerjasama)
     {
         //
-        $this->validate($request, [
-            'nama_kerja_sama' => 'required',
-            'tanggal_mulai' => 'required',
-            'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
-            'nama_kategori' => 'required',
-            'nama_status' => 'required',
-            'usulan' => 'required'
-        ]);
+        if($request->nama_kategori == '1'){
+            $this->validate($request, [
+                'nama_kerja_sama' => 'required',
+                'tanggal_mulai' => 'required',
+                'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
+                'nama_kategori' => 'required',
+                'nama_status' => 'required',
+                'usulan' => 'required',
+                'no_mou' => 'required',
+            ]);
+        }
+        else{
+            $this->validate($request, [
+                'nama_kerja_sama' => 'required',
+                'tanggal_mulai' => 'required',
+                'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
+                'nama_kategori' => 'required',
+                'nama_status' => 'required',
+                'usulan' => 'required',
+            ]);
+        }
 
         $kerjasama = Kerjasama::findOrFail($kerjasama->id);
 
-        $kerjasama->update([
-            'nama_kerja_sama' => $request->nama_kerja_sama,
-            'tanggal_mulai' => $request->tanggal_mulai,
-            'tanggal_sampai' => $request->tanggal_sampai,
-            'kategori_id' => $request->nama_kategori,
-            'status_id' => $request->nama_status,
-            'usulan_id' => $request->usulan
-        ]);
+        if($request->nama_kategori == '1'){
+            $kerjasama->update([
+                'no_mou' => $request->no_mou,
+                'nama_kerja_sama' => $request->nama_kerja_sama,
+                'tanggal_mulai' => $request->tanggal_mulai,
+                'tanggal_sampai' => $request->tanggal_sampai,
+                'kategori_id' => $request->nama_kategori,
+                'status_id' => $request->nama_status,
+                'usulan_id' => $request->usulan
+            ]);
+        }
+        else{
+            $kerjasama->update([
+                'nama_kerja_sama' => $request->nama_kerja_sama,
+                'tanggal_mulai' => $request->tanggal_mulai,
+                'tanggal_sampai' => $request->tanggal_sampai,
+                'kategori_id' => $request->nama_kategori,
+                'status_id' => $request->nama_status,
+                'usulan_id' => $request->usulan
+            ]);
+        }
 
         $request->session()->flash('pesan', 'Perubahan data berhasil');
         return redirect()->route('kerjasamas.index');

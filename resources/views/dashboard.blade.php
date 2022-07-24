@@ -255,9 +255,9 @@
                         </li>
 
                         {{-- Nav Grafik Kerjasama --}}
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link" href="#kerjasama-chart" data-toggle="tab">Kerjasama</a>
-                        </li>
+                        </li> --}}
 
                         {{-- Nav Grafik Kegiatan --}}
                         <li class="nav-item">
@@ -334,12 +334,12 @@
                     </div>
 
                     {{-- Grafik Kerjasama --}}
-                    <div class="chart tab-pane" id="kerjasama-chart" style="position: relative; height: 450px;">
+                    {{-- <div class="chart tab-pane" id="kerjasama-chart" style="position: relative; height: 450px;">
                         <div class="">
                             <figure class="highcharts-figure">
                                 <div id="container2"></div>
                                 <p class="highcharts-description">
-                                    {{-- Menunjukan jumlah kerjasama dengan mitra. --}}
+
                                 </p>
                             </figure>
 
@@ -389,7 +389,7 @@
                                 });
                             </script>
                         </div>
-                    </div>
+                    </div> --}}
 
                     {{-- Grafik Kegiatan --}}
                     <div class="chart tab-pane" id="kegiatan-chart" style="position: relative; height: 450px;">
