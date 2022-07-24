@@ -110,17 +110,13 @@
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
-        </div>
 
-        <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
-            &nbsp;
-            <a href="/kegiatans" class="btn btn-outline-dark">Kembali</a>
+                <br>
+                {{-- Button --}}
+                <button type="submit" class="btn btn-primary">Submit</button>
+                &nbsp;
+                <a href="/kegiatans" class="btn btn-outline-dark">Kembali</a>
+            </form>
         </div>
-
     </div>
-
-
-    </form>
-
 @endsection

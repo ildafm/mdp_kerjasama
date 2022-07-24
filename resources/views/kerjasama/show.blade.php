@@ -76,65 +76,96 @@
         </div>
     </div>
 
-    {{-- card tambah bukti --}}
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">Tambah Bukti Kerjasama</h3>
-            <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                    <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                    <i class="fas fa-times"></i>
-                </button>
+    {{-- Navbar Tambah Data Bukti Kerjasama dan Kegiatan --}}
+    <div class="card card-default card-tabs">
+        <div class="card-header p-0 pt-1">
+            <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                <li class="pt-2 px-3">
+                    <h3 class="card-title">Tambah Data</h3>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" id="custom-tabs-two-home-tab" data-toggle="pill" href="#custom-tabs-two-home"
+                        role="tab" aria-controls="custom-tabs-two-home" aria-selected="true">Bukti Kerjasama</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-two-profile-tab" data-toggle="pill" href="#custom-tabs-two-profile"
+                        role="tab" aria-controls="custom-tabs-two-profile" aria-selected="false">Kegiatan</a>
+                </li>
+                {{-- <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-two-messages-tab" data-toggle="pill"
+                        href="#custom-tabs-two-messages" role="tab" aria-controls="custom-tabs-two-messages"
+                        aria-selected="false">Messages</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-two-settings-tab" data-toggle="pill"
+                        href="#custom-tabs-two-settings" role="tab" aria-controls="custom-tabs-two-settings"
+                        aria-selected="false">Settings</a>
+                </li> --}}
+            </ul>
+        </div>
+        <div class="card-body">
+            <div class="tab-content" id="custom-tabs-two-tabContent">
+                <div class="tab-pane fade show active" id="custom-tabs-two-home" role="tabpanel"
+                    aria-labelledby="custom-tabs-two-home-tab">
+                    {{-- Form Menambahkan data Bukti --}}
+                    <form action="{{ route('buktiKerjasamas.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        {{-- Nama Bukti Kerjasama --}}
+                        <div class="form-group">
+                            <label for="nama_bukti_kerjasama">Nama Bukti Kerjasama</label>
+                            <input type="text" class="form-control" name="nama_bukti_kerjasama"
+                                placeholder="Enter Nama Bukti Kerjasama" value="{{ old('nama_bukti_kerjasama') }}">
+
+                            @error('nama_bukti_kerjasama')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- add file --}}
+                        <div class="form-group">
+                            <label for="file">Bukti Kerjasama(Max:5mb)</label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
+                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                </div>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">Upload</span>
+                                </div>
+                            </div>
+
+                            @error('file')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- getKerjasamaID --}}
+                        <input type="hidden" value="{{ $kerjasama->id }}" name="kerjasama_id">
+                        @error('kerjasama_id')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+
+                        <br>
+                        {{-- Button --}}
+                        <button type="submit" class="btn btn-primary">Tambahkan Bukti</button>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="custom-tabs-two-profile" role="tabpanel"
+                    aria-labelledby="custom-tabs-two-profile-tab">
+                    {{-- Form Menambahkan data Kegiatan --}}
+                    Kegiatan
+                </div>
+                {{-- <div class="tab-pane fade" id="custom-tabs-two-messages" role="tabpanel"
+                    aria-labelledby="custom-tabs-two-messages-tab">
+                    Message
+                </div>
+                <div class="tab-pane fade" id="custom-tabs-two-settings" role="tabpanel"
+                    aria-labelledby="custom-tabs-two-settings-tab">
+                    Setting
+                </div> --}}
             </div>
         </div>
 
-        <div class="card-body">
-            {{-- Form Menambahkan data Bukti --}}
-            <form action="{{ route('buktiKerjasamas.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-
-                {{-- Nama Bukti Kerjasama --}}
-                <div class="form-group">
-                    <label for="nama_bukti_kerjasama">Nama Bukti Kerjasama</label>
-                    <input type="text" class="form-control" name="nama_bukti_kerjasama"
-                        placeholder="Enter Nama Bukti Kerjasama" value="{{ old('nama_bukti_kerjasama') }}">
-
-                    @error('nama_bukti_kerjasama')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                {{-- add file --}}
-                <div class="form-group">
-                    <label for="file">Bukti Kerjasama(Max:5mb)</label>
-                    <div class="input-group">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
-                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                        </div>
-                        <div class="input-group-append">
-                            <span class="input-group-text">Upload</span>
-                        </div>
-                    </div>
-
-                    @error('file')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                {{-- getKerjasamaID --}}
-                <input type="hidden" value="{{ $kerjasama->id }}" name="kerjasama_id">
-                @error('kerjasama_id')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-
-                <br>
-                {{-- Button --}}
-                <button type="submit" class="btn btn-primary">Tambahkan Bukti</button>
-            </form>
-        </div>
     </div>
 
     {{-- Tabel Bukti Kerjasama --}}
@@ -180,7 +211,8 @@
 
                                 {{-- Button Ubah --}}
                                 <a href="{{ route('buktiKerjasamas.edit', ['buktiKerjasama' => $data->id]) }}"
-                                    class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit" title="Edit"></i></a>
+                                    class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
+                                        title="Edit"></i></a>
 
                                 {{-- Button Hapus --}}
                                 <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
