@@ -52,13 +52,13 @@
                         <td>{{ $kegiatan->tanggal_sampai }}</td>
                     </tr>
 
-                    <tr>
+                    {{-- <tr>
                         <td>PIC</td>
                         <td>{{ Status::kegiatan($kegiatan->PIC) }}</td>
-                    </tr>
+                    </tr> --}}
 
                     <tr>
-                        <td>Nama Dosen</td>
+                        <td>PIC Dosen</td>
                         <td>{{ $kegiatan->user->name }}</td>
                     </tr>
 
@@ -255,8 +255,8 @@
                             <td> {{ $nomor++ }} </td>
                             <td>
                                 {{-- Button Tampil --}}
-                                <a href="{{ url('storage/kegiatan/' . $data->file) }}"
-                                    class="btn btn-sm btn-primary"><i class="nav-icon fas fa-eye" title="Tampil"></i></a>
+                                <a href="{{ url('storage/kegiatan/' . $data->file) }}" class="btn btn-sm btn-primary"><i
+                                        class="nav-icon fas fa-eye" title="Tampil"></i></a>
 
                                 {{-- Button Ubah --}}
                                 <a href="{{ route('buktiKegiatans.edit', ['buktiKegiatan' => $data->id_bukti_kegiatan]) }}"
@@ -264,9 +264,8 @@
                                         title="Edit"></i></a>
 
                                 {{-- Button Hapus --}}
-                                <button class="btn btn-sm btn-danger btn-hapus"
-                                    data-id="{{ $data->id_bukti_kegiatan }}" data-toggle="modal"
-                                    data-target="#modal-sm"
+                                <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id_bukti_kegiatan }}"
+                                    data-toggle="modal" data-target="#modal-sm"
                                     data-namaBuktiKegiatan="{{ $data->nama_bukti_kegiatan }}"><i
                                         class="nav-icon fas fa-trash" title="Hapus"></i></button>
                             </td>

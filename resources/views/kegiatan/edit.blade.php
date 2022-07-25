@@ -79,8 +79,32 @@
                         @enderror
                     </div>
 
-                    {{-- PIC --}}
+                    {{-- Dosen --}}
                     <div class="form-group col-lg-4">
+                        <label for="pic_dosen">PIC Dosen</label>
+
+                        @php
+                            if (old('pic_dosen') !== null) {
+                                $option = old('pic_dosen');
+                            } else {
+                                $option = $kegiatans->user_id;
+                            }
+                        @endphp
+
+                        <select class="form-control select2" name="pic_dosen" id="">
+                            @foreach ($users as $data)
+                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                    {{ $data->kode_dosen }} - {{ $data->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('pic_dosen')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- PIC --}}
+                    {{-- <div class="form-group col-lg-4">
                         <label for="PIC">PIC</label>
 
                         @php
@@ -98,7 +122,7 @@
                         @error('PIC')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
-                    </div>
+                    </div> --}}
                 </div>
 
                 {{-- Keterangan --}}

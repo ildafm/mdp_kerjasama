@@ -35,9 +35,8 @@
                         <th>Aksi</th>
                         <th>Nama Kerjasama</th>
                         <th>Bentuk Kegiatan</th>
-                        <th>PIC</th>
                         <th>Keterangan</th>
-                        <th>Nama Dosen</th>
+                        <th>PIC Dosen</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
                     </tr>
@@ -58,11 +57,12 @@
                                 <a href="{{ url('kegiatans/' . $data->id) }}" class="btn btn-sm btn-primary"><i
                                         class="nav-icon fas fa-eye" title="Tampil"></i></a>
 
-                                {{-- Button Ubah --}}
-                                <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
-                                    class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit" title="Edit"></i></a>
+                                @if (Auth::user()->level != 'D')
+                                    {{-- Button Ubah --}}
+                                    <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
+                                        class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
+                                            title="Edit"></i></a>
 
-                                @if (Auth::user()->level == 'A')
                                     {{-- Button Hapus --}}
                                     <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
                                         data-bentukKegiatan="{{ $data->bentuk_kegiatan }}" data-toggle="modal"
@@ -71,7 +71,7 @@
                                 @endif
                             </td>
 
-                            @if (Auth::user()->level == 'A')
+                            @if (Auth::user()->level != 'D')
                                 <td>{{ $data->kerjasama->nama_kerja_sama }}</td>
                             @else
                                 <td>{{ $data->nama_kerja_sama }}</td>
@@ -79,11 +79,9 @@
 
                             <td>{{ $data->bentuk_kegiatan }}</td>
 
-                            <td>{{ Status::kegiatan($data->PIC) }}</td>
-
                             <td>{{ $data->keterangan }}</td>
 
-                            @if (Auth::user()->level == 'A')
+                            @if (Auth::user()->level != 'D')
                                 <td>{{ $data->user->name }}</td>
                             @else
                                 <td>{{ $data->name }}</td>
@@ -102,9 +100,8 @@
                         <th>Aksi</th>
                         <th>Nama Kerjasama</th>
                         <th>Bentuk Kegiatan</th>
-                        <th>PIC</th>
                         <th>Keterangan</th>
-                        <th>Nama Dosen</th>
+                        <th>PIC Dosen</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
                     </tr>

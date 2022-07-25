@@ -20,13 +20,15 @@ class KegiatanController extends Controller
     public function index()
     {
         //
-        if(Auth::user()->level != 'D'){
-            $kegiatans = Kegiatan::All();
-        }
-        else{
-            $getUserID = Auth::user()->id;
-            $kegiatans = DB::select("SELECT kegiatans.id AS 'id', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, PIC, keterangan, nama_kerja_sama, users.name AS 'name' FROM kegiatans JOIN kerjasamas ON kerjasama_id = kerjasamas.id JOIN users ON kegiatans.user_id = users.id WHERE kegiatans.user_id = $getUserID");
-        }
+        // if(Auth::user()->level != 'D'){
+        //     $kegiatans = Kegiatan::All();
+        // }
+        // else{
+        //     $getUserID = Auth::user()->id;
+        //     $kegiatans = DB::select("SELECT kegiatans.id AS 'id', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, PIC, keterangan, nama_kerja_sama, users.name AS 'name' FROM kegiatans JOIN kerjasamas ON kerjasama_id = kerjasamas.id JOIN users ON kegiatans.user_id = users.id WHERE kegiatans.user_id = $getUserID");
+        // }
+
+        $kegiatans = Kegiatan::All();
 
         return view('kegiatan.index')->with('kegiatans', $kegiatans);
     }
@@ -59,10 +61,10 @@ class KegiatanController extends Controller
             'tanggal_mulai' => 'required',
             'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
             'bentuk_kegiatan' => 'required',
-            'PIC' => 'required',
+            // 'PIC' => 'required',
             'kerjasamas' => 'required',
-            'user' => 'required',
-            'keterangan' => 'required'
+            'pic_dosen' => 'required',
+            'keterangan' => 'required',
         ]);
 
         $kegiatan = new Kegiatan();
@@ -70,9 +72,9 @@ class KegiatanController extends Controller
         $kegiatan->tanggal_mulai = $validateData['tanggal_mulai'];
         $kegiatan->tanggal_sampai = $validateData['tanggal_sampai'];
         $kegiatan->bentuk_kegiatan = $validateData['bentuk_kegiatan'];
-        $kegiatan->PIC = $validateData['PIC'];
+        // $kegiatan->PIC = $validateData['PIC'];
         $kegiatan->kerjasama_id = $validateData['kerjasamas'];
-        $kegiatan->user_id = $validateData['user'];
+        $kegiatan->user_id = $validateData['pic_dosen'];
         $kegiatan->keterangan =$validateData['keterangan'];
 
         $kegiatan->save();
@@ -90,7 +92,6 @@ class KegiatanController extends Controller
     public function show(Kegiatan $kegiatan)
     {
         //
-
         if(Auth::user()->id != $kegiatan->user_id){
             $this->authorize('viewAny', User::class);
         }
@@ -144,7 +145,8 @@ class KegiatanController extends Controller
             'tanggal_mulai' => 'required',
             'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
             'bentuk_kegiatan' => 'required',
-            'PIC' => 'required',
+            // 'PIC' => 'required',
+            'pic_dosen' => 'required',
             'keterangan' => 'required',
             'kerjasamas' => 'required',
         ]);
@@ -155,7 +157,8 @@ class KegiatanController extends Controller
             'tanggal_mulai' => $request->tanggal_mulai,
             'tanggal_sampai' => $request->tanggal_sampai,
             'bentuk_kegiatan' => $request->bentuk_kegiatan,
-            'PIC' => $request->PIC,
+            // 'PIC' => $request->PIC,
+            'user_id' => $request->pic_dosen,
             'keterangan' => $request->keterangan,
             'kerjasama_id' => $request->kerjasamas,
         ]);

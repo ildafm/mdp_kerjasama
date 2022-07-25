@@ -21,6 +21,12 @@ class UserPolicy
         return $user->level != 'D';
     }
 
+    public function dosenOnly(User $user)
+    {
+        //
+        return $user->level == 'D';
+    }
+
     /**
      * Determine whether the user can view the model.
      *
