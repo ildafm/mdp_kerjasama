@@ -4,10 +4,10 @@ Name : Admin
 Email : admin@gmail.com
 Password : admin123
 
-Name : Admin2
-Email : admin2@gmail.com
-Password : admin123
-
 Name : Dosen
 Email : dosen@gmail.com
 Password : dosen123
+
+Name : Dekan
+Email : dekan@gmail.com
+Password : dekan123

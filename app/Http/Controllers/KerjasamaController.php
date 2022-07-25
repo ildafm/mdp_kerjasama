@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\BuktiKerjasama;
 use App\Models\Kategori;
+use App\Models\Kegiatan;
 use App\Models\Kerjasama;
 use App\Models\Status;
+use App\Models\User;
 use App\Models\Usulan;
 use Illuminate\Http\Request;
 
@@ -56,48 +58,76 @@ class KerjasamaController extends Controller
     public function store(Request $request)
     {
         //
-        if($request->nama_kategori == '1'){
-            $validateData = $request->validate([
-                'nama_kerja_sama' => 'required',
-                'tanggal_mulai' => 'required',
-                'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
-                'nama_kategori' => 'required',
-                'nama_status' => 'required',
-                'usulan' => 'required',
-                'no_mou' => 'required',
-            ]);
+        if ($request->nama_kerja_sama != '' || $request->nama_kerja_sama != null) {
+            if($request->nama_kategori == '1'){
+                $validateData = $request->validate([
+                    'nama_kerja_sama' => 'required',
+                    'tanggal_mulai' => 'required',
+                    'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
+                    'nama_kategori' => 'required',
+                    'nama_status' => 'required',
+                    'usulan' => 'required',
+                    'no_mou' => 'required',
+                ]);
+            }
+            else{
+                $validateData = $request->validate([
+                    'nama_kerja_sama' => 'required',
+                    'tanggal_mulai' => 'required',
+                    'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
+                    'nama_kategori' => 'required',
+                    'nama_status' => 'required',
+                    'usulan' => 'required',
+                ]);
+            }
+    
+            $kerjasama = new Kerjasama();
+    
+            if($request->no_mou != '' || $request->no_mou != null){
+                $kerjasama->no_mou = $validateData['no_mou'];
+            }
+            else{
+                $kerjasama->no_mou = '';
+            }
+    
+            $kerjasama->nama_kerja_sama = $validateData['nama_kerja_sama'];
+            $kerjasama->tanggal_mulai = $validateData['tanggal_mulai'];
+            $kerjasama->tanggal_sampai = $validateData['tanggal_sampai'];
+            $kerjasama->kategori_id = $validateData['nama_kategori'];
+            $kerjasama->status_id = $validateData['nama_status'];
+            $kerjasama->usulan_id = $validateData['usulan'];
+    
+            $kerjasama->save();
+    
+            $request->session()->flash('pesan', 'Penambahan data berhasil');
+            return redirect()->route('kerjasamas.index');
         }
         else{
             $validateData = $request->validate([
-                'nama_kerja_sama' => 'required',
                 'tanggal_mulai' => 'required',
                 'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
-                'nama_kategori' => 'required',
-                'nama_status' => 'required',
-                'usulan' => 'required',
+                'bentuk_kegiatan' => 'required',
+                // 'PIC' => 'required',
+                'kerjasama_id' => 'required',
+                'pic_dosen' => 'required',
+                'keterangan' => 'required',
             ]);
-        }
-
-        $kerjasama = new Kerjasama();
-
-        if($request->no_mou != '' || $request->no_mou != null){
-            $kerjasama->no_mou = $validateData['no_mou'];
-        }
-        else{
-            $kerjasama->no_mou = '';
-        }
-
-        $kerjasama->nama_kerja_sama = $validateData['nama_kerja_sama'];
-        $kerjasama->tanggal_mulai = $validateData['tanggal_mulai'];
-        $kerjasama->tanggal_sampai = $validateData['tanggal_sampai'];
-        $kerjasama->kategori_id = $validateData['nama_kategori'];
-        $kerjasama->status_id = $validateData['nama_status'];
-        $kerjasama->usulan_id = $validateData['usulan'];
-
-        $kerjasama->save();
-
-        $request->session()->flash('pesan', 'Penambahan data berhasil');
-        return redirect()->route('kerjasamas.index');
+    
+            $kegiatan = new Kegiatan();
+    
+            $kegiatan->tanggal_mulai = $validateData['tanggal_mulai'];
+            $kegiatan->tanggal_sampai = $validateData['tanggal_sampai'];
+            $kegiatan->bentuk_kegiatan = $validateData['bentuk_kegiatan'];
+            // $kegiatan->PIC = $validateData['PIC'];
+            $kegiatan->kerjasama_id = $validateData['kerjasama_id'];
+            $kegiatan->user_id = $validateData['pic_dosen'];
+            $kegiatan->keterangan =$validateData['keterangan'];
+    
+            $kegiatan->save();
+    
+            $request->session()->flash('pesan', 'Penambahan data berhasil');
+            return redirect()->route('kerjasamas.show', $kegiatan->kerjasama_id);
+        } 
     }
 
     /**
@@ -114,9 +144,14 @@ class KerjasamaController extends Controller
         JOIN kerjasamas ON bukti_kerjasamas.kerjasama_id = kerjasamas.id
         WHERE bukti_kerjasamas.kerjasama_id = $kerjasama->id");
 
+        $users = User::All();
+        $kegiatans = Kegiatan::All();
+
         return view('kerjasama.show')
             ->with('kerjasama', $kerjasama)
-            ->with('buktiKerjasama', $buktiKerjasama);
+            ->with('buktiKerjasama', $buktiKerjasama)
+            ->with('users', $users)
+            ->with('kegiatans', $kegiatans);
     }
 
     /**

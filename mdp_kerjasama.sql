@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 24, 2022 at 01:27 PM
+-- Generation Time: Jul 25, 2022 at 02:30 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -195,9 +195,11 @@ CREATE TABLE `kegiatans` (
 --
 
 INSERT INTO `kegiatans` (`id`, `tanggal_mulai`, `tanggal_sampai`, `bentuk_kegiatan`, `PIC`, `keterangan`, `kerjasama_id`, `user_id`, `created_at`, `updated_at`) VALUES
-(8, '2022-06-30', '2022-07-02', 'Daring 1', 'P', 'Dilakukan secara daring selama beberapa hari', 8, 2, '2022-06-29 19:21:32', '2022-06-29 19:23:33'),
+(8, '2022-06-30', '2022-07-02', 'Daring 1', 'P', 'Dilakukan secara daring selama beberapa hari', 8, 4, '2022-06-29 19:21:32', '2022-07-25 11:40:20'),
 (10, '2022-08-08', '2022-09-10', 'Lepas 1', 'F', 'Keterangan ke 1Q', 9, 4, '2022-07-01 03:51:51', '2022-07-12 18:52:53'),
-(16, '2022-07-20', '2022-07-22', 'Bentuk Kegiatan 2', 'P', 'Keterangan Kegiatan 2', 8, 6, '2022-07-14 00:01:53', '2022-07-14 00:01:53');
+(16, '2022-07-20', '2022-07-22', 'Bentuk Kegiatan 2', 'P', 'Keterangan Kegiatan 2', 8, 6, '2022-07-14 00:01:53', '2022-07-14 00:01:53'),
+(20, '2022-07-25', '2022-07-27', 'Bentuk Kegiatan 2', 'P', 'Keterangan Kegiatan 2', 9, 2, '2022-07-24 19:12:20', '2022-07-24 19:12:20'),
+(21, '2022-07-25', '2022-07-26', 'Bentuk Kegiatan Q2 Baru', NULL, 'Keterangan Kegiatan 2 Baru', 15, 11, '2022-07-25 11:40:45', '2022-07-25 11:40:45');
 
 -- --------------------------------------------------------
 
@@ -224,7 +226,7 @@ CREATE TABLE `kerjasamas` (
 
 INSERT INTO `kerjasamas` (`id`, `nama_kerja_sama`, `no_mou`, `tanggal_mulai`, `tanggal_sampai`, `kategori_id`, `status_id`, `usulan_id`, `created_at`, `updated_at`) VALUES
 (8, 'Kerja Sama Q1', 'MoU001', '2022-06-30', '2022-07-22', 1, 2, 17, '2022-06-29 19:20:18', '2022-07-24 11:25:05'),
-(9, 'Kerja Sama Q2', '', '2022-07-01', '2022-07-02', 2, 3, 17, '2022-07-01 04:34:11', '2022-07-23 21:38:46'),
+(9, 'Kerja Sama Q2', '', '2022-07-01', '2022-07-02', 2, 3, 19, '2022-07-01 04:34:11', '2022-07-24 11:40:48'),
 (15, 'Kerjasama Q3', '', '2022-07-22', '2022-07-30', 3, 1, 17, '2022-07-21 17:50:54', '2022-07-23 21:38:46'),
 (16, 'Kerjasama Q4', '', '2022-07-23', '2022-07-24', 2, 2, 19, '2022-07-23 21:49:13', '2022-07-24 11:20:55'),
 (17, 'Kerja Sama Q5', '', '2022-07-24', '2022-07-31', 2, 1, 18, '2022-07-23 22:13:12', '2022-07-24 11:19:27');
@@ -280,7 +282,8 @@ INSERT INTO `mitras` (`id`, `nama_mitra`, `tingkat`, `created_at`, `updated_at`)
 (17, 'Universitas B', 'I', '2022-06-11 11:30:00', '2022-06-11 11:30:00'),
 (18, 'Universitas C', 'I', '2022-06-11 11:30:56', '2022-06-11 11:30:56'),
 (19, 'Universitas D', 'W', '2022-06-29 02:41:08', '2022-07-13 23:55:59'),
-(20, 'Universitas D', 'W', '2022-07-12 18:49:40', '2022-07-12 18:49:40');
+(20, 'Universitas F', 'W', '2022-07-12 18:49:40', '2022-07-24 18:55:57'),
+(21, 'Universitas E', 'N', '2022-07-24 18:55:48', '2022-07-24 18:55:48');
 
 -- --------------------------------------------------------
 
@@ -337,9 +340,9 @@ CREATE TABLE `statuses` (
 --
 
 INSERT INTO `statuses` (`id`, `nama_status`, `created_at`, `updated_at`) VALUES
-(1, 'Aktif', '2022-04-22 07:48:14', '2022-04-22 07:48:14'),
-(2, 'Kadaluarsa', '2022-04-22 00:48:32', '2022-04-23 02:44:51'),
-(3, 'Dalam Perpanjangan', '2022-04-22 00:53:30', '2022-04-23 03:10:22');
+(1, 'Aktif', '2022-04-22 07:48:14', '2022-07-24 19:27:33'),
+(2, 'Kadaluarsa', '2022-04-22 00:48:32', '2022-07-24 19:27:40'),
+(3, 'Dalam Perpanjangan', '2022-04-22 00:53:30', '2022-07-24 19:27:46');
 
 -- --------------------------------------------------------
 
@@ -430,7 +433,8 @@ INSERT INTO `usulans` (`id`, `usulan`, `bentuk_kerjasama`, `rencana_kegiatan`, `
 (18, 'Pengusulan Tentang Nomor 2', 'Membentuk Kerjasama Nomor 2', 'Rencanakan Nomor 2', '0813358888131', 'O', 2, 6, 3, 'L', 'Kesepakatan Disetujui', '2022-07-18 17:03:52', '2022-07-24 10:41:51'),
 (19, 'Pengusulan Tentang Nomor Q2', 'Membentuk Kerjasama Nomor Q2', 'Rencanakan Nomor Q2', '081335888814', 'I', 15, 6, 4, 'L', 'Kesepakatan Disetujui', '2022-07-18 17:35:40', '2022-07-24 10:42:05'),
 (20, 'Pengusulan Tentang Nomor 3', 'Membentuk Kerjasama Nomor 3', 'Rencanakan Nomor 3', '081335888812', '', 2, 11, 2, 'T', 'Kesepakatan Tidak Disetujui', '2022-07-21 17:29:36', '2022-07-24 11:25:11'),
-(21, 'Pengusulan Tentang Nomor Q2', 'Membentuk Kerjasama Nomor Q3', 'Rencana Q2', '081335888813', 'O', 3, 11, 2, 'B', NULL, '2022-07-23 21:15:09', '2022-07-24 11:21:08');
+(21, 'Pengusulan Tentang Nomor Q3', 'Membentuk Kerjasama Nomor Q3', 'Rencana Q2', '081335888813', 'O', 3, 11, 2, 'B', NULL, '2022-07-23 21:15:09', '2022-07-24 11:35:28'),
+(22, 'Usulan Q1', 'Bentuk Kerjasama Q1', 'Rencana Kegiatan Q1', '081335888810', 'I', 2, 4, 2, 'L', 'Kesepakatan Disetujui', '2022-07-24 18:46:38', '2022-07-24 18:46:55');
 
 --
 -- Indexes for dumped tables
@@ -588,19 +592,19 @@ ALTER TABLE `kategoris`
 -- AUTO_INCREMENT for table `kegiatans`
 --
 ALTER TABLE `kegiatans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `kerjasamas`
 --
 ALTER TABLE `kerjasamas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `mitras`
 --
 ALTER TABLE `mitras`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `statuses`
@@ -624,7 +628,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `usulans`
 --
 ALTER TABLE `usulans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- Constraints for dumped tables

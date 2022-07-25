@@ -324,7 +324,6 @@
         </div>
     @endif
 
-
     {{-- Modal Layout --}}
     <div class="modal fade" id="modal-sm">
         <div class="modal-dialog modal-sm">

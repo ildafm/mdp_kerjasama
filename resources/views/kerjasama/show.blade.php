@@ -76,20 +76,24 @@
         </div>
     </div>
 
-    {{-- Navbar Tambah Data Bukti Kerjasama dan Kegiatan --}}
+    {{-- Navbar Data Bukti Kerjasama dan Kegiatan --}}
     <div class="card card-default card-tabs">
         <div class="card-header p-0 pt-1">
             <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
                 <li class="pt-2 px-3">
-                    <h3 class="card-title">Tambah Data</h3>
+                    <h3 class="card-title">Data</h3>
                 </li>
+                {{-- Nav Kegiatan --}}
                 <li class="nav-item">
-                    <a class="nav-link active" id="custom-tabs-two-home-tab" data-toggle="pill" href="#custom-tabs-two-home"
-                        role="tab" aria-controls="custom-tabs-two-home" aria-selected="true">Bukti Kerjasama</a>
+                    <a class="nav-link active" id="custom-tabs-two-kegiatan-tab" data-toggle="pill"
+                        href="#custom-tabs-two-kegiatan" role="tab" aria-controls="custom-tabs-two-kegiatan"
+                        aria-selected="true">Kegiatan</a>
                 </li>
+                {{-- Nav Bukti Kerjasama --}}
                 <li class="nav-item">
-                    <a class="nav-link" id="custom-tabs-two-profile-tab" data-toggle="pill" href="#custom-tabs-two-profile"
-                        role="tab" aria-controls="custom-tabs-two-profile" aria-selected="false">Kegiatan</a>
+                    <a class="nav-link" id="custom-tabs-two-bukti_kerjasama-tab" data-toggle="pill"
+                        href="#custom-tabs-two-bukti_kerjasama" role="tab"
+                        aria-controls="custom-tabs-two-bukti_kerjasama" aria-selected="false">Bukti Kerjasama</a>
                 </li>
                 {{-- <li class="nav-item">
                     <a class="nav-link" id="custom-tabs-two-messages-tab" data-toggle="pill"
@@ -105,9 +109,190 @@
         </div>
         <div class="card-body">
             <div class="tab-content" id="custom-tabs-two-tabContent">
-                <div class="tab-pane fade show active" id="custom-tabs-two-home" role="tabpanel"
-                    aria-labelledby="custom-tabs-two-home-tab">
+                {{-- Panel Kegiatan --}}
+                <div class="tab-pane fade show active" id="custom-tabs-two-kegiatan" role="tabpanel"
+                    aria-labelledby="custom-tabs-two-kegiatan-tab">
+                    {{-- Form Menambahkan data Kegiatan --}}
+                    <h3>Tambah Data Kegiatan</h3>
+                    <form action="{{ route('kerjasamas.store') }}" method="POST">
+                        @csrf
+
+                        {{-- getKerjasamaID --}}
+                        <div class="form-group" hidden>
+                            <label for="kerjasama_id">getKerjasamaID </label>
+                            <input type="text" name='kerjasama_id' value="{{ $kerjasama->id }}"
+                                class="form-control @error('kerjasama_id') is-invalid @enderror"
+                                placeholder="Masukan ID Kerjasama" readonly>
+                            @error('kerjasama_id')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- Bentuk Kegiatan --}}
+                        <div class="form-group">
+                            <label for="bentuk_kegiatan">Bentuk Kegiatan </label>
+                            <input type="text" name='bentuk_kegiatan' value="{{ old('bentuk_kegiatan') }}"
+                                class="form-control @error('bentuk_kegiatan') is-invalid @enderror"
+                                placeholder="Masukan Bentuk Kegiatan">
+                            @error('bentuk_kegiatan')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="row">
+                            {{-- Tanggal Mulai --}}
+                            <div class="form-group col-lg-4">
+                                <label for="tanggal_mulai">Tanggal Mulai</label>
+                                <input type="date" name="tanggal_mulai" id="" class="form-control"
+                                    value="{{ old('tanggal_mulai') }}">
+                                @error('tanggal_mulai')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Tanggal Sampai --}}
+                            <div class="form-group col-lg-4">
+                                <label for="tanggal_sampai">Tanggal Sampai</label>
+                                <input type="date" name="tanggal_sampai" id="" class="form-control"
+                                    value="{{ old('tanggal_sampai') }}">
+                                @error('tanggal_sampai')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Dosen --}}
+                            <div class="form-group col-lg-4">
+                                <label for="pic_dosen">PIC Dosen</label>
+
+                                @php
+                                    if (old('pic_dosen') !== null) {
+                                        $option = old('pic_dosen');
+                                    } else {
+                                        $option = 1;
+                                    }
+                                @endphp
+
+                                <select class="form-control select2" name="pic_dosen" id="">
+                                    @foreach ($users as $data)
+                                        <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                            {{ $data->kode_dosen }} - {{ $data->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('pic_dosen')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="keterangan">Keterangan</label>
+                            <input type="text" name="keterangan" id="" value="{{ old('keterangan') }}"
+                                class="form-control @error('keterangan') is-invalid @enderror"
+                                placeholder="Masukan Keterangan">
+                            @error('keterangan')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <br>
+                        {{-- Button --}}
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                    <br><br>
+                    <h3>Tabel Daftar Kegiatan</h3>
+                    <table id="example3" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Aksi</th>
+                                <th>Nama Kerjasama</th>
+                                <th>Bentuk Kegiatan</th>
+                                <th>Keterangan</th>
+                                <th>PIC Dosen</th>
+                                <th>Tanggal Mulai</th>
+                                <th>Tanggal Sampai</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @php
+                                $nomor = 1;
+                            @endphp
+
+                            @foreach ($kegiatans as $data)
+                                @if ($data->kerjasama_id == $kerjasama->id)
+                                    <tr>
+                                        <td>{{ $nomor++ }}</td>
+
+                                        <td>
+                                            {{-- Button Tampil --}}
+                                            <a href="{{ url('kegiatans/' . $data->id) }}"
+                                                class="btn btn-sm btn-primary"><i class="nav-icon fas fa-eye"
+                                                    title="Tampil"></i></a>
+
+                                            @if (Auth::user()->level != 'D')
+                                                {{-- Button Ubah --}}
+                                                <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
+                                                    class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
+                                                        title="Edit"></i></a>
+
+                                                {{-- Button Hapus --}}
+                                                <button class="btn btn-sm btn-danger btn-hapus-kegiatan"
+                                                    data-id-kegiatan="{{ $data->id }}"
+                                                    data-bentukKegiatan="{{ $data->bentuk_kegiatan }}"
+                                                    data-toggle="modal" data-target="#modal-sm"><i
+                                                        class="nav-icon fas fa-trash" title="Hapus"></i></button>
+                                            @endif
+                                        </td>
+
+                                        @if (Auth::user()->level != 'D')
+                                            <td>{{ $data->kerjasama->nama_kerja_sama }}</td>
+                                        @else
+                                            <td>{{ $data->nama_kerja_sama }}</td>
+                                        @endif
+
+                                        <td>{{ $data->bentuk_kegiatan }}</td>
+
+                                        <td>{{ $data->keterangan }}</td>
+
+                                        @if (Auth::user()->level != 'D')
+                                            <td>{{ $data->user->name }}</td>
+                                        @else
+                                            <td>{{ $data->name }}</td>
+                                        @endif
+
+                                        <td>{{ $data->tanggal_mulai }}</td>
+
+                                        <td>{{ $data->tanggal_sampai }}</td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <th>No</th>
+                                <th>Aksi</th>
+                                <th>Nama Kerjasama</th>
+                                <th>Bentuk Kegiatan</th>
+                                <th>Keterangan</th>
+                                <th>PIC Dosen</th>
+                                <th>Tanggal Mulai</th>
+                                <th>Tanggal Sampai</th>
+                            </tr>
+                        </tfoot>
+
+                    </table>
+                </div>
+
+                {{-- Panel Bukti Kerjasama --}}
+                <div class="tab-pane fade" id="custom-tabs-two-bukti_kerjasama" role="tabpanel"
+                    aria-labelledby="custom-tabs-two-bukti_kerjasama-tab">
                     {{-- Form Menambahkan data Bukti --}}
+                    <h3>Tambah Data Bukti Kerjasama</h3>
                     <form action="{{ route('buktiKerjasamas.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         {{-- Nama Bukti Kerjasama --}}
@@ -126,7 +311,8 @@
                             <label for="file">Bukti Kerjasama(Max:5mb)</label>
                             <div class="input-group">
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
+                                    <input type="file" class="custom-file-input" name="file"
+                                        id="exampleInputFile">
                                     <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                 </div>
                                 <div class="input-group-append">
@@ -149,11 +335,62 @@
                         {{-- Button --}}
                         <button type="submit" class="btn btn-primary">Tambahkan Bukti</button>
                     </form>
-                </div>
-                <div class="tab-pane fade" id="custom-tabs-two-profile" role="tabpanel"
-                    aria-labelledby="custom-tabs-two-profile-tab">
-                    {{-- Form Menambahkan data Kegiatan --}}
-                    Kegiatan
+                    {{-- Tabel Data Bukti Kegiatan --}}
+                    <br><br>
+                    <h3>Tabel Data Bukti Kerjasama</h3>
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Aksi</th>
+                                <th>Nama Bukti Kerjasama</th>
+                                <th>Tanggal Upload</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @php
+                                $nomor = 1;
+                            @endphp
+
+                            @foreach ($buktiKerjasama as $data)
+                                <tr>
+                                    <td> {{ $nomor++ }} </td>
+                                    <td>
+                                        {{-- Button Tampil --}}
+                                        <a href="{{ url('storage/kerjasama/' . $data->file) }}"
+                                            class="btn btn-sm btn-primary">
+                                            <i class="nav-icon fas fa-eye" title="Tampil"></i></a>
+
+                                        {{-- Button Ubah --}}
+                                        <a href="{{ route('buktiKerjasamas.edit', ['buktiKerjasama' => $data->id]) }}"
+                                            class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
+                                                title="Edit"></i></a>
+
+                                        {{-- Button Hapus --}}
+                                        <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                            data-namaBuktiKerjasama="{{ $data->nama_bukti_kerjasama }}"
+                                            data-toggle="modal" data-target="#modal-sm"><i class="nav-icon fas fa-trash"
+                                                title="Hapus"></i></button>
+                                    </td>
+                                    <td>{{ $data->nama_bukti_kerjasama }}</td>
+                                    <td>{{ $data->tanggalUpload }}</td>
+                                </tr>
+                            @endforeach
+
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <th>No</th>
+                                <th>Aksi</th>
+                                <th>Nama Bukti Kerjasama</th>
+                                <th>Tanggal Upload</th>
+                            </tr>
+                        </tfoot>
+
+                    </table>
                 </div>
                 {{-- <div class="tab-pane fade" id="custom-tabs-two-messages" role="tabpanel"
                     aria-labelledby="custom-tabs-two-messages-tab">
@@ -165,81 +402,9 @@
                 </div> --}}
             </div>
         </div>
-
     </div>
 
-    {{-- Tabel Bukti Kerjasama --}}
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">Tabel Bukti Kerjasama</h3>
-            <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                    <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-        </div>
-
-        <div class="card-body">
-            {{-- Data Tabel Bukti Kerjasama --}}
-            <table id="example1" class="table table-bordered table-striped">
-
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Aksi</th>
-                        <th>Nama Bukti Kerjasama</th>
-                        <th>Tanggal Upload</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    @php
-                        $nomor = 1;
-                    @endphp
-
-                    @foreach ($buktiKerjasama as $data)
-                        <tr>
-                            <td> {{ $nomor++ }} </td>
-                            <td>
-                                {{-- Button Tampil --}}
-                                <a href="{{ url('storage/kerjasama/' . $data->file) }}" class="btn btn-sm btn-primary">
-                                    <i class="nav-icon fas fa-eye" title="Tampil"></i></a>
-
-                                {{-- Button Ubah --}}
-                                <a href="{{ route('buktiKerjasamas.edit', ['buktiKerjasama' => $data->id]) }}"
-                                    class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
-                                        title="Edit"></i></a>
-
-                                {{-- Button Hapus --}}
-                                <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                    data-namaBuktiKerjasama="{{ $data->nama_bukti_kerjasama }}" data-toggle="modal"
-                                    data-target="#modal-sm"><i class="nav-icon fas fa-trash" title="Hapus"></i></button>
-                            </td>
-                            <td>{{ $data->nama_bukti_kerjasama }}</td>
-                            <td>{{ $data->tanggalUpload }}</td>
-                        </tr>
-                    @endforeach
-
-                </tbody>
-
-                <tfoot>
-                    <tr>
-                        <th>No</th>
-                        <th>Aksi</th>
-                        <th>Nama Bukti Kerjasama</th>
-                        <th>Tanggal Upload</th>
-                    </tr>
-                </tfoot>
-
-            </table>
-        </div>
-    </div>
-
-    {{-- Modal Layout --}}
+    {{-- Modal Layout Bukti --}}
     <div class="modal fade" id="modal-sm">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -252,7 +417,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body" id="mb-konfirmasi">
+                    <div class="modal-body" id="mb-konfirmasi-bukti">
                         {{-- <p id="text_modal"></p> --}}
                     </div>
                     <div class="modal-footer justify-content-between">
@@ -264,7 +429,33 @@
         </div>
     </div>
 
+    {{-- Modal Layout Kegiatan --}}
+    <div class="modal fade" id="modal-sm">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <form action="" method="POST" id="formDelete-kegiatan">
+                    @method('DELETE')
+                    @csrf
+                    <div class="modal-header">
+                        <h4 class="modal-title">Peringatan !!!</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="mb-konfirmasi-kegiatan">
+
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Tidak</button>
+                        <button type="submit" class="btn btn-danger">Iya, Hapus</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+    {{-- Script untuk hapus data bukti --}}
     <script>
         // jika tombol hapus ditekan, generate alamat URL untuk proses hapus
         // id disini adalah id buktiKerjasama
@@ -273,7 +464,7 @@
             $('#formDelete').attr('action', '/buktiKerjasamas/' + id);
 
             let namaBuktiKerjasama = $(this).attr('data-namaBuktiKerjasama');
-            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus bukti " + namaBuktiKerjasama + " ?")
+            $('#mb-konfirmasi-bukti').text("Apakah anda yakin ingin menghapus bukti " + namaBuktiKerjasama + " ?")
 
             // document.getElementById("text_modal").innerHTML = "Apakah anda yakin ingin menghapus bukti " +
             //     namaBuktiKerjasama + " ?";
@@ -282,6 +473,25 @@
         // jika tombol Ya, hapus ditekan, submit form hapus
         $('#formDelete [type="submit"]').click(function() {
             $('#formDelete').submit();
+        })
+    </script>
+
+    {{-- Script untuk hapus data kegiatan --}}
+    <script>
+        // jika tombol hapus ditekan, generate alamat URL untuk proses hapus
+        // id disini adalah id kegiatan
+        $('.btn-hapus-kegiatan').click(function() {
+            let id_kegiatan = $(this).attr('data-id-kegiatan');
+            $('#formDelete-kegiatan').attr('action', '/kegiatans/' + id_kegiatan);
+
+            let dataBentukKegiatan = $(this).attr('data-bentukKegiatan')
+            $('#mb-konfirmasi-kegiatan').text("Apakah anda yakin ingin menghapus kegiatan : " + dataBentukKegiatan +
+                " ?")
+        })
+
+        // jika tombol Ya, hapus ditekan, submit form hapus
+        $('#formDelete-kegiatan [type="submit"]').click(function() {
+            $('#formDelete-kegiatan').submit();
         })
     </script>
 

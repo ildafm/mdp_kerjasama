@@ -45,5 +45,7 @@
 -> Masalah reset password (bisa dari profile untuk login dosen, Selesai)
 
 -> Masalah Edit Nomor MoU tidak menjadi readonly meski sudah variabel default adalah tanpa MoU
+-> Masalah data kegiatan tidak bisa dihapus melalui view show kerjasama
+-> Masalah data bukti tidak bisa di unlink jika file tidak ada di penyimpanan
 -> Menambahkan komentar (Sedikit)
 -> Form ubah bukti kegiatan(Bagian Checkbox Masih Bermasalah)
