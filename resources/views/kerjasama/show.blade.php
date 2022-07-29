@@ -243,7 +243,7 @@
                                                 <button class="btn btn-sm btn-danger btn-hapus-kegiatan"
                                                     data-id-kegiatan="{{ $data->id }}"
                                                     data-bentukKegiatan="{{ $data->bentuk_kegiatan }}"
-                                                    data-toggle="modal" data-target="#modal-sm"><i
+                                                    data-toggle="modal" data-target="#modal-sm-kegiatan"><i
                                                         class="nav-icon fas fa-trash" title="Hapus"></i></button>
                                             @endif
                                         </td>
@@ -430,7 +430,7 @@
     </div>
 
     {{-- Modal Layout Kegiatan --}}
-    <div class="modal fade" id="modal-sm">
+    <div class="modal fade" id="modal-sm-kegiatan">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <form action="" method="POST" id="formDelete-kegiatan">
@@ -464,7 +464,7 @@
             $('#formDelete').attr('action', '/buktiKerjasamas/' + id);
 
             let namaBuktiKerjasama = $(this).attr('data-namaBuktiKerjasama');
-            $('#mb-konfirmasi-bukti').text("Apakah anda yakin ingin menghapus bukti " + namaBuktiKerjasama + " ?")
+            $('#mb-konfirmasi-bukti').text("Apakah anda yakin ingin menghapus bukti : " + namaBuktiKerjasama + " ?")
 
             // document.getElementById("text_modal").innerHTML = "Apakah anda yakin ingin menghapus bukti " +
             //     namaBuktiKerjasama + " ?";
