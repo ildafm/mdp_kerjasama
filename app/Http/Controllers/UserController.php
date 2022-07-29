@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Models\Unit;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -35,8 +36,9 @@ class UserController extends Controller
     {
         //
         $this->authorize('viewAny', User::class);
-
-        return view('user.create');
+        $units = Unit::All();
+        return view('user.create')
+            ->with('units', $units);
     }
 
     /**
@@ -56,7 +58,8 @@ class UserController extends Controller
             'kode_dosen' => 'required | max:6 | string | unique:users',
             'email' => 'required | unique:users| email | max:255 | string',
             'password' => 'required | min:8 | confirmed | string',
-            'level' => 'required'
+            'level' => 'required',
+            'nama_unit' => 'required',
         ]);
 
         $user = new User();
@@ -65,6 +68,7 @@ class UserController extends Controller
         $user->email = $validateData['email'];
         $user->password = Hash::make($validateData['password']);
         $user->level = $validateData['level'];
+        $user->unit_id = $validateData['nama_unit'];
         $user->save();
 
         $request->session()->flash('pesan', 'Penambahan data berhasil');
@@ -97,7 +101,10 @@ class UserController extends Controller
         //
             $this->authorize('viewAny', User::class);
 
-            return view('user.edit')->with('user', $user);
+            $units = Unit::All();
+            return view('user.edit')
+            ->with('units', $units)
+            ->with('user', $user);
     }
 
     /**
@@ -116,6 +123,7 @@ class UserController extends Controller
             'name' => 'required | string',
             'password' => 'required_with:password_confirmation|same:password_confirmation',
             'level' => 'required',
+            'nama_unit' => 'required',
         ]);
 
         $user = User::findOrFail($user->id);
@@ -123,13 +131,15 @@ class UserController extends Controller
             $user->update([
                 'name' => $request->name,
                 'password' => $request->password = Hash::make($validateData['password']),
-                'level' => $request->level
+                'level' => $request->level,
+                'unit_id' => $request->nama_unit,
             ]);   
         }
         else{
             $user->update([
                 'name' => $request->name,
                 'level' => $request->level,
+                'unit_id' => $request->nama_unit,
             ]); 
         }
        

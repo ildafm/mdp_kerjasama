@@ -33,6 +33,7 @@
                         <th>Nama Pengguna</th>
                         <th>Email</th>
                         <th>Level</th>
+                        <th>Nama Unit</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,12 +71,13 @@
                                     } elseif ($data->level == 'K') {
                                         echo 'Kaprodi';
                                     } elseif ($data->level == 'U') {
-                                        echo 'Kelapa Unit';
+                                        echo 'Kepala Unit';
                                     } else {
                                         echo 'Dosen';
                                     }
                                 @endphp
                             </td>
+                            <td>{{ $data->unit->nama_unit }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -87,6 +89,7 @@
                         <th>Nama Pengguna</th>
                         <th>Email</th>
                         <th>Level</th>
+                        <th>Nama Unit</th>
                     </tr>
                 </tfoot>
             </table>

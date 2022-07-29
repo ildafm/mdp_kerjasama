@@ -59,7 +59,6 @@
                     @enderror
                 </div>
 
-
                 <div class="row">
                     <div class="form-group col-lg-6">
                         {{-- ubah password --}}
@@ -80,28 +79,54 @@
                     </div>
                 </div>
 
-                {{-- ubah level --}}
-                <div class="form-group">
-                    <label for="level">Level</label>
+                <div class="row">
+                    {{-- select unit --}}
+                    <div class="form-group col-lg-6">
+                        <label for="nama_unit">Nama Unit</label>
 
-                    @php
-                        if (old('level') !== null) {
-                            $option = old('level');
-                        } else {
-                            $option = $user->level;
-                        }
-                    @endphp
+                        @php
+                            if (old('nama_unit') !== null) {
+                                $option = old('nama_unit');
+                            } else {
+                                $option = $user->unit_id;
+                            }
+                        @endphp
 
-                    <select class="form-control" name='level'>
-                        <option value='A' <?= $option == 'A' ? 'selected' : '' ?>>Admin</option>
-                        <option value='E' <?= $option == 'E' ? 'selected' : '' ?>>Dekan</option>
-                        <option value='K' <?= $option == 'K' ? 'selected' : '' ?>>Kaprodi</option>
-                        <option value='U' <?= $option == 'U' ? 'selected' : '' ?>>Kepala Unit</option>
-                        <option value='D' <?= $option == 'D' ? 'selected' : '' ?>>Dosen</option>
-                    </select>
-                    @error('level')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                        <select class="form-control select2" name="nama_unit" id="">
+                            @foreach ($units as $data)
+                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                    {{ $data->nama_unit }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('nama_unit')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- ubah level --}}
+                    <div class="form-group col-lg-6">
+                        <label for="level">Level</label>
+
+                        @php
+                            if (old('level') !== null) {
+                                $option = old('level');
+                            } else {
+                                $option = $user->level;
+                            }
+                        @endphp
+
+                        <select class="form-control" name='level'>
+                            <option value='A' <?= $option == 'A' ? 'selected' : '' ?>>Admin</option>
+                            <option value='E' <?= $option == 'E' ? 'selected' : '' ?>>Dekan</option>
+                            <option value='K' <?= $option == 'K' ? 'selected' : '' ?>>Kaprodi</option>
+                            <option value='U' <?= $option == 'U' ? 'selected' : '' ?>>Kepala Unit</option>
+                            <option value='D' <?= $option == 'D' ? 'selected' : '' ?>>Dosen</option>
+                        </select>
+                        @error('level')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
 
                 <br>

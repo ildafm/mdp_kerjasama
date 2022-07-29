@@ -13,5 +13,9 @@ class Unit extends Model
         return $this->hasMany(Usulan::class);
     }
 
+    public function user(){
+        return $this->hasMany(User::class);
+    }
+
     protected $fillable = ['nama_unit'];
 }

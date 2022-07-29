@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'level',
+        'unit_id',
     ];
 
     /**
@@ -45,5 +46,9 @@ class User extends Authenticatable
 
     public function usulan(){
         return $this->hasMany(Usulan::class);
+    }
+
+    public function unit(){
+        return $this->belongsTo(Unit::class);
     }
 }

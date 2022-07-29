@@ -157,6 +157,7 @@
                         data-accordion="false">
 
                         <li class="nav-item">
+                            {{-- Dashboard --}}
                             <a href="{{ url('/dashboard') }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
@@ -165,6 +166,7 @@
                             </a>
                         </li>
 
+                        {{-- Mitras --}}
                         <li class="nav-item">
                             <a href="{{ url('/mitras') }}" class="nav-link">
                                 <i class="nav-icon fas fa-building"></i>
@@ -174,6 +176,7 @@
                             </a>
                         </li>
 
+                        {{-- Usulans --}}
                         <li class="nav-item">
                             <a href="{{ url('/usulans') }}" class="nav-link">
                                 <i class="nav-icon fas fa-paper-plane"></i>
@@ -183,6 +186,7 @@
                             </a>
                         </li>
 
+                        {{-- Kerjasamas --}}
                         <li class="nav-item">
                             <a href="{{ url('/kerjasamas') }}" class="nav-link">
                                 <i class="nav-icon fas fa-handshake"></i>
@@ -192,6 +196,7 @@
                             </a>
                         </li>
 
+                        {{-- Kegiatans --}}
                         <li class="nav-item">
                             <a href="{{ url('/kegiatans') }}" class="nav-link">
                                 <i class="nav-icon fas fa-briefcase"></i>
@@ -201,49 +206,47 @@
                             </a>
                         </li>
 
-                        @php
-                            if (Auth::user()->level != 'D') {
-                                // Units
-                                echo '<li class="nav-item">';
-                                echo '<a href="/units" class="nav-link">';
-                                echo '<i class="nav-icon fas fa-users"></i>';
-                                echo '<p>';
-                                echo '  Unit';
-                                echo '</p>';
-                                echo '</a>';
-                                echo '</li>';
-                            
-                                // Status
-                                echo '<li class="nav-item">';
-                                echo '<a href="/statuses" class="nav-link">';
-                                echo '<i class="nav-icon fas fa-flag"></i>';
-                                echo '<p>';
-                                echo '  Status';
-                                echo '</p>';
-                                echo '</a>';
-                                echo '</li>';
-                            
-                                // Status
-                                echo '<li class="nav-item">';
-                                echo '<a href="/kategoris" class="nav-link">';
-                                echo '<i class="nav-icon fas fa-layer-group"></i>';
-                                echo '<p>';
-                                echo '  Kategori';
-                                echo '</p>';
-                                echo '</a>';
-                                echo '</li>';
-                            
-                                // Users
-                                echo '<li class="nav-item">';
-                                echo '<a href="/users" class="nav-link">';
-                                echo '<i class="nav-icon fas fa-user"></i>';
-                                echo '<p>';
-                                echo '  User';
-                                echo '</p>';
-                                echo '</a>';
-                                echo '</li>';
-                            }
-                        @endphp
+                        @if (Auth::user()->level != 'D')
+                            {{-- Users --}}
+                            <li class="nav-item">
+                                <a href="{{ url('/users') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-user"></i>
+                                    <p>
+                                        User
+                                    </p>
+                                </a>
+                            </li>
+
+                            {{-- Units --}}
+                            <li class="nav-item">
+                                <a href="{{ url('/units') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-users"></i>
+                                    <p>
+                                        Unit
+                                    </p>
+                                </a>
+                            </li>
+
+                            {{-- Statuses --}}
+                            <li class="nav-item">
+                                <a href="{{ url('/statuses') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-flag"></i>
+                                    <p>
+                                        Status
+                                    </p>
+                                </a>
+                            </li>
+
+                            {{-- Kategoris --}}
+                            <li class="nav-item">
+                                <a href="{{ url('/kategoris') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-layer-group"></i>
+                                    <p>
+                                        Kategori
+                                    </p>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                 </nav>
             </div>

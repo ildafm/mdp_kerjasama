@@ -24,7 +24,7 @@
 
                 <div class="row">
                     {{-- input nama --}}
-                    <div class="form-group col-lg-6">
+                    <div class="form-group col-lg-8">
                         <label for="name">Nama User</label>
                         <input type="text" name='name' autocomplete="name" autofocus value="{{ old('name') }}"
                             class="form-control @error('name') is-invalid @enderror" placeholder="Masukan Nama User">
@@ -34,7 +34,7 @@
                     </div>
 
                     {{-- Input Kode Dosen --}}
-                    <div class="form-group col-lg-6">
+                    <div class="form-group col-lg-4">
                         <label for="kode_dosen">Kode Dosen</label>
                         <input type="text" name='kode_dosen' value="{{ old('kode_dosen') }}"
                             class="form-control @error('kode_dosen') is-invalid @enderror" placeholder="Masukan Kode Dosen">
@@ -44,16 +44,41 @@
                     </div>
                 </div>
 
-                {{-- input email --}}
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="text" name='email' autocomplete="email" value="{{ old('email') }}"
-                        class="form-control @error('email') is-invalid @enderror" placeholder="Masukan Email">
-                    @error('email')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
+                <div class="row">
+                    {{-- input email --}}
+                    <div class="form-group col-lg-8">
+                        <label for="email">Email</label>
+                        <input type="text" name='email' autocomplete="email" value="{{ old('email') }}"
+                            class="form-control @error('email') is-invalid @enderror" placeholder="Masukan Email">
+                        @error('email')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
 
+                    {{-- select unit --}}
+                    <div class="form-group col-lg-4">
+                        <label for="nama_unit">Nama Unit</label>
+
+                        @php
+                            if (old('nama_unit') !== null) {
+                                $option = old('nama_unit');
+                            } else {
+                                $option = 1;
+                            }
+                        @endphp
+
+                        <select class="form-control select2" name="nama_unit" id="">
+                            @foreach ($units as $data)
+                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                    {{ $data->nama_unit }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('nama_unit')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
                 {{-- password dan password confirm dan level row --}}
                 <div class="row">
                     {{-- input password --}}
