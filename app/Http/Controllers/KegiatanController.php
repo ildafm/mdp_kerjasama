@@ -41,6 +41,8 @@ class KegiatanController extends Controller
     public function create()
     {
         //
+        $this->authorize('viewAny', User::class);
+
         $users = User::All();
         $kerjasamas = Kerjasama::All();
         return view('kegiatan.create')
@@ -57,6 +59,8 @@ class KegiatanController extends Controller
     public function store(Request $request)
     {
         //
+        $this->authorize('viewAny', User::class);
+
         $validateData = $request->validate([
             'tanggal_mulai' => 'required',
             'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
@@ -104,6 +108,10 @@ class KegiatanController extends Controller
         WHERE bukti_kegiatans.kegiatans_id = $kegiatan->id");
 
         $units = Unit::All();
+        
+        // update status kegiatan
+        DB::update("UPDATE kegiatans SET kegiatans.status = '1' WHERE id = $kegiatan->id");
+
         return view('kegiatan.show')
             ->with('buktiKegiatans', $buktiKegiatans)
             ->with('kegiatan', $kegiatan)
@@ -119,9 +127,11 @@ class KegiatanController extends Controller
     public function edit(Kegiatan $kegiatan)
     {
         //
-        if(Auth::user()->id != $kegiatan->user_id){
-            $this->authorize('viewAny', User::class);
-        }
+        $this->authorize('viewAny', User::class);
+
+        // if(Auth::user()->id != $kegiatan->user_id){
+        //     $this->authorize('viewAny', User::class);
+        // }
         
         $kerjasamas = Kerjasama::All();
         $users = User::All();

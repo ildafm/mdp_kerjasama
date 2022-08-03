@@ -220,10 +220,7 @@ class BuktiKegiatanController extends Controller
             ]);
         }
 
-        DB::update("UPDATE bukti_kegiatan_units
-        JOIN bukti_kegiatans ON bukti_kegiatan_units.bukti_kegiatans_id = bukti_kegiatans.id
-        SET units_id = $request->nama_unit
-        WHERE bukti_kegiatans_id = $buktiKegiatan->id");
+        DB::update("UPDATE bukti_kegiatan_units JOIN bukti_kegiatans ON bukti_kegiatan_units.bukti_kegiatans_id = bukti_kegiatans.id SET units_id = $request->nama_unit WHERE bukti_kegiatans_id = $buktiKegiatan->id");
 
         $request->session()->flash('pesan', 'Perubahan data berhasil');
         return redirect()->route('kegiatans.show', $buktiKegiatan->kegiatans_id);

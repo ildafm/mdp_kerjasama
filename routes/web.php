@@ -13,6 +13,7 @@ use App\Http\Controllers\StatusController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BuktiKerjasamaController;
 use App\Http\Controllers\BuktiKegiatanController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 
 /*
@@ -44,6 +45,8 @@ Route::resource('profiles', ProfileController::class)->middleware(['auth']);
 
 Route::resource('buktiKerjasamas', BuktiKerjasamaController::class)->middleware(['auth']);
 Route::resource('buktiKegiatans', BuktiKegiatanController::class)->middleware(['auth']);
+Route::get('notification_kegiatan', [App\Http\Controllers\NotificationController::class, 'kegiatan'])->middleware(['auth']);
+
 // Route::get('/mahasiswa/create', [MahasiswaController::class, 'create']);
 
 Auth::routes();

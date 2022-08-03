@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 03, 2022 at 05:37 PM
+-- Generation Time: Aug 04, 2022 at 12:34 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -159,9 +159,18 @@ CREATE TABLE `kegiatans` (
   `keterangan` text NOT NULL,
   `kerjasama_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `status` varchar(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `kegiatans`
+--
+
+INSERT INTO `kegiatans` (`id`, `tanggal_mulai`, `tanggal_sampai`, `bentuk_kegiatan`, `PIC`, `keterangan`, `kerjasama_id`, `user_id`, `status`, `created_at`, `updated_at`) VALUES
+(29, '2022-08-03', '2022-08-06', 'Kegiatan 10', NULL, 'Keterangan 10', 8, 13, '1', '2022-05-04 16:25:20', '2022-08-03 22:16:45'),
+(30, '2022-08-04', '2022-08-31', 'Kegiatan Q10', NULL, 'Keterangan Q10', 9, 13, '0', '2022-07-02 19:05:00', '2022-08-03 22:20:45');
 
 -- --------------------------------------------------------
 
@@ -557,7 +566,7 @@ ALTER TABLE `kategoris`
 -- AUTO_INCREMENT for table `kegiatans`
 --
 ALTER TABLE `kegiatans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `kerjasamas`
@@ -653,7 +662,7 @@ DELIMITER $$
 --
 CREATE DEFINER=`root`@`localhost` EVENT `auto_update_status_kerjasama` ON SCHEDULE EVERY 1 DAY STARTS '2022-07-22 00:35:05' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE kerjasamas
 SET status_id = 2
-WHERE tanggal_sampai < NOW() and NOT status_id = 3$$
+WHERE tanggal_sampai < NOW() AND status_id = 1$$
 
 DELIMITER ;
 COMMIT;

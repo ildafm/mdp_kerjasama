@@ -1,17 +1,11 @@
 @extends('layouts.master')
-@section('title', 'Kegiatan')
+@section('title', 'Kegiatan Terbaru')
 
 @section('content')
 
     <div class="card">
         <div class="card-header">
-            @if (Auth::user()->level != 'D')
-                {{-- Button Tambah --}}
-                <a href="{{ url('/kegiatans/create') }}" class='btn btn-primary'>Tambah Kegiatan</a>
-            @else
-                <h3 class="card-title">Daftar Kegiatan</h3>
-            @endif
-
+            <h3 class="card-title">Kegiatan Terbaru</h3>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                     <i class="fas fa-minus"></i>
@@ -52,7 +46,7 @@
                         $nomor = 1;
                     @endphp
 
-                    @foreach ($kegiatans as $data)
+                    @foreach ($kegiatansUnRead as $data)
                         <tr>
                             <td>{{ $nomor++ }}</td>
 
@@ -75,13 +69,13 @@
                                 @endif
                             </td>
 
-                            <td>{{ $data->kerjasama->nama_kerja_sama }}</td>
+                            <td>{{ $data->nama_kerja_sama }}</td>
 
                             <td>{{ $data->bentuk_kegiatan }}</td>
 
                             <td>{{ $data->keterangan }}</td>
 
-                            <td>{{ $data->user->name }}</td>
+                            <td>{{ $data->name }}</td>
 
                             <td>{{ $data->tanggal_mulai }}</td>
 
