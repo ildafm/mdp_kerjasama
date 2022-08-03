@@ -186,6 +186,23 @@ class KegiatanController extends Controller
         }
         
         $kegiatan->delete();
-        return redirect()->route('kegiatans.index')->with('pesan', "Hapus data kegiatan : $kegiatan->bentuk_kegiatan berhasil");
+            return redirect()->route('kegiatans.index')->with('pesan', "Hapus data kegiatan : $kegiatan->bentuk_kegiatan berhasil");
+    }
+
+    public function customDestroy($id_kegiatan){
+        $kegiatan = Kegiatan::findOrFail($id_kegiatan);
+
+        $getBuktiKegiatan = DB::select("SELECT id, nama_bukti_kegiatan, bukti_kegiatans.file AS 'file', kegiatans_id FROM bukti_kegiatans WHERE kegiatans_id = $kegiatan->id");
+
+        // unlink semua file sekaligus
+        if(count($getBuktiKegiatan) > 0){
+            for ($i = 0; $i < count($getBuktiKegiatan); $i++) {
+                unlink(storage_path('app/public/kegiatan/'.$getBuktiKegiatan[$i]->file));
+            }
+        }
+        
+        $kegiatan->delete();
+        return redirect()->route('kerjasamas.show', $kegiatan->kerjasama_id)->with('pesan', "Hapus data kegiatan : $kegiatan->bentuk_kegiatan berhasil");
+
     }
 }

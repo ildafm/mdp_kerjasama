@@ -30,6 +30,7 @@ Route::get('/', function () {
     return redirect()->route('dashboard');
 });
 
+Route::delete('kegiatans/customDestroy/{id_kegiatan}', [App\Http\Controllers\KegiatanController::class, 'customDestroy'])->name('customDestroy')->middleware(['auth']);
 Route::resource('mitras', MitraController::class)->middleware(['auth']);
 Route::resource('dosens', DosenController::class)->middleware(['auth']);
 Route::resource('kegiatans', KegiatanController::class)->middleware(['auth']);

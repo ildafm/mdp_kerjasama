@@ -201,7 +201,13 @@
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                     <br><br>
-                    <h3>Tabel Daftar Kegiatan</h3>
+                    <h3>
+                        @if ($kerjasama->no_mou != null || $kerjasama->no_mou != '')
+                            Nomor MoU : {{ $kerjasama->no_mou }}
+                        @else
+                            Tanpa MoU
+                        @endif
+                    </h3>
                     <table id="example3" class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -482,7 +488,7 @@
         // id disini adalah id kegiatan
         $('.btn-hapus-kegiatan').click(function() {
             let id_kegiatan = $(this).attr('data-id-kegiatan');
-            $('#formDelete-kegiatan').attr('action', '/kegiatans/' + id_kegiatan);
+            $('#formDelete-kegiatan').attr('action', '/kegiatans/customDestroy/' + id_kegiatan);
 
             let dataBentukKegiatan = $(this).attr('data-bentukKegiatan')
             $('#mb-konfirmasi-kegiatan').text("Apakah anda yakin ingin menghapus kegiatan : " + dataBentukKegiatan +

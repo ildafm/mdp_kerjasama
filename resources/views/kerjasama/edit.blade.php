@@ -2,21 +2,7 @@
 @section('title', 'Kerjasama')
 
 @section('content')
-    <script>
-        function getStatus(status) {
-            let nk = document.getElementById("nama_kategori")
 
-            let no_mou = document.getElementById("no_mou")
-
-            no_mou.readOnly = false
-            if (nk.value == "1") {
-                no_mou.readOnly = false
-            } else {
-                no_mou.value = ""
-                no_mou.readOnly = true
-            }
-        }
-    </script>
 
     <div class="card">
         <div class="card-header">
@@ -44,7 +30,8 @@
                     <div class="form-group col-lg-6">
                         <label for="no_mou">Nomor MoU</label>
                         <input type="text" id="no_mou" name='no_mou' value="{{ old('no_mou', $kerjasama->no_mou) }}"
-                            class="form-control @error('no_mou') is-invalid @enderror" placeholder="Masukan Nomor MoU">
+                            class="form-control @error('no_mou') is-invalid @enderror" placeholder="Masukan Nomor MoU"
+                            onload="getStatus({{ $kerjasama->kategori_id }})">
                         @error('no_mou')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -150,5 +137,23 @@
             </form>
         </div>
     </div>
+
+    <script>
+        document.getElementById("no_mou").addEventListener("load", getStatus(@php echo $kerjasama->kategori_id @endphp));
+
+        function getStatus(status) {
+            let nk = document.getElementById("nama_kategori")
+
+            let no_mou = document.getElementById("no_mou")
+
+            no_mou.readOnly = false
+            if (nk.value == "1") {
+                no_mou.readOnly = false
+            } else {
+                no_mou.value = ""
+                no_mou.readOnly = true
+            }
+        }
+    </script>
 
 @endsection

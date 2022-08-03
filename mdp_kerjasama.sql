@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 29, 2022 at 04:49 PM
+-- Generation Time: Aug 03, 2022 at 05:37 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -40,19 +40,6 @@ CREATE TABLE `bukti_kegiatans` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `bukti_kegiatans`
---
-
-INSERT INTO `bukti_kegiatans` (`id`, `nama_bukti_kegiatan`, `file`, `kegiatans_id`, `ceklist_apt`, `ceklist_aps`, `ceklist_lamemba`, `bidang`, `created_at`, `updated_at`) VALUES
-(14, 'Bukti kegiatan Q2', 'file-1657089740.pdf', 8, 'Y', 'Y', 'Y', 'P', '2022-07-06 06:42:20', '2022-07-14 04:48:33'),
-(15, 'Bukti kegiatan Q3', 'file-1657089773.docx', 8, 'Y', 'T', 'Y', 'L', '2022-07-06 06:42:53', '2022-07-13 08:07:44'),
-(30, 'Bukti Kegiatan Q4', 'file-1657654084.png', 8, 'T', 'Y', 'T', 'B', '2022-07-12 19:28:04', '2022-07-12 19:28:04'),
-(34, 'Bukti 1', 'file-1657655394.png', 8, 'Y', 'Y', 'T', 'N', '2022-07-12 19:49:54', '2022-07-13 07:29:04'),
-(38, 'Bukti 1', 'file-1657756513.png', 10, 'T', 'T', 'T', 'N', '2022-07-13 23:55:13', '2022-07-13 23:55:13'),
-(40, 'Bukti Kegiatan Q4 Dari Q2', 'file-1657757114.png', 16, 'Y', 'Y', 'Y', 'N', '2022-07-14 00:05:14', '2022-07-14 00:05:14'),
-(44, 'Bukti Kegiatan Q4', 'file-1657757322.png', 16, 'T', 'Y', 'T', 'B', '2022-07-14 00:08:42', '2022-07-14 00:08:42');
-
 -- --------------------------------------------------------
 
 --
@@ -66,19 +53,6 @@ CREATE TABLE `bukti_kegiatan_units` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `bukti_kegiatan_units`
---
-
-INSERT INTO `bukti_kegiatan_units` (`id`, `units_id`, `bukti_kegiatans_id`, `created_at`, `updated_at`) VALUES
-(11, 4, 14, '2022-07-06 06:42:20', '2022-07-11 12:57:26'),
-(12, 3, 15, '2022-07-06 06:42:53', '2022-07-13 07:42:24'),
-(27, 2, 30, '2022-07-12 19:28:04', '2022-07-12 19:28:04'),
-(31, 4, 34, '2022-07-12 19:49:54', '2022-07-12 19:49:54'),
-(35, 3, 38, '2022-07-13 23:55:13', '2022-07-13 23:55:13'),
-(37, 2, 40, '2022-07-14 00:05:14', '2022-07-14 00:05:14'),
-(41, 1, 44, '2022-07-14 00:08:42', '2022-07-14 00:08:42');
 
 -- --------------------------------------------------------
 
@@ -103,8 +77,7 @@ INSERT INTO `bukti_kerjasamas` (`id`, `nama_bukti_kerjasama`, `file`, `kerjasama
 (24, 'Bukti Kerjasama Q1', 'file-1656651006.png', 8, '2022-07-01 04:50:06', '2022-07-01 04:50:06'),
 (27, 'Upload FIle PDF', 'file-1656651201.pdf', 8, '2022-07-01 04:53:21', '2022-07-01 04:53:21'),
 (28, 'Bukti Kerjasama Dari Kerja Sama Q12', 'file-1657650172.png', 9, '2022-07-12 18:22:52', '2022-07-12 18:22:52'),
-(29, 'Bukti Kerjasama', 'file-1657651442.png', 8, '2022-07-12 18:29:07', '2022-07-12 18:44:44'),
-(39, 'abc', 'file-1658615018.docx', 8, '2022-07-23 22:23:38', '2022-07-23 22:23:38');
+(29, 'Bukti Kerjasama', 'file-1657651442.png', 8, '2022-07-12 18:29:07', '2022-07-12 18:44:44');
 
 -- --------------------------------------------------------
 
@@ -190,17 +163,6 @@ CREATE TABLE `kegiatans` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `kegiatans`
---
-
-INSERT INTO `kegiatans` (`id`, `tanggal_mulai`, `tanggal_sampai`, `bentuk_kegiatan`, `PIC`, `keterangan`, `kerjasama_id`, `user_id`, `created_at`, `updated_at`) VALUES
-(8, '2022-06-30', '2022-07-02', 'Daring 1', 'P', 'Dilakukan secara daring selama beberapa hari', 8, 4, '2022-06-29 19:21:32', '2022-07-25 11:40:20'),
-(10, '2022-08-08', '2022-09-10', 'Lepas 1', 'F', 'Keterangan ke 1Q', 9, 4, '2022-07-01 03:51:51', '2022-07-12 18:52:53'),
-(16, '2022-07-20', '2022-07-22', 'Bentuk Kegiatan 2', 'P', 'Keterangan Kegiatan 2', 8, 6, '2022-07-14 00:01:53', '2022-07-14 00:01:53'),
-(20, '2022-07-25', '2022-07-27', 'Bentuk Kegiatan 2', 'P', 'Keterangan Kegiatan 2', 9, 2, '2022-07-24 19:12:20', '2022-07-24 19:12:20'),
-(21, '2022-07-25', '2022-07-26', 'Bentuk Kegiatan Q2 Baru', NULL, 'Keterangan Kegiatan 2 Baru', 15, 11, '2022-07-25 11:40:45', '2022-07-25 11:40:45');
-
 -- --------------------------------------------------------
 
 --
@@ -227,9 +189,9 @@ CREATE TABLE `kerjasamas` (
 INSERT INTO `kerjasamas` (`id`, `nama_kerja_sama`, `no_mou`, `tanggal_mulai`, `tanggal_sampai`, `kategori_id`, `status_id`, `usulan_id`, `created_at`, `updated_at`) VALUES
 (8, 'Kerja Sama Q1', 'MoU001', '2022-06-30', '2022-07-22', 1, 2, 17, '2022-06-29 19:20:18', '2022-07-24 11:25:05'),
 (9, 'Kerja Sama Q2', '', '2022-07-01', '2022-07-02', 2, 3, 19, '2022-07-01 04:34:11', '2022-07-24 11:40:48'),
-(15, 'Kerjasama Q3', '', '2022-07-22', '2022-07-30', 3, 1, 17, '2022-07-21 17:50:54', '2022-07-23 21:38:46'),
+(15, 'Kerjasama Q3', '', '2022-07-22', '2022-07-30', 3, 2, 17, '2022-07-21 17:50:54', '2022-08-02 02:25:27'),
 (16, 'Kerjasama Q4', '', '2022-07-23', '2022-07-24', 2, 2, 19, '2022-07-23 21:49:13', '2022-07-24 11:20:55'),
-(17, 'Kerja Sama Q5', '', '2022-07-24', '2022-07-31', 2, 1, 18, '2022-07-23 22:13:12', '2022-07-24 11:19:27');
+(17, 'Kerja Sama Q5', '', '2022-07-24', '2022-07-31', 2, 2, 18, '2022-07-23 22:13:12', '2022-08-02 02:25:27');
 
 -- --------------------------------------------------------
 
@@ -401,7 +363,8 @@ INSERT INTO `users` (`id`, `kode_dosen`, `name`, `email`, `level`, `unit_id`, `f
 (2, '000000', 'MainAccount', 'admin@gmail.com', 'A', 1, NULL, NULL, '$2y$10$1Z/MaxYrXiOtFN5zZdu6.eeDsbt.QqEnmpgKS/WhKnrPEbCYh/qsa', NULL, '2022-05-27 01:55:39', '2022-07-29 14:48:39'),
 (4, 'D00002', 'Account Dosen', 'dosen@gmail.com', 'D', 3, 'file-D00002-Main Account Dosen 1.jpg', NULL, '$2y$10$Rk9WruJrJqv/WJ7a5vhw8uV3cw96IbybCGoqIxYA.pwtLtfsYxZsG', NULL, '2022-05-29 02:59:11', '2022-07-29 14:48:44'),
 (6, 'D00004', 'Main Account User', 'user@mail.com', 'K', 6, 'file-D00004-User123.jpg', NULL, '$2y$10$LGiWSlpAmY29qI8yYpJ.PuwxLHK4SaXBS2uWLTU6BgR0UQBNwFvaK', NULL, '2022-06-26 02:31:14', '2022-07-29 14:48:51'),
-(11, 'D00003', 'MainDekan', 'dekan@gmail.com', 'E', 8, NULL, NULL, '$2y$10$DSPCZBtaRwe.9yfO0XR9j.bHsiIS7IV8R/OHhObOgnlt/49x8Ko0m', NULL, '2022-07-21 17:21:28', '2022-07-29 14:48:58');
+(11, 'D00003', 'MainDekan', 'dekan@gmail.com', 'E', 8, NULL, NULL, '$2y$10$DSPCZBtaRwe.9yfO0XR9j.bHsiIS7IV8R/OHhObOgnlt/49x8Ko0m', NULL, '2022-07-21 17:21:28', '2022-07-29 14:48:58'),
+(13, 'D00010', 'User Main', 'usermain026@gmail.com', 'D', 1, NULL, NULL, '$2y$10$DJzep551eMhQyLRkDxW9QuApzJcab5F5cnSQS07wnsEw2l5Vdul9e', NULL, '2022-08-03 15:36:10', '2022-08-03 15:36:10');
 
 -- --------------------------------------------------------
 
@@ -594,7 +557,7 @@ ALTER TABLE `kategoris`
 -- AUTO_INCREMENT for table `kegiatans`
 --
 ALTER TABLE `kegiatans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `kerjasamas`
@@ -624,7 +587,7 @@ ALTER TABLE `units`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `usulans`
@@ -688,7 +651,7 @@ DELIMITER $$
 --
 -- Events
 --
-CREATE DEFINER=`root`@`localhost` EVENT `auto_update_status_kerjasama` ON SCHEDULE EVERY 5 MINUTE STARTS '2022-07-22 00:35:05' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE kerjasamas
+CREATE DEFINER=`root`@`localhost` EVENT `auto_update_status_kerjasama` ON SCHEDULE EVERY 1 DAY STARTS '2022-07-22 00:35:05' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE kerjasamas
 SET status_id = 2
 WHERE tanggal_sampai < NOW() and NOT status_id = 3$$
 

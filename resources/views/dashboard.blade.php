@@ -119,7 +119,7 @@
                         <div class="info-box">
                             <span class="info-box-icon bg-info elevation-1"><i class="fas fa-thumbs-up"></i></span>
                             <div class="info-box-content">
-                                <span class="info-box-text">{{ $countStatusAktif[0]->nama_status }}</span>
+                                <span class="info-box-text">{{ $namaStatus[0]->nama_status }}</span>
                                 <span class="info-box-number">
                                     @if (count($countStatusAktif) > 0)
                                         @foreach ($countStatusAktif as $item)
@@ -139,7 +139,7 @@
                         <div class="info-box mb-3">
                             <span class="info-box-icon bg-success elevation-1"><i class="fas fa-bell"></i></span>
                             <div class="info-box-content">
-                                <span class="info-box-text">{{ $countStatusDalamPerpanjangan[0]->nama_status }}</span>
+                                <span class="info-box-text">{{ $namaStatus[2]->nama_status }}</span>
                                 <span class="info-box-number">
                                     @if (count($countStatusDalamPerpanjangan) > 0)
                                         @foreach ($countStatusDalamPerpanjangan as $item)
@@ -160,7 +160,7 @@
                             <span class="info-box-icon bg-warning elevation-1"> <i class="fas fa-exclamation"></i>
                             </span>
                             <div class="info-box-content">
-                                <span class="info-box-text">{{ $countStatusKadaluarsa[0]->nama_status }}</span>
+                                <span class="info-box-text">{{ $namaStatus[1]->nama_status }}</span>
                                 <span class="info-box-number">
                                     @if (count($countStatusKadaluarsa) > 0)
                                         @foreach ($countStatusKadaluarsa as $item)
@@ -255,9 +255,9 @@
                         </li>
 
                         {{-- Nav Grafik Kerjasama --}}
-                        {{-- <li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link" href="#kerjasama-chart" data-toggle="tab">Kerjasama</a>
-                        </li> --}}
+                        </li>
 
                         {{-- Nav Grafik Kegiatan --}}
                         <li class="nav-item">
@@ -334,7 +334,7 @@
                     </div>
 
                     {{-- Grafik Kerjasama --}}
-                    {{-- <div class="chart tab-pane" id="kerjasama-chart" style="position: relative; height: 450px;">
+                    <div class="chart tab-pane" id="kerjasama-chart" style="position: relative; height: 450px;">
                         <div class="">
                             <figure class="highcharts-figure">
                                 <div id="container2"></div>
@@ -352,7 +352,7 @@
                                         type: 'pie'
                                     },
                                     title: {
-                                        text: 'Jumlah Kerjasama Dengan Mitra'
+                                        text: 'Jumlah Kerjasama dengan atau tanpa MoU'
                                     },
                                     tooltip: {
                                         pointFormat: '{series.name}: <b>{point.y}</b>'
@@ -376,10 +376,10 @@
                                         name: 'Jumlah',
                                         colorByPoint: true,
                                         data: [
-                                            @foreach ($getJumlahKerjasamaDenganMitra as $data)
+                                            @foreach ($countKategoriInKerjasama as $data)
                                                 {
-                                                    name: '{{ $data->nama_mitra }}',
-                                                    y: {{ $data->jumlah_kerjasama }},
+                                                    name: '{{ $data->nama_kategori }}',
+                                                    y: {{ $data->jumlah_kategori }},
                                                     sliced: false,
                                                     selected: false
                                                 },
@@ -389,7 +389,7 @@
                                 });
                             </script>
                         </div>
-                    </div> --}}
+                    </div>
 
                     {{-- Grafik Kegiatan --}}
                     <div class="chart tab-pane" id="kegiatan-chart" style="position: relative; height: 450px;">
