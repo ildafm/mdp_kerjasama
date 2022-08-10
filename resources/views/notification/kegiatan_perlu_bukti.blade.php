@@ -1,19 +1,11 @@
 @extends('layouts.master')
-@section('title', 'Kegiatan')
+@section('title', 'Kegiatan Tanpa Bukti')
 
 @section('content')
 
     <div class="card">
         <div class="card-header">
-            @if (Auth::user()->level != 'D')
-                {{-- Button Tambah --}}
-                <a href="{{ url('/kegiatans/create') }}" class='btn btn-primary'>Tambah Kegiatan</a>
-            @else
-                <div class="card-title">
-                    <h4 class="">Tabel Daftar Kegiatan</h4>
-                </div>
-            @endif
-
+            <h3 class="card-title">Kegiatan Tanpa Bukti</h3>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                     <i class="fas fa-minus"></i>
@@ -54,41 +46,43 @@
                         $nomor = 1;
                     @endphp
 
-                    @foreach ($kegiatans as $data)
-                        <tr>
-                            <td>{{ $nomor++ }}</td>
+                    @foreach ($listKegiatanTanpaBukti as $data)
+                        @if ($data->total_bukti == 0)
+                            <tr>
+                                <td>{{ $nomor++ }}</td>
 
-                            <td>
-                                {{-- Button Tampil --}}
-                                <a href="{{ url('kegiatans/' . $data->id) }}" class="btn btn-sm btn-primary"><i
-                                        class="nav-icon fas fa-eye" title="Tampil"></i></a>
+                                <td>
+                                    {{-- Button Tampil --}}
+                                    <a href="{{ url('kegiatans/' . $data->id) }}" class="btn btn-sm btn-primary"><i
+                                            class="nav-icon fas fa-eye" title="Tampil"></i></a>
 
-                                @if (Auth::user()->level != 'D')
-                                    {{-- Button Ubah --}}
-                                    <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
-                                        class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
-                                            title="Edit"></i></a>
+                                    @if (Auth::user()->level != 'D')
+                                        {{-- Button Ubah --}}
+                                        <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
+                                            class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
+                                                title="Edit"></i></a>
 
-                                    {{-- Button Hapus --}}
-                                    <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                        data-bentukKegiatan="{{ $data->bentuk_kegiatan }}" data-toggle="modal"
-                                        data-target="#modal-sm"><i class="nav-icon fas fa-trash"
-                                            title="Hapus"></i></button>
-                                @endif
-                            </td>
+                                        {{-- Button Hapus --}}
+                                        <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                            data-bentukKegiatan="{{ $data->bentuk_kegiatan }}" data-toggle="modal"
+                                            data-target="#modal-sm"><i class="nav-icon fas fa-trash"
+                                                title="Hapus"></i></button>
+                                    @endif
+                                </td>
 
-                            <td>{{ $data->kerjasama->nama_kerja_sama }}</td>
+                                <td>{{ $data->nama_kerja_sama }}</td>
 
-                            <td>{{ $data->bentuk_kegiatan }}</td>
+                                <td>{{ $data->bentuk_kegiatan }}</td>
 
-                            <td>{{ $data->keterangan }}</td>
+                                <td>{{ $data->keterangan }}</td>
 
-                            <td>{{ $data->user->name }}</td>
+                                <td>{{ $data->name }}</td>
 
-                            <td>{{ $data->tanggal_mulai }}</td>
+                                <td>{{ $data->tanggal_mulai }}</td>
 
-                            <td>{{ $data->tanggal_sampai }}</td>
-                        </tr>
+                                <td>{{ $data->tanggal_sampai }}</td>
+                            </tr>
+                        @endif
                     @endforeach
                 </tbody>
 

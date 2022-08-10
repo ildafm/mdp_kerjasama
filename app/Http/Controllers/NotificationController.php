@@ -13,13 +13,14 @@ class NotificationController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * 
      */
     public function kegiatan()
     {
         //
         $getUserID = Auth::user()->id;
-        $kegiatans = Kegiatan::All();
-        $kegiatansUnRead = DB::select("SELECT kegiatans.id AS 'id', kerjasamas.nama_kerja_sama, bentuk_kegiatan, keterangan, users.name AS 'name', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, kegiatans.status FROM kegiatans JOIN kerjasamas ON kerjasama_id = kerjasamas.id JOIN users ON user_id = users.id WHERE user_id = $getUserID AND kegiatans.status = '0' ORDER BY id DESC");
+
+        $kegiatansUnRead = DB::select("SELECT kegiatans.id AS 'id', kerjasamas.nama_kerja_sama, bentuk_kegiatan, keterangan, users.name AS 'name', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, kegiatans.status FROM kegiatans JOIN kerjasamas ON kerjasama_id = kerjasamas.id JOIN users ON user_id = users.id WHERE user_id = $getUserID AND kegiatans.status = '0' ORDER BY id");
         return view('notification.kegiatan')->with('kegiatansUnRead', $kegiatansUnRead);
     }
 
@@ -28,9 +29,32 @@ class NotificationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function kegiatanPerluBukti()
     {
         //
+        $getUserID = Auth::user()->id;
+                
+        $listKegiatanTanpaBukti = DB::select("SELECT kegiatans.id AS 'id', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, keterangan, kerjasamas.nama_kerja_sama, users.name AS 'name', kegiatans.status, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti'
+        FROM kegiatans
+        JOIN kerjasamas ON kerjasamas.id = kerjasama_id
+        JOIN users ON users.id = kegiatans.user_id
+        LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
+        WHERE users.id = $getUserID
+        GROUP BY kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, keterangan,  kerjasamas.nama_kerja_sama, users.name, kegiatans.status");
+
+        // $kegiatansPerluBukti = DB::select("SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_kegiatan' FROM kegiatans LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id WHERE kegiatans.user_id = $getUserID GROUP BY kegiatans.id");
+
+        // $countKegiatanTanpaBukti = 0;
+        // for ($i = 0; $i < count($kegiatansPerluBukti); $i++) { 
+        //     if($kegiatansPerluBukti[$i]->total_kegiatan = 0){
+        //         $countKegiatanTanpaBukti++;
+        //     }
+        // }
+        
+        return view("notification.kegiatan_perlu_bukti")
+            // ->with('countKegiatanTanpaBukti', $countKegiatanTanpaBukti)
+            ->with('listKegiatanTanpaBukti', $listKegiatanTanpaBukti);
+        
     }
 
     /**

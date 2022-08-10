@@ -5,8 +5,14 @@
     <div class="card">
         <div class="card-header">
             <!-- <h3 class="card-title">Tabel Daftar Kerjasama</h3> -->
-            {{-- Button Tambah --}}
-            <a href="{{ url('/kerjasamas/create') }}" class='btn btn-primary'>Tambah Kerjasama</a>
+            @if (Auth::user()->level != 'D')
+                {{-- Button Tambah --}}
+                <a href="{{ url('/kerjasamas/create') }}" class='btn btn-primary'>Tambah Kerjasama</a>
+            @else
+                <div class="card-title">
+                    <h4 class="">Tabel Daftar Usulan</h4>
+                </div>
+            @endif
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">

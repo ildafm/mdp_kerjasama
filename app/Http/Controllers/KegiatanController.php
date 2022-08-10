@@ -110,7 +110,9 @@ class KegiatanController extends Controller
         $units = Unit::All();
         
         // update status kegiatan
-        DB::update("UPDATE kegiatans SET kegiatans.status = '1' WHERE id = $kegiatan->id");
+        if (Auth::user()->id == $kegiatan->user_id) {
+            DB::update("UPDATE kegiatans SET kegiatans.status = '1' WHERE id = $kegiatan->id");
+        }
 
         return view('kegiatan.show')
             ->with('buktiKegiatans', $buktiKegiatans)

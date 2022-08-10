@@ -5,8 +5,14 @@
     <div class="card">
         <div class="card-header">
             <!-- <h3 class="card-title">Tabel Daftar Mitra</h3> -->
-            {{-- Button Tambah --}}
-            <a href="{{ url('/mitras/create') }}" class='btn btn-primary'>Tambah Mitra</a>
+            @if (Auth::user()->level != 'D')
+                {{-- Button Tambah --}}
+                <a href="{{ url('/mitras/create') }}" class='btn btn-primary'>Tambah Mitra</a>
+            @else
+                <div class="card-title">
+                    <h4 class="">Tabel Daftar Usulan</h4>
+                </div>
+            @endif
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -33,7 +39,9 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Aksi</th>
+                        @if (Auth::user()->level != 'D')
+                            <th>Aksi</th>
+                        @endif
                         <th>Nama Mitra</th>
                         <th>Tingkat</th>
                     </tr>
@@ -51,23 +59,27 @@
                                 {{-- $data->id --}}
                                 {{ $nomor++ }}
                             </td>
-                            <td>
-                                {{-- Button Tampil --}}
-                                {{-- <a href="{{ url('mitras/' . $data->id) }}" class="btn btn-sm btn-primary"
+                            @if (Auth::user()->level != 'D')
+                                <td>
+                                    {{-- Button Tampil --}}
+                                    {{-- <a href="{{ url('mitras/' . $data->id) }}" class="btn btn-sm btn-primary"
                                     title="Tampil"><i class="nav-icon fas fa-eye"></i></a> --}}
 
-                                {{-- Button Ubah --}}
-                                <a href="{{ route('mitras.edit', ['mitra' => $data->id]) }}"
-                                    class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit" title="Edit"></i></a>
+                                    {{-- Button Ubah --}}
+                                    <a href="{{ route('mitras.edit', ['mitra' => $data->id]) }}"
+                                        class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
+                                            title="Edit"></i></a>
 
-                                @if (Auth::user()->level == 'A')
-                                    {{-- Button Hapus --}}
-                                    <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                        data-toggle="modal" data-target="#modal-sm"
-                                        data-namaMitra="{{ $data->nama_mitra }}"><i
-                                            class="nav-icon fas fa-trash"></i></button>
-                                @endif
-                            </td>
+                                    @if (Auth::user()->level == 'A')
+                                        {{-- Button Hapus --}}
+                                        <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                            data-toggle="modal" data-target="#modal-sm"
+                                            data-namaMitra="{{ $data->nama_mitra }}"><i
+                                                class="nav-icon fas fa-trash"></i></button>
+                                    @endif
+                                </td>
+                            @endif
+
                             <td>{{ $data->nama_mitra }}</td>
                             <td>{{-- $data->tingkat --}}
                                 {{ Status::mitra($data->tingkat) }}
@@ -80,7 +92,9 @@
                 <tfoot>
                     <tr>
                         <th>No</th>
-                        <th>Aksi</th>
+                        @if (Auth::user()->level != 'D')
+                            <th>Aksi</th>
+                        @endif
                         <th>Nama Mitra</th>
                         <th>Tingkat</th>
                     </tr>

@@ -42,6 +42,10 @@ class BuktiKegiatanController extends Controller
     public function store(Request $request)
     {
         //
+        if (Auth::user()->level == 'D') {
+            $this->authorize('theUserOnly', User::class);
+        }
+        
         // 1. validasi input data kosong
         $validateData = $request->validate([
             'nama_bukti_kegiatan' => 'required',

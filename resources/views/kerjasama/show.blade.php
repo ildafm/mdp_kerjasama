@@ -254,21 +254,13 @@
                                             @endif
                                         </td>
 
-                                        @if (Auth::user()->level != 'D')
-                                            <td>{{ $data->kerjasama->nama_kerja_sama }}</td>
-                                        @else
-                                            <td>{{ $data->nama_kerja_sama }}</td>
-                                        @endif
+                                        <td>{{ $data->kerjasama->nama_kerja_sama }}</td>
 
                                         <td>{{ $data->bentuk_kegiatan }}</td>
 
                                         <td>{{ $data->keterangan }}</td>
 
-                                        @if (Auth::user()->level != 'D')
-                                            <td>{{ $data->user->name }}</td>
-                                        @else
-                                            <td>{{ $data->name }}</td>
-                                        @endif
+                                        <td>{{ $data->user->name }}</td>
 
                                         <td>{{ $data->tanggal_mulai }}</td>
 

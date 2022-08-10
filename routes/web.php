@@ -46,6 +46,8 @@ Route::resource('profiles', ProfileController::class)->middleware(['auth']);
 Route::resource('buktiKerjasamas', BuktiKerjasamaController::class)->middleware(['auth']);
 Route::resource('buktiKegiatans', BuktiKegiatanController::class)->middleware(['auth']);
 Route::get('notification_kegiatan', [App\Http\Controllers\NotificationController::class, 'kegiatan'])->middleware(['auth']);
+Route::get('notification_kegiatan_perlu_bukti', [App\Http\Controllers\NotificationController::class, 'kegiatanPerluBukti'])->middleware(['auth']);
+
 
 // Route::get('/mahasiswa/create', [MahasiswaController::class, 'create']);
 

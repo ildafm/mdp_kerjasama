@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class UserPolicy
 {
@@ -25,6 +26,12 @@ class UserPolicy
     {
         //
         return $user->level == 'D';
+    }
+
+    public function theUserOnly(User $user)
+    {
+        //
+        return $user->id == Auth::user()->id;
     }
 
     /**
