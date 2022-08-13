@@ -2,6 +2,7 @@
 @section('title', 'Kerjasama')
 
 @section('content')
+    {{-- Menu Show --}}
     <div class="card">
         <div class="card-header">
 
@@ -78,6 +79,7 @@
 
     {{-- Navbar Data Bukti Kerjasama dan Kegiatan --}}
     <div class="card card-default card-tabs">
+        {{-- Navbar --}}
         <div class="card-header p-0 pt-1">
             <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
                 <li class="pt-2 px-3">
@@ -107,100 +109,105 @@
                 </li> --}}
             </ul>
         </div>
+
         <div class="card-body">
             <div class="tab-content" id="custom-tabs-two-tabContent">
                 {{-- Panel Kegiatan --}}
                 <div class="tab-pane fade show active" id="custom-tabs-two-kegiatan" role="tabpanel"
                     aria-labelledby="custom-tabs-two-kegiatan-tab">
-                    {{-- Form Menambahkan data Kegiatan --}}
-                    <h3>Tambah Data Kegiatan</h3>
-                    <form action="{{ route('kerjasamas.store') }}" method="POST">
-                        @csrf
+                    @if (Auth::user()->level != 'D')
+                        {{-- Form Menambahkan data Kegiatan --}}
+                        <h3>Tambah Data Kegiatan</h3>
+                        <form action="{{ route('kerjasamas.store') }}" method="POST">
+                            @csrf
 
-                        {{-- getKerjasamaID --}}
-                        <div class="form-group" hidden>
-                            <label for="kerjasama_id">getKerjasamaID </label>
-                            <input type="text" name='kerjasama_id' value="{{ $kerjasama->id }}"
-                                class="form-control @error('kerjasama_id') is-invalid @enderror"
-                                placeholder="Masukan ID Kerjasama" readonly>
-                            @error('kerjasama_id')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- Bentuk Kegiatan --}}
-                        <div class="form-group">
-                            <label for="bentuk_kegiatan">Bentuk Kegiatan </label>
-                            <input type="text" name='bentuk_kegiatan' value="{{ old('bentuk_kegiatan') }}"
-                                class="form-control @error('bentuk_kegiatan') is-invalid @enderror"
-                                placeholder="Masukan Bentuk Kegiatan">
-                            @error('bentuk_kegiatan')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="row">
-                            {{-- Tanggal Mulai --}}
-                            <div class="form-group col-lg-4">
-                                <label for="tanggal_mulai">Tanggal Mulai</label>
-                                <input type="date" name="tanggal_mulai" id="" class="form-control"
-                                    value="{{ old('tanggal_mulai') }}">
-                                @error('tanggal_mulai')
+                            {{-- getKerjasamaID --}}
+                            <div class="form-group" hidden>
+                                <label for="kerjasama_id">getKerjasamaID </label>
+                                <input type="text" name='kerjasama_id' value="{{ $kerjasama->id }}"
+                                    class="form-control @error('kerjasama_id') is-invalid @enderror"
+                                    placeholder="Masukan ID Kerjasama" readonly>
+                                @error('kerjasama_id')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            {{-- Tanggal Sampai --}}
-                            <div class="form-group col-lg-4">
-                                <label for="tanggal_sampai">Tanggal Sampai</label>
-                                <input type="date" name="tanggal_sampai" id="" class="form-control"
-                                    value="{{ old('tanggal_sampai') }}">
-                                @error('tanggal_sampai')
+                            {{-- Bentuk Kegiatan --}}
+                            <div class="form-group">
+                                <label for="bentuk_kegiatan">Bentuk Kegiatan </label>
+                                <input type="text" name='bentuk_kegiatan' value="{{ old('bentuk_kegiatan') }}"
+                                    class="form-control @error('bentuk_kegiatan') is-invalid @enderror"
+                                    placeholder="Masukan Bentuk Kegiatan">
+                                @error('bentuk_kegiatan')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            {{-- Dosen --}}
-                            <div class="form-group col-lg-4">
-                                <label for="pic_dosen">PIC Dosen</label>
+                            <div class="row">
+                                {{-- Tanggal Mulai --}}
+                                <div class="form-group col-lg-4">
+                                    <label for="tanggal_mulai">Tanggal Mulai</label>
+                                    <input type="date" name="tanggal_mulai" id="" class="form-control"
+                                        value="{{ old('tanggal_mulai') }}">
+                                    @error('tanggal_mulai')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
 
-                                @php
-                                    if (old('pic_dosen') !== null) {
-                                        $option = old('pic_dosen');
-                                    } else {
-                                        $option = 1;
-                                    }
-                                @endphp
+                                {{-- Tanggal Sampai --}}
+                                <div class="form-group col-lg-4">
+                                    <label for="tanggal_sampai">Tanggal Sampai</label>
+                                    <input type="date" name="tanggal_sampai" id="" class="form-control"
+                                        value="{{ old('tanggal_sampai') }}">
+                                    @error('tanggal_sampai')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
 
-                                <select class="form-control select2" name="pic_dosen" id="">
-                                    @foreach ($users as $data)
-                                        <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                            {{ $data->kode_dosen }} - {{ $data->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('pic_dosen')
+                                {{-- Dosen --}}
+                                <div class="form-group col-lg-4">
+                                    <label for="pic_dosen">PIC Dosen</label>
+
+                                    @php
+                                        if (old('pic_dosen') !== null) {
+                                            $option = old('pic_dosen');
+                                        } else {
+                                            $option = 1;
+                                        }
+                                    @endphp
+
+                                    <select class="form-control select2" name="pic_dosen" id="">
+                                        @foreach ($users as $data)
+                                            <option value="{{ $data->id }}"
+                                                {{ $option == $data->id ? 'selected' : '' }}>
+                                                {{ $data->kode_dosen }} - {{ $data->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('pic_dosen')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="keterangan">Keterangan</label>
+                                <input type="text" name="keterangan" id="" value="{{ old('keterangan') }}"
+                                    class="form-control @error('keterangan') is-invalid @enderror"
+                                    placeholder="Masukan Keterangan">
+                                @error('keterangan')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                        </div>
-
-                        <div class="form-group">
-                            <label for="keterangan">Keterangan</label>
-                            <input type="text" name="keterangan" id="" value="{{ old('keterangan') }}"
-                                class="form-control @error('keterangan') is-invalid @enderror"
-                                placeholder="Masukan Keterangan">
-                            @error('keterangan')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <br>
-                        {{-- Button --}}
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                    <br><br>
+                            <br>
+                            {{-- Button --}}
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                        <br><br>
+                    @endif
+                    {{-- info no mou --}}
                     <h3>
                         @if ($kerjasama->no_mou != null || $kerjasama->no_mou != '')
                             Nomor MoU : {{ $kerjasama->no_mou }}
@@ -208,6 +215,7 @@
                             Tanpa MoU
                         @endif
                     </h3>
+                    {{-- Tabel data Kegiatan --}}
                     <table id="example3" class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -289,52 +297,56 @@
                 {{-- Panel Bukti Kerjasama --}}
                 <div class="tab-pane fade" id="custom-tabs-two-bukti_kerjasama" role="tabpanel"
                     aria-labelledby="custom-tabs-two-bukti_kerjasama-tab">
-                    {{-- Form Menambahkan data Bukti --}}
-                    <h3>Tambah Data Bukti Kerjasama</h3>
-                    <form action="{{ route('buktiKerjasamas.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        {{-- Nama Bukti Kerjasama --}}
-                        <div class="form-group">
-                            <label for="nama_bukti_kerjasama">Nama Bukti Kerjasama</label>
-                            <input type="text" class="form-control" name="nama_bukti_kerjasama"
-                                placeholder="Enter Nama Bukti Kerjasama" value="{{ old('nama_bukti_kerjasama') }}">
+                    @if (Auth::user()->level != 'D')
+                        {{-- Form Menambahkan data Bukti --}}
+                        <h3>Tambah Data Bukti Kerjasama</h3>
+                        <form action="{{ route('buktiKerjasamas.store') }}" method="POST"
+                            enctype="multipart/form-data">
+                            @csrf
+                            {{-- Nama Bukti Kerjasama --}}
+                            <div class="form-group">
+                                <label for="nama_bukti_kerjasama">Nama Bukti Kerjasama</label>
+                                <input type="text" class="form-control" name="nama_bukti_kerjasama"
+                                    placeholder="Enter Nama Bukti Kerjasama" value="{{ old('nama_bukti_kerjasama') }}">
 
-                            @error('nama_bukti_kerjasama')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- add file --}}
-                        <div class="form-group">
-                            <label for="file">Bukti Kerjasama(Max:5mb)</label>
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" name="file"
-                                        id="exampleInputFile">
-                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                </div>
-                                <div class="input-group-append">
-                                    <span class="input-group-text">Upload</span>
-                                </div>
+                                @error('nama_bukti_kerjasama')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
-                            @error('file')
+                            {{-- add file --}}
+                            <div class="form-group">
+                                <label for="file">Bukti Kerjasama(Max:5mb)</label>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="file"
+                                            id="exampleInputFile">
+                                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">Upload</span>
+                                    </div>
+                                </div>
+
+                                @error('file')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- getKerjasamaID --}}
+                            <input type="hidden" value="{{ $kerjasama->id }}" name="kerjasama_id">
+                            @error('kerjasama_id')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
-                        </div>
 
-                        {{-- getKerjasamaID --}}
-                        <input type="hidden" value="{{ $kerjasama->id }}" name="kerjasama_id">
-                        @error('kerjasama_id')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-
-                        <br>
-                        {{-- Button --}}
-                        <button type="submit" class="btn btn-primary">Tambahkan Bukti</button>
-                    </form>
-                    {{-- Tabel Data Bukti Kegiatan --}}
-                    <br><br>
+                            <br>
+                            {{-- Button --}}
+                            <button type="submit" class="btn btn-primary">Tambahkan Bukti</button>
+                        </form>
+                        {{-- Tabel Data Bukti Kegiatan --}}
+                        <br><br>
+                    @endif
+                    {{-- Tabel Data Bukti Kerjasama --}}
                     <h3>Tabel Data Bukti Kerjasama</h3>
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
@@ -361,16 +373,19 @@
                                             class="btn btn-sm btn-primary">
                                             <i class="nav-icon fas fa-eye" title="Tampil"></i></a>
 
-                                        {{-- Button Ubah --}}
-                                        <a href="{{ route('buktiKerjasamas.edit', ['buktiKerjasama' => $data->id]) }}"
-                                            class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
-                                                title="Edit"></i></a>
+                                        @if (Auth::user()->level != 'D')
+                                            {{-- Button Ubah --}}
+                                            <a href="{{ route('buktiKerjasamas.edit', ['buktiKerjasama' => $data->id]) }}"
+                                                class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
+                                                    title="Edit"></i></a>
 
-                                        {{-- Button Hapus --}}
-                                        <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                            data-namaBuktiKerjasama="{{ $data->nama_bukti_kerjasama }}"
-                                            data-toggle="modal" data-target="#modal-sm"><i class="nav-icon fas fa-trash"
-                                                title="Hapus"></i></button>
+                                            {{-- Button Hapus --}}
+                                            <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                                data-namaBuktiKerjasama="{{ $data->nama_bukti_kerjasama }}"
+                                                data-toggle="modal" data-target="#modal-sm">
+                                                <i class="nav-icon fas fa-trash" title="Hapus"></i>
+                                            </button>
+                                        @endif
                                     </td>
                                     <td>{{ $data->nama_bukti_kerjasama }}</td>
                                     <td>{{ $data->tanggalUpload }}</td>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 04, 2022 at 12:34 AM
+-- Generation Time: Aug 13, 2022 at 07:24 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -40,6 +40,18 @@ CREATE TABLE `bukti_kegiatans` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `bukti_kegiatans`
+--
+
+INSERT INTO `bukti_kegiatans` (`id`, `nama_bukti_kegiatan`, `file`, `kegiatans_id`, `ceklist_apt`, `ceklist_aps`, `ceklist_lamemba`, `bidang`, `created_at`, `updated_at`) VALUES
+(48, 'bukti 1', 'file-1659595478.pdf', 29, 'Y', 'T', 'T', 'P', '2022-08-04 06:44:38', '2022-08-04 06:44:38'),
+(49, 'bukti Q1', 'file-1659595498.pdf', 29, 'T', 'Y', 'T', 'B', '2022-08-04 06:44:58', '2022-08-04 06:44:58'),
+(53, 'bukti 1', 'file-1659599847.pdf', 30, 'T', 'Y', 'T', 'L', '2022-08-04 07:57:27', '2022-08-04 07:57:27'),
+(54, 'Bukti A', 'file-1660094187.png', 37, 'Y', 'T', 'T', 'P', '2022-08-10 01:16:27', '2022-08-10 01:16:27'),
+(55, 'Bukti A', 'file-1660096033.png', 38, 'T', 'Y', 'T', 'P', '2022-08-10 01:47:13', '2022-08-10 01:47:13'),
+(56, 'Bukti A', 'file-1660365727.png', 34, 'T', 'T', 'Y', 'P', '2022-08-13 04:42:07', '2022-08-13 04:42:07');
+
 -- --------------------------------------------------------
 
 --
@@ -53,6 +65,18 @@ CREATE TABLE `bukti_kegiatan_units` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `bukti_kegiatan_units`
+--
+
+INSERT INTO `bukti_kegiatan_units` (`id`, `units_id`, `bukti_kegiatans_id`, `created_at`, `updated_at`) VALUES
+(45, 2, 48, '2022-08-04 06:44:38', '2022-08-04 06:44:38'),
+(46, 2, 49, '2022-08-04 06:44:58', '2022-08-04 06:44:58'),
+(50, 5, 53, '2022-08-04 07:57:27', '2022-08-04 07:57:27'),
+(51, 1, 54, '2022-08-10 01:16:27', '2022-08-10 01:16:27'),
+(52, 1, 55, '2022-08-10 01:47:13', '2022-08-10 01:47:13'),
+(53, 2, 56, '2022-08-13 04:42:08', '2022-08-13 04:42:08');
 
 -- --------------------------------------------------------
 
@@ -169,8 +193,15 @@ CREATE TABLE `kegiatans` (
 --
 
 INSERT INTO `kegiatans` (`id`, `tanggal_mulai`, `tanggal_sampai`, `bentuk_kegiatan`, `PIC`, `keterangan`, `kerjasama_id`, `user_id`, `status`, `created_at`, `updated_at`) VALUES
-(29, '2022-08-03', '2022-08-06', 'Kegiatan 10', NULL, 'Keterangan 10', 8, 13, '1', '2022-05-04 16:25:20', '2022-08-03 22:16:45'),
-(30, '2022-08-04', '2022-08-31', 'Kegiatan Q10', NULL, 'Keterangan Q10', 9, 13, '0', '2022-07-02 19:05:00', '2022-08-03 22:20:45');
+(29, '2022-08-03', '2022-08-06', 'Kegiatan 10', NULL, 'Keterangan 10', 8, 13, '1', '2022-05-04 16:25:20', '2022-08-13 05:18:11'),
+(30, '2022-08-04', '2022-08-31', 'Kegiatan Q10', NULL, 'Keterangan Q10', 9, 13, '1', '2022-07-02 19:05:00', '2022-08-04 06:52:13'),
+(32, '2022-08-04', '2022-08-19', 'Kegiatan E10', NULL, 'Keterangan E10', 9, 11, '1', '2022-08-04 06:13:45', '2022-08-04 06:14:21'),
+(34, '2022-08-10', '2022-08-13', 'Kegiatan T10', NULL, 'Keterangan T10', 8, 13, '1', '2022-08-10 00:51:08', '2022-08-10 01:48:03'),
+(37, '2022-08-10', '2022-08-12', 'Kegiatan T10', NULL, 'Keterangan T10', 8, 2, '1', '2022-08-10 01:11:49', '2022-08-10 01:12:11'),
+(38, '2022-08-10', '2022-08-11', 'Kegiatan Y10', NULL, 'Keterangan Y10', 9, 2, '1', '2022-08-10 01:20:15', '2022-08-10 01:44:36'),
+(39, '2022-08-11', '2022-08-24', 'Kegiatan 10', NULL, 'Keterangan 10', 8, 2, '1', '2022-08-10 01:32:37', '2022-08-10 01:44:44'),
+(40, '2022-08-10', '2022-08-13', 'Kegiatan 10', NULL, 'Keterangan 10', 8, 2, '0', '2022-08-10 01:42:46', '2022-08-10 01:42:46'),
+(41, '2022-08-13', '2022-08-16', 'Kegiatan U10', NULL, 'Keterangan U10', 8, 13, '1', '2022-08-13 04:39:26', '2022-08-13 04:43:28');
 
 -- --------------------------------------------------------
 
@@ -536,13 +567,13 @@ ALTER TABLE `usulans`
 -- AUTO_INCREMENT for table `bukti_kegiatans`
 --
 ALTER TABLE `bukti_kegiatans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `bukti_kegiatan_units`
 --
 ALTER TABLE `bukti_kegiatan_units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `bukti_kerjasamas`
@@ -566,7 +597,7 @@ ALTER TABLE `kategoris`
 -- AUTO_INCREMENT for table `kegiatans`
 --
 ALTER TABLE `kegiatans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `kerjasamas`

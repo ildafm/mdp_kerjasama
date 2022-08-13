@@ -271,6 +271,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Aksi</th>
                             <th>Nama Kerjasama</th>
                             <th>Nomor MoU</th>
                             <th>Tanggal Mulai</th>
@@ -290,6 +291,14 @@
                                     {{ $nomor++ }}
                                     {{-- {{ $data->id_kerjasama }} --}}
                                 </td>
+
+                                <td>
+                                    {{-- Button Tampil --}}
+                                    <a href="{{ url('kerjasamas/' . $data->id_kerjasama) }}"
+                                        class="btn btn-sm btn-primary"><i class="nav-icon fas fa-eye"
+                                            title="Tampil"></i></a>
+                                </td>
+
                                 <td>{{ $data->nama_kerja_sama }}</td>
                                 <td>
                                     @if ($data->no_mou == '')
@@ -309,6 +318,7 @@
                     <tfoot>
                         <tr>
                             <th>No</th>
+                            <th>Aksi</th>
                             <th>Nama Kerjasama</th>
                             <th>Nomor MoU</th>
                             <th>Tanggal Mulai</th>

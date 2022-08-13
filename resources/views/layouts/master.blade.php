@@ -496,6 +496,8 @@
         // getDay
         day = weekday[n.getDay()];
 
+        date = date < "10" ? `0${date}` : date;
+
         document.getElementById("date").innerHTML = day + ", " + date + " " + month + " " + year;
     </script>
 

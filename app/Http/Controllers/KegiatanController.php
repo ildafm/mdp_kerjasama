@@ -96,9 +96,9 @@ class KegiatanController extends Controller
     public function show(Kegiatan $kegiatan)
     {
         //
-        if(Auth::user()->id != $kegiatan->user_id){
-            $this->authorize('viewAny', User::class);
-        }
+        // if(Auth::user()->id != $kegiatan->user_id){
+        //     $this->authorize('viewAny', User::class);
+        // }
 
         $buktiKegiatans = DB::select("SELECT bukti_kegiatans.id AS id_bukti_kegiatan, bukti_kegiatans.nama_bukti_kegiatan AS nama_bukti_kegiatan, bukti_kegiatans.bidang AS 'bidang', kegiatans.keterangan AS keterangan_kegiatan, units.nama_unit, ceklist_apt, ceklist_aps, ceklist_lamemba, LEFT(bukti_kegiatans.created_at, 10) AS tanggal_upload_bukti, bukti_kegiatans.file AS 'file'
         FROM bukti_kegiatans 

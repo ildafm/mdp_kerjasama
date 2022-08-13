@@ -42,9 +42,6 @@ class BuktiKegiatanController extends Controller
     public function store(Request $request)
     {
         //
-        if (Auth::user()->level == 'D') {
-            $this->authorize('theUserOnly', User::class);
-        }
         
         // 1. validasi input data kosong
         $validateData = $request->validate([
@@ -125,12 +122,12 @@ class BuktiKegiatanController extends Controller
     {
         //
 
-        $getUserID = DB::select("SELECT kegiatans.id AS 'id_kegiatan', kegiatans.user_id AS 'user_id', bukti_kegiatans.id AS 'id_bukti_kegiatan', kegiatans_id AS 'id_kegiatan_di_bukti_kegiatan'
+        $getUserIDWithQuery = DB::select("SELECT kegiatans.id AS 'id_kegiatan', kegiatans.user_id AS 'user_id', bukti_kegiatans.id AS 'id_bukti_kegiatan', kegiatans_id AS 'id_kegiatan_di_bukti_kegiatan'
         FROM bukti_kegiatans
         JOIN kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
         WHERE bukti_kegiatans.id = $buktiKegiatan->id");
 
-        if(Auth::user()->id != $getUserID[0]->user_id){
+        if(Auth::user()->id != $getUserIDWithQuery[0]->user_id){
             $this->authorize('viewAny', User::class);
         }
         
@@ -239,6 +236,15 @@ class BuktiKegiatanController extends Controller
     public function destroy(BuktiKegiatan $buktiKegiatan)
     {
         //
+
+        $getUserIDWithQuery = DB::select("SELECT kegiatans.id AS 'id_kegiatan', kegiatans.user_id AS 'user_id', bukti_kegiatans.id AS 'id_bukti_kegiatan', kegiatans_id AS 'id_kegiatan_di_bukti_kegiatan'
+        FROM bukti_kegiatans
+        JOIN kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
+        WHERE bukti_kegiatans.id = $buktiKegiatan->id");
+
+        if(Auth::user()->id != $getUserIDWithQuery[0]->user_id){
+            $this->authorize('viewAny', User::class);
+        }
         
         if($buktiKegiatan->file != null || $buktiKegiatan->file != ''){
             unlink(storage_path('app/public/kegiatan/'.$buktiKegiatan->file));

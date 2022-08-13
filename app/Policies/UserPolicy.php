@@ -28,12 +28,6 @@ class UserPolicy
         return $user->level == 'D';
     }
 
-    public function theUserOnly(User $user)
-    {
-        //
-        return $user->id == Auth::user()->id;
-    }
-
     /**
      * Determine whether the user can view the model.
      *
