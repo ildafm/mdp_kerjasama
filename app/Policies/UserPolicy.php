@@ -22,10 +22,10 @@ class UserPolicy
         return $user->level != 'D';
     }
 
-    public function dosenOnly(User $user)
+    public function adminOnly(User $user)
     {
         //
-        return $user->level == 'D';
+        return $user->level == 'A';
     }
 
     /**

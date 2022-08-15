@@ -21,7 +21,7 @@ class UserController extends Controller
     public function index()
     {
         //
-        $this->authorize('viewAny', User::class);
+        $this->authorize('adminOnly', User::class);
         $users = User::all();
         return view('user.index')
             ->with('users', $users);
@@ -35,7 +35,7 @@ class UserController extends Controller
     public function create()
     {
         //
-        $this->authorize('viewAny', User::class);
+        $this->authorize('adminOnly', User::class);
         $units = Unit::All();
         return view('user.create')
             ->with('units', $units);
@@ -51,7 +51,7 @@ class UserController extends Controller
     {
         //
 
-        $this->authorize('viewAny', User::class);
+        $this->authorize('adminOnly', User::class);
 
         $validateData = $request->validate([
             'name' => 'required | string',
@@ -84,7 +84,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         //
-        $this->authorize('viewAny', User::class);
+        $this->authorize('adminOnly', User::class);
         
         return view('user.show')->with('user', $user);
 
@@ -99,7 +99,7 @@ class UserController extends Controller
     public function edit(User $user) //User $user = $id
     {
         //
-            $this->authorize('viewAny', User::class);
+            $this->authorize('adminOnly', User::class);
 
             $units = Unit::All();
             return view('user.edit')
@@ -117,7 +117,7 @@ class UserController extends Controller
     public function update(Request $request, User $user) //User $user = $id
     {
         //
-        $this->authorize('viewAny', User::class);
+        $this->authorize('adminOnly', User::class);
 
         $validateData = $request->validate([
             'name' => 'required | string',
@@ -156,7 +156,7 @@ class UserController extends Controller
     public function destroy(User $user) //User $user = $id
     {
         //
-        $this->authorize('viewAny', User::class);
+        $this->authorize('adminOnly', User::class);
 
         if($user->file != null || $user->file != ''){
             unlink(storage_path('app/public/profile/'.$user->file));

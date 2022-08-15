@@ -63,7 +63,7 @@ class ProfileController extends Controller
     public function edit(User $user)
     {
         //
-        if(Auth::user()->level == 'D'){
+        if(Auth::user()->level != 'A'){
             return view('profile.edit')->with('user', $user);
         }
         else{

@@ -70,7 +70,7 @@
 
     </div>
 
-    @if (Auth::user()->id == $kegiatan->user_id)
+    @if (Auth::user()->id == $kegiatan->user_id || Auth::user()->level != 'D')
         {{-- card tambah bukti kegiatan --}}
         <div class="card">
             <div class="card-header">

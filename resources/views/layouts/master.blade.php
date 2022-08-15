@@ -34,10 +34,6 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
                             class="fas fa-bars"></i></a>
                 </li>
-
-                <li class="nav-item d-none d-sm-inline-block">
-
-                </li>
             </ul>
 
             <ul class="navbar-nav ml-auto">
@@ -47,34 +43,65 @@
                 </li>
 
                 @php
-                    $getUserID = Auth::user()->id;
+                    // Jika login Admin akan menampilkan semua, jika dosen hanya akan menampilkan yang bersangkutan
+                    if (Auth::user()->level != 'D') {
+                        $countUnReadNotifKegiatan = DB::select("SELECT kegiatans.status AS 'status', COUNT(kegiatans.status) AS 'jumlah' FROM kegiatans WHERE kegiatans.status = '0' GROUP BY kegiatans.status");
                     
-                    $countUnReadNotifKegiatan = DB::select("SELECT kegiatans.status AS 'status', COUNT(kegiatans.status) AS 'jumlah' FROM kegiatans WHERE kegiatans.user_id = $getUserID AND kegiatans.status = '0' GROUP BY kegiatans.status");
+                        $countTimeKegiatan = DB::select("SELECT id, DATEDIFF(NOW(), created_at) AS 'datediff', HOUR(TIMEDIFF(NOW(), created_at)) AS 'get_hour', MINUTE(TIMEDIFF(NOW(), created_at)) AS 'get_minute', SECOND(TIMEDIFF(NOW(), created_at)) AS 'get_second' FROM kegiatans WHERE kegiatans.status = '0'");
                     
-                    $countTimeKegiatan = DB::select("SELECT id, DATEDIFF(NOW(), created_at) AS 'datediff', HOUR(TIMEDIFF(NOW(), created_at)) AS 'get_hour', MINUTE(TIMEDIFF(NOW(), created_at)) AS 'get_minute', SECOND(TIMEDIFF(NOW(), created_at)) AS 'get_second' FROM kegiatans WHERE kegiatans.user_id = $getUserID AND kegiatans.status = '0'");
+                        $kegiatansPerluBukti = DB::select("SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_kegiatan' FROM kegiatans LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id GROUP BY kegiatans.id");
                     
-                    $kegiatansPerluBukti = DB::select("SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_kegiatan' FROM kegiatans LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id WHERE kegiatans.user_id = $getUserID GROUP BY kegiatans.id");
-                    
-                    $countKegiatanTanpaBukti = 0;
-                    for ($i = 0; $i < count($kegiatansPerluBukti); $i++) {
-                        if ($kegiatansPerluBukti[$i]->total_kegiatan == 0) {
-                            $countKegiatanTanpaBukti++;
+                        $countKegiatanTanpaBukti = 0;
+                        for ($i = 0; $i < count($kegiatansPerluBukti); $i++) {
+                            if ($kegiatansPerluBukti[$i]->total_kegiatan == 0) {
+                                $countKegiatanTanpaBukti++;
+                            }
                         }
-                    }
                     
-                    $countTimeBukti = DB::select("SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti_kegiatan', DATEDIFF(NOW(), kegiatans.created_at) AS 'datediff', HOUR(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_hour', MINUTE(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_minute', SECOND(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_second' FROM kegiatans LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id WHERE kegiatans.user_id = $getUserID GROUP BY kegiatans.id, bukti_kegiatans.kegiatans_id, kegiatans.created_at");
+                        $countTimeBukti = DB::select("SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti_kegiatan', DATEDIFF(NOW(), kegiatans.created_at) AS 'datediff', HOUR(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_hour', MINUTE(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_minute', SECOND(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_second' FROM kegiatans LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id GROUP BY kegiatans.id, bukti_kegiatans.kegiatans_id, kegiatans.created_at");
                     
-                    for ($i = 0; $i < count($countTimeBukti); $i++) {
-                        if ($countTimeBukti[$i]->total_bukti_kegiatan == 0) {
-                            $countTimeBukti[0] = $countTimeBukti[$i];
-                            break;
+                        for ($i = 0; $i < count($countTimeBukti); $i++) {
+                            if ($countTimeBukti[$i]->total_bukti_kegiatan == 0) {
+                                $countTimeBukti[0] = $countTimeBukti[$i];
+                                break;
+                            }
                         }
-                    }
                     
-                    if (count($countUnReadNotifKegiatan) > 0) {
-                        $totalNotifications = $countUnReadNotifKegiatan[0]->jumlah + $countKegiatanTanpaBukti;
+                        if (count($countUnReadNotifKegiatan) > 0) {
+                            $totalNotifications = $countUnReadNotifKegiatan[0]->jumlah + $countKegiatanTanpaBukti;
+                        } else {
+                            $totalNotifications = 0 + $countKegiatanTanpaBukti;
+                        }
                     } else {
-                        $totalNotifications = 0 + $countKegiatanTanpaBukti;
+                        $getUserID = Auth::user()->id;
+                    
+                        $countUnReadNotifKegiatan = DB::select("SELECT kegiatans.status AS 'status', COUNT(kegiatans.status) AS 'jumlah' FROM kegiatans WHERE kegiatans.user_id = $getUserID AND kegiatans.status = '0' GROUP BY kegiatans.status");
+                    
+                        $countTimeKegiatan = DB::select("SELECT id, DATEDIFF(NOW(), created_at) AS 'datediff', HOUR(TIMEDIFF(NOW(), created_at)) AS 'get_hour', MINUTE(TIMEDIFF(NOW(), created_at)) AS 'get_minute', SECOND(TIMEDIFF(NOW(), created_at)) AS 'get_second' FROM kegiatans WHERE kegiatans.user_id = $getUserID AND kegiatans.status = '0'");
+                    
+                        $kegiatansPerluBukti = DB::select("SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_kegiatan' FROM kegiatans LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id WHERE kegiatans.user_id = $getUserID GROUP BY kegiatans.id");
+                    
+                        $countKegiatanTanpaBukti = 0;
+                        for ($i = 0; $i < count($kegiatansPerluBukti); $i++) {
+                            if ($kegiatansPerluBukti[$i]->total_kegiatan == 0) {
+                                $countKegiatanTanpaBukti++;
+                            }
+                        }
+                    
+                        $countTimeBukti = DB::select("SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti_kegiatan', DATEDIFF(NOW(), kegiatans.created_at) AS 'datediff', HOUR(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_hour', MINUTE(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_minute', SECOND(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_second' FROM kegiatans LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id WHERE kegiatans.user_id = $getUserID GROUP BY kegiatans.id, bukti_kegiatans.kegiatans_id, kegiatans.created_at");
+                    
+                        for ($i = 0; $i < count($countTimeBukti); $i++) {
+                            if ($countTimeBukti[$i]->total_bukti_kegiatan == 0) {
+                                $countTimeBukti[0] = $countTimeBukti[$i];
+                                break;
+                            }
+                        }
+                    
+                        if (count($countUnReadNotifKegiatan) > 0) {
+                            $totalNotifications = $countUnReadNotifKegiatan[0]->jumlah + $countKegiatanTanpaBukti;
+                        } else {
+                            $totalNotifications = 0 + $countKegiatanTanpaBukti;
+                        }
                     }
                 @endphp
 
@@ -123,10 +150,10 @@
 
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="/notification_kegiatan_perlu_bukti" class="dropdown-item">
+                        <a href="/notification_kegiatan_belum_ada_bukti" class="dropdown-item">
                             <i class="fas fa-copy mr-2"></i>
                             @if ($countKegiatanTanpaBukti > 0)
-                                {{ $countKegiatanTanpaBukti }} kegiatan perlu bukti
+                                {{ $countKegiatanTanpaBukti }} kegiatan belum ada bukti
                                 <span class="float-right text-muted text-sm">
                                     @php
                                         if ($countTimeBukti[0]->datediff <= 0) {
@@ -219,28 +246,28 @@
                     {{-- Nama dan Level --}}
                     <div class="info">
                         @if (Auth::user()->level == 'A')
-                            <a class="">
+                            <a href="{{ route('profiles.edit', ['profile' => Auth::user()->id]) }}" class="">
                                 {{ Auth::user()->name }}<br>
                                 Admin
                             </a>
                         @endif
 
                         @if (Auth::user()->level == 'E')
-                            <a class="">
+                            <a href="{{ route('profiles.edit', ['profile' => Auth::user()->id]) }}" class="">
                                 {{ Auth::user()->name }}<br>
                                 Dekan
                             </a>
                         @endif
 
                         @if (Auth::user()->level == 'K')
-                            <a class="">
+                            <a href="{{ route('profiles.edit', ['profile' => Auth::user()->id]) }}" class="">
                                 {{ Auth::user()->name }}<br>
                                 Kaprodi
                             </a>
                         @endif
 
                         @if (Auth::user()->level == 'U')
-                            <a class="">
+                            <a href="{{ route('profiles.edit', ['profile' => Auth::user()->id]) }}" class="">
                                 {{ Auth::user()->name }}<br>
                                 Kepala Unit
                             </a>
@@ -249,18 +276,7 @@
                         @if (Auth::user()->level == 'D')
                             <a href="{{ route('profiles.edit', ['profile' => Auth::user()->id]) }}" class="">
                                 {{ Auth::user()->name }}<br>
-                                {{-- @if (Auth::user()->level == 'E')
-                                    Dekan
-                                @endif
-                                @if (Auth::user()->level == 'K')
-                                    Kaprodi
-                                @endif
-                                @if (Auth::user()->level == 'U')
-                                    Kepala Unit
-                                @endif --}}
-                                {{-- @if (Auth::user()->level == 'D') --}}
                                 Dosen
-                                {{-- @endif --}}
                             </a>
                         @endif
 
@@ -322,7 +338,7 @@
                             </a>
                         </li>
 
-                        @if (Auth::user()->level != 'D')
+                        @if (Auth::user()->level == 'A')
                             {{-- Users --}}
                             <li class="nav-item">
                                 <a href="{{ url('/users') }}" class="nav-link">
@@ -452,6 +468,7 @@
 
     <script src="{{ asset('dist/js/adminlte.min.js?v=3.2.0') }}"></script>
 
+    {{-- Tabel --}}
     <script>
         $(function() {
             $("#example1").DataTable({
@@ -478,9 +495,11 @@
         });
     </script>
 
+    {{-- Time --}}
     <script>
         // getDate
         n = new Date();
+
         year = n.getFullYear(); //getYear
         date = n.getDate(); //getDate
 
@@ -498,7 +517,8 @@
 
         date = date < "10" ? `0${date}` : date;
 
-        document.getElementById("date").innerHTML = day + ", " + date + " " + month + " " + year;
+        dateNow = `${day}, ${date} ${month} ${year}`;
+        document.getElementById("date").innerHTML = dateNow;
     </script>
 
     <script>

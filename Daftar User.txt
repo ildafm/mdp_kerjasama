@@ -11,3 +11,7 @@ Password : dosen123
 Name : Dekan
 Email : dekan@gmail.com
 Password : dekan123
+
+Name : User Main
+Email : usermain026@gmail.com
+Password : user1234

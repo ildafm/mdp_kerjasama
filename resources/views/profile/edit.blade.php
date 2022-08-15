@@ -4,7 +4,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Ubah Data User {{ $user->name }}</h3>
+            <h3 class="card-title">Data User {{ Auth::user()->name }}</h3>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -17,13 +17,13 @@
             </div>
         </div>
 
-        {{-- Form Ubah Data --}}
-        <form action="{{ route('profiles.update', ['profile' => Auth::user()->id]) }}" method="POST"
-            enctype="multipart/form-data">
-            @method('PUT')
-            @csrf
+        <div class="card-body">
+            {{-- Form Ubah Data --}}
+            <form action="{{ route('profiles.update', ['profile' => Auth::user()->id]) }}" method="POST"
+                enctype="multipart/form-data">
+                @method('PUT')
+                @csrf
 
-            <div class="card-body">
                 {{-- Tampilkan Pesan --}}
                 @if (session()->has('pesan'))
                     <div class='alert alert-success'>
@@ -36,7 +36,7 @@
                     <center>
                         <p>
                         <div class="image">
-                            @if (Auth::user()->file == null)
+                            @if (Auth::user()->file == null || Auth::user()->file == '')
                                 <img style="width: 250px; height: 250px" src="{{ asset('dist/img/user_profile.png') }}"
                                     class="img-circle elevation-2 img-fluid " alt="User_Image">
                             @else
@@ -123,14 +123,18 @@
                             placeholder="Konfirmasi Password" autocomplete="new-password" value="">
                     </div>
                 </div>
-            </div>
-
-            <div class="card-footer">
+                <br>
                 {{-- Button Submit --}}
                 <button type="submit" class="btn btn-primary">Submit</button>
 
-            </div>
-        </form>
+            </form>
+
+        </div>
+
+        <div class="card-footer">
+
+
+        </div>
     </div>
 
 @endsection

@@ -28,13 +28,7 @@
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-info">
                             <div class="inner">
-                                @if (count($getJumlahMitra) > 0)
-                                    @foreach ($getJumlahMitra as $data)
-                                        <h3>{{ $data->jumlahMitra }}</h3>
-                                    @endforeach
-                                @else
-                                    <h3>0</h3>
-                                @endif
+                                <h3>{{ $getJumlahMitra[0]->jumlahMitra }}</h3>
                                 <p>Total Mitra</p>
                             </div>
                             <div class="icon">
@@ -49,14 +43,8 @@
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-success">
                             <div class="inner">
-                                @if (count($getJumlahKerjasama) > 0)
-                                    @foreach ($getJumlahKerjasama as $data)
-                                        <h3>{{ $data->jumlahKerjasama }}</h3>
-                                        {{-- <sup style="font-size: 20px">%</sup> --}}
-                                    @endforeach
-                                @else
-                                    <h3>0</h3>
-                                @endif
+                                <h3>{{ $getJumlahKerjasama[0]->jumlahKerjasama }}</h3>
+                                {{-- <sup style="font-size: 20px">%</sup> --}}
                                 <p>Total Kerjasama</p>
                             </div>
                             <div class="icon">
@@ -71,13 +59,7 @@
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-warning">
                             <div class="inner">
-                                @if (count($getJumlahKegiatan) > 0)
-                                    @foreach ($getJumlahKegiatan as $data)
-                                        <h3>{{ $data->jumlahKegiatan }}</h3>
-                                    @endforeach
-                                @else
-                                    <h3>0</h3>
-                                @endif
+                                <h3>{{ $getJumlahKegiatan[0]->jumlahKegiatan }}</h3>
                                 <p>Total Kegiatan</p>
                             </div>
                             <div class="icon">
@@ -92,13 +74,7 @@
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-danger">
                             <div class="inner">
-                                @if (count($getJumlahUsulan) > 0)
-                                    @foreach ($getJumlahUsulan as $data)
-                                        <h3>{{ $data->jumlahUsulan }}</h3>
-                                    @endforeach
-                                @else
-                                    <h3>0</h3>
-                                @endif
+                                <h3>{{ $getJumlahUsulan[0]->jumlahUsulan }}</h3>
                                 <p>Total Usulan</p>
                             </div>
                             <div class="icon">
@@ -178,7 +154,7 @@
             </div>
 
             <div class="card-footer">
-                Footer
+
             </div>
 
         </div>

@@ -71,11 +71,13 @@
                                         class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
                                             title="Edit"></i></a>
 
-                                    {{-- Button Hapus --}}
-                                    <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                        data-namaKerjasama="{{ $data->nama_kerja_sama }}" data-toggle="modal"
-                                        data-target="#modal-sm"><i class="nav-icon fas fa-trash"
-                                            title="Hapus"></i></button>
+                                    @if (Auth::user()->level == 'A')
+                                        {{-- Button Hapus --}}
+                                        <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                            data-namaKerjasama="{{ $data->nama_kerja_sama }}" data-toggle="modal"
+                                            data-target="#modal-sm"><i class="nav-icon fas fa-trash"
+                                                title="Hapus"></i></button>
+                                    @endif
                                 @endif
                             </td>
                             <td>{{ $data->nama_kerja_sama }}</td>

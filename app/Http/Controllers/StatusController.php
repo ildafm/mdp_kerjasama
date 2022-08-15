@@ -15,7 +15,7 @@ class StatusController extends Controller
     public function index()
     {
         //
-        $this->authorize('viewAny', User::class);
+        $this->authorize('adminOnly', User::class);
 
         $status = Status::All();
         return view('status.index')
@@ -30,7 +30,7 @@ class StatusController extends Controller
     public function create()
     {
         //
-        $this->authorize('viewAny', User::class);
+        $this->authorize('adminOnly', User::class);
 
         return view('status.create');
     }
@@ -44,7 +44,7 @@ class StatusController extends Controller
     public function store(Request $request)
     {
         //
-        $this->authorize('viewAny', User::class);
+        $this->authorize('adminOnly', User::class);
 
         $validateData = $request->validate([
             
@@ -68,7 +68,7 @@ class StatusController extends Controller
     public function show(Status $status)
     {
         //
-        $this->authorize('viewAny', User::class);
+        $this->authorize('adminOnly', User::class);
 
         return view('status.show')->with('status', $status);
     }
@@ -82,7 +82,7 @@ class StatusController extends Controller
     public function edit(Status $status)
     {
         //
-        $this->authorize('viewAny', User::class);
+        $this->authorize('adminOnly', User::class);
 
         return view('status.edit')->with('status', $status);
     }
@@ -97,7 +97,7 @@ class StatusController extends Controller
     public function update(Request $request, Status $status)
     {
         //
-        $this->authorize('viewAny', User::class);
+        $this->authorize('adminOnly', User::class);
 
         $this->validate($request, [
             'nama_status' => 'required'
@@ -122,7 +122,7 @@ class StatusController extends Controller
     public function destroy(Status $status)
     {
         //
-        $this->authorize('viewAny', User::class);
+        $this->authorize('adminOnly', User::class);
 
         $status->delete();
         return redirect()->route('statuses.index')->with('pesan', "Hapus data $status->nama_status berhasil");
