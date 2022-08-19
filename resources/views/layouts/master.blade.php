@@ -44,6 +44,7 @@
 
                 @php
                     // Jika login Admin akan menampilkan semua, jika dosen hanya akan menampilkan yang bersangkutan
+                    // Login selain dosen
                     if (Auth::user()->level != 'D') {
                         $countUnReadNotifKegiatan = DB::select("SELECT kegiatans.status AS 'status', COUNT(kegiatans.status) AS 'jumlah' FROM kegiatans WHERE kegiatans.status = '0' GROUP BY kegiatans.status");
                     
@@ -60,6 +61,15 @@
                     
                         $countTimeBukti = DB::select("SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti_kegiatan', DATEDIFF(NOW(), kegiatans.created_at) AS 'datediff', HOUR(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_hour', MINUTE(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_minute', SECOND(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_second' FROM kegiatans LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id GROUP BY kegiatans.id, bukti_kegiatans.kegiatans_id, kegiatans.created_at");
                     
+                        $kegiatanLewatWaktuSampai = DB::select("SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti_kegiatan', DATEDIFF(NOW(), kegiatans.tanggal_sampai) AS 'datediff' FROM kegiatans LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id GROUP BY kegiatans.id, bukti_kegiatans.kegiatans_id, kegiatans.tanggal_sampai ORDER BY DATEDIFF(NOW(), kegiatans.tanggal_sampai) DESC");
+                    
+                        $jumlahKegiatanLewatWaktuSampai = 0;
+                        for ($i = 0; $i < count($countTimeBukti); $i++) {
+                            if ($kegiatanLewatWaktuSampai[$i]->datediff < 0) {
+                                $jumlahKegiatanLewatWaktuSampai++;
+                            }
+                        }
+                    
                         for ($i = 0; $i < count($countTimeBukti); $i++) {
                             if ($countTimeBukti[$i]->total_bukti_kegiatan == 0) {
                                 $countTimeBukti[0] = $countTimeBukti[$i];
@@ -72,7 +82,10 @@
                         } else {
                             $totalNotifications = 0 + $countKegiatanTanpaBukti;
                         }
-                    } else {
+                        $bellNotif = $totalNotifications - $jumlahKegiatanLewatWaktuSampai;
+                    }
+                    // Login Dosen
+                    else {
                         $getUserID = Auth::user()->id;
                     
                         $countUnReadNotifKegiatan = DB::select("SELECT kegiatans.status AS 'status', COUNT(kegiatans.status) AS 'jumlah' FROM kegiatans WHERE kegiatans.user_id = $getUserID AND kegiatans.status = '0' GROUP BY kegiatans.status");
@@ -90,6 +103,15 @@
                     
                         $countTimeBukti = DB::select("SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti_kegiatan', DATEDIFF(NOW(), kegiatans.created_at) AS 'datediff', HOUR(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_hour', MINUTE(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_minute', SECOND(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_second' FROM kegiatans LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id WHERE kegiatans.user_id = $getUserID GROUP BY kegiatans.id, bukti_kegiatans.kegiatans_id, kegiatans.created_at");
                     
+                        $kegiatanLewatWaktuSampai = DB::select("SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti_kegiatan', DATEDIFF(NOW(), kegiatans.tanggal_sampai) AS 'datediff' FROM kegiatans LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id WHERE kegiatans.user_id = $getUserID GROUP BY kegiatans.id, bukti_kegiatans.kegiatans_id, kegiatans.tanggal_sampai ORDER BY DATEDIFF(NOW(), kegiatans.tanggal_sampai) DESC");
+                    
+                        $jumlahKegiatanLewatWaktuSampai = 0;
+                        for ($i = 0; $i < count($kegiatanLewatWaktuSampai); $i++) {
+                            if ($kegiatanLewatWaktuSampai[$i]->datediff < 0) {
+                                $jumlahKegiatanLewatWaktuSampai++;
+                            }
+                        }
+                    
                         for ($i = 0; $i < count($countTimeBukti); $i++) {
                             if ($countTimeBukti[$i]->total_bukti_kegiatan == 0) {
                                 $countTimeBukti[0] = $countTimeBukti[$i];
@@ -102,6 +124,7 @@
                         } else {
                             $totalNotifications = 0 + $countKegiatanTanpaBukti;
                         }
+                        $bellNotif = $totalNotifications - $jumlahKegiatanLewatWaktuSampai;
                     }
                 @endphp
 
@@ -110,8 +133,8 @@
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-bell"></i>
 
-                        @if ($totalNotifications > 0)
-                            <span class="badge badge-warning navbar-badge">{{ $totalNotifications }}</span>
+                        @if ($bellNotif > 0)
+                            <span class="badge badge-warning navbar-badge">{{ $bellNotif }}</span>
                         @endif
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
@@ -123,6 +146,7 @@
                             @endif
                         </span>
                         <div class="dropdown-divider"></div>
+                        {{-- Notifikasi kegiatan belum dibaca --}}
                         <a href="{{ url('/notification_kegiatan') }}" class="dropdown-item">
                             <i class="fas fa-briefcase mr-2"></i>
                             @if (count($countUnReadNotifKegiatan) > 0)
@@ -145,44 +169,34 @@
                                     @endphp
                                 </span>
                             @else
-                                0 kegiatan baru <span class="float-right text-muted text-sm"> 0 secs </span>
+                                0 kegiatan baru
                             @endif
 
                         </a>
                         <div class="dropdown-divider"></div>
+                        {{-- Notifikasi kegiatan belum memiliki bukti kegiatan --}}
                         <a href="/notification_kegiatan_belum_ada_bukti" class="dropdown-item">
                             <i class="fas fa-copy mr-2"></i>
                             @if ($countKegiatanTanpaBukti > 0)
                                 {{ $countKegiatanTanpaBukti }} kegiatan belum ada bukti
                                 <span class="float-right text-muted text-sm">
                                     @php
-                                        if ($countTimeBukti[0]->datediff <= 0) {
-                                            if ($countTimeBukti[0]->get_hour <= 0) {
-                                                if ($countTimeBukti[0]->get_minute <= 0) {
-                                                    echo $countTimeBukti[0]->get_second, ' secs';
-                                                } else {
-                                                    echo $countTimeBukti[0]->get_minute, ' mins';
+                                        for ($i = 0; $i < count($kegiatanLewatWaktuSampai); $i++) {
+                                            if ($kegiatanLewatWaktuSampai[$i]->total_bukti_kegiatan == 0) {
+                                                if ($kegiatanLewatWaktuSampai[$i]->datediff > 0) {
+                                                    echo $kegiatanLewatWaktuSampai[$i]->datediff, ' day';
+                                                    break;
                                                 }
-                                            } else {
-                                                echo $countTimeBukti[0]->get_hour, ' hour';
                                             }
-                                        } else {
-                                            echo $countTimeBukti[0]->datediff, ' day';
                                         }
                                     @endphp
                                 </span>
                             @else
-                                0 kegiatan perlu bukti <span class="float-right text-muted text-sm"> 0 secs </span>
+                                0 kegiatan perlu bukti <span class="float-right text-muted text-sm"> 0 day </span>
                             @endif
 
                         </a>
-                        {{-- <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-file mr-2"></i> 3 new reports
-                            <span class="float-right text-muted text-sm">2 days</span>
-                        </a> --}}
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
                     </div>
                 </li>
 

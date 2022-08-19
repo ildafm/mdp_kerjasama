@@ -101,8 +101,9 @@
                     </tfoot>
 
                 </table>
-            @else
+
                 {{-- Tabel Data Untuk login dosen --}}
+            @else
                 <table id="example1" class="table table-bordered table-striped">
                     <thead>
                         <tr>
@@ -132,19 +133,6 @@
                                         {{-- Button Tampil --}}
                                         <a href="{{ url('kegiatans/' . $data->id) }}" class="btn btn-sm btn-primary"><i
                                                 class="nav-icon fas fa-eye" title="Tampil"></i></a>
-
-                                        @if (Auth::user()->level != 'D')
-                                            {{-- Button Ubah --}}
-                                            <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
-                                                class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
-                                                    title="Edit"></i></a>
-
-                                            {{-- Button Hapus --}}
-                                            <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                                data-bentukKegiatan="{{ $data->bentuk_kegiatan }}" data-toggle="modal"
-                                                data-target="#modal-sm"><i class="nav-icon fas fa-trash"
-                                                    title="Hapus"></i></button>
-                                        @endif
                                     </td>
 
                                     <td>{{ $data->nama_kerja_sama }}</td>

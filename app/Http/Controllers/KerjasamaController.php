@@ -12,6 +12,7 @@ use App\Models\Usulan;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class KerjasamaController extends Controller
 {
@@ -58,6 +59,7 @@ class KerjasamaController extends Controller
     public function store(Request $request)
     {
         //
+        // Input kerjasama baru
         if ($request->nama_kerja_sama != '' || $request->nama_kerja_sama != null) {
             if($request->nama_kategori == '1'){
                 $validateData = $request->validate([
@@ -102,6 +104,7 @@ class KerjasamaController extends Controller
             $request->session()->flash('pesan', 'Penambahan data berhasil');
             return redirect()->route('kerjasamas.index');
         }
+        // Input kegiatan baru melalui kerjasama show
         else{
             $validateData = $request->validate([
                 'tanggal_mulai' => 'required',
@@ -126,6 +129,18 @@ class KerjasamaController extends Controller
             $kegiatan->save();
     
             $request->session()->flash('pesan', 'Penambahan data berhasil');
+
+            $findUser = User::findOrFail($kegiatan->user_id);
+            $bentukKegiatan = $validateData['bentuk_kegiatan'];
+            $tanggalMulaiKegiatan = $validateData['tanggal_mulai'];
+            $tanggalSampaiKegiatan = $validateData['tanggal_sampai'];
+            $details = [
+            'title' => 'Kegiatan Baru',
+            'body' => "Hai <b>$findUser->name</b>, anda ditugaskan pada kegiatan '$bentukKegiatan', yang dimulai pada tanggal $tanggalMulaiKegiatan sampai dengan tanggal $tanggalSampaiKegiatan, silahkan klik link di bawah untuk melihat lebih detail"
+            ];
+
+            Mail::to($findUser->email)->send(new \App\Mail\MyTestMail($details));
+
             return redirect()->route('kerjasamas.show', $kegiatan->kerjasama_id);
         } 
     }

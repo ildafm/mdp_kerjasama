@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Models\Unit;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MyTestMail;
 
 class KegiatanController extends Controller
 {
@@ -84,6 +86,15 @@ class KegiatanController extends Controller
         $kegiatan->save();
 
         $request->session()->flash('pesan', 'Penambahan data berhasil');
+
+        $findUser = User::findOrFail($kegiatan->user_id);
+        $details = [
+            'title' => 'Kegiatan Baru',
+            'body' => "Hai $findUser->name, anda ditugaskan pada kegiatan "+$validateData['bentuk_kegiatan']+" yang dimulai pada tanggal "+$validateData['tanggal_mulai']+" sampai tanggal "+$validateData['tanggal_sampai']+" silahkan klik link di bawah untuk melihat lebih detail"
+            ];
+           
+            Mail::to($findUser->email)->send(new \App\Mail\MyTestMail($details));
+
         return redirect()->route('kegiatans.index');
     }
 

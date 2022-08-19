@@ -55,23 +55,16 @@ class NotificationController extends Controller
         JOIN users ON users.id = kegiatans.user_id
         LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
         WHERE users.id = $getUserID
-        GROUP BY kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, keterangan,  kerjasamas.nama_kerja_sama, users.name, kegiatans.status");
+        GROUP BY kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, keterangan,  kerjasamas.nama_kerja_sama, users.name, kegiatans.status 
+        ORDER BY kegiatans.tanggal_sampai");
 
         $listKegiatanTanpaBuktiForAdmin = DB::select("SELECT kegiatans.id AS 'id', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, keterangan, kerjasamas.nama_kerja_sama, users.name AS 'name', kegiatans.status, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti' 
         FROM kegiatans 
         JOIN kerjasamas ON kerjasamas.id = kerjasama_id 
         JOIN users ON users.id = kegiatans.user_id 
         LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id 
-        GROUP BY kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, keterangan,  kerjasamas.nama_kerja_sama, users.name, kegiatans.status");
-
-        // $kegiatansPerluBukti = DB::select("SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_kegiatan' FROM kegiatans LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id WHERE kegiatans.user_id = $getUserID GROUP BY kegiatans.id");
-
-        // $countKegiatanTanpaBukti = 0;
-        // for ($i = 0; $i < count($kegiatansPerluBukti); $i++) { 
-        //     if($kegiatansPerluBukti[$i]->total_kegiatan = 0){
-        //         $countKegiatanTanpaBukti++;
-        //     }
-        // }
+        GROUP BY kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, keterangan,  kerjasamas.nama_kerja_sama, users.name, kegiatans.status
+        ORDER BY kegiatans.tanggal_sampai");
         
         return view("notification.kegiatan_perlu_bukti")
             ->with('listKegiatanTanpaBuktiForAdmin', $listKegiatanTanpaBuktiForAdmin)
