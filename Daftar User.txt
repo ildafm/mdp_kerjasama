@@ -1,17 +1,11 @@
 Daftar User yang sudah terdaftar dan bisa dipakai untuk sementara
 
-Name : Admin
-Email : admin@gmail.com
-Password : admin123
-
-Name : Dosen
-Email : dosen@gmail.com
-Password : dosen123
-
-Name : Dekan
-Email : dekan@gmail.com
-Password : dekan123
-
-Name : User Main
+Name : User Main Admin
 Email : usermain026@gmail.com
 Password : user1234
+Level : Admin
+
+Name : Dosen Main Account
+Email : dosenmain026@gmail.com
+Password : dosen123
+Level : Dosen

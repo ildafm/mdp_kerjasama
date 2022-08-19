@@ -85,16 +85,21 @@ class KegiatanController extends Controller
 
         $kegiatan->save();
 
-        $request->session()->flash('pesan', 'Penambahan data berhasil');
-
         $findUser = User::findOrFail($kegiatan->user_id);
-        $details = [
+            $bentukKegiatan = $validateData['bentuk_kegiatan'];
+            $tanggalMulaiKegiatan = $validateData['tanggal_mulai'];
+            $tanggalSampaiKegiatan = $validateData['tanggal_sampai'];
+            $details = [
             'title' => 'Kegiatan Baru',
-            'body' => "Hai $findUser->name, anda ditugaskan pada kegiatan "+$validateData['bentuk_kegiatan']+" yang dimulai pada tanggal "+$validateData['tanggal_mulai']+" sampai tanggal "+$validateData['tanggal_sampai']+" silahkan klik link di bawah untuk melihat lebih detail"
-            ];
-           
-            Mail::to($findUser->email)->send(new \App\Mail\MyTestMail($details));
+            'user_name' => $findUser->name,
+            'bentuk_kegiatan' => $bentukKegiatan,
+            'tanggal_mulai' => $tanggalMulaiKegiatan,
+            'tanggal_sampai' => $tanggalSampaiKegiatan,
+        ];
 
+        Mail::to($findUser->email)->send(new \App\Mail\MyTestMail($details));
+
+        $request->session()->flash('pesan', 'Penambahan data berhasil');
         return redirect()->route('kegiatans.index');
     }
 

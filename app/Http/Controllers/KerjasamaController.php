@@ -128,19 +128,21 @@ class KerjasamaController extends Controller
     
             $kegiatan->save();
     
-            $request->session()->flash('pesan', 'Penambahan data berhasil');
-
             $findUser = User::findOrFail($kegiatan->user_id);
             $bentukKegiatan = $validateData['bentuk_kegiatan'];
             $tanggalMulaiKegiatan = $validateData['tanggal_mulai'];
             $tanggalSampaiKegiatan = $validateData['tanggal_sampai'];
             $details = [
             'title' => 'Kegiatan Baru',
-            'body' => "Hai <b>$findUser->name</b>, anda ditugaskan pada kegiatan '$bentukKegiatan', yang dimulai pada tanggal $tanggalMulaiKegiatan sampai dengan tanggal $tanggalSampaiKegiatan, silahkan klik link di bawah untuk melihat lebih detail"
+            'user_name' => $findUser->name,
+            'bentuk_kegiatan' => $bentukKegiatan,
+            'tanggal_mulai' => $tanggalMulaiKegiatan,
+            'tanggal_sampai' => $tanggalSampaiKegiatan,
             ];
 
             Mail::to($findUser->email)->send(new \App\Mail\MyTestMail($details));
 
+            $request->session()->flash('pesan', 'Penambahan data berhasil');
             return redirect()->route('kerjasamas.show', $kegiatan->kerjasama_id);
         } 
     }
