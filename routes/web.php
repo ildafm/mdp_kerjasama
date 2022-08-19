@@ -31,7 +31,10 @@ Route::get('/', function () {
     return redirect()->route('dashboard');
 });
 
-Route::delete('kegiatans/customDestroy/{id_kegiatan}', [App\Http\Controllers\KegiatanController::class, 'customDestroy'])->name('customDestroy')->middleware(['auth']);
+Route::delete('kegiatans/customDestroyKegiatan/{id_kegiatan}', [App\Http\Controllers\KegiatanController::class, 'customDestroy'])->name('customDestroyKegiatan')->middleware(['auth']);
+
+Route::delete('kerjasamas/customDestroyKerjasama/{id_kerjasama}', [App\Http\Controllers\KerjasamaController::class, 'customDestroy'])->name('customDestroyKerjasama')->middleware(['auth']);
+
 Route::resource('mitras', MitraController::class)->middleware(['auth']);
 Route::resource('dosens', DosenController::class)->middleware(['auth']);
 Route::resource('kegiatans', KegiatanController::class)->middleware(['auth']);

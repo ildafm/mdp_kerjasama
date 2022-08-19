@@ -192,7 +192,7 @@
                                     @endphp
                                 </span>
                             @else
-                                0 kegiatan perlu bukti <span class="float-right text-muted text-sm"> 0 day </span>
+                                0 kegiatan perlu bukti
                             @endif
 
                         </a>

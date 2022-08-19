@@ -221,7 +221,6 @@
                             <tr>
                                 <th>No</th>
                                 <th>Aksi</th>
-                                <th>Nama Kerjasama</th>
                                 <th>Bentuk Kegiatan</th>
                                 <th>Keterangan</th>
                                 <th>PIC Dosen</th>
@@ -262,8 +261,6 @@
                                             @endif
                                         </td>
 
-                                        <td>{{ $data->kerjasama->nama_kerja_sama }}</td>
-
                                         <td>{{ $data->bentuk_kegiatan }}</td>
 
                                         <td>{{ $data->keterangan }}</td>
@@ -282,7 +279,6 @@
                             <tr>
                                 <th>No</th>
                                 <th>Aksi</th>
-                                <th>Nama Kerjasama</th>
                                 <th>Bentuk Kegiatan</th>
                                 <th>Keterangan</th>
                                 <th>PIC Dosen</th>
@@ -343,7 +339,6 @@
                             {{-- Button --}}
                             <button type="submit" class="btn btn-primary">Tambahkan Bukti</button>
                         </form>
-                        {{-- Tabel Data Bukti Kegiatan --}}
                         <br><br>
                     @endif
                     {{-- Tabel Data Bukti Kerjasama --}}
@@ -405,14 +400,6 @@
 
                     </table>
                 </div>
-                {{-- <div class="tab-pane fade" id="custom-tabs-two-messages" role="tabpanel"
-                    aria-labelledby="custom-tabs-two-messages-tab">
-                    Message
-                </div>
-                <div class="tab-pane fade" id="custom-tabs-two-settings" role="tabpanel"
-                    aria-labelledby="custom-tabs-two-settings-tab">
-                    Setting
-                </div> --}}
             </div>
         </div>
     </div>
@@ -495,7 +482,7 @@
         // id disini adalah id kegiatan
         $('.btn-hapus-kegiatan').click(function() {
             let id_kegiatan = $(this).attr('data-id-kegiatan');
-            $('#formDelete-kegiatan').attr('action', '/kegiatans/customDestroy/' + id_kegiatan);
+            $('#formDelete-kegiatan').attr('action', '/kegiatans/customDestroyKegiatan/' + id_kegiatan);
 
             let dataBentukKegiatan = $(this).attr('data-bentukKegiatan')
             $('#mb-konfirmasi-kegiatan').text("Apakah anda yakin ingin menghapus kegiatan : " + dataBentukKegiatan +

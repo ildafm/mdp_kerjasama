@@ -59,6 +59,7 @@ class UsulanController extends Controller
     {
         //
         $this->authorize('viewAny', User::class);
+        // simpan usulan
         if ($request->usulan != '' || $request->usulan != null) {
             $validateData = $request->validate([
                 'usulan' => 'required',
@@ -86,6 +87,7 @@ class UsulanController extends Controller
             $request->session()->flash('pesan', 'Penambahan data berhasil');
             return redirect()->route('usulans.index');
         }
+        // simpan kegiatan
         else{
             if($request->nama_kategori == '1'){
                 $validateData = $request->validate([
@@ -205,6 +207,7 @@ class UsulanController extends Controller
             'nama_pengusul' => 'required',
             'nama_unit' => 'required',
             'hasil_penjajakan' => 'required',
+            'type' => 'required',
         ]);
 
         if ($request->hasil_penjajakan != 'B') {
@@ -225,6 +228,7 @@ class UsulanController extends Controller
             'unit_id' => $request->nama_unit,
             'hasil_penjajakan' => $request->hasil_penjajakan,
             'keterangan' => $request->keterangan_hasil_penajajakan,
+            'type' => $request->type,
         ]);
 
         $request->session()->flash('pesan', 'Perubahan data berhasil');

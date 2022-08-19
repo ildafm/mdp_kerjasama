@@ -74,7 +74,7 @@
 
                 <div class="row">
                     {{-- Nama Pengusulan --}}
-                    <div class="form-group col-lg-4">
+                    <div class="form-group col-lg-3">
                         <label for="nama_pengusul">Nama Pengusul</label>
 
                         @php
@@ -98,7 +98,7 @@
                     </div>
 
                     {{-- Nama Mitra --}}
-                    <div class="form-group col-lg-4">
+                    <div class="form-group col-lg-3">
                         <label for="nama_mitra">Nama Mitra </label>
 
                         @php
@@ -122,7 +122,7 @@
                     </div>
 
                     {{-- Nama Unit --}}
-                    <div class="form-group col-lg-4">
+                    <div class="form-group col-lg-3">
                         <label for="nama_unit">Nama Unit</label>
 
                         @php
@@ -141,6 +141,26 @@
                             @endforeach
                         </select>
                         @error('nama_unit')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Type --}}
+                    <div class="form-group col-lg-3">
+                        <label for="type">Type</label>
+                        @php
+                            if (old('type') !== null) {
+                                $option = old('type');
+                            } else {
+                                $option = $usulans->type;
+                            }
+                        @endphp
+
+                        <select class="form-control" name="type" id="">
+                            <option value="I" <?= $option == 'I' ? 'selected' : '' ?>>IN</option>
+                            <option value="O" <?= $option == 'O' ? 'selected' : '' ?>>OUT</option>
+                        </select>
+                        @error('type')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>

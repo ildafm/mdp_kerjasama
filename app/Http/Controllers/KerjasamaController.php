@@ -269,4 +269,21 @@ class KerjasamaController extends Controller
         $kerjasama->delete();
         return redirect()->route('kerjasamas.index')->with('pesan', "Hapus data $kerjasama->nama_kerja_sama berhasil");
     }
+
+    public function customDestroy($id_kerjasama){
+        $kerjasama = Kerjasama::findOrFail($id_kerjasama);
+
+        $getBuktiKerjasama = DB::select("SELECT id, nama_bukti_kerjasama, bukti_kerjasamas.file AS 'file', kerjasama_id FROM bukti_kerjasamas WHERE kerjasama_id = $kerjasama->id");
+
+        // unlink semua file sekaligus
+        if(count($getBuktiKerjasama) > 0){
+            for ($i = 0; $i < count($getBuktiKerjasama); $i++) {
+                unlink(storage_path('app/public/kerjasama/'.$getBuktiKerjasama[$i]->file));
+            }
+        }
+        
+        $kerjasama->delete();
+        return redirect()->route('usulans.show', $kerjasama->usulan_id)->with('pesan', "Hapus data kerjasama : $kerjasama->nama_kerja_sama berhasil");
+
+    }
 }

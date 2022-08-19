@@ -289,7 +289,6 @@
                             <tr>
                                 <td>
                                     {{ $nomor++ }}
-                                    {{-- {{ $data->id_kerjasama }} --}}
                                 </td>
 
                                 <td>
@@ -297,6 +296,22 @@
                                     <a href="{{ url('kerjasamas/' . $data->id_kerjasama) }}"
                                         class="btn btn-sm btn-primary"><i class="nav-icon fas fa-eye"
                                             title="Tampil"></i></a>
+
+                                    @if (Auth::user()->level != 'D')
+                                        {{-- Button Ubah --}}
+                                        <a href="{{ route('kerjasamas.edit', ['kerjasama' => $data->id_kerjasama]) }}"
+                                            class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
+                                                title="Edit"></i></a>
+
+                                        @if (Auth::user()->level == 'A')
+                                            {{-- Button Hapus --}}
+                                            <button class="btn btn-sm btn-danger btn-hapus"
+                                                data-id_kerjasama="{{ $data->id_kerjasama }}"
+                                                data-namaKerjasama="{{ $data->nama_kerja_sama }}" data-toggle="modal"
+                                                data-target="#modal-sm"><i class="nav-icon fas fa-trash"
+                                                    title="Hapus"></i></button>
+                                        @endif
+                                    @endif
                                 </td>
 
                                 <td>{{ $data->nama_kerja_sama }}</td>
@@ -311,7 +326,6 @@
                                 <td>{{ $data->tanggal_sampai }}</td>
                                 <td>{{ $data->nama_kategori }}</td>
                                 <td>{{ $data->nama_status }}</td>
-                                {{-- <td>{{ $data->usulan->usulan }}</td> --}}
                             </tr>
                         @endforeach
                     </tbody>
@@ -348,11 +362,11 @@
                         </button>
                     </div>
                     <div class="modal-body" id="mb-konfirmasi">
-                        {{-- <p>Apakah anda yakin ingin menghapus data ini?</p> --}}
+
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
-                        <button type="submit" class="btn btn-primary">Iya</button>
+                        <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Tidak</button>
+                        <button type="submit" class="btn btn-danger">Iya, Hapus</button>
                     </div>
                 </form>
             </div>
@@ -362,13 +376,13 @@
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <script>
         // jika tombol hapus ditekan, generate alamat URL untuk proses hapus
-        // id disini adalah id usulan
+        // id disini adalah id kerjasama
         $('.btn-hapus').click(function() {
-            let id = $(this).attr('data-id');
-            $('#formDelete').attr('action', '/usulans/' + id);
+            let id_kerjasama = $(this).attr('data-id_kerjasama');
+            $('#formDelete').attr('action', '/kerjasamas/customDestroyKerjasama/' + id_kerjasama);
 
-            let namaUsulan = $(this).attr('data-namaUsulan');
-            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus usulan " + namaUsulan + " ?")
+            let nama_kerja_sama = $(this).attr('data-namaKerjasama');
+            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus Kerjasama " + nama_kerja_sama + " ?")
         })
 
         // jika tombol Ya, hapus ditekan, submit form hapus
