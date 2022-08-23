@@ -4,7 +4,6 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <!-- <h3 class="card-title">Tabel Daftar Unit</h3> -->
             {{-- Button Tambah --}}
             <a href="{{ url('/units/create') }}" class='btn btn-primary'>Tambah Unit</a>
 
@@ -35,6 +34,7 @@
                         <th>No</th>
                         <th>Aksi</th>
                         <th>Nama Unit</th>
+                        <th>Parent Unit</th>
                     </tr>
                 </thead>
 
@@ -48,13 +48,9 @@
                         <tr>
                             <td>{{ $nomor++ }}</td>
                             <td>
-                                {{-- Button Tampil --}}
-                                {{-- <a href="{{ url('units/' . $data->id) }}" class="btn btn-sm btn-primary"><i
-                                        class="nav-icon fas fa-eye" title="Tampil"></i></a> --}}
-
                                 {{-- Button Ubah --}}
-                                <a href="{{ route('units.edit', ['unit' => $data->id]) }}"
-                                    class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit" title="Edit"></i></a>
+                                <a href="{{ route('units.edit', ['unit' => $data->id]) }}" class="btn btn-sm btn-warning"><i
+                                        class="nav-icon fas fa-edit" title="Edit"></i></a>
 
                                 {{-- Button Hapus --}}
                                 <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
@@ -62,6 +58,16 @@
                                         class="nav-icon fas fa-trash" title="Hapus"></i></button>
                             </td>
                             <td>{{ $data->nama_unit }}</td>
+                            <td>
+                                @php
+                                    for ($i = 0; $i < count($units); $i++) {
+                                        if ($data->parent_unit == $units[$i]->id) {
+                                            echo $units[$i]->nama_unit;
+                                            break;
+                                        }
+                                    }
+                                @endphp
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -71,6 +77,7 @@
                         <th>No</th>
                         <th>Aksi</th>
                         <th>Nama Unit</th>
+                        <th>Parent Unit</th>
                     </tr>
                 </tfoot>
 

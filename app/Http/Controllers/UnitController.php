@@ -31,7 +31,8 @@ class UnitController extends Controller
         //
         $this->authorize('adminOnly', User::class);
 
-        return view('unit.create');
+        $units = Unit::All();
+        return view('unit.create')->with('units', $units);
     }
 
     /**
@@ -46,12 +47,13 @@ class UnitController extends Controller
         $this->authorize('adminOnly', User::class);
 
         $validateData = $request->validate([
-            
-            'nama_unit' => 'required'
+            'nama_unit' => 'required',
+            'parent_unit' => 'required'
         ]);
 
         $unit = new Unit();
         $unit->nama_unit = $validateData['nama_unit'];
+        $unit->parent_unit = $validateData['parent_unit'];
         $unit->save();
 
         $request->session()->flash('pesan', 'Penambahan data berhasil');
@@ -83,7 +85,10 @@ class UnitController extends Controller
         //
         $this->authorize('adminOnly', User::class);
 
-        return view('unit.edit')->with('unit', $unit);
+        $units = Unit::All();
+        return view('unit.edit')
+            ->with('unit', $unit)
+            ->with('units', $units);
     }
 
     /**
@@ -99,13 +104,15 @@ class UnitController extends Controller
         $this->authorize('adminOnly', User::class);
 
         $this->validate($request, [
-            'nama_unit' => 'required'
+            'nama_unit' => 'required',
+            'parent_unit' => 'required'
         ]);
 
         $unit = Unit::findOrFail($unit->id);
 
         $unit->update([
             'nama_unit' => $request->nama_unit,
+            'parent_unit' => $request->parent_unit,
         ]);
 
         $request->session()->flash('pesan', 'Perubahan data berhasil');

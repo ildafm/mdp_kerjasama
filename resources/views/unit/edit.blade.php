@@ -24,15 +24,41 @@
                 @method('PUT')
                 @csrf
 
-                <div class="form-group">
-                    <label for="nama_unit">Nama Unit</label>
-                    <input type="text" value='{{ $unit->nama_unit }}' name='nama_unit'
-                        class="form-control @error('nama_unit') is-invalid @enderror" placeholder="Masukan Nama Unit">
-                    @error('nama_unit')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
+                <div class="row">
+                    {{-- Nama Unit --}}
+                    <div class="form-group col-lg-6">
+                        <label for="nama_unit">Nama Unit</label>
+                        <input type="text" value='{{ $unit->nama_unit }}' name='nama_unit'
+                            class="form-control @error('nama_unit') is-invalid @enderror" placeholder="Masukan Nama Unit">
+                        @error('nama_unit')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
 
+                    {{-- Parent Unit --}}
+                    <div class="form-group col-lg-6">
+                        <label for="parent_unit">Parent Unit</label>
+
+                        @php
+                            if (old('parent_unit') !== null) {
+                                $option = old('parent_unit');
+                            } else {
+                                $option = $unit->parent_unit;
+                            }
+                        @endphp
+
+                        <select class="form-control select2" name="parent_unit" id="">
+                            @foreach ($units as $data)
+                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                    {{ $data->nama_unit }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('parent_unit')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
                 <br>
                 {{-- Button --}}
                 <button type="submit" class="btn btn-primary">Submit</button>

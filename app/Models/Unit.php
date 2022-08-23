@@ -17,5 +17,5 @@ class Unit extends Model
         return $this->hasMany(User::class);
     }
 
-    protected $fillable = ['nama_unit'];
+    protected $fillable = ['nama_unit', 'parent_unit'];
 }
