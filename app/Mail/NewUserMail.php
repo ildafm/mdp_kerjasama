@@ -7,12 +7,12 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class MyTestMail extends Mailable
+class NewUserMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $details;
-  
+
     /**
      * Create a new message instance.
      *
@@ -20,9 +20,10 @@ class MyTestMail extends Mailable
      */
     public function __construct($details)
     {
+        //
         $this->details = $details;
     }
-  
+
     /**
      * Build the message.
      *
@@ -30,7 +31,7 @@ class MyTestMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Kegiatan Baru')
-                    ->view('emails.new_kegiatan');
+        return $this->subject('Aktivasi Akun MDP Kerjasama')
+                    ->view('emails.new_user');
     }
 }

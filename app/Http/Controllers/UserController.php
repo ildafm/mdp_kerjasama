@@ -8,7 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Unit;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -70,6 +72,25 @@ class UserController extends Controller
         $user->level = $validateData['level'];
         $user->unit_id = $validateData['nama_unit'];
         $user->save();
+
+        // Send email to new user
+        $nowHourQuerry = DB::select("SELECT Hour(Now()) as 'jam_sekarang'");
+        $nowHour = $nowHourQuerry[0]->jam_sekarang;
+        if ($nowHour < 12) {
+            $salam = 'Selamat pagi';
+        } elseif($nowHour < 19){
+            $salam = 'Selamat sore';
+        } elseif($nowHour < 24){
+            $salam = 'Selamat malam';
+        }
+        $details = [
+            'title' => 'Aktivasi Akun MDP Kerjasama',
+            'salam' => $salam,
+            'user_email' => $validateData['email'],
+            'user_password' => $validateData['password'],
+        ];
+
+        Mail::to($validateData['email'])->send(new \App\Mail\NewUserMail($details));
 
         $request->session()->flash('pesan', 'Penambahan data berhasil');
         return redirect()->route('users.index');

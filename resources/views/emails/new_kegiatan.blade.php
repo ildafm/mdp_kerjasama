@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Kegiatan Baru</title>
+    <title>{{ $details['title'] }}</title>
 </head>
 
 <body>
