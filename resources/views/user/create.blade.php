@@ -55,26 +55,26 @@
                         @enderror
                     </div>
 
-                    {{-- select unit --}}
-                    <div class="form-group col-lg-4">
-                        <label for="nama_unit">Nama Unit</label>
+                    {{-- input level --}}
+                    <div class="form-group col-lg-4 col-sm-12 col-md-12">
+                        <label for="level">Level</label>
 
                         @php
-                            if (old('nama_unit') !== null) {
-                                $option = old('nama_unit');
+                            if (old('level') !== null) {
+                                $option_level = old('level');
                             } else {
-                                $option = 1;
+                                $option_level = 'A';
                             }
                         @endphp
 
-                        <select class="form-control select2" name="nama_unit" id="">
-                            @foreach ($units as $data)
-                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                    {{ $data->nama_unit }}
-                                </option>
-                            @endforeach
+                        <select id="select_level" class="form-control" name='level' onchange="getUnitFromLevel()">
+                            <option value='A' <?= $option_level == 'A' ? 'selected' : '' ?>>Admin</option>
+                            <option value='E' <?= $option_level == 'E' ? 'selected' : '' ?>>Dekan</option>
+                            <option value='K' <?= $option_level == 'K' ? 'selected' : '' ?>>Kaprodi</option>
+                            <option value='U' <?= $option_level == 'U' ? 'selected' : '' ?>>Kepala Unit</option>
+                            <option value='D' <?= $option_level == 'D' ? 'selected' : '' ?>>Dosen</option>
                         </select>
-                        @error('nama_unit')
+                        @error('level')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
@@ -99,26 +99,42 @@
                             required placeholder="Konfirmasi Password" autocomplete="new-password">
                     </div>
 
-                    {{-- input level --}}
-                    <div class="form-group col-lg-4 col-sm-12 col-md-12">
-                        <label for="level">Level</label>
+                    {{-- select unit --}}
+                    <div class="form-group col-lg-4">
+                        <label for="nama_unit">Nama Unit</label>
 
                         @php
-                            if (old('level') !== null) {
-                                $option = old('level');
+                            if (old('nama_unit') !== null) {
+                                $option = old('nama_unit');
                             } else {
-                                $option = 'A';
+                                $option = 1;
                             }
                         @endphp
 
-                        <select class="form-control" name='level'>
-                            <option value='A' <?= $option == 'A' ? 'selected' : '' ?>>Admin</option>
-                            <option value='E' <?= $option == 'E' ? 'selected' : '' ?>>Dekan</option>
-                            <option value='K' <?= $option == 'K' ? 'selected' : '' ?>>Kaprodi</option>
-                            <option value='U' <?= $option == 'U' ? 'selected' : '' ?>>Kepala Unit</option>
-                            <option value='D' <?= $option == 'D' ? 'selected' : '' ?>>Dosen</option>
+                        <select class="form-control select2" name="nama_unit">
+                            @foreach ($units as $data)
+                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                    {{ $data->nama_unit }}
+                                </option>
+                            @endforeach
+                            {{-- @php
+                                $getAllUnits = DB::select('SELECT id, nama_unit, parent_unit FROM units');
+                                for ($i = 0; $i < count($getAllUnits); $i++) {
+                                    if ($option_level == 'A') {
+                                        if ($getAllUnits[$i]->parent_unit == null || $getAllUnits[$i]->parent_unit == '') {
+                                            echo '<option value=',$getAllUnits[$i]->id,' ', $option == $getAllUnits[$i]->id ? 'selected' : '', '>', $getAllUnits[$i]->nama_unit, '</option>';
+                                        }
+                                    } elseif ($option_level == 'E') {
+                                        if ($getAllUnits[$i]->parent_unit == '1') {
+                                            echo '<option value=',$getAllUnits[$i]->id,' ', $option == $getAllUnits[$i]->id ? 'selected' : '', '>', $getAllUnits[$i]->nama_unit, '</option>';
+                                        }
+                                    } else {
+                                        echo '<option value=',$getAllUnits[$i]->id,' ', $option == $getAllUnits[$i]->id ? 'selected' : '', '>', $getAllUnits[$i]->nama_unit, '</option>';
+                                    }
+                                }
+                            @endphp --}}
                         </select>
-                        @error('level')
+                        @error('nama_unit')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>

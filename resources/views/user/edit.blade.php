@@ -80,30 +80,6 @@
                 </div>
 
                 <div class="row">
-                    {{-- select unit --}}
-                    <div class="form-group col-lg-6">
-                        <label for="nama_unit">Nama Unit</label>
-
-                        @php
-                            if (old('nama_unit') !== null) {
-                                $option = old('nama_unit');
-                            } else {
-                                $option = $user->unit_id;
-                            }
-                        @endphp
-
-                        <select class="form-control select2" name="nama_unit" id="">
-                            @foreach ($units as $data)
-                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                    {{ $data->nama_unit }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('nama_unit')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-
                     {{-- ubah level --}}
                     <div class="form-group col-lg-6">
                         <label for="level">Level</label>
@@ -124,6 +100,30 @@
                             <option value='D' <?= $option == 'D' ? 'selected' : '' ?>>Dosen</option>
                         </select>
                         @error('level')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- select unit --}}
+                    <div class="form-group col-lg-6">
+                        <label for="nama_unit">Nama Unit</label>
+
+                        @php
+                            if (old('nama_unit') !== null) {
+                                $option = old('nama_unit');
+                            } else {
+                                $option = $user->unit_id;
+                            }
+                        @endphp
+
+                        <select class="form-control select2" name="nama_unit" id="">
+                            @foreach ($units as $data)
+                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                    {{ $data->nama_unit }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('nama_unit')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>

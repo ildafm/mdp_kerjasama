@@ -70,7 +70,7 @@
 
                 <div class="row">
                     {{-- ubah email --}}
-                    <div class="form-group col-lg-6 col-sm-12">
+                    <div class="form-group col-lg-4 col-sm-12">
                         <label for="email">Email</label>
                         <input readonly type="text" name='email' autocomplete="email"
                             class="form-control @error('email') is-invalid @enderror" placeholder="Masukan Email"
@@ -81,12 +81,23 @@
                     </div>
 
                     {{-- Ubah Kode Dosen --}}
-                    <div class="form-group col-lg-6 col-sm-12">
+                    <div class="form-group col-lg-4 col-sm-12">
                         <label for="kode_dosen">Kode Dosen</label>
                         <input readonly type="text" name='kode_dosen' autocomplete="kode_dosen"
                             class="form-control @error('kode_dosen') is-invalid @enderror" placeholder="Masukan Kode Dosen"
                             value="{{ Auth::user()->kode_dosen }}">
                         @error('kode_dosen')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Ubah Unit --}}
+                    <div class="form-group col-lg-4 col-sm-12">
+                        <label for="unit">Unit</label>
+                        <input readonly type="text" name='unit' autocomplete="unit"
+                            class="form-control @error('unit') is-invalid @enderror" placeholder="Masukan Unit"
+                            value="{{ Auth::user()->unit->nama_unit }}">
+                        @error('unit')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>

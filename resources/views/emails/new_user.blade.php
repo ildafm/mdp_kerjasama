@@ -17,7 +17,7 @@
     </p>
     <p>
         Silahkan login menggunakan link dibawah ini. <br>
-        <a href="{{ url('dashboard') }}">MDP Kerjasama</a>
+        <a href="{{ url('') }}">{{ ur }}l('')}}</a>
     </p>
 
     <p>Thank you</p>
