@@ -21,11 +21,6 @@ class NotificationController extends Controller
         $getUserID = Auth::user()->id;
         $getUserUnit = Auth::user()->unit_id;
 
-        // $getUnitFromUsulan = DB::select("SELECT usulans.id, usulan, bentuk_kerjasama, unit_id, units.nama_unit 
-        // FROM usulans
-        // JOIN units ON unit_id = units.id");
-
-
         $kegiatansUnRead = DB::select("SELECT kegiatans.id AS 'id', kerjasamas.nama_kerja_sama, bentuk_kegiatan, keterangan, users.name AS 'name', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, kegiatans.status 
         FROM kegiatans 
         JOIN kerjasamas ON kerjasama_id = kerjasamas.id 
@@ -49,10 +44,20 @@ class NotificationController extends Controller
         WHERE (units.parent_unit = $getUserUnit OR units.id = $getUserUnit OR kegiatans.user_id = $getUserID) AND kegiatans.status = '0' 
         ORDER BY id");
 
+        $kegiatansUnReadForKaprodi = DB::select("SELECT kegiatans.id AS 'id', kerjasamas.nama_kerja_sama, bentuk_kegiatan, kegiatans.keterangan, users.name AS 'name', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, kegiatans.status, nama_unit
+        FROM kegiatans 
+        JOIN kerjasamas ON kerjasama_id = kerjasamas.id 
+        JOIN usulans ON kerjasamas.usulan_id = usulans.id
+        JOIN units ON usulans.unit_id = units.id
+        JOIN users ON kegiatans.user_id = users.id 
+        WHERE kegiatans.status = '0' AND (users.id = $getUserID OR units.id = $getUserUnit) 
+        ORDER BY id");
+
         return view('notification.kegiatan')
             ->with('kegiatansUnRead', $kegiatansUnRead)
             ->with('kegiatansUnReadForDekan', $kegiatansUnReadForDekan)
-            ->with('kegiatansUnReadForAdmin', $kegiatansUnReadForAdmin);
+            ->with('kegiatansUnReadForAdmin', $kegiatansUnReadForAdmin)
+            ->with('kegiatansUnReadForKaprodi', $kegiatansUnReadForKaprodi);
     }
 
     /**
@@ -93,10 +98,22 @@ class NotificationController extends Controller
         WHERE units.parent_unit = $getUserUnit OR units.id = $getUserUnit OR users.id = $getUserID
         GROUP BY kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, kegiatans.keterangan,kerjasamas.nama_kerja_sama, users.name, kegiatans.status, units.nama_unit, kerjasamas.usulan_id
         ORDER BY kegiatans.tanggal_sampai");
+
+        $listKegiatanTanpaBuktiForKaprodi = DB::select("SELECT kegiatans.id AS 'id', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, kegiatans.keterangan, kerjasamas.nama_kerja_sama, users.name AS 'name', kegiatans.status, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti', units.nama_unit
+        FROM kegiatans 
+        JOIN kerjasamas ON kerjasamas.id = kegiatans.kerjasama_id 
+        JOIN usulans ON usulans.id = kerjasamas.usulan_id
+        JOIN units ON units.id = usulans.unit_id
+        JOIN users ON users.id = kegiatans.user_id 
+        LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id 
+        WHERE units.id = $getUserUnit OR users.id = $getUserID
+        GROUP BY kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, kegiatans.keterangan,kerjasamas.nama_kerja_sama, users.name, kegiatans.status, units.nama_unit, kerjasamas.usulan_id
+        ORDER BY kegiatans.tanggal_sampai");
         
         return view("notification.kegiatan_perlu_bukti")
             ->with('listKegiatanTanpaBuktiForAdmin', $listKegiatanTanpaBuktiForAdmin)
             ->with('listKegiatanTanpaBuktiForDekan', $listKegiatanTanpaBuktiForDekan)
+            ->with('listKegiatanTanpaBuktiForKaprodi', $listKegiatanTanpaBuktiForKaprodi)
             ->with('listKegiatanTanpaBukti', $listKegiatanTanpaBukti);
         
     }

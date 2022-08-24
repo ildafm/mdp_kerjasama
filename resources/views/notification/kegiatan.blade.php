@@ -169,6 +169,77 @@
                 </table>
             @endif
 
+            {{-- Tabel Data untuk login kaprodi --}}
+            @if (Auth::user()->level == 'K')
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Aksi</th>
+                            <th>Nama Kerjasama</th>
+                            <th>Bentuk Kegiatan</th>
+                            <th>Keterangan</th>
+                            <th>PIC Dosen</th>
+                            <th>Unit</th>
+                            <th>Tanggal Mulai</th>
+                            <th>Tanggal Sampai</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @php
+                            $nomor = 1;
+                        @endphp
+
+                        @foreach ($kegiatansUnReadForKaprodi as $data)
+                            <tr>
+                                <td>{{ $nomor++ }}</td>
+
+                                <td>
+                                    {{-- Button Tampil --}}
+                                    <a href="{{ url('kegiatans/' . $data->id) }}" class="btn btn-sm btn-primary"><i
+                                            class="nav-icon fas fa-eye" title="Tampil"></i></a>
+
+                                    {{-- Button Ubah --}}
+                                    <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
+                                        class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
+                                            title="Edit"></i></a>
+                                </td>
+
+                                <td>{{ $data->nama_kerja_sama }}</td>
+
+                                <td>{{ $data->bentuk_kegiatan }}</td>
+
+                                <td>{{ $data->keterangan }}</td>
+
+                                <td>{{ $data->name }}</td>
+
+                                <td>{{ $data->nama_unit }}</td>
+
+                                <td>{{ $data->tanggal_mulai }}</td>
+
+                                <td>{{ $data->tanggal_sampai }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <th>No</th>
+                            <th>Aksi</th>
+                            <th>Nama Kerjasama</th>
+                            <th>Bentuk Kegiatan</th>
+                            <th>Keterangan</th>
+                            <th>PIC Dosen</th>
+                            <th>Unit</th>
+                            <th>Tanggal Mulai</th>
+                            <th>Tanggal Sampai</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            @endif
+
             {{-- Tabel Data untuk login dosen --}}
             @if (Auth::user()->level == 'D')
                 <table id="example1" class="table table-bordered table-striped">
