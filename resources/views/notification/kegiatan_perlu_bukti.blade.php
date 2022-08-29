@@ -48,42 +48,40 @@
                         @endphp
 
                         @foreach ($listKegiatanTanpaBuktiForAdmin as $data)
-                            @if ($data->total_bukti == 0)
-                                <tr>
-                                    <td>{{ $nomor++ }}</td>
+                            <tr>
+                                <td>{{ $nomor++ }}</td>
 
-                                    <td>
-                                        {{-- Button Tampil --}}
-                                        <a href="{{ url('kegiatans/' . $data->id) }}" class="btn btn-sm btn-primary"><i
-                                                class="nav-icon fas fa-eye" title="Tampil"></i></a>
+                                <td>
+                                    {{-- Button Tampil --}}
+                                    <a href="{{ url('kegiatans/' . $data->id) }}" class="btn btn-sm btn-primary"><i
+                                            class="nav-icon fas fa-eye" title="Tampil"></i></a>
 
-                                        @if (Auth::user()->level != 'D')
-                                            {{-- Button Ubah --}}
-                                            <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
-                                                class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
-                                                    title="Edit"></i></a>
+                                    @if (Auth::user()->level != 'D')
+                                        {{-- Button Ubah --}}
+                                        <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
+                                            class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
+                                                title="Edit"></i></a>
 
-                                            {{-- Button Hapus --}}
-                                            <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                                data-bentukKegiatan="{{ $data->bentuk_kegiatan }}" data-toggle="modal"
-                                                data-target="#modal-sm"><i class="nav-icon fas fa-trash"
-                                                    title="Hapus"></i></button>
-                                        @endif
-                                    </td>
+                                        {{-- Button Hapus --}}
+                                        <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                            data-bentukKegiatan="{{ $data->bentuk_kegiatan }}" data-toggle="modal"
+                                            data-target="#modal-sm"><i class="nav-icon fas fa-trash"
+                                                title="Hapus"></i></button>
+                                    @endif
+                                </td>
 
-                                    <td>{{ $data->nama_kerja_sama }}</td>
+                                <td>{{ $data->nama_kerja_sama }}</td>
 
-                                    <td>{{ $data->bentuk_kegiatan }}</td>
+                                <td>{{ $data->bentuk_kegiatan }}</td>
 
-                                    <td>{{ $data->keterangan }}</td>
+                                <td>{{ $data->keterangan }}</td>
 
-                                    <td>{{ $data->name }}</td>
+                                <td>{{ $data->name }}</td>
 
-                                    <td>{{ $data->tanggal_mulai }}</td>
+                                <td>{{ $data->tanggal_mulai }}</td>
 
-                                    <td>{{ $data->tanggal_sampai }}</td>
-                                </tr>
-                            @endif
+                                <td>{{ $data->tanggal_sampai }}</td>
+                            </tr>
                         @endforeach
                     </tbody>
 
@@ -127,36 +125,34 @@
                         @endphp
 
                         @foreach ($listKegiatanTanpaBuktiForDekan as $data)
-                            @if ($data->total_bukti == 0)
-                                <tr>
-                                    <td>{{ $nomor++ }}</td>
+                            <tr>
+                                <td>{{ $nomor++ }}</td>
 
-                                    <td>
-                                        {{-- Button Tampil --}}
-                                        <a href="{{ url('kegiatans/' . $data->id) }}" class="btn btn-sm btn-primary"><i
-                                                class="nav-icon fas fa-eye" title="Tampil"></i></a>
+                                <td>
+                                    {{-- Button Tampil --}}
+                                    <a href="{{ url('kegiatans/' . $data->id) }}" class="btn btn-sm btn-primary"><i
+                                            class="nav-icon fas fa-eye" title="Tampil"></i></a>
 
-                                        {{-- Button Ubah --}}
-                                        <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
-                                            class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
-                                                title="Edit"></i></a>
-                                    </td>
+                                    {{-- Button Ubah --}}
+                                    <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
+                                        class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
+                                            title="Edit"></i></a>
+                                </td>
 
-                                    <td>{{ $data->nama_kerja_sama }}</td>
+                                <td>{{ $data->nama_kerja_sama }}</td>
 
-                                    <td>{{ $data->bentuk_kegiatan }}</td>
+                                <td>{{ $data->bentuk_kegiatan }}</td>
 
-                                    <td>{{ $data->keterangan }}</td>
+                                <td>{{ $data->keterangan }}</td>
 
-                                    <td>{{ $data->name }}</td>
+                                <td>{{ $data->name }}</td>
 
-                                    <td>{{ $data->nama_unit }}</td>
+                                <td>{{ $data->nama_unit }}</td>
 
-                                    <td>{{ $data->tanggal_mulai }}</td>
+                                <td>{{ $data->tanggal_mulai }}</td>
 
-                                    <td>{{ $data->tanggal_sampai }}</td>
-                                </tr>
-                            @endif
+                                <td>{{ $data->tanggal_sampai }}</td>
+                            </tr>
                         @endforeach
                     </tbody>
 
@@ -177,8 +173,8 @@
                 </table>
             @endif
 
-            {{-- Tabel Data untuk login kaprodi --}}
-            @if (Auth::user()->level == 'K')
+            {{-- Tabel Data untuk login kaprodi(K) dan kepala unit(U) --}}
+            @if (Auth::user()->level == 'K' || Auth::user()->level == 'U')
                 <table id="example1" class="table table-bordered table-striped">
                     <thead>
                         <tr>
@@ -200,37 +196,35 @@
                             $nomor = 1;
                         @endphp
 
-                        @foreach ($listKegiatanTanpaBuktiForKaprodi as $data)
-                            @if ($data->total_bukti == 0)
-                                <tr>
-                                    <td>{{ $nomor++ }}</td>
+                        @foreach ($listKegiatanTanpaBuktiForKaprodiDanKepalaUnit as $data)
+                            <tr>
+                                <td>{{ $nomor++ }}</td>
 
-                                    <td>
-                                        {{-- Button Tampil --}}
-                                        <a href="{{ url('kegiatans/' . $data->id) }}" class="btn btn-sm btn-primary"><i
-                                                class="nav-icon fas fa-eye" title="Tampil"></i></a>
+                                <td>
+                                    {{-- Button Tampil --}}
+                                    <a href="{{ url('kegiatans/' . $data->id) }}" class="btn btn-sm btn-primary"><i
+                                            class="nav-icon fas fa-eye" title="Tampil"></i></a>
 
-                                        {{-- Button Ubah --}}
-                                        <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
-                                            class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
-                                                title="Edit"></i></a>
-                                    </td>
+                                    {{-- Button Ubah --}}
+                                    <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
+                                        class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
+                                            title="Edit"></i></a>
+                                </td>
 
-                                    <td>{{ $data->nama_kerja_sama }}</td>
+                                <td>{{ $data->nama_kerja_sama }}</td>
 
-                                    <td>{{ $data->bentuk_kegiatan }}</td>
+                                <td>{{ $data->bentuk_kegiatan }}</td>
 
-                                    <td>{{ $data->keterangan }}</td>
+                                <td>{{ $data->keterangan }}</td>
 
-                                    <td>{{ $data->name }}</td>
+                                <td>{{ $data->name }}</td>
 
-                                    <td>{{ $data->nama_unit }}</td>
+                                <td>{{ $data->nama_unit }}</td>
 
-                                    <td>{{ $data->tanggal_mulai }}</td>
+                                <td>{{ $data->tanggal_mulai }}</td>
 
-                                    <td>{{ $data->tanggal_sampai }}</td>
-                                </tr>
-                            @endif
+                                <td>{{ $data->tanggal_sampai }}</td>
+                            </tr>
                         @endforeach
                     </tbody>
 
@@ -274,29 +268,27 @@
                         @endphp
 
                         @foreach ($listKegiatanTanpaBukti as $data)
-                            @if ($data->total_bukti == 0)
-                                <tr>
-                                    <td>{{ $nomor++ }}</td>
+                            <tr>
+                                <td>{{ $nomor++ }}</td>
 
-                                    <td>
-                                        {{-- Button Tampil --}}
-                                        <a href="{{ url('kegiatans/' . $data->id) }}" class="btn btn-sm btn-primary"><i
-                                                class="nav-icon fas fa-eye" title="Tampil"></i></a>
-                                    </td>
+                                <td>
+                                    {{-- Button Tampil --}}
+                                    <a href="{{ url('kegiatans/' . $data->id) }}" class="btn btn-sm btn-primary"><i
+                                            class="nav-icon fas fa-eye" title="Tampil"></i></a>
+                                </td>
 
-                                    <td>{{ $data->nama_kerja_sama }}</td>
+                                <td>{{ $data->nama_kerja_sama }}</td>
 
-                                    <td>{{ $data->bentuk_kegiatan }}</td>
+                                <td>{{ $data->bentuk_kegiatan }}</td>
 
-                                    <td>{{ $data->keterangan }}</td>
+                                <td>{{ $data->keterangan }}</td>
 
-                                    <td>{{ $data->name }}</td>
+                                <td>{{ $data->name }}</td>
 
-                                    <td>{{ $data->tanggal_mulai }}</td>
+                                <td>{{ $data->tanggal_mulai }}</td>
 
-                                    <td>{{ $data->tanggal_sampai }}</td>
-                                </tr>
-                            @endif
+                                <td>{{ $data->tanggal_sampai }}</td>
+                            </tr>
                         @endforeach
                     </tbody>
 

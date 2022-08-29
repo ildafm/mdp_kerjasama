@@ -42,52 +42,62 @@
                     <a id="date" style="color:rgb(0, 0, 0)" class="nav-link"></a>
                 </li>
 
+                {{-- PHP khusus untuk tampilan notifikasi setiap level user --}}
                 @php
-                    $getUserID = Auth::user()->id;
-                    $getUserUnit = Auth::user()->unit_id;
-                    // Jika login Admin akan menampilkan semua, jika dosen hanya akan menampilkan yang bersangkutan
+                    $getUserID = Auth::user()->id; //variabel untuk menampung user id
+                    $getUserUnit = Auth::user()->unit_id; //variabel untuk menampung user unit
+                    // Variabel penampung menampung untuk penjumlahan total notif
+                    $totalKegiatanYangBelumDibaca = 0; // untuk menampung $countUnReadNotifKegiatan[0]->jumlah
+                    $totalKegiatanYangBelumMemilikiBukti = 0; // untuk menampung $kegiatanPerluBukti[0]->total_kegiatan
+                    $totalKegiatanYangSudahMulai = 0; // untuk menampung $totalKegiatanSudahWaktuMulai[0]->total_kegiatan_sudah_mulai_dan_tidak_memiliki_bukti
+                    
+                    // Jika login Admin akan menampilkan semua, selain hanya akan menampilkan yang bersangkutan
                     // Login Admin
                     if (Auth::user()->level == 'A') {
-                        $countUnReadNotifKegiatan = DB::select("SELECT kegiatans.status AS 'status', COUNT(kegiatans.status) AS 'jumlah' FROM kegiatans WHERE kegiatans.status = '0' GROUP BY kegiatans.status");
+                        // menghitung jumlah kegiatan yang baru yang belum dilihat
+                        $countUnReadNotifKegiatan = DB::select("SELECT kegiatans.status AS 'status', COUNT(kegiatans.status) AS 'jumlah'
+                        FROM kegiatans
+                        WHERE kegiatans.status = '0'
+                        GROUP BY kegiatans.status");
                     
-                        $countTimeKegiatan = DB::select("SELECT id, DATEDIFF(NOW(), created_at) AS 'datediff', HOUR(TIMEDIFF(NOW(), created_at)) AS 'get_hour', MINUTE(TIMEDIFF(NOW(), created_at)) AS 'get_minute', SECOND(TIMEDIFF(NOW(), created_at)) AS 'get_second' FROM kegiatans WHERE kegiatans.status = '0'");
+                        // menghitung waktu sejak awal kegiatan baru ditambahkan
+                        $TimeKegiatan = DB::select("SELECT id, DATEDIFF(NOW(), created_at) AS 'get_day', HOUR(TIMEDIFF(NOW(), created_at)) AS 'get_hour', MINUTE(TIMEDIFF(NOW(), created_at)) AS 'get_minute', SECOND(TIMEDIFF(NOW(), created_at)) AS 'get_second'
+                        FROM kegiatans
+                        WHERE kegiatans.status = '0'");
                     
-                        $kegiatansPerluBukti = DB::select("SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_kegiatan' FROM kegiatans LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id GROUP BY kegiatans.id");
+                        // menghitung jumlah total kegiatan yang tidak memiliki bukti
+                        $kegiatanPerluBukti = DB::select("SELECT COUNT(*) AS 'total_kegiatan' FROM (
+                            SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_kegiatan'
+                            FROM kegiatans
+                            LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
+                            GROUP BY kegiatans.id
+                        ) AS tbl_kegiatan_perlu_bukti
+                        WHERE tbl_kegiatan_perlu_bukti.total_kegiatan = 0");
                     
-                        $countKegiatanTanpaBukti = 0;
-                        for ($i = 0; $i < count($kegiatansPerluBukti); $i++) {
-                            if ($kegiatansPerluBukti[$i]->total_kegiatan == 0) {
-                                $countKegiatanTanpaBukti++;
-                            }
-                        }
+                        // menghitung waktu kegiatan yang sudah memasuki waktu mulai tetapi belum memiliki bukti
+                        $kegiatanSudahWaktuMulai = DB::select("SELECT * FROM (
+                            SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti_kegiatan', DATEDIFF(NOW(), kegiatans.tanggal_mulai) AS 'get_day'
+                            FROM kegiatans
+                            LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
+                            GROUP BY kegiatans.id, bukti_kegiatans.kegiatans_id, kegiatans.tanggal_mulai
+                            ORDER BY DATEDIFF(NOW(), kegiatans.tanggal_mulai) DESC
+                        ) AS tbl_kegiatan_sudah_waktu_mulai
+                        WHERE tbl_kegiatan_sudah_waktu_mulai.total_bukti_kegiatan = 0 AND tbl_kegiatan_sudah_waktu_mulai.get_day >= 0");
                     
-                        $countTimeBukti = DB::select("SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti_kegiatan', DATEDIFF(NOW(), kegiatans.created_at) AS 'datediff', HOUR(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_hour', MINUTE(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_minute', SECOND(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_second' FROM kegiatans LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id GROUP BY kegiatans.id, bukti_kegiatans.kegiatans_id, kegiatans.created_at");
-                    
-                        $kegiatanLewatWaktuSampai = DB::select("SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti_kegiatan', DATEDIFF(NOW(), kegiatans.tanggal_sampai) AS 'datediff' FROM kegiatans LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id GROUP BY kegiatans.id, bukti_kegiatans.kegiatans_id, kegiatans.tanggal_sampai ORDER BY DATEDIFF(NOW(), kegiatans.tanggal_sampai) DESC");
-                    
-                        $jumlahKegiatanBelumLewatWaktuSampai = 0;
-                        for ($i = 0; $i < count($countTimeBukti); $i++) {
-                            if ($kegiatanLewatWaktuSampai[$i]->datediff < 0 && $kegiatanLewatWaktuSampai[$i]->total_bukti_kegiatan < 1) {
-                                $jumlahKegiatanBelumLewatWaktuSampai++;
-                            }
-                        }
-                    
-                        for ($i = 0; $i < count($countTimeBukti); $i++) {
-                            if ($countTimeBukti[$i]->total_bukti_kegiatan == 0) {
-                                $countTimeBukti[0] = $countTimeBukti[$i];
-                                break;
-                            }
-                        }
-                    
-                        if (count($countUnReadNotifKegiatan) > 0) {
-                            $totalNotifications = $countUnReadNotifKegiatan[0]->jumlah + $countKegiatanTanpaBukti;
-                        } else {
-                            $totalNotifications = 0 + $countKegiatanTanpaBukti;
-                        }
-                        $bellNotif = $totalNotifications - $jumlahKegiatanBelumLewatWaktuSampai;
+                        // menghitung total kegiatan yang sudah memasuki waktu mulai tetapi belum memiliki bukti
+                        $totalKegiatanSudahWaktuMulai = DB::select("SELECT COUNT(*) AS 'total_kegiatan_sudah_mulai_dan_tidak_memiliki_bukti' FROM  (
+                            SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti_kegiatan', DATEDIFF(NOW(), kegiatans.tanggal_mulai) AS 'get_day'
+                            FROM kegiatans
+                            LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
+                            GROUP BY kegiatans.id, bukti_kegiatans.kegiatans_id, kegiatans.tanggal_mulai
+                            ORDER BY DATEDIFF(NOW(), kegiatans.tanggal_mulai) DESC
+                        ) AS tbl_kegiatan_sudah_waktu_mulai
+                        WHERE tbl_kegiatan_sudah_waktu_mulai.total_bukti_kegiatan = 0 AND tbl_kegiatan_sudah_waktu_mulai.get_day >= 0
+                        GROUP BY tbl_kegiatan_sudah_waktu_mulai.total_bukti_kegiatan");
                     }
                     // Login Dekan
                     elseif (Auth::user()->level == 'E') {
+                        // menghitung jumlah kegiatan yang baru yang belum dilihat
                         $countUnReadNotifKegiatan = DB::select("SELECT kegiatans.status AS 'status', COUNT(kegiatans.status) AS 'jumlah'
                         FROM kegiatans
                         JOIN kerjasamas ON kerjasamas.id = kerjasama_id
@@ -96,70 +106,59 @@
                         WHERE kegiatans.status = 0 AND (units.parent_unit = $getUserUnit OR units.id = $getUserUnit OR kegiatans.user_id = $getUserID)
                         GROUP BY kegiatans.status");
                     
-                        $countTimeKegiatan = DB::select("SELECT kegiatans.id, DATEDIFF(NOW(), kegiatans.created_at) AS 'datediff', HOUR(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_hour', MINUTE(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_minute', SECOND(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_second' FROM kegiatans
+                        // menghitung waktu sejak awal kegiatan baru ditambahkan
+                        $TimeKegiatan = DB::select("SELECT kegiatans.id, DATEDIFF(NOW(), kegiatans.created_at) AS 'get_day', HOUR(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_hour', MINUTE(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_minute', SECOND(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_second' FROM kegiatans
                         JOIN kerjasamas ON kerjasamas.id = kerjasama_id
                         JOIN usulans ON usulans.id = usulan_id
                         JOIN units ON units.id = unit_id
                         WHERE kegiatans.status = '0' AND (units.parent_unit = $getUserUnit OR units.id = $getUserUnit OR kegiatans.user_id = $getUserID)");
                     
-                        $kegiatansPerluBukti = DB::select("SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_kegiatan'
-                        FROM kegiatans
-                        LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
-                        JOIN kerjasamas ON kerjasamas.id = kerjasama_id
-                        JOIN usulans ON usulans.id = usulan_id
-                        JOIN units ON units.id = unit_id
-                        WHERE units.parent_unit = $getUserUnit OR units.id = $getUserUnit OR kegiatans.user_id = $getUserID
-                        GROUP BY kegiatans.id");
+                        // menghitung jumlah total kegiatan yang tidak memiliki bukti
+                        $kegiatanPerluBukti = DB::select("SELECT COUNT(*) AS 'total_kegiatan' FROM (
+                            SELECT COUNT(bukti_kegiatans.kegiatans_id) AS 'total_kegiatan'
+                            FROM kegiatans
+                            LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
+                            JOIN kerjasamas ON kerjasamas.id = kerjasama_id
+                            JOIN usulans ON usulans.id = usulan_id
+                            JOIN units ON units.id = unit_id
+                            WHERE (units.parent_unit = $getUserUnit OR units.id = $getUserUnit OR kegiatans.user_id = $getUserID)
+                            GROUP BY kegiatans.id
+                        ) AS tbl_kegiatan_perlu_bukti
+                        WHERE tbl_kegiatan_perlu_bukti.total_kegiatan = 0
+                        GROUP BY tbl_kegiatan_perlu_bukti.total_kegiatan");
                     
-                        $countKegiatanTanpaBukti = 0;
-                        for ($i = 0; $i < count($kegiatansPerluBukti); $i++) {
-                            if ($kegiatansPerluBukti[$i]->total_kegiatan == 0) {
-                                $countKegiatanTanpaBukti++;
-                            }
-                        }
+                        // menghitung waktu kegiatan yang sudah memasuki waktu mulai tetapi belum memiliki bukti
+                        $kegiatanSudahWaktuMulai = DB::select("SELECT tbl_kegiatan_sudah_waktu_mulai.* FROM (
+                            SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti_kegiatan', DATEDIFF(NOW(), kegiatans.tanggal_mulai) AS 'get_day'
+                            FROM kegiatans
+                            LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
+                            JOIN kerjasamas ON kerjasamas.id = kerjasama_id
+                            JOIN usulans ON usulans.id = usulan_id
+                            JOIN units ON units.id = unit_id
+                            WHERE units.parent_unit = $getUserUnit OR units.id = $getUserUnit OR kegiatans.user_id = $getUserID
+                            GROUP BY kegiatans.id, bukti_kegiatans.kegiatans_id, kegiatans.tanggal_mulai
+                            ORDER BY DATEDIFF(NOW(), kegiatans.tanggal_mulai) DESC
+                        ) AS tbl_kegiatan_sudah_waktu_mulai
+                        WHERE tbl_kegiatan_sudah_waktu_mulai.total_bukti_kegiatan = 0 AND tbl_kegiatan_sudah_waktu_mulai.get_day >= 0");
                     
-                        $countTimeBukti = DB::select("SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti_kegiatan', DATEDIFF(NOW(), kegiatans.created_at) AS 'datediff', HOUR(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_hour', MINUTE(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_minute', SECOND(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_second'
-                        FROM kegiatans
-                        LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
-                        JOIN kerjasamas ON kerjasamas.id = kerjasama_id
-                        JOIN usulans ON usulans.id = usulan_id
-                        JOIN units ON units.id = unit_id
-                        WHERE units.parent_unit = $getUserUnit OR units.id = $getUserUnit OR kegiatans.user_id = $getUserID
-                        GROUP BY kegiatans.id, bukti_kegiatans.kegiatans_id, kegiatans.created_at");
-                    
-                        $kegiatanLewatWaktuSampai = DB::select("SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti_kegiatan', DATEDIFF(NOW(), kegiatans.tanggal_sampai) AS 'datediff'
-                        FROM kegiatans
-                        LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
-                        JOIN kerjasamas ON kerjasamas.id = kerjasama_id
-                        JOIN usulans ON usulans.id = usulan_id
-                        JOIN units ON units.id = unit_id
-                        WHERE units.parent_unit = $getUserUnit OR units.id = $getUserUnit OR kegiatans.user_id = $getUserID
-                        GROUP BY kegiatans.id, bukti_kegiatans.kegiatans_id, kegiatans.tanggal_sampai
-                        ORDER BY DATEDIFF(NOW(), kegiatans.tanggal_sampai) DESC");
-                    
-                        $jumlahKegiatanBelumLewatWaktuSampai = 0;
-                        for ($i = 0; $i < count($kegiatanLewatWaktuSampai); $i++) {
-                            if ($kegiatanLewatWaktuSampai[$i]->datediff < 0 && $kegiatanLewatWaktuSampai[$i]->total_bukti_kegiatan < 1) {
-                                $jumlahKegiatanBelumLewatWaktuSampai++;
-                            }
-                        }
-                    
-                        for ($i = 0; $i < count($countTimeBukti); $i++) {
-                            if ($countTimeBukti[$i]->total_bukti_kegiatan == 0) {
-                                $countTimeBukti[0] = $countTimeBukti[$i];
-                                break;
-                            }
-                        }
-                    
-                        if (count($countUnReadNotifKegiatan) > 0) {
-                            $totalNotifications = $countUnReadNotifKegiatan[0]->jumlah + $countKegiatanTanpaBukti;
-                        } else {
-                            $totalNotifications = 0 + $countKegiatanTanpaBukti;
-                        }
-                        $bellNotif = $totalNotifications - $jumlahKegiatanBelumLewatWaktuSampai;
+                        // menghitung total kegiatan yang sudah memasuki waktu mulai tetapi belum memiliki bukti
+                        $totalKegiatanSudahWaktuMulai = DB::select("SELECT COUNT(*) AS 'total_kegiatan_sudah_mulai_dan_tidak_memiliki_bukti' FROM (
+                            SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti_kegiatan', DATEDIFF(NOW(), kegiatans.tanggal_mulai) AS 'get_day'
+                            FROM kegiatans
+                            LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
+                            JOIN kerjasamas ON kerjasamas.id = kerjasama_id
+                            JOIN usulans ON usulans.id = usulan_id
+                            JOIN units ON units.id = unit_id
+                            WHERE units.parent_unit = $getUserUnit OR units.id = $getUserUnit OR kegiatans.user_id = $getUserID
+                            GROUP BY kegiatans.id, bukti_kegiatans.kegiatans_id, kegiatans.tanggal_mulai
+                            ORDER BY DATEDIFF(NOW(), kegiatans.tanggal_mulai) DESC
+                        ) AS tbl_kegiatan_sudah_waktu_mulai
+                        WHERE tbl_kegiatan_sudah_waktu_mulai.total_bukti_kegiatan = 0 AND tbl_kegiatan_sudah_waktu_mulai.get_day >= 0
+                        GROUP BY tbl_kegiatan_sudah_waktu_mulai.total_bukti_kegiatan");
                     }
-                    // Login Kaprodi
-                    elseif (Auth::user()->level == 'K') {
+                    // Login Kaprodi(K) atau Kepala Unit(U)
+                    elseif (Auth::user()->level == 'K' || Auth::user()->level == 'U') {
+                        // menghitung jumlah kegiatan yang baru yang belum dilihat
                         $countUnReadNotifKegiatan = DB::select("SELECT kegiatans.status AS 'status', COUNT(kegiatans.status) AS 'jumlah'
                         FROM kegiatans
                         JOIN kerjasamas ON kerjasamas.id = kerjasama_id
@@ -168,111 +167,120 @@
                         WHERE kegiatans.status = 0 AND (units.id = $getUserUnit OR kegiatans.user_id = $getUserID)
                         GROUP BY kegiatans.status");
                     
-                        $countTimeKegiatan = DB::select("SELECT kegiatans.id, DATEDIFF(NOW(), kegiatans.created_at) AS 'datediff', HOUR(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_hour', MINUTE(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_minute', SECOND(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_second' FROM kegiatans
+                        // menghitung waktu sejak awal kegiatan baru ditambahkan
+                        $TimeKegiatan = DB::select("SELECT kegiatans.id, DATEDIFF(NOW(), kegiatans.created_at) AS 'get_day', HOUR(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_hour', MINUTE(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_minute', SECOND(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_second'
+                        FROM kegiatans
                         JOIN kerjasamas ON kerjasamas.id = kerjasama_id
                         JOIN usulans ON usulans.id = usulan_id
                         JOIN units ON units.id = unit_id
                         WHERE kegiatans.status = '0' AND (units.id = $getUserUnit OR kegiatans.user_id = $getUserID)");
                     
-                        $kegiatansPerluBukti = DB::select("SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_kegiatan'
-                        FROM kegiatans
-                        LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
-                        JOIN kerjasamas ON kerjasamas.id = kerjasama_id
-                        JOIN usulans ON usulans.id = usulan_id
-                        JOIN units ON units.id = unit_id
-                        WHERE units.id = $getUserUnit OR kegiatans.user_id = $getUserID
-                        GROUP BY kegiatans.id");
+                        // menghitung jumlah total kegiatan yang tidak memiliki bukti
+                        $kegiatanPerluBukti = DB::select("SELECT COUNT(*) AS 'total_kegiatan' FROM (
+                            SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_kegiatan'
+                            FROM kegiatans
+                            LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
+                            JOIN kerjasamas ON kerjasamas.id = kerjasama_id
+                            JOIN usulans ON usulans.id = usulan_id
+                            JOIN units ON units.id = unit_id
+                            WHERE units.id = $getUserUnit OR kegiatans.user_id = $getUserID
+                            GROUP BY kegiatans.id) AS tbl_kegiatan_perlu_bukti
+                        WHERE tbl_kegiatan_perlu_bukti.total_kegiatan = 0
+                        GROUP BY tbl_kegiatan_perlu_bukti.total_kegiatan");
                     
-                        $countKegiatanTanpaBukti = 0;
-                        for ($i = 0; $i < count($kegiatansPerluBukti); $i++) {
-                            if ($kegiatansPerluBukti[$i]->total_kegiatan == 0) {
-                                $countKegiatanTanpaBukti++;
-                            }
-                        }
+                        // menghitung waktu kegiatan yang sudah memasuki waktu mulai tetapi belum memiliki bukti
+                        $kegiatanSudahWaktuMulai = DB::select("SELECT * FROM (
+                            SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti_kegiatan', DATEDIFF(NOW(), kegiatans.tanggal_mulai) AS 'get_day'
+                            FROM kegiatans
+                            LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
+                            JOIN kerjasamas ON kerjasamas.id = kerjasama_id
+                            JOIN usulans ON usulans.id = usulan_id
+                            JOIN units ON units.id = unit_id
+                            WHERE units.id = $getUserUnit OR kegiatans.user_id = $getUserID
+                            GROUP BY kegiatans.id, bukti_kegiatans.kegiatans_id, kegiatans.tanggal_mulai
+                            ORDER BY DATEDIFF(NOW(), kegiatans.tanggal_mulai) DESC
+                        ) AS tbl_kegiatan_sudah_waktu_mulai
+                        WHERE tbl_kegiatan_sudah_waktu_mulai.total_bukti_kegiatan = 0 AND tbl_kegiatan_sudah_waktu_mulai.get_day >= 0");
                     
-                        $countTimeBukti = DB::select("SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti_kegiatan', DATEDIFF(NOW(), kegiatans.created_at) AS 'datediff', HOUR(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_hour', MINUTE(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_minute', SECOND(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_second'
-                        FROM kegiatans
-                        LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
-                        JOIN kerjasamas ON kerjasamas.id = kerjasama_id
-                        JOIN usulans ON usulans.id = usulan_id
-                        JOIN units ON units.id = unit_id
-                        WHERE units.id = $getUserUnit OR kegiatans.user_id = $getUserID
-                        GROUP BY kegiatans.id, bukti_kegiatans.kegiatans_id, kegiatans.created_at");
-                    
-                        $kegiatanLewatWaktuSampai = DB::select("SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti_kegiatan', DATEDIFF(NOW(), kegiatans.tanggal_sampai) AS 'datediff'
-                        FROM kegiatans
-                        LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
-                        JOIN kerjasamas ON kerjasamas.id = kerjasama_id
-                        JOIN usulans ON usulans.id = usulan_id
-                        JOIN units ON units.id = unit_id
-                        WHERE units.id = $getUserUnit OR kegiatans.user_id = $getUserID
-                        GROUP BY kegiatans.id, bukti_kegiatans.kegiatans_id, kegiatans.tanggal_sampai
-                        ORDER BY DATEDIFF(NOW(), kegiatans.tanggal_sampai) DESC");
-                    
-                        $jumlahKegiatanBelumLewatWaktuSampai = 0;
-                        for ($i = 0; $i < count($countTimeBukti); $i++) {
-                            if ($kegiatanLewatWaktuSampai[$i]->datediff < 0 && $kegiatanLewatWaktuSampai[$i]->total_bukti_kegiatan < 1) {
-                                $jumlahKegiatanBelumLewatWaktuSampai++;
-                            }
-                        }
-                    
-                        for ($i = 0; $i < count($countTimeBukti); $i++) {
-                            if ($countTimeBukti[$i]->total_bukti_kegiatan == 0) {
-                                $countTimeBukti[0] = $countTimeBukti[$i];
-                                break;
-                            }
-                        }
-                    
-                        if (count($countUnReadNotifKegiatan) > 0) {
-                            $totalNotifications = $countUnReadNotifKegiatan[0]->jumlah + $countKegiatanTanpaBukti;
-                        } else {
-                            $totalNotifications = 0 + $countKegiatanTanpaBukti;
-                        }
-                        $bellNotif = $totalNotifications - $jumlahKegiatanBelumLewatWaktuSampai;
+                        // menghitung total kegiatan yang sudah memasuki waktu mulai tetapi belum memiliki bukti
+                        $totalKegiatanSudahWaktuMulai = DB::select("SELECT COUNT(*) AS 'total_kegiatan_sudah_mulai_dan_tidak_memiliki_bukti' FROM (
+                            SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti_kegiatan', DATEDIFF(NOW(), kegiatans.tanggal_mulai) AS 'get_day'
+                            FROM kegiatans
+                            LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
+                            JOIN kerjasamas ON kerjasamas.id = kerjasama_id
+                            JOIN usulans ON usulans.id = usulan_id
+                            JOIN units ON units.id = unit_id
+                            WHERE units.id = $getUserUnit OR kegiatans.user_id = $getUserID
+                            GROUP BY kegiatans.id, bukti_kegiatans.kegiatans_id, kegiatans.tanggal_mulai
+                            ORDER BY DATEDIFF(NOW(), kegiatans.tanggal_mulai) DESC
+                        ) AS tbl_kegiatan_sudah_waktu_mulai
+                        WHERE tbl_kegiatan_sudah_waktu_mulai.total_bukti_kegiatan = 0 AND tbl_kegiatan_sudah_waktu_mulai.get_day >= 0
+                        GROUP BY tbl_kegiatan_sudah_waktu_mulai.total_bukti_kegiatan");
                     }
                     // Login Dosen
                     else {
-                        $countUnReadNotifKegiatan = DB::select("SELECT kegiatans.status AS 'status', COUNT(kegiatans.status) AS 'jumlah' FROM kegiatans WHERE kegiatans.user_id = $getUserID AND kegiatans.status = '0' GROUP BY kegiatans.status");
+                        // menghitung jumlah kegiatan yang baru yang belum dilihat
+                        $countUnReadNotifKegiatan = DB::select("SELECT kegiatans.status AS 'status', COUNT(kegiatans.status) AS 'jumlah'
+                        FROM kegiatans
+                        WHERE kegiatans.user_id = $getUserID AND kegiatans.status = '0'
+                        GROUP BY kegiatans.status");
                     
-                        $countTimeKegiatan = DB::select("SELECT id, DATEDIFF(NOW(), created_at) AS 'datediff', HOUR(TIMEDIFF(NOW(), created_at)) AS 'get_hour', MINUTE(TIMEDIFF(NOW(), created_at)) AS 'get_minute', SECOND(TIMEDIFF(NOW(), created_at)) AS 'get_second' FROM kegiatans WHERE kegiatans.user_id = $getUserID AND kegiatans.status = '0'");
+                        // menghitung waktu sejak awal kegiatan baru ditambahkan
+                        $TimeKegiatan = DB::select("SELECT id, DATEDIFF(NOW(), created_at) AS 'get_day', HOUR(TIMEDIFF(NOW(), created_at)) AS 'get_hour', MINUTE(TIMEDIFF(NOW(), created_at)) AS 'get_minute', SECOND(TIMEDIFF(NOW(), created_at)) AS 'get_second'
+                        FROM kegiatans
+                        WHERE kegiatans.user_id = $getUserID AND kegiatans.status = '0'");
                     
-                        $kegiatansPerluBukti = DB::select("SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_kegiatan' FROM kegiatans LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id WHERE kegiatans.user_id = $getUserID GROUP BY kegiatans.id");
+                        // menghitung jumlah total kegiatan yang tidak memiliki bukti
+                        $kegiatanPerluBukti = DB::select("SELECT COUNT(*) AS 'total_kegiatan' FROM (
+                            SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_kegiatan'
+                            FROM kegiatans
+                            LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
+                            WHERE kegiatans.user_id = $getUserID
+                            GROUP BY kegiatans.id
+                        ) AS tbl_kegiatan_perlu_bukti
+                        WHERE tbl_kegiatan_perlu_bukti.total_kegiatan = 0
+                        GROUP BY tbl_kegiatan_perlu_bukti.total_kegiatan");
                     
-                        $countKegiatanTanpaBukti = 0;
-                        for ($i = 0; $i < count($kegiatansPerluBukti); $i++) {
-                            if ($kegiatansPerluBukti[$i]->total_kegiatan == 0) {
-                                $countKegiatanTanpaBukti++;
-                            }
-                        }
+                        // menghitung waktu kegiatan yang sudah memasuki waktu mulai tetapi belum memiliki bukti
+                        $kegiatanSudahWaktuMulai = DB::select("SELECT * FROM (
+                            SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti_kegiatan', DATEDIFF(NOW(), kegiatans.tanggal_mulai) AS 'get_day'
+                            FROM kegiatans
+                            LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
+                            WHERE kegiatans.user_id = $getUserID GROUP BY kegiatans.id, bukti_kegiatans.kegiatans_id, kegiatans.tanggal_mulai
+                            ORDER BY DATEDIFF(NOW(), kegiatans.tanggal_mulai) DESC
+                        ) AS tbl_kegiatan_waktu_mulai
+                        WHERE tbl_kegiatan_waktu_mulai.total_bukti_kegiatan = 0 AND tbl_kegiatan_waktu_mulai.get_day >= 0");
                     
-                        $countTimeBukti = DB::select("SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti_kegiatan', DATEDIFF(NOW(), kegiatans.created_at) AS 'datediff', HOUR(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_hour', MINUTE(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_minute', SECOND(TIMEDIFF(NOW(), kegiatans.created_at)) AS 'get_second' FROM kegiatans LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id WHERE kegiatans.user_id = $getUserID GROUP BY kegiatans.id, bukti_kegiatans.kegiatans_id, kegiatans.created_at");
-                    
-                        $kegiatanLewatWaktuSampai = DB::select("SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti_kegiatan', DATEDIFF(NOW(), kegiatans.tanggal_sampai) AS 'datediff' FROM kegiatans LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id WHERE kegiatans.user_id = $getUserID GROUP BY kegiatans.id, bukti_kegiatans.kegiatans_id, kegiatans.tanggal_sampai ORDER BY DATEDIFF(NOW(), kegiatans.tanggal_sampai) DESC");
-                    
-                        $jumlahKegiatanBelumLewatWaktuSampai = 0;
-                        for ($i = 0; $i < count($kegiatanLewatWaktuSampai); $i++) {
-                            if ($kegiatanLewatWaktuSampai[$i]->datediff < 0 && $kegiatanLewatWaktuSampai[$i]->total_bukti_kegiatan < 1) {
-                                $jumlahKegiatanBelumLewatWaktuSampai++;
-                            }
-                        }
-                    
-                        for ($i = 0; $i < count($countTimeBukti); $i++) {
-                            if ($countTimeBukti[$i]->total_bukti_kegiatan == 0) {
-                                $countTimeBukti[0] = $countTimeBukti[$i];
-                                break;
-                            }
-                        }
-                    
-                        if (count($countUnReadNotifKegiatan) > 0) {
-                            $totalNotifications = $countUnReadNotifKegiatan[0]->jumlah + $countKegiatanTanpaBukti;
-                        } else {
-                            $totalNotifications = 0 + $countKegiatanTanpaBukti;
-                        }
-                        $bellNotif = $totalNotifications - $jumlahKegiatanBelumLewatWaktuSampai;
+                        // menghitung total kegiatan yang sudah memasuki waktu mulai tetapi belum memiliki bukti
+                        $totalKegiatanSudahWaktuMulai = DB::select("SELECT COUNT(*) AS 'total_kegiatan_sudah_mulai_dan_tidak_memiliki_bukti' FROM (
+                            SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti_kegiatan', DATEDIFF(NOW(), kegiatans.tanggal_mulai) AS 'get_day'
+                            FROM kegiatans
+                            LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
+                            WHERE kegiatans.user_id = $getUserID GROUP BY kegiatans.id, bukti_kegiatans.kegiatans_id, kegiatans.tanggal_mulai
+                            ORDER BY DATEDIFF(NOW(), kegiatans.tanggal_mulai) DESC
+                        ) AS tbl_kegiatan_sudah_waktu_mulai
+                        WHERE tbl_kegiatan_sudah_waktu_mulai.total_bukti_kegiatan = 0 AND tbl_kegiatan_sudah_waktu_mulai.get_day >= 0
+                        GROUP BY tbl_kegiatan_sudah_waktu_mulai.total_bukti_kegiatan");
                     }
+                    
+                    // Kondisi Untuk Mengisi Variabel Penampung Digunakan untuk semua level user
+                    if (count($countUnReadNotifKegiatan) > 0) {
+                        $totalKegiatanYangBelumDibaca = $countUnReadNotifKegiatan[0]->jumlah;
+                    }
+                    // Kondisi Untuk Mengisi Variabel Penampung Digunakan untuk semua level user
+                    if (count($kegiatanPerluBukti) > 0) {
+                        $totalKegiatanYangBelumMemilikiBukti = $kegiatanPerluBukti[0]->total_kegiatan;
+                    }
+                    // Kondisi Untuk Mengisi Variabel Penampung Digunakan untuk semua level user
+                    if (count($totalKegiatanSudahWaktuMulai) > 0) {
+                        $totalKegiatanYangSudahMulai = $totalKegiatanSudahWaktuMulai[0]->total_kegiatan_sudah_mulai_dan_tidak_memiliki_bukti;
+                    }
+                    // menjumlahkan total notifikasi
+                    $totalNotifications = $totalKegiatanYangBelumDibaca + $totalKegiatanYangBelumMemilikiBukti;
+                    $bellNotif = $totalKegiatanYangBelumDibaca + $totalKegiatanYangSudahMulai;
                 @endphp
 
-                {{-- Message --}}
+                {{-- Bell Notifikasi --}}
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-bell"></i>
@@ -297,23 +305,23 @@
                                 {{ $countUnReadNotifKegiatan[0]->jumlah }} kegiatan baru
                                 <span class="float-right text-muted text-sm">
                                     @php
-                                        if ($countTimeKegiatan[0]->datediff <= 0) {
-                                            if ($countTimeKegiatan[0]->get_hour <= 0) {
-                                                if ($countTimeKegiatan[0]->get_minute <= 0) {
-                                                    echo $countTimeKegiatan[0]->get_second, ' secs';
+                                        if ($TimeKegiatan[0]->get_day <= 0) {
+                                            if ($TimeKegiatan[0]->get_hour <= 0) {
+                                                if ($TimeKegiatan[0]->get_minute <= 0) {
+                                                    echo $TimeKegiatan[0]->get_second, ' secs';
                                                 } else {
-                                                    echo $countTimeKegiatan[0]->get_minute, ' mins';
+                                                    echo $TimeKegiatan[0]->get_minute, ' mins';
                                                 }
                                             } else {
-                                                echo $countTimeKegiatan[0]->get_hour, ' hour';
+                                                echo $TimeKegiatan[0]->get_hour, ' hour';
                                             }
                                         } else {
-                                            echo $countTimeKegiatan[0]->datediff, ' day';
+                                            echo $TimeKegiatan[0]->get_day, ' day';
                                         }
                                     @endphp
                                 </span>
                             @else
-                                0 kegiatan baru
+                                0 kegiatan baru <span class="float-right text-muted text-sm">0 secs</span>
                             @endif
 
                         </a>
@@ -321,22 +329,15 @@
                         {{-- Notifikasi kegiatan belum memiliki bukti kegiatan --}}
                         <a href="/notification_kegiatan_belum_ada_bukti" class="dropdown-item">
                             <i class="fas fa-copy mr-2"></i>
-                            @if ($countKegiatanTanpaBukti > 0)
-                                {{ $countKegiatanTanpaBukti }} kegiatan belum ada bukti
+                            @if (count($kegiatanPerluBukti) > 0)
+                                {{ $kegiatanPerluBukti[0]->total_kegiatan }} kegiatan belum ada bukti
                                 <span class="float-right text-muted text-sm">
                                     @php
-                                        for ($i = 0; $i < count($kegiatanLewatWaktuSampai); $i++) {
-                                            if ($kegiatanLewatWaktuSampai[$i]->total_bukti_kegiatan == 0) {
-                                                if ($kegiatanLewatWaktuSampai[$i]->datediff > 0) {
-                                                    echo $kegiatanLewatWaktuSampai[$i]->datediff, ' day';
-                                                    break;
-                                                }
-                                            }
-                                        }
+                                        echo $kegiatanSudahWaktuMulai[0]->get_day, ' day';
                                     @endphp
                                 </span>
                             @else
-                                0 kegiatan perlu bukti
+                                0 kegiatan perlu bukti <span class="float-right text-muted text-sm">0 day </span>
                             @endif
 
                         </a>
@@ -377,7 +378,7 @@
             </ul>
         </nav>
 
-
+        {{-- main side --}}
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
             <a href="{{ url('/dashboard') }}" class="brand-link">
@@ -386,10 +387,13 @@
                 <span class="brand-text font-weight-light">MDP KERMA</span>
             </a>
 
+            {{-- side --}}
             <div class="sidebar">
 
+                {{-- Info User --}}
                 <div class="user-panel mt-3 pb-3 d-flex">
                     <div class="image mt-2">
+                        {{-- Photo Profile --}}
                         @if (empty(Auth::user()->file))
                             <img style="width: 45px; height: 45px" src="{{ asset('dist/img/user_profile.png') }}"
                                 class="img-circle elevation-2" alt="User Image">
@@ -577,11 +581,7 @@
         </div>
 
         <footer class="main-footer">
-            <div class="float-right d-none d-sm-block">
-                <b>Version</b> 3.2.0
-            </div>
-            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
-            reserved.
+            <strong>Copyright &copy; 2022 MDP Kerjasama
         </footer>
 
         <aside class="control-sidebar control-sidebar-dark">

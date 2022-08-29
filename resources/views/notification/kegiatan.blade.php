@@ -169,8 +169,8 @@
                 </table>
             @endif
 
-            {{-- Tabel Data untuk login kaprodi --}}
-            @if (Auth::user()->level == 'K')
+            {{-- Tabel Data untuk login kaprodi(K) dan kepala unit(U) --}}
+            @if (Auth::user()->level == 'K' || Auth::user()->level == 'U')
                 <table id="example1" class="table table-bordered table-striped">
                     <thead>
                         <tr>
@@ -192,7 +192,7 @@
                             $nomor = 1;
                         @endphp
 
-                        @foreach ($kegiatansUnReadForKaprodi as $data)
+                        @foreach ($kegiatansUnReadForKaprodiDanKepalaUnit as $data)
                             <tr>
                                 <td>{{ $nomor++ }}</td>
 

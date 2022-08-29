@@ -39,62 +39,53 @@
                 <div class="row">
                     {{-- APT --}}
                     @php
-                        // if (old('apt') != null) {
-                        //     $option_apt = old('apt');
-                        // } else {
-                        //     $option_apt = $buktiKegiatan->ceklist_apt;
-                        // }
-                        // echo $option_apt;
-                        
                         $option_apt = $buktiKegiatan->ceklist_apt;
-                        // if (old('apt') == null) {
-                        //     $old_value = 'on';
-                        // } else {
-                        //     $old_value = 'off';
-                        // }
-                        // echo "$option_apt ";
-                        // echo "$old_value ";
+                        $checked_apt="";
+                        if (old('apt') == 'Y') {
+                            $checked_apt = 'checked';
+                        }
+                        if ($option_apt == 'Y') {
+                            $checked_apt = 'checked';
+                        }
                     @endphp
 
                     <div class="form-check col">
-                        <input class="form-check-input" type="checkbox" name="apt"
-                            @if ($option_apt == 'Y') checked @endif>
+                        <input class="form-check-input" type="checkbox" name="apt" value="Y" {{ $checked_apt }} />
                         <label class="form-check-label">APT</label>
                     </div>
 
                     {{-- APS --}}
                     @php
-                        // if (old('aps') != null) {
-                        //     $option_aps = old('aps');
-                        // } else {
-                        //     $option_aps = $buktiKegiatan->ceklist_aps;
-                        // }
-                        // echo $option_aps;
-                        
                         $option_aps = $buktiKegiatan->ceklist_aps;
+                        $checked_aps="";
+                        if (old('aps') == 'Y') {
+                            $checked_aps = 'checked';
+                        }
+                        if ($option_aps == 'Y') {
+                            $checked_aps = 'checked';
+                        }
                     @endphp
 
                     <div class="form-check col">
-                        <input class="form-check-input" type="checkbox" name="aps"
-                            @if ($option_aps == 'Y') checked @endif>
+                        <input class="form-check-input" type="checkbox" name="aps" value="Y" {{ $checked_aps }} />
                         <label class="form-check-label">APS</label>
                     </div>
 
                     {{-- LAMEMBA --}}
                     @php
-                        // if (old('lamemba') != null) {
-                        //     $option_lamemba = old('lamemba');
-                        // } else {
-                        //     $option_lamemba = $buktiKegiatan->ceklist_lamemba;
-                        // }
-                        // echo $option_lamemba;
-                        
                         $option_lamemba = $buktiKegiatan->ceklist_lamemba;
+                        $checked_lamemba="";
+                        if (old('lamemba') == 'Y') {
+                            $checked_lamemba = 'checked';
+                        }
+                        if ($option_lamemba == 'Y') {
+                            $checked_lamemba = 'checked';
+                        }
                     @endphp
 
                     <div class="form-check col">
-                        <input class="form-check-input" type="checkbox" name="lamemba"
-                            @if ($option_lamemba == 'Y') checked @endif>
+                        <input class="form-check-input" type="checkbox" name="lamemba" value="Y"
+                            {{ $checked_lamemba }} />
                         <label class="form-check-label">LAMEMBA</label>
                     </div>
                 </div>

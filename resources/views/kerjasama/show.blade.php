@@ -148,6 +148,7 @@
                                 <div class="form-group col-lg-4">
                                     <label for="tanggal_mulai">Tanggal Mulai</label>
                                     <input type="date" name="tanggal_mulai" id="" class="form-control"
+                                        min="{{ $kerjasama->tanggal_mulai }}" max="{{ $kerjasama->tanggal_sampai }}"
                                         value="{{ old('tanggal_mulai') }}">
                                     @error('tanggal_mulai')
                                         <div class="text-danger">{{ $message }}</div>
@@ -158,6 +159,7 @@
                                 <div class="form-group col-lg-4">
                                     <label for="tanggal_sampai">Tanggal Sampai</label>
                                     <input type="date" name="tanggal_sampai" id="" class="form-control"
+                                        min="{{ $kerjasama->tanggal_mulai }}" max="{{ $kerjasama->tanggal_sampai }}"
                                         value="{{ old('tanggal_sampai') }}">
                                     @error('tanggal_sampai')
                                         <div class="text-danger">{{ $message }}</div>
