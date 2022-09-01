@@ -2,6 +2,30 @@
 @section('title', 'Kegiatan')
 
 @section('content')
+
+    <script>
+        getTanggal();
+
+        function getTanggal() {
+            let kerjasamas = document.getElementById("kerjasamas");
+            let tanggal_mulai = document.getElementById("tanggal_mulai");
+            let tanggal_sampai = document.getElementById("tanggal_sampai");
+            let bentuk_kegiatan = document.getElementById("bentuk_kegiatan");
+
+            let text = kerjasamas.options[kerjasamas.selectedIndex].text;
+            // Mengubah text menjadi array
+            let texts = text.split("|");
+
+            tanggal_mulai.setAttribute("min", texts[2]) //set atribut min tanggal mulai
+            tanggal_mulai.setAttribute("max", texts[3]) //set atribut max tanggal mulai
+            tanggal_mulai.setAttribute("value", texts[2]) //set atribut value tanggal mulai
+
+            tanggal_sampai.setAttribute("min", texts[2]) //set atribut min tanggal sampai
+            tanggal_sampai.setAttribute("max", texts[3]) //set atribut max tanggal sampai
+            tanggal_sampai.setAttribute("value", texts[3]) //set atribut value tanggal sampai
+        }
+    </script>
+
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Tambah Kegiatan</h3>
@@ -33,10 +57,12 @@
                         }
                     @endphp
 
-                    <select class="form-control select2" name="kerjasamas" id="">
+                    <select class="form-control select2" name="kerjasamas" id="kerjasamas" onchange="getTanggal()">
+                        <option value="">-- Pilih Kerjasama --</option>
                         @foreach ($kerjasamas as $data)
                             <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                {{ $data->nama_kerja_sama }} - {{ $data->usulan->mitra->nama_mitra }}
+                                {{ $data->nama_kerja_sama }} | {{ $data->usulan->mitra->nama_mitra }}
+                                |{{ $data->tanggal_mulai }}|{{ $data->tanggal_sampai }}
                             </option>
                         @endforeach
                     </select>
@@ -48,7 +74,7 @@
                 {{-- Bentuk Kegiatan --}}
                 <div class="form-group">
                     <label for="bentuk_kegiatan">Bentuk Kegiatan </label>
-                    <input type="text" name='bentuk_kegiatan' value="{{ old('bentuk_kegiatan') }}"
+                    <input id="bentuk_kegiatan" type="text" name='bentuk_kegiatan' value="{{ old('bentuk_kegiatan') }}"
                         class="form-control @error('bentuk_kegiatan') is-invalid @enderror"
                         placeholder="Masukan Bentuk Kegiatan">
                     @error('bentuk_kegiatan')
@@ -60,8 +86,8 @@
                     {{-- Tanggal Mulai --}}
                     <div class="form-group col-lg-4">
                         <label for="tanggal_mulai">Tanggal Mulai</label>
-                        <input type="date" name="tanggal_mulai" id="" class="form-control"
-                            value="{{ old('tanggal_mulai') }}">
+                        <input type="date" name="tanggal_mulai" id="tanggal_mulai" class="form-control"
+                            value="{{ old('tanggal_mulai') }}" min="">
                         @error('tanggal_mulai')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -70,7 +96,7 @@
                     {{-- Tanggal Sampai --}}
                     <div class="form-group col-lg-4">
                         <label for="tanggal_sampai">Tanggal Sampai</label>
-                        <input type="date" name="tanggal_sampai" id="" class="form-control"
+                        <input type="date" name="tanggal_sampai" id="tanggal_sampai" class="form-control"
                             value="{{ old('tanggal_sampai') }}">
                         @error('tanggal_sampai')
                             <div class="text-danger">{{ $message }}</div>

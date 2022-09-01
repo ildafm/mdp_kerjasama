@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Unit;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -76,9 +77,11 @@ class UserController extends Controller
         // Send email to new user
         $nowHourQuerry = DB::select("SELECT Hour(Now()) as 'jam_sekarang'");
         $nowHour = $nowHourQuerry[0]->jam_sekarang;
-        if ($nowHour < 12) {
+        if ($nowHour <= 11) {
             $salam = 'Selamat pagi';
-        } elseif($nowHour < 19){
+        } elseif($nowHour <= 14){
+            $salam = 'Selamat siang';
+        } elseif($nowHour <= 18){
             $salam = 'Selamat sore';
         } elseif($nowHour < 24){
             $salam = 'Selamat malam';
@@ -154,7 +157,18 @@ class UserController extends Controller
                 'password' => $request->password = Hash::make($validateData['password']),
                 'level' => $request->level,
                 'unit_id' => $request->nama_unit,
-            ]);   
+            ]); 
+            
+            if ($user->id != Auth::user()->id) {
+                // Send email to new user
+                $details = [
+                    'title' => 'Perubahan Akun MDP Kerjasama',
+                    'user_email' => $user->email,
+                    'user_name' => $request->name,
+                    'user_password' => $validateData['password'],
+                ];
+                Mail::to($user->email)->send(new \App\Mail\EditUserMail($details));
+            }
         }
         else{
             $user->update([

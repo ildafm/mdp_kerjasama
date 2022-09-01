@@ -64,6 +64,20 @@
                         if ($option_aps == 'Y') {
                             $checked_aps = 'checked';
                         }
+
+                        // if ($option_aps == 'Y') {
+                        //     $checked_aps = 'checked';
+                        // }
+                        // if (old('aps') == 'Y') {
+                        //     $checked_aps = 'checked';
+                        // } else {
+                        //     if (old('aps') == null) {
+                        //         $checked_aps = '';
+                        //     } else {
+                        //         $checked_aps = 'checked';
+                        //     }
+                        // }
+                        
                     @endphp
 
                     <div class="form-check col">

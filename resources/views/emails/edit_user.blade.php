@@ -8,8 +8,8 @@
 <body>
     <h1>{{ $details['title'] }}</h1>
     <p>
-        {{ $details['salam'] }}, Di informasikan bahwa email anda sudah di daftarkan pada aplikasi mdp kerjasama,
-        gunakan informasi dibawah ini untuk lanjut ke proses aktivasi
+        Hi {{ $details['user_name'] }}, Di informasikan bahwa telah terjadi perubahan password pada akun aplikasi mdp
+        kerjasama anda, silahkan gunakan informasi dibawah ini untuk login ke aplikasi
     </p>
     <p>
         Email : {{ $details['user_email'] }} <br>

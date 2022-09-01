@@ -161,7 +161,16 @@ class KerjasamaController extends Controller
         JOIN kerjasamas ON bukti_kerjasamas.kerjasama_id = kerjasamas.id
         WHERE bukti_kerjasamas.kerjasama_id = $kerjasama->id");
 
-        $users = User::All();
+        $users = DB::select("SELECT b.id, b.kode_dosen, b.name
+        FROM users b 
+        WHERE b.kode_dosen NOT IN ( 
+            SELECT DISTINCT users.kode_dosen 
+            FROM users 
+            LEFT JOIN kegiatans ON kegiatans.user_id = users.id 
+            LEFT JOIN bukti_kegiatans on bukti_kegiatans.kegiatans_id = kegiatans.id 
+            WHERE (kegiatans.bentuk_kegiatan IS NOT NULL AND bukti_kegiatans.nama_bukti_kegiatan IS NULL) 
+            ORDER BY users.id )");
+            
         $kegiatans = Kegiatan::All();
 
         return view('kerjasama.show')
@@ -272,6 +281,7 @@ class KerjasamaController extends Controller
         return redirect()->route('kerjasamas.index')->with('pesan', "Hapus data $kerjasama->nama_kerja_sama berhasil");
     }
 
+    // Delete from usulan show.blade.php
     public function customDestroy($id_kerjasama){
         $kerjasama = Kerjasama::findOrFail($id_kerjasama);
 

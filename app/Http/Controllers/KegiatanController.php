@@ -22,14 +22,6 @@ class KegiatanController extends Controller
     public function index()
     {
         //
-        // if(Auth::user()->level != 'D'){
-        //     $kegiatans = Kegiatan::All();
-        // }
-        // else{
-        //     $getUserID = Auth::user()->id;
-        //     $kegiatans = DB::select("SELECT kegiatans.id AS 'id', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, PIC, keterangan, nama_kerja_sama, users.name AS 'name' FROM kegiatans JOIN kerjasamas ON kerjasama_id = kerjasamas.id JOIN users ON kegiatans.user_id = users.id WHERE kegiatans.user_id = $getUserID");
-        // }
-
         $kegiatans = Kegiatan::All();
 
         return view('kegiatan.index')->with('kegiatans', $kegiatans);
@@ -45,7 +37,16 @@ class KegiatanController extends Controller
         //
         $this->authorize('viewAny', User::class);
 
-        $users = User::All();
+        $users = DB::select("SELECT b.id, b.kode_dosen, b.name
+        FROM users b 
+        WHERE b.kode_dosen NOT IN ( 
+            SELECT DISTINCT users.kode_dosen 
+            FROM users 
+            LEFT JOIN kegiatans ON kegiatans.user_id = users.id 
+            LEFT JOIN bukti_kegiatans on bukti_kegiatans.kegiatans_id = kegiatans.id 
+            WHERE (kegiatans.bentuk_kegiatan IS NOT NULL AND bukti_kegiatans.nama_bukti_kegiatan IS NULL) 
+            ORDER BY users.id )");
+            
         $kerjasamas = Kerjasama::All();
         return view('kegiatan.create')
             ->with('users', $users)
@@ -85,10 +86,12 @@ class KegiatanController extends Controller
 
         $kegiatan->save();
 
+        // Send email to user
         $findUser = User::findOrFail($kegiatan->user_id);
         $bentukKegiatan = $validateData['bentuk_kegiatan'];
         $tanggalMulaiKegiatan = $validateData['tanggal_mulai']; 
         $tanggalSampaiKegiatan = $validateData['tanggal_sampai'];
+        
         $details = [
             'title' => 'Kegiatan Baru',
             'user_name' => $findUser->name,
@@ -214,6 +217,7 @@ class KegiatanController extends Controller
             return redirect()->route('kegiatans.index')->with('pesan', "Hapus data kegiatan : $kegiatan->bentuk_kegiatan berhasil");
     }
 
+    // Delete from kerjasama show.blade.php
     public function customDestroy($id_kegiatan){
         $kegiatan = Kegiatan::findOrFail($id_kegiatan);
 
