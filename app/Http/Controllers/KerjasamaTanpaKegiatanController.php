@@ -7,14 +7,14 @@ use App\Models\Kategori;
 use App\Models\Kegiatan;
 use App\Models\Kerjasama;
 use App\Models\Status;
-use App\Models\User;
 use App\Models\Usulan;
+use App\Models\KerjasamaTanpaKegiatan;
+use App\Models\User;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
-class KerjasamaController extends Controller
+class KerjasamaTanpaKegiatanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,8 +24,17 @@ class KerjasamaController extends Controller
     public function index()
     {
         //
-        $kerjasamas = Kerjasama::All();
-        return view('kerjasama.index')->with('kerjasamas', $kerjasamas);
+        $kerjasamas = DB::select("SELECT * FROM (
+            SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, kegiatans.bentuk_kegiatan, kerjasamas.no_mou, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, statuses.nama_status, usulans.usulan
+            FROM kerjasamas
+            LEFT JOIN kegiatans ON kegiatans.kerjasama_id = kerjasamas.id
+            JOIN kategoris ON kategoris.id = kerjasamas.kategori_id
+            JOIN statuses ON statuses.id = kerjasamas.status_id
+            JOIN usulans ON usulans.id = kerjasamas.usulan_id
+        ) AS c
+        WHERE c.bentuk_kegiatan IS NULL
+        ORDER BY c.id");
+        return view('kerjasama_tanpa_kegiatan.index')->with('kerjasamas', $kerjasamas);
     }
 
     /**
@@ -41,7 +50,7 @@ class KerjasamaController extends Controller
         $kerjasamas = Kerjasama::All();
         $usulans = Usulan::All()->where('hasil_penjajakan', 'L');
 
-        return view('kerjasama.create')
+        return view('kerjasama_tanpa_kegiatan.create')
             ->with('kategoris', $kategoris)
             ->with('statuses', $statuses)
             ->with('kerjasamas', $kerjasamas)
@@ -57,8 +66,8 @@ class KerjasamaController extends Controller
     public function store(Request $request)
     {
         //
-        // Input kerjasama baru
-        if ($request->nama_kerja_sama != '' || $request->nama_kerja_sama != null) {
+        // input kerjasama baru
+        if($request->nama_kerja_sama != '' || $request->nama_kerja_sama != null){
             if($request->nama_kategori == '1'){
                 $validateData = $request->validate([
                     'nama_kerja_sama' => 'required',
@@ -100,9 +109,9 @@ class KerjasamaController extends Controller
             $kerjasama->save();
     
             $request->session()->flash('pesan', 'Penambahan data berhasil');
-            return redirect()->route('kerjasamas.index');
+            return redirect()->route('kerjasama_tanpa_kegiatans.index');   
         }
-        // Input kegiatan baru melalui kerjasama show
+        // input kegiatan baru melalui show
         else{
             $validateData = $request->validate([
                 'tanggal_mulai' => 'required',
@@ -119,7 +128,6 @@ class KerjasamaController extends Controller
             $kegiatan->tanggal_mulai = $validateData['tanggal_mulai'];
             $kegiatan->tanggal_sampai = $validateData['tanggal_sampai'];
             $kegiatan->bentuk_kegiatan = $validateData['bentuk_kegiatan'];
-            // $kegiatan->PIC = $validateData['PIC'];
             $kegiatan->kerjasama_id = $validateData['kerjasama_id'];
             $kegiatan->user_id = $validateData['pic_dosen'];
             $kegiatan->keterangan =$validateData['keterangan'];
@@ -138,27 +146,37 @@ class KerjasamaController extends Controller
             'tanggal_mulai' => $tanggalMulaiKegiatan,
             'tanggal_sampai' => $tanggalSampaiKegiatan,
             ];
-
+    
             Mail::to($findUser->email)->send(new \App\Mail\MyTestMail($details));
-
+    
             $request->session()->flash('pesan', 'Penambahan data berhasil');
-            return redirect()->route('kerjasamas.show', $kegiatan->kerjasama_id);
-        } 
+            return redirect()->route('kerjasama_tanpa_kegiatans.show', $kegiatan->kerjasama_id);
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Kerjasama  $kerjasama
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Kerjasama $kerjasama)
+    public function show($id)
     {
         //
+        $kerjasama = DB::select("SELECT * FROM (
+            SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, kegiatans.bentuk_kegiatan, kerjasamas.no_mou, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, statuses.nama_status, usulans.usulan
+            FROM kerjasamas
+            LEFT JOIN kegiatans ON kegiatans.kerjasama_id = kerjasamas.id
+            JOIN kategoris ON kategoris.id = kerjasamas.kategori_id
+            JOIN statuses ON statuses.id = kerjasamas.status_id
+            JOIN usulans ON usulans.id = kerjasamas.usulan_id
+        ) AS c
+        WHERE c.bentuk_kegiatan IS NULL AND c.id = $id");
+
         $buktiKerjasama = DB::select("SELECT bukti_kerjasamas.id, nama_bukti_kerjasama, bukti_kerjasamas.file, LEFT(bukti_kerjasamas.created_at, 10) as tanggalUpload 
         FROM bukti_kerjasamas
         JOIN kerjasamas ON bukti_kerjasamas.kerjasama_id = kerjasamas.id
-        WHERE bukti_kerjasamas.kerjasama_id = $kerjasama->id");
+        WHERE bukti_kerjasamas.kerjasama_id = $id");
 
         $users = DB::select("SELECT b.id, b.kode_dosen, b.name
         FROM users b 
@@ -172,8 +190,8 @@ class KerjasamaController extends Controller
             
         $kegiatans = Kegiatan::All();
 
-        return view('kerjasama.show')
-            ->with('kerjasama', $kerjasama)
+        return view('kerjasama_tanpa_kegiatan.show')
+            ->with('kerjasama', $kerjasama[0])
             ->with('buktiKerjasama', $buktiKerjasama)
             ->with('users', $users)
             ->with('kegiatans', $kegiatans);
@@ -182,18 +200,28 @@ class KerjasamaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Kerjasama  $kerjasama
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kerjasama $kerjasama)
+    public function edit($id)
     {
         //
+        $kerjasama = DB::select("SELECT * FROM (
+            SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, kegiatans.bentuk_kegiatan, kerjasamas.no_mou, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategori_id, kategoris.nama_kategori, status_id, statuses.nama_status, usulan_id, usulans.usulan
+            FROM kerjasamas
+            LEFT JOIN kegiatans ON kegiatans.kerjasama_id = kerjasamas.id
+            JOIN kategoris ON kategoris.id = kerjasamas.kategori_id
+            JOIN statuses ON statuses.id = kerjasamas.status_id
+            JOIN usulans ON usulans.id = kerjasamas.usulan_id
+        ) AS c
+        WHERE c.bentuk_kegiatan IS NULL AND c.id = $id");
+
         $kategoris = Kategori::All();
         $statuses = Status::All();
         $usulans = Usulan::All()->where('hasil_penjajakan', 'L');
         
-        return view('kerjasama.edit')
-            ->with('kerjasama', $kerjasama)
+        return view('kerjasama_tanpa_kegiatan.edit')
+            ->with('kerjasama', $kerjasama[0])
             ->with('kategoris', $kategoris)
             ->with('statuses', $statuses)
             ->with('usulans', $usulans);
@@ -203,10 +231,10 @@ class KerjasamaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Kerjasama  $kerjasama
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kerjasama $kerjasama)
+    public function update(Request $request, $id)
     {
         //
         if($request->nama_kategori == '1'){
@@ -231,7 +259,7 @@ class KerjasamaController extends Controller
             ]);
         }
 
-        $kerjasama = Kerjasama::findOrFail($kerjasama->id);
+        $kerjasama = Kerjasama::findOrFail($id);
 
         if($request->nama_kategori == '1'){
             $kerjasama->update([
@@ -256,19 +284,19 @@ class KerjasamaController extends Controller
         }
 
         $request->session()->flash('pesan', 'Perubahan data berhasil');
-        return redirect()->route('kerjasamas.index');
+        return redirect()->route('kerjasama_tanpa_kegiatans.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Kerjasama  $kerjasama
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kerjasama $kerjasama)
+    public function destroy($id)
     {
         //
-        $getBuktiKerjasama = DB::select("SELECT id, nama_bukti_kerjasama, bukti_kerjasamas.file AS 'file', kerjasama_id FROM bukti_kerjasamas WHERE kerjasama_id = $kerjasama->id");
+        $getBuktiKerjasama = DB::select("SELECT id, nama_bukti_kerjasama, bukti_kerjasamas.file AS 'file', kerjasama_id FROM bukti_kerjasamas WHERE kerjasama_id = $id");
 
         // unlink semua file sekaligus
         if(count($getBuktiKerjasama) > 0){
@@ -276,25 +304,8 @@ class KerjasamaController extends Controller
                 unlink(storage_path('app/public/kerjasama/'.$getBuktiKerjasama[$i]->file));
             }
         }
+        $kerjasama = Kerjasama::findOrFail($id);
         $kerjasama->delete();
-        return redirect()->route('kerjasamas.index')->with('pesan', "Hapus data $kerjasama->nama_kerja_sama berhasil");
-    }
-
-    // Delete from usulan show.blade.php
-    public function customDestroy($id_kerjasama){
-        $kerjasama = Kerjasama::findOrFail($id_kerjasama);
-
-        $getBuktiKerjasama = DB::select("SELECT id, nama_bukti_kerjasama, bukti_kerjasamas.file AS 'file', kerjasama_id FROM bukti_kerjasamas WHERE kerjasama_id = $kerjasama->id");
-
-        // unlink semua file sekaligus
-        if(count($getBuktiKerjasama) > 0){
-            for ($i = 0; $i < count($getBuktiKerjasama); $i++) {
-                unlink(storage_path('app/public/kerjasama/'.$getBuktiKerjasama[$i]->file));
-            }
-        }
-        
-        $kerjasama->delete();
-        return redirect()->route('usulans.show', $kerjasama->usulan_id)->with('pesan', "Hapus data kerjasama : $kerjasama->nama_kerja_sama berhasil");
-
+        return redirect()->route('kerjasama_tanpa_kegiatans.index')->with('pesan', "Hapus data $kerjasama->nama_kerja_sama berhasil");
     }
 }

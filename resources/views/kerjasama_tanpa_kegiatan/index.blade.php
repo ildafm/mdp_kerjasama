@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Kerjasama')
+@section('title', 'Kerjasama Tanpa Kegiatan')
 
 @section('content')
     <div class="card">
@@ -7,7 +7,7 @@
             <!-- <h3 class="card-title">Tabel Daftar Kerjasama</h3> -->
             @if (Auth::user()->level != 'D')
                 {{-- Button Tambah --}}
-                <a href="{{ url('/kerjasamas/create') }}" class='btn btn-primary'>Tambah Kerjasama</a>
+                <a href="{{ url('/kerjasama_tanpa_kegiatans/create') }}" class='btn btn-primary'>Tambah Kerjasama</a>
             @else
                 <div class="card-title">
                     <h4 class="">Tabel Daftar Kerjasama</h4>
@@ -61,23 +61,22 @@
                             <td>{{ $nomor++ }}</td>
                             <td>
                                 {{-- Button Tampil --}}
-                                <a href="{{ url('kerjasamas/' . $data->id) }}" class="btn btn-sm btn-primary"><i
-                                        class="nav-icon fas fa-eye" title="Tampil"></i></a>
-
+                                <a href="{{ url('kerjasama_tanpa_kegiatans/' . $data->id) }}"
+                                    class="btn btn-sm btn-primary"><i class="nav-icon fas fa-eye" title="Tampil"></i></a>
 
                                 @if (Auth::user()->level != 'D')
                                     {{-- Button Ubah --}}
-                                    <a href="{{ route('kerjasamas.edit', ['kerjasama' => $data->id]) }}"
-                                        class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
-                                            title="Edit"></i></a>
-
-                                    @if (Auth::user()->level == 'A')
-                                        {{-- Button Hapus --}}
-                                        <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                            data-namaKerjasama="{{ $data->nama_kerja_sama }}" data-toggle="modal"
-                                            data-target="#modal-sm"><i class="nav-icon fas fa-trash"
-                                                title="Hapus"></i></button>
-                                    @endif
+                                    <a href="{{ route('kerjasama_tanpa_kegiatans.edit', ['kerjasama_tanpa_kegiatan' => $data->id]) }}"
+                                        class="btn btn-sm btn-warning">
+                                        <i class="nav-icon fas fa-edit" title="Edit"></i>
+                                    </a>
+                                @endif
+                                @if (Auth::user()->level == 'A')
+                                    {{-- Button Hapus --}}
+                                    <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                        data-namaKerjasama="{{ $data->nama_kerja_sama }}" data-toggle="modal"
+                                        data-target="#modal-sm"><i class="nav-icon fas fa-trash"
+                                            title="Hapus"></i></button>
                                 @endif
                             </td>
                             <td>{{ $data->nama_kerja_sama }}</td>
@@ -90,9 +89,9 @@
                             </td>
                             <td>{{ $data->tanggal_mulai }}</td>
                             <td>{{ $data->tanggal_sampai }}</td>
-                            <td>{{ $data->kategori->nama_kategori }}</td>
-                            <td>{{ $data->status->nama_status }}</td>
-                            <td>{{ $data->usulan->usulan }}</td>
+                            <td>{{ $data->nama_kategori }}</td>
+                            <td>{{ $data->nama_status }}</td>
+                            <td>{{ $data->usulan }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -148,7 +147,7 @@
         // id disini adalah id kerjasama
         $('.btn-hapus').click(function() {
             let id = $(this).attr('data-id');
-            $('#formDelete').attr('action', '/kerjasamas/' + id);
+            $('#formDelete').attr('action', '/kerjasama_tanpa_kegiatans/' + id);
 
             let namaKerjasama = $(this).attr('data-namaKerjasama');
             $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus kerjasama : " + namaKerjasama + " ?")

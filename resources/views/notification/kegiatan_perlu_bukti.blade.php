@@ -36,6 +36,7 @@
                             <th>Bentuk Kegiatan</th>
                             <th>Keterangan</th>
                             <th>PIC Dosen</th>
+                            <th>Unit</th>
                             <th>Tanggal Mulai</th>
                             <th>Tanggal Sampai</th>
                         </tr>
@@ -78,6 +79,8 @@
 
                                 <td>{{ $data->name }}</td>
 
+                                <td>{{ $data->nama_unit }}</td>
+
                                 <td>{{ $data->tanggal_mulai }}</td>
 
                                 <td>{{ $data->tanggal_sampai }}</td>
@@ -93,6 +96,7 @@
                             <th>Bentuk Kegiatan</th>
                             <th>Keterangan</th>
                             <th>PIC Dosen</th>
+                            <th>Unit</th>
                             <th>Tanggal Mulai</th>
                             <th>Tanggal Sampai</th>
                         </tr>

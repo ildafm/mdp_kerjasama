@@ -184,7 +184,8 @@
                             JOIN usulans ON usulans.id = usulan_id
                             JOIN units ON units.id = unit_id
                             WHERE units.id = $getUserUnit OR kegiatans.user_id = $getUserID
-                            GROUP BY kegiatans.id) AS tbl_kegiatan_perlu_bukti
+                            GROUP BY kegiatans.id
+                        ) AS tbl_kegiatan_perlu_bukti
                         WHERE tbl_kegiatan_perlu_bukti.total_kegiatan = 0
                         GROUP BY tbl_kegiatan_perlu_bukti.total_kegiatan");
                     
@@ -268,13 +269,14 @@
                         $totalKegiatanYangBelumDibaca = $countUnReadNotifKegiatan[0]->jumlah;
                     }
                     // Kondisi Untuk Mengisi Variabel Penampung Digunakan untuk semua level user
-                    if (count($kegiatanPerluBukti) > 0) {
+                    if ($kegiatanPerluBukti[0]->total_kegiatan > 0) {
                         $totalKegiatanYangBelumMemilikiBukti = $kegiatanPerluBukti[0]->total_kegiatan;
                     }
                     // Kondisi Untuk Mengisi Variabel Penampung Digunakan untuk semua level user
                     if (count($totalKegiatanSudahWaktuMulai) > 0) {
                         $totalKegiatanYangSudahMulai = $totalKegiatanSudahWaktuMulai[0]->total_kegiatan_sudah_mulai_dan_tidak_memiliki_bukti;
                     }
+                    
                     // menjumlahkan total notifikasi
                     $totalNotifications = $totalKegiatanYangBelumDibaca + $totalKegiatanYangBelumMemilikiBukti;
                     $bellNotif = $totalKegiatanYangBelumDibaca + $totalKegiatanYangSudahMulai;
@@ -299,7 +301,7 @@
                         </span>
                         <div class="dropdown-divider"></div>
                         {{-- Notifikasi kegiatan belum dibaca --}}
-                        <a href="{{ url('/notification_kegiatan') }}" class="dropdown-item">
+                        <a href="{{ url('/notification_kegiatans') }}" class="dropdown-item">
                             <i class="fas fa-briefcase mr-2"></i>
                             @if (count($countUnReadNotifKegiatan) > 0)
                                 {{ $countUnReadNotifKegiatan[0]->jumlah }} kegiatan baru
@@ -327,9 +329,9 @@
                         </a>
                         <div class="dropdown-divider"></div>
                         {{-- Notifikasi kegiatan belum memiliki bukti kegiatan --}}
-                        <a href="/notification_kegiatan_belum_ada_bukti" class="dropdown-item">
+                        <a href="/notification_kegiatan_belum_ada_buktis" class="dropdown-item">
                             <i class="fas fa-copy mr-2"></i>
-                            @if (count($kegiatanPerluBukti) > 0)
+                            @if ($kegiatanPerluBukti[0]->total_kegiatan > 0)
                                 {{ $kegiatanPerluBukti[0]->total_kegiatan }} kegiatan belum ada bukti
                                 <span class="float-right text-muted text-sm">
                                     @php
@@ -407,41 +409,22 @@
 
                     {{-- Nama dan Level --}}
                     <div class="info">
-                        @if (Auth::user()->level == 'A')
-                            <a href="{{ route('profiles.edit', ['profile' => Auth::user()->id]) }}" class="">
-                                {{ Auth::user()->name }}<br>
-                                Admin
-                            </a>
-                        @endif
-
-                        @if (Auth::user()->level == 'E')
-                            <a href="{{ route('profiles.edit', ['profile' => Auth::user()->id]) }}" class="">
-                                {{ Auth::user()->name }}<br>
-                                Dekan
-                            </a>
-                        @endif
-
-                        @if (Auth::user()->level == 'K')
-                            <a href="{{ route('profiles.edit', ['profile' => Auth::user()->id]) }}" class="">
-                                {{ Auth::user()->name }}<br>
-                                Kaprodi
-                            </a>
-                        @endif
-
-                        @if (Auth::user()->level == 'U')
-                            <a href="{{ route('profiles.edit', ['profile' => Auth::user()->id]) }}" class="">
-                                {{ Auth::user()->name }}<br>
-                                Kepala Unit
-                            </a>
-                        @endif
-
-                        @if (Auth::user()->level == 'D')
-                            <a href="{{ route('profiles.edit', ['profile' => Auth::user()->id]) }}" class="">
-                                {{ Auth::user()->name }}<br>
-                                Dosen
-                            </a>
-                        @endif
-
+                        <a href="{{ route('profiles.edit', ['profile' => Auth::user()->id]) }}" class="">
+                            {{ Auth::user()->name }}<br>
+                            @php
+                                if (Auth::user()->level == 'A') {
+                                    echo 'Admin';
+                                } elseif (Auth::user()->level == 'E') {
+                                    echo 'Dekan';
+                                } elseif (Auth::user()->level == 'K') {
+                                    echo 'Kaprodi';
+                                } elseif (Auth::user()->level == 'U') {
+                                    echo 'Kepala Unit';
+                                } else {
+                                    echo 'Dosen';
+                                }
+                            @endphp
+                        </a>
                         <br>
                     </div>
                 </div>
@@ -450,8 +433,8 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
 
+                        {{-- Dashboard --}}
                         <li class="nav-item">
-                            {{-- Dashboard --}}
                             <a href="{{ url('/dashboard') }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
@@ -480,14 +463,31 @@
                             </a>
                         </li>
 
-                        {{-- Kerjasamas --}}
+                        {{-- Kerjasama --}}
                         <li class="nav-item">
-                            <a href="{{ url('/kerjasamas') }}" class="nav-link">
+                            <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-handshake"></i>
                                 <p>
                                     Kerjasama
+                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                {{-- Semua Kerjasama --}}
+                                <li class="nav-item">
+                                    <a href="{{ url('/kerjasamas') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Semua Kerjasama</p>
+                                    </a>
+                                </li>
+                                {{-- Kerjasama yang tidak memiliki kegiatan --}}
+                                <li class="nav-item">
+                                    <a href="{{ url('/kerjasama_tanpa_kegiatans') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Kerjasama Tanpa Kegiatan</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
 
                         {{-- Kegiatans --}}
