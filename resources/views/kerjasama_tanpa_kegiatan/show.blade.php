@@ -290,7 +290,7 @@
                     @if (Auth::user()->level != 'D')
                         {{-- Form Menambahkan data Bukti --}}
                         <h3>Tambah Data Bukti Kerjasama</h3>
-                        <form action="{{ route('buktiKerjasamas.store') }}" method="POST"
+                        <form action="{{ route('buktiKerjasama2s.store') }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
                             {{-- Nama Bukti Kerjasama --}}
@@ -364,7 +364,7 @@
 
                                         @if (Auth::user()->level != 'D')
                                             {{-- Button Ubah --}}
-                                            <a href="{{ route('buktiKerjasamas.edit', ['buktiKerjasama' => $data->id]) }}"
+                                            <a href="{{ route('buktiKerjasama2s.edit', ['buktiKerjasama2' => $data->id]) }}"
                                                 class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
                                                     title="Edit"></i></a>
 
@@ -458,13 +458,10 @@
         // id disini adalah id buktiKerjasama
         $('.btn-hapus').click(function() {
             let id = $(this).attr('data-id');
-            $('#formDelete').attr('action', '/buktiKerjasamas/' + id);
+            $('#formDelete').attr('action', '/buktiKerjasama2s/' + id);
 
             let namaBuktiKerjasama = $(this).attr('data-namaBuktiKerjasama');
             $('#mb-konfirmasi-bukti').text("Apakah anda yakin ingin menghapus bukti : " + namaBuktiKerjasama + " ?")
-
-            // document.getElementById("text_modal").innerHTML = "Apakah anda yakin ingin menghapus bukti " +
-            //     namaBuktiKerjasama + " ?";
         })
 
         // jika tombol Ya, hapus ditekan, submit form hapus

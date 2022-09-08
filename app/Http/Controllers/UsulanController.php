@@ -12,6 +12,7 @@ use App\Models\Status;
 use App\Models\Unit;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class UsulanController extends Controller
 {
@@ -83,11 +84,51 @@ class UsulanController extends Controller
             $usulan->unit_id =$validateData['nama_unit'];
     
             $usulan->save();
-    
+
+            // Send email to user
+            $findUser = DB::select("SELECT users.id, users.kode_dosen, users.name AS 'name', users.email, users.level 
+            FROM users
+            WHERE users.level = 'A'");
+            $nowHourQuerry = DB::select("SELECT Hour(Now()) as 'jam_sekarang'");
+
+            $nowHour = $nowHourQuerry[0]->jam_sekarang;
+            if ($nowHour <= 10) {
+                $salam = 'Selamat pagi';
+            } elseif($nowHour <= 14){
+                $salam = 'Selamat siang';
+            } elseif($nowHour <= 18){
+                $salam = 'Selamat sore';
+            } elseif($nowHour < 24){
+                $salam = 'Selamat malam';
+            }
+            $nama_usulan = $validateData['usulan'];
+            $bentuk_kerjasama = $validateData['bentuk_kerjasama']; 
+            $kontak_kerjasama = $validateData['kontak_kerjasama'];
+
+            $pengusul_id = $validateData['nama_pengusul'];
+            $findPengusul = DB::select("SELECT users.id, users.kode_dosen, users.name AS 'name' , users.email, users.level
+            FROM users
+            WHERE users.id = $pengusul_id");
+
+            $id_usulan = $usulan->id;//get id usulan for send emails            
+            for ($i=0; $i < count($findUser); $i++) { 
+                $details = [
+                    'title' => 'Usulan Baru',
+                    'user_name' => $findUser[$i]->name,
+                    'salam' => $salam,
+                    'usulan' => $nama_usulan,
+                    'bentuk_kerjasama' => $bentuk_kerjasama,
+                    'nama_pengusul' => $findPengusul[0]->name,
+                    'kontak_kerjasama' => $kontak_kerjasama,
+                    'id_usulan' => $id_usulan,
+                ];
+                Mail::to($findUser[$i]->email)->send(new \App\Mail\newUsulanMail($details));
+            }
+            
             $request->session()->flash('pesan', 'Penambahan data berhasil');
             return redirect()->route('usulans.index');
         }
-        // simpan kegiatan
+        // simpan kerjasama
         else{
             if($request->nama_kategori == '1'){
                 $validateData = $request->validate([

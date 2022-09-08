@@ -36,6 +36,7 @@ class KerjasamaController extends Controller
     public function create()
     {
         //
+        $this->authorize('viewAny', User::class);
         $kategoris = Kategori::All();
         $statuses = Status::All();
         $kerjasamas = Kerjasama::All();
@@ -57,6 +58,7 @@ class KerjasamaController extends Controller
     public function store(Request $request)
     {
         //
+        $this->authorize('viewAny', User::class);
         // Input kerjasama baru
         if ($request->nama_kerja_sama != '' || $request->nama_kerja_sama != null) {
             if($request->nama_kategori == '1'){
@@ -129,17 +131,21 @@ class KerjasamaController extends Controller
             // send mail
             $findUser = User::findOrFail($kegiatan->user_id);
             $bentukKegiatan = $validateData['bentuk_kegiatan'];
-            $tanggalMulaiKegiatan = $validateData['tanggal_mulai'];
+            $tanggalMulaiKegiatan = $validateData['tanggal_mulai']; 
             $tanggalSampaiKegiatan = $validateData['tanggal_sampai'];
+            $id_kegiatan = $kegiatan->id; //get id kegiatan for send email
+            
             $details = [
-            'title' => 'Kegiatan Baru',
-            'user_name' => $findUser->name,
-            'bentuk_kegiatan' => $bentukKegiatan,
-            'tanggal_mulai' => $tanggalMulaiKegiatan,
-            'tanggal_sampai' => $tanggalSampaiKegiatan,
+                'title' => 'Kegiatan Baru',
+                'user_name' => $findUser->name,
+                'bentuk_kegiatan' => $bentukKegiatan,
+                'tanggal_mulai' => $tanggalMulaiKegiatan,
+                'tanggal_sampai' => $tanggalSampaiKegiatan,
+                'id_kegiatan' => $id_kegiatan,
             ];
 
             Mail::to($findUser->email)->send(new \App\Mail\MyTestMail($details));
+
 
             $request->session()->flash('pesan', 'Penambahan data berhasil');
             return redirect()->route('kerjasamas.show', $kegiatan->kerjasama_id);
@@ -188,6 +194,7 @@ class KerjasamaController extends Controller
     public function edit(Kerjasama $kerjasama)
     {
         //
+        $this->authorize('viewAny', User::class);
         $kategoris = Kategori::All();
         $statuses = Status::All();
         $usulans = Usulan::All()->where('hasil_penjajakan', 'L');
@@ -209,6 +216,7 @@ class KerjasamaController extends Controller
     public function update(Request $request, Kerjasama $kerjasama)
     {
         //
+        $this->authorize('viewAny', User::class);
         if($request->nama_kategori == '1'){
             $this->validate($request, [
                 'nama_kerja_sama' => 'required',
@@ -268,6 +276,7 @@ class KerjasamaController extends Controller
     public function destroy(Kerjasama $kerjasama)
     {
         //
+        $this->authorize('adminOnly', User::class);
         $getBuktiKerjasama = DB::select("SELECT id, nama_bukti_kerjasama, bukti_kerjasamas.file AS 'file', kerjasama_id FROM bukti_kerjasamas WHERE kerjasama_id = $kerjasama->id");
 
         // unlink semua file sekaligus
@@ -282,6 +291,8 @@ class KerjasamaController extends Controller
 
     // Delete from usulan show.blade.php
     public function customDestroy($id_kerjasama){
+        $this->authorize('adminOnly', User::class);
+        
         $kerjasama = Kerjasama::findOrFail($id_kerjasama);
 
         $getBuktiKerjasama = DB::select("SELECT id, nama_bukti_kerjasama, bukti_kerjasamas.file AS 'file', kerjasama_id FROM bukti_kerjasamas WHERE kerjasama_id = $kerjasama->id");

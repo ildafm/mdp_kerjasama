@@ -2,6 +2,7 @@
 @section('title', 'Usulan')
 
 @section('content')
+    {{-- card informasi lengkap terkait usulan --}}
     <div class="card">
         <div class="card-header">
             {{-- Button Kembali --}}
@@ -100,6 +101,23 @@
                             @endif
                         </td>
                     </tr>
+                    @if ($usulan->hasil_penjajakan == 'B' && Auth::user()->level != 'D')
+                        <tr>
+                            <td>Aksi</td>
+                            <td>
+                                {{-- Button Ubah --}}
+                                <a href="{{ route('usulans.edit', ['usulan' => $usulan->id]) }}"
+                                    class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit" title="Edit"></i></a>
+                                @if (Auth::user()->level == 'A')
+                                    {{-- Button Hapus --}}
+                                    <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $usulan->id }}"
+                                        data-namaUsulan="{{ $usulan->usulan }}" data-toggle="modal"
+                                        data-target="#modal-sm"><i class="nav-icon fas fa-trash"
+                                            title="Hapus"></i></button>
+                                @endif
+                            </td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
         </div>
@@ -107,7 +125,6 @@
 
     @if ($usulan->hasil_penjajakan == 'L')
         @if (Auth::user()->level != 'D')
-            {{-- Card Menambah Data Kerjasama --}}
             <script>
                 function getStatus(status) {
                     let nk = document.getElementById("nama_kategori")
@@ -123,6 +140,7 @@
                     }
                 }
             </script>
+            {{-- Card Menambah Data Kerjasama --}}
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Menambah Data Kerjasama</h3>
@@ -251,7 +269,8 @@
                 </div>
             </div>
         @endif
-        {{-- Tabel Daftar Kerjasama --}}
+
+        {{-- tabel Daftar Kerjasama --}}
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Tabel Daftar Kerjasama</h3>
@@ -348,7 +367,32 @@
         </div>
     @endif
 
-    {{-- Modal Layout --}}
+    {{-- Modal Layout delete kerjasama --}}
+    <div class="modal fade" id="modal-sm">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <form action="" method="POST" id="formDelete">
+                    @method('DELETE')
+                    @csrf
+                    <div class="modal-header">
+                        <h4 class="modal-title">Peringatan !!!</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="mb-konfirmasi">
+
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Tidak</button>
+                        <button type="submit" class="btn btn-danger">Iya, Hapus</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{-- Modal Layout delete usulan --}}
     <div class="modal fade" id="modal-sm">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -374,6 +418,7 @@
     </div>
 
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+    {{-- Script delete kerjasama --}}
     <script>
         // jika tombol hapus ditekan, generate alamat URL untuk proses hapus
         // id disini adalah id kerjasama
@@ -383,6 +428,24 @@
 
             let nama_kerja_sama = $(this).attr('data-namaKerjasama');
             $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus Kerjasama " + nama_kerja_sama + " ?")
+        })
+
+        // jika tombol Ya, hapus ditekan, submit form hapus
+        $('#formDelete [type="submit"]').click(function() {
+            $('#formDelete').submit();
+        })
+    </script>
+
+    {{-- Script delete usulan --}}
+    <script>
+        // jika tombol hapus ditekan, generate alamat URL untuk proses hapus
+        // id disini adalah id usulan
+        $('.btn-hapus').click(function() {
+            let id = $(this).attr('data-id');
+            $('#formDelete').attr('action', '/usulans/' + id);
+
+            let namaUsulan = $(this).attr('data-namaUsulan');
+            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus usulan : " + namaUsulan + " ?")
         })
 
         // jika tombol Ya, hapus ditekan, submit form hapus

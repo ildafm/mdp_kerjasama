@@ -13,6 +13,7 @@ use App\Http\Controllers\StatusController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BuktiKerjasamaController;
 use App\Http\Controllers\BuktiKegiatanController;
+use App\Http\Controllers\BuktiKerjasama2Controller;
 use App\Http\Controllers\KerjasamaTanpaKegiatanController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
@@ -32,6 +33,7 @@ Route::get('/', function () {
     return redirect()->route('dashboard');
 });
 
+// custom delete route
 Route::delete('kegiatans/customDestroyKegiatan/{id_kegiatan}', [App\Http\Controllers\KegiatanController::class, 'customDestroy'])->name('customDestroyKegiatan')->middleware(['auth']); //route untuk melakukan delete data kegiatan melalui show kerjasama
 
 Route::delete('kerjasamas/customDestroyKerjasama/{id_kerjasama}', [App\Http\Controllers\KerjasamaController::class, 'customDestroy'])->name('customDestroyKerjasama')->middleware(['auth']);//route untuk melakukan delete data kerjasama melalui usulan show blade
@@ -47,7 +49,9 @@ Route::resource('kategoris', KategoriController::class)->middleware(['auth']);
 Route::resource('users', UserController::class)->middleware(['auth']);
 Route::resource('profiles', ProfileController::class)->middleware(['auth']);
 
+// other route
 Route::resource('buktiKerjasamas', BuktiKerjasamaController::class)->middleware(['auth']);//route yang mengarah untuk memperlihatkan bukti kerjasama
+Route::resource('buktiKerjasama2s', BuktiKerjasama2Controller::class)->middleware(['auth']);//route yang mengarah untuk memperlihatkan bukti kerjasama
 Route::resource('buktiKegiatans', BuktiKegiatanController::class)->middleware(['auth']); //route yang mengarah untuk memperlihatkan bukti kegiatan
 Route::resource('kerjasama_tanpa_kegiatans', KerjasamaTanpaKegiatanController::class)->middleware(['auth']); //route untuk mengarah ke kerjasama yang tidak memiliki kegiatan
 

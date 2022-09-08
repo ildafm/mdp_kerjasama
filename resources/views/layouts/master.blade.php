@@ -124,8 +124,7 @@
                             WHERE (units.parent_unit = $getUserUnit OR units.id = $getUserUnit OR kegiatans.user_id = $getUserID)
                             GROUP BY kegiatans.id
                         ) AS tbl_kegiatan_perlu_bukti
-                        WHERE tbl_kegiatan_perlu_bukti.total_kegiatan = 0
-                        GROUP BY tbl_kegiatan_perlu_bukti.total_kegiatan");
+                        WHERE tbl_kegiatan_perlu_bukti.total_kegiatan = 0");
                     
                         // menghitung waktu kegiatan yang sudah memasuki waktu mulai tetapi belum memiliki bukti
                         $kegiatanSudahWaktuMulai = DB::select("SELECT tbl_kegiatan_sudah_waktu_mulai.* FROM (
@@ -186,8 +185,7 @@
                             WHERE units.id = $getUserUnit OR kegiatans.user_id = $getUserID
                             GROUP BY kegiatans.id
                         ) AS tbl_kegiatan_perlu_bukti
-                        WHERE tbl_kegiatan_perlu_bukti.total_kegiatan = 0
-                        GROUP BY tbl_kegiatan_perlu_bukti.total_kegiatan");
+                        WHERE tbl_kegiatan_perlu_bukti.total_kegiatan = 0");
                     
                         // menghitung waktu kegiatan yang sudah memasuki waktu mulai tetapi belum memiliki bukti
                         $kegiatanSudahWaktuMulai = DB::select("SELECT * FROM (
@@ -239,8 +237,7 @@
                             WHERE kegiatans.user_id = $getUserID
                             GROUP BY kegiatans.id
                         ) AS tbl_kegiatan_perlu_bukti
-                        WHERE tbl_kegiatan_perlu_bukti.total_kegiatan = 0
-                        GROUP BY tbl_kegiatan_perlu_bukti.total_kegiatan");
+                        WHERE tbl_kegiatan_perlu_bukti.total_kegiatan = 0");
                     
                         // menghitung waktu kegiatan yang sudah memasuki waktu mulai tetapi belum memiliki bukti
                         $kegiatanSudahWaktuMulai = DB::select("SELECT * FROM (
@@ -354,14 +351,11 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 
-                        @if (Auth::user()->level == 'D')
-                            {{-- Profile --}}
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ route('profiles.edit', ['profile' => Auth::user()->id]) }}"
-                                class="dropdown-item">
-                                <i class="fas fa-user mr-2"></i> Profile
-                            </a>
-                        @endif
+                        {{-- Profile --}}
+                        <div class="dropdown-divider"></div>
+                        <a href="{{ route('profiles.edit', ['profile' => Auth::user()->id]) }}" class="dropdown-item">
+                            <i class="fas fa-user mr-2"></i> Profile
+                        </a>
 
                         <div class="dropdown-divider"></div>
                         {{-- logout button --}}

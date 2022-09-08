@@ -91,6 +91,7 @@ class KegiatanController extends Controller
         $bentukKegiatan = $validateData['bentuk_kegiatan'];
         $tanggalMulaiKegiatan = $validateData['tanggal_mulai']; 
         $tanggalSampaiKegiatan = $validateData['tanggal_sampai'];
+        $id_kegiatan = $kegiatan->id; //get id kegiatan for send email
         
         $details = [
             'title' => 'Kegiatan Baru',
@@ -98,6 +99,7 @@ class KegiatanController extends Controller
             'bentuk_kegiatan' => $bentukKegiatan,
             'tanggal_mulai' => $tanggalMulaiKegiatan,
             'tanggal_sampai' => $tanggalSampaiKegiatan,
+            'id_kegiatan' => $id_kegiatan,
         ];
 
         Mail::to($findUser->email)->send(new \App\Mail\MyTestMail($details));
@@ -115,7 +117,6 @@ class KegiatanController extends Controller
     public function show(Kegiatan $kegiatan)
     {
         //
-
         $buktiKegiatans = DB::select("SELECT bukti_kegiatans.id AS id_bukti_kegiatan, bukti_kegiatans.nama_bukti_kegiatan AS nama_bukti_kegiatan, bukti_kegiatans.bidang AS 'bidang', kegiatans.keterangan AS keterangan_kegiatan, units.nama_unit, ceklist_apt, ceklist_aps, ceklist_lamemba, LEFT(bukti_kegiatans.created_at, 10) AS tanggal_upload_bukti, bukti_kegiatans.file AS 'file'
         FROM bukti_kegiatans 
         JOIN kegiatans ON bukti_kegiatans.kegiatans_id = kegiatans.id
@@ -146,10 +147,6 @@ class KegiatanController extends Controller
     {
         //
         $this->authorize('viewAny', User::class);
-
-        // if(Auth::user()->id != $kegiatan->user_id){
-        //     $this->authorize('viewAny', User::class);
-        // }
         
         $kerjasamas = Kerjasama::All();
         $users = User::All();
@@ -169,6 +166,8 @@ class KegiatanController extends Controller
     public function update(Request $request, Kegiatan $kegiatan)
     {
         //
+        $this->authorize('viewAny', User::class);
+
         $this->validate($request, [
             'tanggal_mulai' => 'required',
             'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
@@ -204,6 +203,7 @@ class KegiatanController extends Controller
     public function destroy(Kegiatan $kegiatan)
     {
         //
+        $this->authorize('adminOnly', User::class);
         $getBuktiKegiatan = DB::select("SELECT id, nama_bukti_kegiatan, bukti_kegiatans.file AS 'file', kegiatans_id FROM bukti_kegiatans WHERE kegiatans_id = $kegiatan->id");
 
         // unlink semua file sekaligus
@@ -219,6 +219,8 @@ class KegiatanController extends Controller
 
     // Delete from kerjasama show.blade.php
     public function customDestroy($id_kegiatan){
+        $this->authorize('adminOnly', User::class);
+        
         $kegiatan = Kegiatan::findOrFail($id_kegiatan);
 
         $getBuktiKegiatan = DB::select("SELECT id, nama_bukti_kegiatan, bukti_kegiatans.file AS 'file', kegiatans_id FROM bukti_kegiatans WHERE kegiatans_id = $kegiatan->id");

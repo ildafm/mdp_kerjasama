@@ -77,7 +77,7 @@ class UserController extends Controller
         // Send email to new user
         $nowHourQuerry = DB::select("SELECT Hour(Now()) as 'jam_sekarang'");
         $nowHour = $nowHourQuerry[0]->jam_sekarang;
-        if ($nowHour <= 11) {
+        if ($nowHour <= 10) {
             $salam = 'Selamat pagi';
         } elseif($nowHour <= 14){
             $salam = 'Selamat siang';

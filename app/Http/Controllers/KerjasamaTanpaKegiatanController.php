@@ -45,6 +45,8 @@ class KerjasamaTanpaKegiatanController extends Controller
     public function create()
     {
         //
+        $this->authorize('viewAny', User::class);
+
         $kategoris = Kategori::All();
         $statuses = Status::All();
         $kerjasamas = Kerjasama::All();
@@ -66,6 +68,8 @@ class KerjasamaTanpaKegiatanController extends Controller
     public function store(Request $request)
     {
         //
+        $this->authorize('viewAny', User::class);
+
         // input kerjasama baru
         if($request->nama_kerja_sama != '' || $request->nama_kerja_sama != null){
             if($request->nama_kategori == '1'){
@@ -134,20 +138,24 @@ class KerjasamaTanpaKegiatanController extends Controller
     
             $kegiatan->save();
     
-            // send mail
+            // Send mail
             $findUser = User::findOrFail($kegiatan->user_id);
             $bentukKegiatan = $validateData['bentuk_kegiatan'];
-            $tanggalMulaiKegiatan = $validateData['tanggal_mulai'];
+            $tanggalMulaiKegiatan = $validateData['tanggal_mulai']; 
             $tanggalSampaiKegiatan = $validateData['tanggal_sampai'];
+            $id_kegiatan = $kegiatan->id; //get id kegiatan for send email
+            
             $details = [
-            'title' => 'Kegiatan Baru',
-            'user_name' => $findUser->name,
-            'bentuk_kegiatan' => $bentukKegiatan,
-            'tanggal_mulai' => $tanggalMulaiKegiatan,
-            'tanggal_sampai' => $tanggalSampaiKegiatan,
+                'title' => 'Kegiatan Baru',
+                'user_name' => $findUser->name,
+                'bentuk_kegiatan' => $bentukKegiatan,
+                'tanggal_mulai' => $tanggalMulaiKegiatan,
+                'tanggal_sampai' => $tanggalSampaiKegiatan,
+                'id_kegiatan' => $id_kegiatan,
             ];
-    
+
             Mail::to($findUser->email)->send(new \App\Mail\MyTestMail($details));
+
     
             $request->session()->flash('pesan', 'Penambahan data berhasil');
             return redirect()->route('kerjasama_tanpa_kegiatans.show', $kegiatan->kerjasama_id);
@@ -173,28 +181,58 @@ class KerjasamaTanpaKegiatanController extends Controller
         ) AS c
         WHERE c.bentuk_kegiatan IS NULL AND c.id = $id");
 
-        $buktiKerjasama = DB::select("SELECT bukti_kerjasamas.id, nama_bukti_kerjasama, bukti_kerjasamas.file, LEFT(bukti_kerjasamas.created_at, 10) as tanggalUpload 
-        FROM bukti_kerjasamas
-        JOIN kerjasamas ON bukti_kerjasamas.kerjasama_id = kerjasamas.id
-        WHERE bukti_kerjasamas.kerjasama_id = $id");
+        // Jika Kerjasama belum memiliki kegiatan
+        if(count($kerjasama) > 0){
+            $buktiKerjasama = DB::select("SELECT bukti_kerjasamas.id, nama_bukti_kerjasama, bukti_kerjasamas.file, LEFT(bukti_kerjasamas.created_at, 10) as tanggalUpload 
+            FROM bukti_kerjasamas
+            JOIN kerjasamas ON bukti_kerjasamas.kerjasama_id = kerjasamas.id
+            WHERE bukti_kerjasamas.kerjasama_id = $id");
 
-        $users = DB::select("SELECT b.id, b.kode_dosen, b.name
-        FROM users b 
-        WHERE b.kode_dosen NOT IN ( 
-            SELECT DISTINCT users.kode_dosen 
-            FROM users 
-            LEFT JOIN kegiatans ON kegiatans.user_id = users.id 
-            LEFT JOIN bukti_kegiatans on bukti_kegiatans.kegiatans_id = kegiatans.id 
-            WHERE (kegiatans.bentuk_kegiatan IS NOT NULL AND bukti_kegiatans.nama_bukti_kegiatan IS NULL) 
-            ORDER BY users.id )");
+            $users = DB::select("SELECT b.id, b.kode_dosen, b.name
+            FROM users b 
+            WHERE b.kode_dosen NOT IN ( 
+                SELECT DISTINCT users.kode_dosen 
+                FROM users 
+                LEFT JOIN kegiatans ON kegiatans.user_id = users.id 
+                LEFT JOIN bukti_kegiatans on bukti_kegiatans.kegiatans_id = kegiatans.id 
+                WHERE (kegiatans.bentuk_kegiatan IS NOT NULL AND bukti_kegiatans.nama_bukti_kegiatan IS NULL) 
+                ORDER BY users.id )");
+                
+            $kegiatans = Kegiatan::All();
+
+            return view('kerjasama_tanpa_kegiatan.show')
+                ->with('kerjasama', $kerjasama[0])
+                ->with('buktiKerjasama', $buktiKerjasama)
+                ->with('users', $users)
+                ->with('kegiatans', $kegiatans);
+        }
+        // Jika kerjasama sudah memiliki kegiatan
+        else{
+            $kerjasama = Kerjasama::findOrFail($id);
             
-        $kegiatans = Kegiatan::All();
+            $buktiKerjasama = DB::select("SELECT bukti_kerjasamas.id, nama_bukti_kerjasama, bukti_kerjasamas.file, LEFT(bukti_kerjasamas.created_at, 10) as tanggalUpload 
+            FROM bukti_kerjasamas
+            JOIN kerjasamas ON bukti_kerjasamas.kerjasama_id = kerjasamas.id
+            WHERE bukti_kerjasamas.kerjasama_id = $id");
 
-        return view('kerjasama_tanpa_kegiatan.show')
-            ->with('kerjasama', $kerjasama[0])
-            ->with('buktiKerjasama', $buktiKerjasama)
-            ->with('users', $users)
-            ->with('kegiatans', $kegiatans);
+            $users = DB::select("SELECT b.id, b.kode_dosen, b.name
+            FROM users b 
+            WHERE b.kode_dosen NOT IN ( 
+                SELECT DISTINCT users.kode_dosen 
+                FROM users 
+                LEFT JOIN kegiatans ON kegiatans.user_id = users.id 
+                LEFT JOIN bukti_kegiatans on bukti_kegiatans.kegiatans_id = kegiatans.id 
+                WHERE (kegiatans.bentuk_kegiatan IS NOT NULL AND bukti_kegiatans.nama_bukti_kegiatan IS NULL) 
+                ORDER BY users.id )");
+                
+            $kegiatans = Kegiatan::All();
+
+            return view('kerjasama.show')
+                ->with('kerjasama', $kerjasama)
+                ->with('buktiKerjasama', $buktiKerjasama)
+                ->with('users', $users)
+                ->with('kegiatans', $kegiatans);
+        }
     }
 
     /**
@@ -206,6 +244,8 @@ class KerjasamaTanpaKegiatanController extends Controller
     public function edit($id)
     {
         //
+        $this->authorize('viewAny', User::class);
+
         $kerjasama = DB::select("SELECT * FROM (
             SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, kegiatans.bentuk_kegiatan, kerjasamas.no_mou, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategori_id, kategoris.nama_kategori, status_id, statuses.nama_status, usulan_id, usulans.usulan
             FROM kerjasamas
@@ -237,6 +277,8 @@ class KerjasamaTanpaKegiatanController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $this->authorize('viewAny', User::class);
+
         if($request->nama_kategori == '1'){
             $this->validate($request, [
                 'nama_kerja_sama' => 'required',
@@ -296,6 +338,8 @@ class KerjasamaTanpaKegiatanController extends Controller
     public function destroy($id)
     {
         //
+        $this->authorize('adminOnly', User::class);
+
         $getBuktiKerjasama = DB::select("SELECT id, nama_bukti_kerjasama, bukti_kerjasamas.file AS 'file', kerjasama_id FROM bukti_kerjasamas WHERE kerjasama_id = $id");
 
         // unlink semua file sekaligus

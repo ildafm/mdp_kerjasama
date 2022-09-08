@@ -223,6 +223,7 @@
                     Info Grafik
                 </h3>
                 <div class="card-tools">
+                    {{-- nav grafik --}}
                     <ul class="nav nav-pills ml-auto">
 
                         {{-- Nav Grafik Mitra --}}
@@ -243,6 +244,11 @@
                         {{-- Nav Grafik Usulan --}}
                         <li class="nav-item">
                             <a class="nav-link" href="#usulan-chart" data-toggle="tab">Usulan</a>
+                        </li>
+
+                        {{-- Nav Grafik Laporan Unit --}}
+                        <li class="nav-item">
+                            <a class="nav-link" href="#laporan_unit-chart" data-toggle="tab">Laporan Unit</a>
                         </li>
                     </ul>
                 </div>
@@ -472,6 +478,64 @@
                                                 {
                                                     name: '{{ $data->kode_dosen }} - {{ $data->name }}',
                                                     y: {{ $data->jumlahUsulan }},
+                                                    sliced: false,
+                                                    selected: false
+                                                },
+                                            @endforeach
+                                        ]
+                                    }]
+                                });
+                            </script>
+                        </div>
+                    </div>
+
+                    {{-- Grafik Laporan --}}
+                    <div class="chart tab-pane" id="laporan_unit-chart" style="position: relative; height: 450px;">
+                        <div class="">
+                            <figure class="highcharts-figure">
+                                <div id="container5"></div>
+                                <p class="highcharts-description">
+
+                                </p>
+                            </figure>
+
+                            <script>
+                                Highcharts.chart('container5', {
+                                    chart: {
+                                        plotBackgroundColor: null,
+                                        plotBorderWidth: null,
+                                        plotShadow: false,
+                                        type: 'pie'
+                                    },
+                                    title: {
+                                        text: 'Jumlah Total Laporan Setiap Unit'
+                                    },
+                                    tooltip: {
+                                        pointFormat: '{series.name}: <b>{point.y}</b>'
+                                    },
+                                    accessibility: {
+                                        point: {
+                                            valueSuffix: '%'
+                                        }
+                                    },
+                                    plotOptions: {
+                                        pie: {
+                                            allowPointSelect: true,
+                                            cursor: 'pointer',
+                                            dataLabels: {
+                                                enabled: true,
+                                                format: '<b>{point.name}</b>: {point.y}'
+                                            }
+                                        }
+                                    },
+                                    series: [{
+                                        name: 'Jumlah',
+                                        colorByPoint: true,
+                                        data: [
+                                            @foreach ($getJumlahLaporanPerUnit as $data)
+                                                {
+                                                    name: '{{ $data->nama_unit }}',
+                                                    y: {{ $data->jumlah_laporan }},
                                                     sliced: false,
                                                     selected: false
                                                 },
