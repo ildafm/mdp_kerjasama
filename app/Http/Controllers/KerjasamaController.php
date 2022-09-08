@@ -25,7 +25,21 @@ class KerjasamaController extends Controller
     {
         //
         $kerjasamas = Kerjasama::All();
-        return view('kerjasama.index')->with('kerjasamas', $kerjasamas);
+
+        if (isset($_GET['filter_tanggal_mulai']) && isset($_GET['filter_tanggal_sampai'])) {
+            $tanggal_mulai = ($_GET['filter_tanggal_mulai']);
+            $tanggal_sampai = ($_GET['filter_tanggal_sampai']);
+            
+            $kerjasamas = Kerjasama::where('tanggal_mulai', '>=', $tanggal_mulai)->where('tanggal_sampai', '<=', $tanggal_sampai)->get();
+        } else{
+            $tanggal_mulai = date('Y-m-d');
+            $tanggal_sampai = date('Y-m-d');
+        }   
+
+        return view('kerjasama.index')
+            ->with('kerjasamas', $kerjasamas)
+            ->with('tanggal_mulai', $tanggal_mulai)
+            ->with('tanggal_sampai', $tanggal_sampai);
     }
 
     /**

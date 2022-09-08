@@ -328,7 +328,7 @@
                         {{-- Notifikasi kegiatan belum memiliki bukti kegiatan --}}
                         <a href="/notification_kegiatan_belum_ada_buktis" class="dropdown-item">
                             <i class="fas fa-copy mr-2"></i>
-                            @if ($kegiatanPerluBukti[0]->total_kegiatan > 0)
+                            @if ($kegiatanPerluBukti[0]->total_kegiatan > 0 && count($kegiatanSudahWaktuMulai) > 0)
                                 {{ $kegiatanPerluBukti[0]->total_kegiatan }} kegiatan belum ada bukti
                                 <span class="float-right text-muted text-sm">
                                     @php

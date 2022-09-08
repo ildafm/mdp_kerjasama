@@ -19,12 +19,23 @@ class KegiatanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
         $kegiatans = Kegiatan::All();
+        if (isset($_GET['filter_tanggal_mulai']) && isset($_GET['filter_tanggal_sampai'])) {
+            $tanggal_mulai = ($_GET['filter_tanggal_mulai']);
+            $tanggal_sampai = ($_GET['filter_tanggal_sampai']);
 
-        return view('kegiatan.index')->with('kegiatans', $kegiatans);
+            $kegiatans = Kegiatan::where('tanggal_mulai', '>=', $tanggal_mulai)->where('tanggal_sampai', '<=', $tanggal_sampai)->get();
+        } else{
+            $tanggal_mulai = date('Y-m-d');
+            $tanggal_sampai = date('Y-m-d');
+        }        
+        return view('kegiatan.index')
+        ->with('kegiatans', $kegiatans)
+        ->with('tanggal_mulai', $tanggal_mulai)
+        ->with('tanggal_sampai', $tanggal_sampai);
     }
 
     /**
@@ -47,7 +58,7 @@ class KegiatanController extends Controller
             WHERE (kegiatans.bentuk_kegiatan IS NOT NULL AND bukti_kegiatans.nama_bukti_kegiatan IS NULL) 
             ORDER BY users.id )");
             
-        $kerjasamas = Kerjasama::All();
+        $kerjasamas = Kerjasama::where("status_id", "!=" , "2")->get();
         return view('kegiatan.create')
             ->with('users', $users)
             ->with('kerjasamas', $kerjasamas);

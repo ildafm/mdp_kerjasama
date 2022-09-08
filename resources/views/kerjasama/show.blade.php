@@ -91,22 +91,13 @@
                         href="#custom-tabs-two-kegiatan" role="tab" aria-controls="custom-tabs-two-kegiatan"
                         aria-selected="true">Kegiatan</a>
                 </li>
+
                 {{-- Nav Bukti Kerjasama --}}
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" id="custom-tabs-two-bukti_kerjasama-tab" data-toggle="pill"
                         href="#custom-tabs-two-bukti_kerjasama" role="tab"
                         aria-controls="custom-tabs-two-bukti_kerjasama" aria-selected="false">Bukti Kerjasama</a>
                 </li>
-                {{-- <li class="nav-item">
-                    <a class="nav-link" id="custom-tabs-two-messages-tab" data-toggle="pill"
-                        href="#custom-tabs-two-messages" role="tab" aria-controls="custom-tabs-two-messages"
-                        aria-selected="false">Messages</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="custom-tabs-two-settings-tab" data-toggle="pill"
-                        href="#custom-tabs-two-settings" role="tab" aria-controls="custom-tabs-two-settings"
-                        aria-selected="false">Settings</a>
-                </li> --}}
             </ul>
         </div>
 
@@ -115,8 +106,8 @@
                 {{-- Panel Kegiatan --}}
                 <div class="tab-pane fade show active" id="custom-tabs-two-kegiatan" role="tabpanel"
                     aria-labelledby="custom-tabs-two-kegiatan-tab">
-                    @if (Auth::user()->level != 'D')
-                        {{-- Form Menambahkan data Kegiatan --}}
+                    {{-- Form Menambahkan data Kegiatan jika kerjasama tidak kadaluarsa dan login bukan dosen --}}
+                    @if ($kerjasama->status_id != '2' && Auth::user()->level != 'D')
                         <h3>Tambah Data Kegiatan</h3>
                         <form action="{{ route('kerjasamas.store') }}" method="POST">
                             @csrf

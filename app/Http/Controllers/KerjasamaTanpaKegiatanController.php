@@ -34,7 +34,30 @@ class KerjasamaTanpaKegiatanController extends Controller
         ) AS c
         WHERE c.bentuk_kegiatan IS NULL
         ORDER BY c.id");
-        return view('kerjasama_tanpa_kegiatan.index')->with('kerjasamas', $kerjasamas);
+
+        if (isset($_GET['filter_tanggal_mulai']) && isset($_GET['filter_tanggal_sampai'])) {
+            $tanggal_mulai = ($_GET['filter_tanggal_mulai']);
+            $tanggal_sampai = ($_GET['filter_tanggal_sampai']);
+            
+            $kerjasamas = DB::select("SELECT * FROM (
+                SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, kegiatans.bentuk_kegiatan, kerjasamas.no_mou, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, statuses.nama_status, usulans.usulan
+                FROM kerjasamas
+                LEFT JOIN kegiatans ON kegiatans.kerjasama_id = kerjasamas.id
+                JOIN kategoris ON kategoris.id = kerjasamas.kategori_id
+                JOIN statuses ON statuses.id = kerjasamas.status_id
+                JOIN usulans ON usulans.id = kerjasamas.usulan_id
+            ) AS c
+            WHERE c.bentuk_kegiatan IS NULL AND (c.tanggal_mulai >= '$tanggal_mulai' AND c.tanggal_sampai <= '$tanggal_sampai')
+            ORDER BY c.id");
+        } else{
+            $tanggal_mulai = date('Y-m-d');
+            $tanggal_sampai = date('Y-m-d');
+        }  
+
+        return view('kerjasama_tanpa_kegiatan.index')
+            ->with('kerjasamas', $kerjasamas)
+            ->with('tanggal_mulai', $tanggal_mulai)
+            ->with('tanggal_sampai', $tanggal_sampai);
     }
 
     /**
@@ -172,7 +195,7 @@ class KerjasamaTanpaKegiatanController extends Controller
     {
         //
         $kerjasama = DB::select("SELECT * FROM (
-            SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, kegiatans.bentuk_kegiatan, kerjasamas.no_mou, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, statuses.nama_status, usulans.usulan
+            SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, kegiatans.bentuk_kegiatan, kerjasamas.no_mou, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, kerjasamas.status_id, statuses.nama_status, usulans.usulan
             FROM kerjasamas
             LEFT JOIN kegiatans ON kegiatans.kerjasama_id = kerjasamas.id
             JOIN kategoris ON kategoris.id = kerjasamas.kategori_id

@@ -33,6 +33,25 @@
                 </div>
             @endif
 
+            {{-- form untuk memfilter kegiatan berdasarkan tanggal mulai dan tanggal sampai --}}
+            <form action="{{ route('kerjasama_tanpa_kegiatans.index') }}" method="GET">
+                @csrf
+                <label for="filter">Filter berdasarkan tanggal</label>
+                <div class="row">
+                    <div class="form-group col-lg-2">
+                        <input type="date" name="filter_tanggal_mulai" class="form-control" value="{{ $tanggal_mulai }}">
+                    </div>
+                    <span class="btn">Sampai</span>
+                    <div class="form-group col-lg-2">
+                        <input type="date" name="filter_tanggal_sampai" class="form-control"
+                            value="{{ $tanggal_sampai }}">
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <button type="submit" class="btn btn-primary">Cari</button>
+                    </div>
+                </div>
+            </form>
+
             {{-- Tabel Data --}}
             <table id="example1" class="table table-bordered table-striped">
 

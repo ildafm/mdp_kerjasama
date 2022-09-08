@@ -10,7 +10,6 @@
             let kerjasamas = document.getElementById("kerjasamas");
             let tanggal_mulai = document.getElementById("tanggal_mulai");
             let tanggal_sampai = document.getElementById("tanggal_sampai");
-            let bentuk_kegiatan = document.getElementById("bentuk_kegiatan");
 
             let text = kerjasamas.options[kerjasamas.selectedIndex].text;
             // Mengubah text menjadi array
@@ -126,31 +125,7 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
-                    {{-- PIC --}}
-                    {{-- <div class="form-group col-lg-4">
-                        <label for="PIC">PIC</label>
-
-                        @php
-                            if (old('PIC') !== null) {
-                                $option = old('PIC');
-                            } else {
-                                $option = 'F';
-                            }
-                        @endphp
-
-                        <select class="form-control" name="PIC" id="">
-                            <option value="F" <?= $option == 'F' ? 'selected' : '' ?>>Fakultas</option>
-                            <option value="P" <?= $option == 'P' ? 'selected' : '' ?>>Program Studi</option>
-                        </select>
-                        @error('PIC')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div> --}}
                 </div>
-
-                {{-- get Dosen/User --}}
-                {{-- <input type="hidden" name="user" value="{{ Auth::user()->id }}" class="form-control" readonly> --}}
 
                 <div class="form-group">
                     <label for="keterangan">Keterangan</label>

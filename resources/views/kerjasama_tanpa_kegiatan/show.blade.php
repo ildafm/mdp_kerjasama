@@ -105,8 +105,8 @@
                 {{-- Panel Kegiatan --}}
                 <div class="tab-pane fade show active" id="custom-tabs-two-kegiatan" role="tabpanel"
                     aria-labelledby="custom-tabs-two-kegiatan-tab">
-                    @if (Auth::user()->level != 'D')
-                        {{-- Form Menambahkan data Kegiatan --}}
+                    {{-- Form Menambahkan data Kegiatan jika kerjasama tidak kadaluarsa dan login bukan dosen --}}
+                    @if ($kerjasama->status_id != '2' && Auth::user()->level != 'D')
                         <h3>Tambah Data Kegiatan</h3>
                         <form action="{{ route('kerjasama_tanpa_kegiatans.store') }}" method="POST">
                             @csrf

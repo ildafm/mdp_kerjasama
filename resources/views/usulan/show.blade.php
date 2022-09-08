@@ -66,7 +66,7 @@
                     </tr>
 
                     <tr>
-                        <td>Hasil Penajajakan</td>
+                        <td>Hasil Penjajakan</td>
                         <td>
                             @php
                                 if ($usulan->hasil_penjajakan == null || $usulan->hasil_penjajakan == '') {
@@ -81,7 +81,7 @@
                     </tr>
 
                     <tr>
-                        <td>Keterangan Hasil Penajajakan</td>
+                        <td>Keterangan Hasil Penjajakan</td>
                         <td>
                             @if ($usulan->keterangan == null || $usulan->keterangan == '')
                                 Belum ada keterangan
