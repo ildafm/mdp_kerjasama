@@ -83,11 +83,19 @@
                 </div>
 
                 <div class="row">
+                    @php
+                        // Mengambil tanggal mulai dan tanggal sampai dari tabel kerjasama
+                        // untuk dijadikan atribut max dan atribut min
+                        $initial_tanggal_mulai_dan_tanggal_sampai_kerjasama = DB::select("SELECT kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai
+                        FROM kerjasamas
+                        JOIN kegiatans ON kegiatans.kerjasama_id = kerjasamas.id
+                        WHERE kegiatans.id = $kegiatans->id")
+                    @endphp
                     {{-- Tanggal Mulai --}}
                     <div class="form-group col-lg-4">
                         <label for="tanggal_mulai">Tanggal Mulai</label>
                         <input type="date" name="tanggal_mulai" id="tanggal_mulai" class="form-control"
-                            value='{{ old('tanggal_mulai', $kegiatans->tanggal_mulai) }}'>
+                            value='{{ old('tanggal_mulai', $kegiatans->tanggal_mulai) }}' min="{{ $initial_tanggal_mulai_dan_tanggal_sampai_kerjasama[0]->tanggal_mulai }}" max="{{ $initial_tanggal_mulai_dan_tanggal_sampai_kerjasama[0]->tanggal_sampai }}">
                         @error('tanggal_mulai')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -97,7 +105,7 @@
                     <div class="form-group col-lg-4">
                         <label for="tanggal_sampai">Tanggal Sampai</label>
                         <input type="date" name="tanggal_sampai" id="tanggal_sampai" class="form-control"
-                            value="{{ old('tanggal_sampai', $kegiatans->tanggal_sampai) }}">
+                            value="{{ old('tanggal_sampai', $kegiatans->tanggal_sampai) }}" min="{{ $initial_tanggal_mulai_dan_tanggal_sampai_kerjasama[0]->tanggal_mulai }}" max="{{ $initial_tanggal_mulai_dan_tanggal_sampai_kerjasama[0]->tanggal_sampai }}">
                         @error('tanggal_sampai')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror

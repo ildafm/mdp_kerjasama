@@ -83,6 +83,7 @@ class KerjasamaController extends Controller
                     'nama_kategori' => 'required',
                     'nama_status' => 'required',
                     'usulan' => 'required',
+                    'bidang' => 'required',
                     'no_mou' => 'required',
                 ]);
             }
@@ -94,6 +95,7 @@ class KerjasamaController extends Controller
                     'nama_kategori' => 'required',
                     'nama_status' => 'required',
                     'usulan' => 'required',
+                    'bidang' => 'required',
                 ]);
             }
     
@@ -107,6 +109,7 @@ class KerjasamaController extends Controller
             }
     
             $kerjasama->nama_kerja_sama = $validateData['nama_kerja_sama'];
+            $kerjasama->bidang = $validateData['bidang'];
             $kerjasama->tanggal_mulai = $validateData['tanggal_mulai'];
             $kerjasama->tanggal_sampai = $validateData['tanggal_sampai'];
             $kerjasama->kategori_id = $validateData['nama_kategori'];
@@ -239,6 +242,7 @@ class KerjasamaController extends Controller
                 'nama_kategori' => 'required',
                 'nama_status' => 'required',
                 'usulan' => 'required',
+                'bidang' => 'required',
                 'no_mou' => 'required',
             ]);
         }
@@ -250,6 +254,7 @@ class KerjasamaController extends Controller
                 'nama_kategori' => 'required',
                 'nama_status' => 'required',
                 'usulan' => 'required',
+                'bidang' => 'required',
             ]);
         }
 
@@ -259,21 +264,23 @@ class KerjasamaController extends Controller
             $kerjasama->update([
                 'no_mou' => $request->no_mou,
                 'nama_kerja_sama' => $request->nama_kerja_sama,
+                'bidang' => $request->bidang,
                 'tanggal_mulai' => $request->tanggal_mulai,
                 'tanggal_sampai' => $request->tanggal_sampai,
                 'kategori_id' => $request->nama_kategori,
                 'status_id' => $request->nama_status,
-                'usulan_id' => $request->usulan
+                'usulan_id' => $request->usulan,
             ]);
         }
         else{
             $kerjasama->update([
                 'nama_kerja_sama' => $request->nama_kerja_sama,
+                'bidang' => $request->bidang,
                 'tanggal_mulai' => $request->tanggal_mulai,
                 'tanggal_sampai' => $request->tanggal_sampai,
                 'kategori_id' => $request->nama_kategori,
                 'status_id' => $request->nama_status,
-                'usulan_id' => $request->usulan
+                'usulan_id' => $request->usulan,
             ]);
         }
 

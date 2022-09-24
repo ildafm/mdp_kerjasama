@@ -49,6 +49,25 @@
                     </tr>
 
                     <tr>
+                        <td>Bidang</td>
+                        <td>
+                            @php
+                                if ($kerjasama->bidang == 'P') {
+                                    echo 'Pendidikan';
+                                } elseif ($kerjasama->bidang == 'N') {
+                                    echo 'Penelitian';
+                                } elseif ($kerjasama->bidang == 'B') {
+                                    echo 'Pengabdian';
+                                } elseif ($kerjasama->bidang == 'A') {
+                                    echo 'Pendidikan, Penelitian, Pengabdian';
+                                } else {
+                                    echo 'Lain-lain';
+                                }
+                            @endphp
+                        </td>
+                    </tr>
+
+                    <tr>
                         <td>Tanggal Mulai</td>
                         <td>{{ $kerjasama->tanggal_mulai }}</td>
                     </tr>

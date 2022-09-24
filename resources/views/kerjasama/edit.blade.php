@@ -98,23 +98,8 @@
                 </div>
 
                 <div class="row">
-                    {{-- Edit Nama Status --}}
-                    <div class="form-group col-lg-6">
-                        <label for="nama_status">Status</label>
-                        <select class="form-control" name='nama_status'>
-                            @foreach ($statuses as $data)
-                                <option value="{{ $data->id }}"
-                                    {{ $data->id == $kerjasama->status_id ? 'selected' : '' }}>
-                                    {{ $data->nama_status }}</option>
-                            @endforeach
-                        </select>
-                        @error('nama_status')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-
                     {{-- Edit Usulan --}}
-                    <div class="form-group col-lg-6">
+                    <div class="form-group col-lg-4">
                         <label for="usulan">Usulan</label>
                         <select class="form-control select2" name='usulan'>
                             @foreach ($usulans as $data)
@@ -124,6 +109,54 @@
                             @endforeach
                         </select>
                         @error('usulan')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Bidang --}}
+                    @php
+                        if (old('bidang') != null) {
+                            $option = old('bidang');
+                        } else {
+                            $option = $kerjasama->bidang;
+                        }
+                    @endphp
+
+                    <div class="form-group col-lg-4">
+                        <label for="bidang">Bidang</label>
+                        <select class="form-control" name="bidang">
+                            <option value='P' <?= $option == 'P' ? 'selected' : '' ?>>
+                                Pendidikan
+                            </option>
+                            <option value='N' <?= $option == 'N' ? 'selected' : '' ?>>
+                                Penelitian
+                            </option>
+                            <option value='B' <?= $option == 'B' ? 'selected' : '' ?>>
+                                Pengabdian
+                            </option>
+                            <option value='A' <?= $option == 'A' ? 'selected' : '' ?>>
+                                Pendidikan, Penelitian, Pengabdian
+                            </option>
+                            <option value='L' <?= $option == 'L' ? 'selected' : '' ?>>
+                                Lain-lain
+                            </option>
+                        </select>
+                        @error('bidang')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Edit Nama Status --}}
+                    <div class="form-group col-lg-4">
+                        <label for="nama_status">Status</label>
+                        <select class="form-control" name='nama_status'>
+                            @foreach ($statuses as $data)
+                                <option value="{{ $data->id }}"
+                                    {{ $data->id == $kerjasama->status_id ? 'selected' : '' }}>
+                                    {{ $data->nama_status }}</option>
+                            @endforeach
+                        </select>
+                        @error('nama_status')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>

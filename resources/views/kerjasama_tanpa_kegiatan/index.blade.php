@@ -61,6 +61,7 @@
                         <th>Aksi</th>
                         <th>Nama Kerjasama</th>
                         <th>Nomor MoU</th>
+                        <th>Bidang</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
                         <th>Kategori</th>
@@ -106,6 +107,21 @@
                                     {{ $data->no_mou }}
                                 @endif
                             </td>
+                            <td>
+                                @php
+                                    if ($data->bidang == 'P') {
+                                        echo 'Pendidikan';
+                                    } elseif ($data->bidang == 'N') {
+                                        echo 'Penelitian';
+                                    } elseif ($data->bidang == 'B') {
+                                        echo 'Pengabdian';
+                                    } elseif ($data->bidang == 'A') {
+                                        echo 'Pendidikan, Penelitian, Pengabdian';
+                                    } else {
+                                        echo 'Lain-lain';
+                                    }
+                                @endphp
+                            </td>
                             <td>{{ $data->tanggal_mulai }}</td>
                             <td>{{ $data->tanggal_sampai }}</td>
                             <td>{{ $data->nama_kategori }}</td>
@@ -121,6 +137,7 @@
                         <th>Aksi</th>
                         <th>Nama Kerjasama</th>
                         <th>Nomor MoU</th>
+                        <th>Bidang</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
                         <th>Kategori</th>

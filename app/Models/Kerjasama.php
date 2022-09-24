@@ -30,5 +30,5 @@ class Kerjasama extends Model
     }
     
 
-    protected $fillable = ['nama_kerja_sama', 'tanggal_mulai', 'tanggal_sampai', 'kategori_id', 'status_id', 'usulan_id', 'no_mou'];
+    protected $fillable = ['nama_kerja_sama', 'tanggal_mulai', 'tanggal_sampai', 'kategori_id', 'status_id', 'usulan_id', 'no_mou', 'bidang'];
 }

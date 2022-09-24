@@ -86,9 +86,9 @@ class NotificationController extends Controller
             LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
             WHERE users.id = $getUserID
             GROUP BY kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, keterangan,  kerjasamas.nama_kerja_sama, users.name, kegiatans.status, units.nama_unit
-            ORDER BY kegiatans.tanggal_sampai
         ) AS tbl_kegiatan_tanpa_bukti
-        WHERE tbl_kegiatan_tanpa_bukti.total_bukti = 0");
+        WHERE tbl_kegiatan_tanpa_bukti.total_bukti = 0
+        ORDER BY tbl_kegiatan_tanpa_bukti.tanggal_mulai");
 
         // Variabel untuk login admin
         $listKegiatanTanpaBuktiForAdmin = DB::select("SELECT * FROM (
@@ -100,9 +100,9 @@ class NotificationController extends Controller
             JOIN users ON users.id = kegiatans.user_id 
             LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id 
             GROUP BY kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, keterangan,  kerjasamas.nama_kerja_sama, users.name, kegiatans.status, units.nama_unit
-            ORDER BY kegiatans.tanggal_sampai
         ) AS tbl_kegiatan_tanpa_bukti
-        WHERE tbl_kegiatan_tanpa_bukti.total_bukti = 0");
+        WHERE tbl_kegiatan_tanpa_bukti.total_bukti = 0
+        ORDER BY tbl_kegiatan_tanpa_bukti.tanggal_mulai");
 
         // Variabel untuk login dekan
         $listKegiatanTanpaBuktiForDekan = DB::select("SELECT * FROM (
@@ -115,24 +115,11 @@ class NotificationController extends Controller
             LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id 
             WHERE units.parent_unit = $getUserUnit OR units.id = $getUserUnit OR users.id = $getUserID
             GROUP BY kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, kegiatans.keterangan,kerjasamas.nama_kerja_sama, users.name, kegiatans.status, units.nama_unit, kerjasamas.usulan_id
-            ORDER BY kegiatans.tanggal_sampai
         ) AS tbl_kegiatan_tanpa_bukti
-        WHERE tbl_kegiatan_tanpa_bukti.total_bukti = 0");
+        WHERE tbl_kegiatan_tanpa_bukti.total_bukti = 0
+        ORDER BY tbl_kegiatan_tanpa_bukti.tanggal_mulai");
 
         // Variabel untuk login kaprodi dan kepala unit
-        // $listKegiatanTanpaBuktiForKaprodiDanKepalaUnit = DB::select("SELECT tbl_kegiatan_tanpa_bukti.* FROM (
-        //     SELECT kegiatans.id AS 'id', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, kegiatans.keterangan, kerjasamas.nama_kerja_sama, users.name AS 'name', kegiatans.status, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti', units.nama_unit
-        //     FROM kegiatans 
-        //     JOIN kerjasamas ON kerjasamas.id = kegiatans.kerjasama_id 
-        //     JOIN usulans ON usulans.id = kerjasamas.usulan_id
-        //     JOIN units ON units.id = usulans.unit_id
-        //     JOIN users ON users.id = kegiatans.user_id 
-        //     LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id 
-        //     GROUP BY kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, kegiatans.keterangan,kerjasamas.nama_kerja_sama, users.name, kegiatans.status, units.nama_unit, kerjasamas.usulan_id
-        //     ORDER BY kegiatans.tanggal_sampai
-        // ) AS tbl_kegiatan_tanpa_bukti
-        // WHERE tbl_kegiatan_tanpa_bukti.total_bukti = 0 AND (users.id = $getUserUnit OR units.id = $getUserUnit)");
-
         $listKegiatanTanpaBuktiForKaprodiDanKepalaUnit = DB::select("SELECT tbl_kegiatan_tanpa_bukti.* FROM (
             SELECT kegiatans.id AS 'id', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, kegiatans.keterangan, kerjasamas.nama_kerja_sama, users.name AS 'name', kegiatans.status, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti', units.nama_unit, users.id AS 'user_id', units.id AS 'unit_id'
             FROM kegiatans 
@@ -142,9 +129,9 @@ class NotificationController extends Controller
             JOIN users ON users.id = kegiatans.user_id 
             LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id 
             GROUP BY kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, kegiatans.keterangan,kerjasamas.nama_kerja_sama, users.name, kegiatans.status, units.nama_unit, kerjasamas.usulan_id, users.id, units.id
-            ORDER BY kegiatans.tanggal_sampai
         ) AS tbl_kegiatan_tanpa_bukti
-        WHERE tbl_kegiatan_tanpa_bukti.total_bukti = 0 AND (tbl_kegiatan_tanpa_bukti.user_id = $getUserID OR tbl_kegiatan_tanpa_bukti.unit_id = $getUserUnit)");
+        WHERE tbl_kegiatan_tanpa_bukti.total_bukti = 0 AND (tbl_kegiatan_tanpa_bukti.user_id = $getUserID OR tbl_kegiatan_tanpa_bukti.unit_id = $getUserUnit)
+        ORDER BY tbl_kegiatan_tanpa_bukti.tanggal_mulai");
         
         return view("notification.kegiatan_perlu_bukti")
             ->with('listKegiatanTanpaBuktiForAdmin', $listKegiatanTanpaBuktiForAdmin)

@@ -107,8 +107,61 @@
                 </div>
 
                 <div class="row">
+                    {{-- Usulan --}}
+                    <div class="form-group col-lg-4 col-sm-12">
+                        <label for="usulan">Usulan</label>
+                        <select class="form-control select2" name='usulan'>
+
+                            @php
+                                if (old('usulan') !== null) {
+                                    $option = old('usulan');
+                                } else {
+                                    $option = 1;
+                                }
+                            @endphp
+
+                            @foreach ($usulans as $data)
+                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                    {{ $data->usulan }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('usulan')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Bidang --}}
+                    @php
+                    $option = old('bidang');
+                    @endphp
+
+                    <div class="form-group col-lg-4 col-sm-12">
+                        <label for="bidang">Bidang</label>
+                        <select class="form-control" name="bidang">
+                            <option value='P' {{ $option == 'P' ? 'selected' : '' }}>
+                                Pendidikan
+                            </option>
+                            <option value='N' {{ $option == 'N' ? 'selected' : '' }}>
+                                Penelitian
+                            </option>
+                            <option value='B' {{ $option == 'B' ? 'selected' : '' }}>
+                                Pengabdian
+                            </option>
+                            <option value='A' {{ $option == 'A' ? 'selected' : ''}}>
+                                Pendidikan, Penelitian, Pengabdian
+                            </option>
+                            <option value='L' {{ $option == 'L' ? 'selected' : '' }}>
+                                Lain-lain
+                            </option>
+                        </select>
+                        @error('bidang')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     {{-- Nama Status --}}
-                    <div class="form-group col-lg-6 col-sm-12">
+                    <div class="form-group col-lg-4 col-sm-12">
                         <label for="nama_status">Status</label>
 
                         @php
@@ -131,29 +184,6 @@
                         @enderror
                     </div>
 
-                    {{-- Usulan --}}
-                    <div class="form-group col-lg-6 col-sm-12">
-                        <label for="usulan">Usulan</label>
-                        <select class="form-control select2" name='usulan'>
-
-                            @php
-                                if (old('usulan') !== null) {
-                                    $option = old('usulan');
-                                } else {
-                                    $option = 1;
-                                }
-                            @endphp
-
-                            @foreach ($usulans as $data)
-                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                    {{ $data->usulan }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('usulan')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
                 </div>
 
                 <br>

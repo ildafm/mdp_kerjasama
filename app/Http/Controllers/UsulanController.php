@@ -65,7 +65,7 @@ class UsulanController extends Controller
             $validateData = $request->validate([
                 'usulan' => 'required',
                 'bentuk_kerjasama' => 'required',
-                'kontak_kerjasama' => 'required|max:13|min:11',
+                'kontak_kerjasama' => 'required|max:13',
                 'rencana_kegiatan' => 'required',
                 'nama_mitra' => 'required',
                 'nama_pengusul' => 'required',
@@ -242,7 +242,7 @@ class UsulanController extends Controller
         $this->validate($request, [
             'usulan' => 'required',
             'bentuk_kerjasama' => 'required',
-            'kontak_kerjasama' => 'required|max:13|min:11',
+            'kontak_kerjasama' => 'required|max:13',
             'rencana_kegiatan' => 'required',
             'nama_mitra' => 'required',
             'nama_pengusul' => 'required',
@@ -253,7 +253,7 @@ class UsulanController extends Controller
 
         if ($request->hasil_penjajakan != 'B') {
             $this->validate($request, [
-                'keterangan_hasil_penajajakan' => 'required',
+                'keterangan_hasil_penjajakan' => 'required',
             ]);
         }
         
@@ -268,7 +268,7 @@ class UsulanController extends Controller
             'user_id' => $request->nama_pengusul,
             'unit_id' => $request->nama_unit,
             'hasil_penjajakan' => $request->hasil_penjajakan,
-            'keterangan' => $request->keterangan_hasil_penajajakan,
+            'keterangan' => $request->keterangan_hasil_penjajakan,
             'type' => $request->type,
         ]);
 

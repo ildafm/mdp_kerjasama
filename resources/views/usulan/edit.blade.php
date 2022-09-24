@@ -176,7 +176,7 @@
                         }
                     @endphp
 
-                    <div class="form-group col-lg-4">
+                    <div class="form-group col-lg-3">
                         <label for="hasil_penjajakan">Hasil Penjajakan</label>
                         <select class="form-control" name='hasil_penjajakan'>
                             <option value='B' <?= $option == 'B' ? 'selected' : '' ?>>Belum Ditentukan</option>
@@ -191,13 +191,13 @@
                     </div>
 
                     {{-- Keterangan Hasil Penjajakan --}}
-                    <div class="form-group col-lg-8">
-                        <label for="keterangan_hasil_penajajakan">Keterangan Hasil Penjajakan</label>
-                        <input type="text" name='keterangan_hasil_penajajakan'
-                            class="form-control @error('keterangan_hasil_penajajakan') is-invalid @enderror"
+                    <div class="form-group col-lg-9">
+                        <label for="keterangan_hasil_penjajakan">Keterangan Hasil Penjajakan</label>
+                        <input type="text" name='keterangan_hasil_penjajakan'
+                            class="form-control @error('keterangan_hasil_penjajakan') is-invalid @enderror"
                             placeholder="Masukan Keterangan Dari Hasil Penjajakan"
-                            value="{{ old('keterangan_hasil_penajajakan', $usulans->keterangan) }}">
-                        @error('keterangan_hasil_penajajakan')
+                            value="{{ old('keterangan_hasil_penjajakan', $usulans->keterangan) }}">
+                        @error('keterangan_hasil_penjajakan')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>

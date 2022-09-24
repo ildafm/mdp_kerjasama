@@ -275,7 +275,7 @@
                     }
                     
                     // menjumlahkan total notifikasi
-                    $totalNotifications = $totalKegiatanYangBelumDibaca + $totalKegiatanYangBelumMemilikiBukti;
+                    $totalNotifications = $totalKegiatanYangBelumDibaca + $totalKegiatanYangSudahMulai;
                     $bellNotif = $totalKegiatanYangBelumDibaca + $totalKegiatanYangSudahMulai;
                 @endphp
 
@@ -328,8 +328,8 @@
                         {{-- Notifikasi kegiatan belum memiliki bukti kegiatan --}}
                         <a href="/notification_kegiatan_belum_ada_buktis" class="dropdown-item">
                             <i class="fas fa-copy mr-2"></i>
-                            @if ($kegiatanPerluBukti[0]->total_kegiatan > 0 && count($kegiatanSudahWaktuMulai) > 0)
-                                {{ $kegiatanPerluBukti[0]->total_kegiatan }} kegiatan belum ada bukti
+                            @if (count($kegiatanSudahWaktuMulai) > 0)
+                                {{ count($kegiatanSudahWaktuMulai) }} kegiatan belum ada bukti
                                 <span class="float-right text-muted text-sm">
                                     @php
                                         echo $kegiatanSudahWaktuMulai[0]->get_day, ' day';

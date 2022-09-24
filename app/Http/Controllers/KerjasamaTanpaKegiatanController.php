@@ -25,7 +25,7 @@ class KerjasamaTanpaKegiatanController extends Controller
     {
         //
         $kerjasamas = DB::select("SELECT * FROM (
-            SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, kegiatans.bentuk_kegiatan, kerjasamas.no_mou, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, statuses.nama_status, usulans.usulan
+            SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, kegiatans.bentuk_kegiatan, kerjasamas.no_mou, kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, statuses.nama_status, usulans.usulan
             FROM kerjasamas
             LEFT JOIN kegiatans ON kegiatans.kerjasama_id = kerjasamas.id
             JOIN kategoris ON kategoris.id = kerjasamas.kategori_id
@@ -103,6 +103,7 @@ class KerjasamaTanpaKegiatanController extends Controller
                     'nama_kategori' => 'required',
                     'nama_status' => 'required',
                     'usulan' => 'required',
+                    'bidang' => 'required',
                     'no_mou' => 'required',
                 ]);
             }
@@ -114,6 +115,7 @@ class KerjasamaTanpaKegiatanController extends Controller
                     'nama_kategori' => 'required',
                     'nama_status' => 'required',
                     'usulan' => 'required',
+                    'bidang' => 'required',
                 ]);
             }
     
@@ -195,7 +197,7 @@ class KerjasamaTanpaKegiatanController extends Controller
     {
         //
         $kerjasama = DB::select("SELECT * FROM (
-            SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, kegiatans.bentuk_kegiatan, kerjasamas.no_mou, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, kerjasamas.status_id, statuses.nama_status, usulans.usulan
+            SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, kegiatans.bentuk_kegiatan, kerjasamas.no_mou, kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, kerjasamas.status_id, statuses.nama_status, usulans.usulan
             FROM kerjasamas
             LEFT JOIN kegiatans ON kegiatans.kerjasama_id = kerjasamas.id
             JOIN kategoris ON kategoris.id = kerjasamas.kategori_id
@@ -270,7 +272,7 @@ class KerjasamaTanpaKegiatanController extends Controller
         $this->authorize('viewAny', User::class);
 
         $kerjasama = DB::select("SELECT * FROM (
-            SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, kegiatans.bentuk_kegiatan, kerjasamas.no_mou, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategori_id, kategoris.nama_kategori, status_id, statuses.nama_status, usulan_id, usulans.usulan
+            SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, kegiatans.bentuk_kegiatan, kerjasamas.no_mou, kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategori_id, kategoris.nama_kategori, status_id, statuses.nama_status, usulan_id, usulans.usulan
             FROM kerjasamas
             LEFT JOIN kegiatans ON kegiatans.kerjasama_id = kerjasamas.id
             JOIN kategoris ON kategoris.id = kerjasamas.kategori_id
@@ -310,6 +312,7 @@ class KerjasamaTanpaKegiatanController extends Controller
                 'nama_kategori' => 'required',
                 'nama_status' => 'required',
                 'usulan' => 'required',
+                'bidang' => 'required',
                 'no_mou' => 'required',
             ]);
         }
@@ -321,6 +324,7 @@ class KerjasamaTanpaKegiatanController extends Controller
                 'nama_kategori' => 'required',
                 'nama_status' => 'required',
                 'usulan' => 'required',
+                'bidang' => 'required',
             ]);
         }
 
@@ -330,6 +334,7 @@ class KerjasamaTanpaKegiatanController extends Controller
             $kerjasama->update([
                 'no_mou' => $request->no_mou,
                 'nama_kerja_sama' => $request->nama_kerja_sama,
+                'bidang' => $request->bidang,
                 'tanggal_mulai' => $request->tanggal_mulai,
                 'tanggal_sampai' => $request->tanggal_sampai,
                 'kategori_id' => $request->nama_kategori,
@@ -340,6 +345,7 @@ class KerjasamaTanpaKegiatanController extends Controller
         else{
             $kerjasama->update([
                 'nama_kerja_sama' => $request->nama_kerja_sama,
+                'bidang' => $request->bidang,
                 'tanggal_mulai' => $request->tanggal_mulai,
                 'tanggal_sampai' => $request->tanggal_sampai,
                 'kategori_id' => $request->nama_kategori,
