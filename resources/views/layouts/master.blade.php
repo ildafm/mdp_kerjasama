@@ -95,6 +95,7 @@
                         WHERE tbl_kegiatan_sudah_waktu_mulai.total_bukti_kegiatan = 0 AND tbl_kegiatan_sudah_waktu_mulai.get_day >= 0
                         GROUP BY tbl_kegiatan_sudah_waktu_mulai.total_bukti_kegiatan");
                     }
+
                     // Login Dekan
                     elseif (Auth::user()->level == 'E') {
                         // menghitung jumlah kegiatan yang baru yang belum dilihat
@@ -155,6 +156,7 @@
                         WHERE tbl_kegiatan_sudah_waktu_mulai.total_bukti_kegiatan = 0 AND tbl_kegiatan_sudah_waktu_mulai.get_day >= 0
                         GROUP BY tbl_kegiatan_sudah_waktu_mulai.total_bukti_kegiatan");
                     }
+
                     // Login Kaprodi(K) atau Kepala Unit(U)
                     elseif (Auth::user()->level == 'K' || Auth::user()->level == 'U') {
                         // menghitung jumlah kegiatan yang baru yang belum dilihat
@@ -216,6 +218,7 @@
                         WHERE tbl_kegiatan_sudah_waktu_mulai.total_bukti_kegiatan = 0 AND tbl_kegiatan_sudah_waktu_mulai.get_day >= 0
                         GROUP BY tbl_kegiatan_sudah_waktu_mulai.total_bukti_kegiatan");
                     }
+
                     // Login Dosen
                     else {
                         // menghitung jumlah kegiatan yang baru yang belum dilihat
@@ -486,12 +489,29 @@
 
                         {{-- Kegiatans --}}
                         <li class="nav-item">
-                            <a href="{{ url('/kegiatans') }}" class="nav-link">
+                            <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-briefcase"></i>
                                 <p>
                                     Kegiatan
+                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                {{-- Semua Kegiatan --}}
+                                <li class="nav-item">
+                                    <a href="{{ url('/kegiatans') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Semua Kegiatan</p>
+                                    </a>
+                                </li>
+                                {{-- Kegiatan yang ditampilkan berdasarkan mitra --}}
+                                <li class="nav-item">
+                                    <a href="{{ url('/kegiatan_berdasarkan_mitras') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Kegiatan Berdasarkan Mitra</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
 
                         @if (Auth::user()->level == 'A')

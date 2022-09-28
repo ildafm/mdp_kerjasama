@@ -8,7 +8,7 @@
 <body>
     <h1>{{ $details['title'] }}</h1>
     <p>
-        Hi {{ $details['user_name'] }}, Di informasikan bahwa telah terjadi perubahan password pada akun aplikasi mdp
+        Hai {{ $details['user_name'] }}, Di informasikan bahwa telah terjadi perubahan password pada akun aplikasi mdp
         kerjasama anda, silahkan gunakan informasi dibawah ini untuk login ke aplikasi
     </p>
     <p>
