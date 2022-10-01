@@ -22,21 +22,47 @@
             @csrf
 
             <div class="card-body">
+                <div class="row">
+                    {{-- Nama File --}}
+                    <div class="form-group col-lg-8">
+                        <label for="nama_file">Nama File</label>
+                        <input type="text" class="form-control" name="nama_file" placeholder="Enter Nama File"
+                            value="{{ old('nama_file', $buktiKerjasama->nama_file) }}">
 
-                {{-- Nama Bukti Kerjasama --}}
-                <div class="form-group">
-                    <label for="nama_bukti_kerjasama">Nama Bukti Kegiatan</label>
-                    <input type="text" class="form-control" name="nama_bukti_kerjasama"
-                        placeholder="Enter Nama Bukti Kegiatan"
-                        value="{{ old('nama_bukti_kerjasama', $buktiKerjasama->nama_bukti_kerjasama) }}">
+                        @error('nama_file')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                    @error('nama_bukti_kerjasama')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                    {{-- Jenis File --}}
+                    <div class="form-group col-lg-4">
+                        <label for="jenis_file">Jenis File</label>
+                        @php
+                            if (old('jenis_file') != null) {
+                                $option = old('jenis_file');
+                            } else {
+                                $option = $buktiKerjasama->jenis_file;
+                            }
+                        @endphp
+
+                        <select class="form-control" name="jenis_file" id="">
+                            <option value="B" {{ $option == 'B' ? 'selected' : '' }}>
+                                Bukti Kerjasama
+                            </option>
+                            <option value="S" {{ $option == 'S' ? 'selected' : '' }}>
+                                SPK
+                            </option>
+                            @if ($kerjasama->kategori_id == '1')
+                                <option value="M" {{ $option == 'M' ? 'selected' : '' }}>
+                                    MoU
+                                </option>
+                            @endif
+                        </select>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="file">Bukti Kerjasama(Max:5mb | Kosongkan jika tidak ingin mengubah)</label>
+                    <label for="file">Masukan File(Max:5mb | Kosongkan jika tidak ingin mengubah)</label>
                     <div class="input-group">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" name="file" id="exampleInputFile">

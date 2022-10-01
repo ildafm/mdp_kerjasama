@@ -178,7 +178,7 @@ class KerjasamaController extends Controller
     public function show(Kerjasama $kerjasama)
     {
         //
-        $buktiKerjasama = DB::select("SELECT bukti_kerjasamas.id, nama_bukti_kerjasama, bukti_kerjasamas.file, LEFT(bukti_kerjasamas.created_at, 10) as tanggalUpload 
+        $buktiKerjasama = DB::select("SELECT bukti_kerjasamas.*, LEFT(bukti_kerjasamas.created_at, 10) as tanggalUpload 
         FROM bukti_kerjasamas
         JOIN kerjasamas ON bukti_kerjasamas.kerjasama_id = kerjasamas.id
         WHERE bukti_kerjasamas.kerjasama_id = $kerjasama->id");
@@ -298,7 +298,7 @@ class KerjasamaController extends Controller
     {
         //
         $this->authorize('adminOnly', User::class);
-        $getBuktiKerjasama = DB::select("SELECT id, nama_bukti_kerjasama, bukti_kerjasamas.file AS 'file', kerjasama_id FROM bukti_kerjasamas WHERE kerjasama_id = $kerjasama->id");
+        $getBuktiKerjasama = DB::select("SELECT * FROM bukti_kerjasamas WHERE kerjasama_id = $kerjasama->id");
 
         // unlink semua file sekaligus
         if(count($getBuktiKerjasama) > 0){
@@ -316,7 +316,7 @@ class KerjasamaController extends Controller
         
         $kerjasama = Kerjasama::findOrFail($id_kerjasama);
 
-        $getBuktiKerjasama = DB::select("SELECT id, nama_bukti_kerjasama, bukti_kerjasamas.file AS 'file', kerjasama_id FROM bukti_kerjasamas WHERE kerjasama_id = $kerjasama->id");
+        $getBuktiKerjasama = DB::select("SELECT * FROM bukti_kerjasamas WHERE kerjasama_id = $kerjasama->id");
 
         // unlink semua file sekaligus
         if(count($getBuktiKerjasama) > 0){

@@ -481,7 +481,7 @@
                                 <li class="nav-item">
                                     <a href="{{ url('/kerjasama_tanpa_kegiatans') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Kerjasama Tanpa Kegiatan</p>
+                                        <p>Tanpa Kegiatan</p>
                                     </a>
                                 </li>
                             </ul>
@@ -508,7 +508,7 @@
                                 <li class="nav-item">
                                     <a href="{{ url('/kegiatan_berdasarkan_mitras') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Kegiatan Berdasarkan Mitra</p>
+                                        <p>Berdasarkan Mitra</p>
                                     </a>
                                 </li>
                             </ul>

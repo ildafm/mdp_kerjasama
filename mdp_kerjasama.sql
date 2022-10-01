@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 29, 2022 at 12:06 AM
+-- Generation Time: Oct 01, 2022 at 12:52 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -45,7 +45,6 @@ CREATE TABLE `bukti_kegiatans` (
 --
 
 INSERT INTO `bukti_kegiatans` (`id`, `nama_bukti_kegiatan`, `file`, `kegiatans_id`, `ceklist_apt`, `ceklist_aps`, `ceklist_lamemba`, `bidang`, `created_at`, `updated_at`) VALUES
-(86, 'Bukti1', 'file-1663802536.png', 107, 'Y', 'Y', 'T', 'P', '2022-09-21 23:22:16', '2022-09-21 23:22:16'),
 (87, 'Bukti1', 'file-1663802566.png', 108, 'T', 'Y', 'T', 'P', '2022-09-21 23:22:46', '2022-09-21 23:22:46'),
 (88, 'Bukti1', 'file-1663806518.png', 111, 'T', 'Y', 'T', 'B', '2022-09-22 00:28:38', '2022-09-22 00:28:38'),
 (89, 'Bukti1', 'file-1663806547.png', 109, 'T', 'T', 'Y', 'B', '2022-09-22 00:29:07', '2022-09-22 00:29:07');
@@ -69,7 +68,6 @@ CREATE TABLE `bukti_kegiatan_units` (
 --
 
 INSERT INTO `bukti_kegiatan_units` (`id`, `units_id`, `bukti_kegiatans_id`, `created_at`, `updated_at`) VALUES
-(83, 2, 86, '2022-09-21 23:22:16', '2022-09-21 23:22:16'),
 (84, 5, 87, '2022-09-21 23:22:46', '2022-09-21 23:22:46'),
 (85, 2, 88, '2022-09-22 00:28:38', '2022-09-22 00:28:38'),
 (86, 4, 89, '2022-09-22 00:29:07', '2022-09-22 00:29:07');
@@ -82,7 +80,7 @@ INSERT INTO `bukti_kegiatan_units` (`id`, `units_id`, `bukti_kegiatans_id`, `cre
 
 CREATE TABLE `bukti_kerjasamas` (
   `id` int(11) NOT NULL,
-  `nama_bukti_kerjasama` varchar(45) NOT NULL,
+  `nama_file` varchar(45) NOT NULL,
   `jenis_file` varchar(1) DEFAULT NULL,
   `file` varchar(255) NOT NULL,
   `kerjasama_id` int(11) NOT NULL,
@@ -94,8 +92,10 @@ CREATE TABLE `bukti_kerjasamas` (
 -- Dumping data for table `bukti_kerjasamas`
 --
 
-INSERT INTO `bukti_kerjasamas` (`id`, `nama_bukti_kerjasama`, `jenis_file`, `file`, `kerjasama_id`, `created_at`, `updated_at`) VALUES
-(43, 'qww', NULL, 'file-1663829451.pdf', 43, '2022-09-22 06:50:52', '2022-09-22 06:50:52');
+INSERT INTO `bukti_kerjasamas` (`id`, `nama_file`, `jenis_file`, `file`, `kerjasama_id`, `created_at`, `updated_at`) VALUES
+(43, 'qww', NULL, 'file-1663829451.pdf', 43, '2022-09-22 06:50:52', '2022-09-22 06:50:52'),
+(49, 'Input Bukti 1 A', 'S', 'file-1664620144.png', 41, '2022-10-01 10:29:04', '2022-10-01 10:29:04'),
+(50, 'Input Bukti 1 C', 'S', 'file-1664621268.png', 41, '2022-10-01 10:43:16', '2022-10-01 10:48:43');
 
 -- --------------------------------------------------------
 
@@ -187,7 +187,6 @@ CREATE TABLE `kegiatans` (
 --
 
 INSERT INTO `kegiatans` (`id`, `tanggal_mulai`, `tanggal_sampai`, `bentuk_kegiatan`, `PIC`, `keterangan`, `kerjasama_id`, `user_id`, `status`, `created_at`, `updated_at`) VALUES
-(107, '2022-09-12', '2022-09-16', 'Kegiatan IF 1.1', NULL, 'Keterangan IF 1.1', 38, 15, '1', '2022-09-08 15:08:02', '2022-09-08 15:17:30'),
 (108, '2022-09-19', '2022-09-23', 'Kegiatan SI 1.1', NULL, 'Keterangan SI 1.1', 39, 26, '1', '2022-09-08 15:25:17', '2022-09-08 15:31:04'),
 (109, '2022-09-24', '2022-09-29', 'kegiatan Baru', NULL, 'kegiatan Baru', 40, 15, '1', '2022-09-21 23:43:22', '2022-09-22 00:26:11'),
 (111, '2022-09-23', '2022-09-30', 'Kegiatan AK 1.1', NULL, 'Kegiatan AK 1.1', 42, 25, '1', '2022-09-22 00:14:12', '2022-09-22 00:28:14'),
@@ -218,7 +217,6 @@ CREATE TABLE `kerjasamas` (
 --
 
 INSERT INTO `kerjasamas` (`id`, `nama_kerja_sama`, `no_mou`, `bidang`, `tanggal_mulai`, `tanggal_sampai`, `kategori_id`, `status_id`, `usulan_id`, `created_at`, `updated_at`) VALUES
-(38, 'Kerjasama IF 1', '', 'A', '2022-09-08', '2025-10-15', 2, 3, 43, '2022-09-08 15:04:01', '2022-09-24 06:41:58'),
 (39, 'Kerjasama SI 1', 'MoU001', 'P', '2022-09-08', '2022-10-08', 1, 1, 44, '2022-09-08 15:22:38', '2022-09-08 15:22:38'),
 (40, 'Kerjasama Baru', '', 'P', '2022-09-22', '2022-11-22', 2, 1, 45, '2022-09-21 23:42:11', '2022-09-21 23:42:11'),
 (41, 'Kerjasama Sudah Kadaluarsa', '', 'N', '2022-08-01', '2022-08-31', 2, 2, 43, '2022-09-22 00:04:50', '2022-09-24 06:48:41'),
@@ -579,7 +577,7 @@ ALTER TABLE `bukti_kegiatan_units`
 -- AUTO_INCREMENT for table `bukti_kerjasamas`
 --
 ALTER TABLE `bukti_kerjasamas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `dosens`

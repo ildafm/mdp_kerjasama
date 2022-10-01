@@ -227,7 +227,7 @@
                         @endif
                     </h3>
                     {{-- Tabel data Kegiatan --}}
-                    <table id="example3" class="table table-bordered table-striped">
+                    <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -303,29 +303,63 @@
                     </table>
                 </div>
 
-                {{-- Panel Bukti Kerjasama --}}
+                {{-- Panel File --}}
                 <div class="tab-pane fade" id="custom-tabs-two-bukti_kerjasama" role="tabpanel"
                     aria-labelledby="custom-tabs-two-bukti_kerjasama-tab">
                     @if (Auth::user()->level != 'D')
                         {{-- Form Menambahkan data Bukti --}}
-                        <h3>Tambah Data Bukti Kerjasama</h3>
+                        <h3>Tambah Data File</h3>
                         <form action="{{ route('buktiKerjasama2s.store') }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
-                            {{-- Nama Bukti Kerjasama --}}
-                            <div class="form-group">
-                                <label for="nama_bukti_kerjasama">Nama Bukti Kerjasama</label>
-                                <input type="text" class="form-control" name="nama_bukti_kerjasama"
-                                    placeholder="Enter Nama Bukti Kerjasama" value="{{ old('nama_bukti_kerjasama') }}">
 
-                                @error('nama_bukti_kerjasama')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
+                            <div class="row">
+                                {{-- Nama File --}}
+                                <div class="form-group col-lg-8">
+                                    <label for="nama_file">Nama File</label>
+                                    <input type="text" class="form-control" name="nama_file"
+                                        placeholder="Enter Nama File" value="{{ old('nama_file') }}">
+
+                                    @error('nama_file')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                {{-- Jenis File --}}
+                                <div class="form-group col-lg-4">
+                                    <label for="jenis_file">Jenis File</label>
+
+                                    @php
+                                        if (old('jenis_file') !== null) {
+                                            $option = old('jenis_file');
+                                        } else {
+                                            $option = 'B';
+                                        }
+                                    @endphp
+
+                                    <select class="form-control" name="jenis_file" id="">
+                                        <option value="B" {{ $option == 'B' ? 'selected' : '' }}>
+                                            Bukti Kerjasama
+                                        </option>
+                                        <option value="S" {{ $option == 'S' ? 'selected' : '' }}>
+                                            SPK
+                                        </option>
+                                        @if ($kerjasama->kategori_id == '1')
+                                            <option value="M" {{ $option == 'M' ? 'selected' : '' }}>
+                                                MoU
+                                            </option>
+                                        @endif
+                                    </select>
+
+                                    @error('jenis_file')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
 
                             {{-- add file --}}
                             <div class="form-group">
-                                <label for="file">Bukti Kerjasama(Max:5mb)</label>
+                                <label for="file">Masukan File(Max:5mb)</label>
                                 <div class="input-group">
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" name="file"
@@ -386,19 +420,29 @@
                                             <a href="{{ route('buktiKerjasama2s.edit', ['buktiKerjasama2' => $data->id]) }}"
                                                 class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
                                                     title="Edit"></i></a>
+                                        @endif
 
-                                            @if (Auth::user()->level == 'A')
-                                                {{-- Button Hapus --}}
-                                                <button class="btn btn-sm btn-danger btn-hapus"
-                                                    data-id="{{ $data->id }}"
-                                                    data-namaBuktiKerjasama="{{ $data->nama_bukti_kerjasama }}"
-                                                    data-toggle="modal" data-target="#modal-sm">
-                                                    <i class="nav-icon fas fa-trash" title="Hapus"></i>
-                                                </button>
-                                            @endif
+                                        @if (Auth::user()->level == 'A')
+                                            {{-- Button Hapus --}}
+                                            <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                                data-namaBuktiKerjasama="{{ $data->nama_file }}" data-toggle="modal"
+                                                data-target="#modal-sm">
+                                                <i class="nav-icon fas fa-trash" title="Hapus"></i>
+                                            </button>
                                         @endif
                                     </td>
-                                    <td>{{ $data->nama_bukti_kerjasama }}</td>
+                                    <td>{{ $data->nama_file }}</td>
+                                    <td>
+                                        @php
+                                            if ($data->jenis_file == 'M') {
+                                                echo 'Mou';
+                                            } elseif ($data->jenis_file == 'S') {
+                                                echo 'SPK';
+                                            } else {
+                                                echo 'Bukti Kerjasama';
+                                            }
+                                        @endphp
+                                    </td>
                                     <td>{{ $data->tanggalUpload }}</td>
                                 </tr>
                             @endforeach

@@ -197,7 +197,7 @@ class KerjasamaTanpaKegiatanController extends Controller
     {
         //
         $kerjasama = DB::select("SELECT * FROM (
-            SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, kegiatans.bentuk_kegiatan, kerjasamas.no_mou, kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, kerjasamas.status_id, statuses.nama_status, usulans.usulan
+            SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, kegiatans.bentuk_kegiatan, kerjasamas.no_mou, kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kerjasamas.kategori_id, kategoris.nama_kategori, kerjasamas.status_id, statuses.nama_status, usulans.usulan
             FROM kerjasamas
             LEFT JOIN kegiatans ON kegiatans.kerjasama_id = kerjasamas.id
             JOIN kategoris ON kategoris.id = kerjasamas.kategori_id
@@ -208,7 +208,7 @@ class KerjasamaTanpaKegiatanController extends Controller
 
         // Jika Kerjasama belum memiliki kegiatan
         if(count($kerjasama) > 0){
-            $buktiKerjasama = DB::select("SELECT bukti_kerjasamas.id, nama_bukti_kerjasama, bukti_kerjasamas.file, LEFT(bukti_kerjasamas.created_at, 10) as tanggalUpload 
+            $buktiKerjasama = DB::select("SELECT bukti_kerjasamas.*, LEFT(bukti_kerjasamas.created_at, 10) as tanggalUpload 
             FROM bukti_kerjasamas
             JOIN kerjasamas ON bukti_kerjasamas.kerjasama_id = kerjasamas.id
             WHERE bukti_kerjasamas.kerjasama_id = $id");
@@ -235,7 +235,7 @@ class KerjasamaTanpaKegiatanController extends Controller
         else{
             $kerjasama = Kerjasama::findOrFail($id);
             
-            $buktiKerjasama = DB::select("SELECT bukti_kerjasamas.id, nama_bukti_kerjasama, bukti_kerjasamas.file, LEFT(bukti_kerjasamas.created_at, 10) as tanggalUpload 
+            $buktiKerjasama = DB::select("SELECT bukti_kerjasamas.*, LEFT(bukti_kerjasamas.created_at, 10) as tanggalUpload 
             FROM bukti_kerjasamas
             JOIN kerjasamas ON bukti_kerjasamas.kerjasama_id = kerjasamas.id
             WHERE bukti_kerjasamas.kerjasama_id = $id");
@@ -369,7 +369,7 @@ class KerjasamaTanpaKegiatanController extends Controller
         //
         $this->authorize('adminOnly', User::class);
 
-        $getBuktiKerjasama = DB::select("SELECT id, nama_bukti_kerjasama, bukti_kerjasamas.file AS 'file', kerjasama_id FROM bukti_kerjasamas WHERE kerjasama_id = $id");
+        $getBuktiKerjasama = DB::select("SELECT * FROM bukti_kerjasamas WHERE kerjasama_id = $id");
 
         // unlink semua file sekaligus
         if(count($getBuktiKerjasama) > 0){

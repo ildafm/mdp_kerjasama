@@ -42,7 +42,8 @@ class BuktiKerjasamaController extends Controller
 
         // 1. validasi input data kosong
         $validateData = $request->validate([
-            'nama_bukti_kerjasama' => 'required',
+            'nama_file' => 'required',
+            'jenis_file' => 'required',
             'file' => 'required | file |mimes:pdf,jpg,png,docx,doc| max:5000',
             'kerjasama_id' => 'required',
         ]);
@@ -61,12 +62,13 @@ class BuktiKerjasamaController extends Controller
         // 2. simpan file
         $buktiKerjasama = new BuktiKerjasama();
         
-        $buktiKerjasama->nama_bukti_kerjasama = $validateData['nama_bukti_kerjasama'];
+        $buktiKerjasama->nama_file = $validateData['nama_file'];
+        $buktiKerjasama->jenis_file = $validateData['jenis_file'];
         $buktiKerjasama->file = $rename_file;
         $buktiKerjasama->kerjasama_id = $validateData['kerjasama_id'];
 
         $buktiKerjasama->save(); // simpan ke tabel bukti_kerjasama
-        $request->session()->flash('pesan', 'Penambahan data bukti berhasil');
+        $request->session()->flash('pesan', 'Penambahan data file berhasil');
         return redirect()->route('kerjasamas.show', $buktiKerjasama->kerjasama_id);
     }
 
@@ -90,7 +92,10 @@ class BuktiKerjasamaController extends Controller
     public function edit(BuktiKerjasama $buktiKerjasama)
     {
         //
-        return view('kerjasama.editBukti')->with('buktiKerjasama', $buktiKerjasama);
+        $kerjasama = Kerjasama::findOrFail($buktiKerjasama->kerjasama_id);
+        return view('kerjasama.editBukti')
+            ->with('buktiKerjasama', $buktiKerjasama)
+            ->with('kerjasama', $kerjasama);
     }
 
     /**
@@ -104,7 +109,8 @@ class BuktiKerjasamaController extends Controller
     {
         //
         $this->validate($request, [
-            'nama_bukti_kerjasama' => 'required',
+            'nama_file' => 'required',
+            'jenis_file' => 'required',
             'file' => 'file |mimes:pdf,jpg,png,docx,doc| max:5120',
         ]);
 
@@ -126,13 +132,15 @@ class BuktiKerjasamaController extends Controller
             $request->file->storeAs('public/kerjasama', $rename_file); //bisa diletakan difolder lain dengan store ke public/(folderlain)
 
             $buktiKerjasama->update([
-                'nama_bukti_kerjasama' => $request->nama_bukti_kerjasama,
+                'nama_file' => $request->nama_file,
+                'jenis_file' => $request->jenis_file,
                 'file' => $rename_file,
             ]); 
         }
         else{
             $buktiKerjasama->update([
-                'nama_bukti_kerjasama' => $request->nama_bukti_kerjasama,
+                'nama_file' => $request->nama_file,
+                'jenis_file' => $request->jenis_file,
             ]);
         }
 
@@ -154,6 +162,6 @@ class BuktiKerjasamaController extends Controller
         }
         
         $buktiKerjasama->delete();
-        return redirect()->route('kerjasamas.show', $buktiKerjasama->kerjasama_id)->with('pesan', "Hapus data bukti $buktiKerjasama->nama_bukti_kerjasama berhasil");
+        return redirect()->route('kerjasamas.show', $buktiKerjasama->kerjasama_id)->with('pesan', "Hapus data file $buktiKerjasama->nama_file berhasil");
     }
 }
