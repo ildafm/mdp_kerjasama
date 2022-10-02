@@ -72,10 +72,23 @@
 
                 {{-- Bentuk Kegiatan --}}
                 <div class="form-group">
-                    <label for="bentuk_kegiatan">Bentuk Kegiatan </label>
-                    <input id="bentuk_kegiatan" type="text" name='bentuk_kegiatan' value="{{ old('bentuk_kegiatan') }}"
-                        class="form-control @error('bentuk_kegiatan') is-invalid @enderror"
-                        placeholder="Masukan Bentuk Kegiatan">
+                    <label for="bentuk_kegiatan">Bentuk Kegiatan</label>
+
+                    @php
+                        if (old('bentuk_kegiatan') !== null) {
+                            $option = old('bentuk_kegiatan');
+                        } else {
+                            $option = 1;
+                        }
+                    @endphp
+
+                    <select class="form-control select2" name="bentuk_kegiatan" id="">
+                        @foreach ($bentukKegiatans as $data)
+                            <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                {{ $data->bentuk }}
+                            </option>
+                        @endforeach
+                    </select>
                     @error('bentuk_kegiatan')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror

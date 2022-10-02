@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MyTestMail;
+use App\Models\BentukKegiatan;
 
 class KegiatanController extends Controller
 {
@@ -48,20 +49,22 @@ class KegiatanController extends Controller
         //
         $this->authorize('viewAny', User::class);
 
-        $users = DB::select("SELECT b.id, b.kode_dosen, b.name
-        FROM users b 
-        WHERE b.kode_dosen NOT IN ( 
+        $users = DB::select("SELECT tbl_user_yang_belum_ditugaskan.id, tbl_user_yang_belum_ditugaskan.kode_dosen, tbl_user_yang_belum_ditugaskan.name
+        FROM users tbl_user_yang_belum_ditugaskan 
+        WHERE tbl_user_yang_belum_ditugaskan.kode_dosen NOT IN ( 
             SELECT DISTINCT users.kode_dosen 
             FROM users 
             LEFT JOIN kegiatans ON kegiatans.user_id = users.id 
             LEFT JOIN bukti_kegiatans on bukti_kegiatans.kegiatans_id = kegiatans.id 
-            WHERE (kegiatans.bentuk_kegiatan IS NOT NULL AND bukti_kegiatans.nama_bukti_kegiatan IS NULL) 
+            WHERE (kegiatans.bentuk_kegiatan_id IS NOT NULL AND bukti_kegiatans.nama_bukti_kegiatan IS NULL) 
             ORDER BY users.id )");
             
         $kerjasamas = Kerjasama::where("status_id", "!=" , "2")->get();
+        $bentukKegiatans = BentukKegiatan::all();
         return view('kegiatan.create')
             ->with('users', $users)
-            ->with('kerjasamas', $kerjasamas);
+            ->with('kerjasamas', $kerjasamas)
+            ->with('bentukKegiatans', $bentukKegiatans);
     }
 
     /**
@@ -79,7 +82,6 @@ class KegiatanController extends Controller
             'tanggal_mulai' => 'required',
             'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
             'bentuk_kegiatan' => 'required',
-            // 'PIC' => 'required',
             'kerjasamas' => 'required',
             'pic_dosen' => 'required',
             'keterangan' => 'required',
@@ -89,8 +91,7 @@ class KegiatanController extends Controller
 
         $kegiatan->tanggal_mulai = $validateData['tanggal_mulai'];
         $kegiatan->tanggal_sampai = $validateData['tanggal_sampai'];
-        $kegiatan->bentuk_kegiatan = $validateData['bentuk_kegiatan'];
-        // $kegiatan->PIC = $validateData['PIC'];
+        $kegiatan->bentuk_kegiatan_id = $validateData['bentuk_kegiatan'];
         $kegiatan->kerjasama_id = $validateData['kerjasamas'];
         $kegiatan->user_id = $validateData['pic_dosen'];
         $kegiatan->keterangan =$validateData['keterangan'];
@@ -99,7 +100,6 @@ class KegiatanController extends Controller
 
         // Send email to user
         $findUser = User::findOrFail($kegiatan->user_id);
-        $bentukKegiatan = $validateData['bentuk_kegiatan'];
         $tanggalMulaiKegiatan = $validateData['tanggal_mulai']; 
         $tanggalSampaiKegiatan = $validateData['tanggal_sampai'];
         $id_kegiatan = $kegiatan->id; //get id kegiatan for send email
@@ -107,7 +107,6 @@ class KegiatanController extends Controller
         $details = [
             'title' => 'Kegiatan Baru',
             'user_name' => $findUser->name,
-            'bentuk_kegiatan' => $bentukKegiatan,
             'tanggal_mulai' => $tanggalMulaiKegiatan,
             'tanggal_sampai' => $tanggalSampaiKegiatan,
             'id_kegiatan' => $id_kegiatan,
@@ -136,7 +135,7 @@ class KegiatanController extends Controller
         WHERE bukti_kegiatans.kegiatans_id = $kegiatan->id");
 
         $units = Unit::All();
-        
+
         // update status kegiatan
         if (Auth::user()->id == $kegiatan->user_id) {
             DB::update("UPDATE kegiatans SET kegiatans.status = '1' WHERE id = $kegiatan->id");
@@ -161,9 +160,12 @@ class KegiatanController extends Controller
         
         $kerjasamas = Kerjasama::All();
         $users = User::All();
+        $bentukKegiatans = BentukKegiatan::all();
+
         return view('kegiatan.edit')
             ->with('kerjasamas', $kerjasamas)
-            ->with('kegiatans', $kegiatan)
+            ->with('kegiatan', $kegiatan)
+            ->with('bentukKegiatans', $bentukKegiatans)
             ->with('users', $users);
     }
 
@@ -194,7 +196,7 @@ class KegiatanController extends Controller
         $kegiatan->update([
             'tanggal_mulai' => $request->tanggal_mulai,
             'tanggal_sampai' => $request->tanggal_sampai,
-            'bentuk_kegiatan' => $request->bentuk_kegiatan,
+            'bentuk_kegiatan_id' => $request->bentuk_kegiatan,
             // 'PIC' => $request->PIC,
             'user_id' => $request->pic_dosen,
             'keterangan' => $request->keterangan,

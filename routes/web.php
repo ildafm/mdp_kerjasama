@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BentukKegiatanController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MitraController;
@@ -57,13 +58,11 @@ Route::resource('buktiKerjasama2s', BuktiKerjasama2Controller::class)->middlewar
 Route::resource('buktiKegiatans', BuktiKegiatanController::class)->middleware(['auth']); //route yang mengarah untuk memperlihatkan bukti kegiatan
 Route::resource('kerjasama_tanpa_kegiatans', KerjasamaTanpaKegiatanController::class)->middleware(['auth']); //route untuk mengarah ke kerjasama yang tidak memiliki kegiatan
 Route::resource('kegiatan_berdasarkan_mitras', KegiatanBerdasarkanMitraController::class)->middleware(['auth']); //notifikasi kegaitan terbaru
+Route::resource('bentuk_kegiatans', BentukKegiatanController::class)->middleware(['auth']); //notifikasi kegaitan terbaru
 
 // route notifikasi
 Route::get('notification_kegiatans', [App\Http\Controllers\NotificationController::class, 'kegiatan'])->middleware(['auth']); //notifikasi kegaitan terbaru
 Route::get('notification_kegiatan_belum_ada_buktis', [App\Http\Controllers\NotificationController::class, 'kegiatanPerluBukti'])->middleware(['auth']);//notifikasi kegiatan yang tidak memiliki bukti kegiatan
-
-
-// Route::get('/mahasiswa/create', [MahasiswaController::class, 'create']);
 
 Auth::routes();
 

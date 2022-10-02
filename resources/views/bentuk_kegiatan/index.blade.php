@@ -1,18 +1,11 @@
 @extends('layouts.master')
-@section('title', 'Mitra')
+@section('title', 'Bentuk Kegiatan')
 
 @section('content')
     <div class="card">
         <div class="card-header">
-            <!-- <h3 class="card-title">Tabel Daftar Mitra</h3> -->
-            @if (Auth::user()->level != 'D')
-                {{-- Button Tambah --}}
-                <a href="{{ url('/mitras/create') }}" class='btn btn-primary'>Tambah Mitra</a>
-            @else
-                <div class="card-title">
-                    <h4 class="">Tabel Daftar Mitra</h4>
-                </div>
-            @endif
+            {{-- Button Tambah --}}
+            <a href="{{ url('/bentuk_kegiatans/create') }}" class='btn btn-primary'>Tambah Bentuk Kegiatan</a>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -39,11 +32,8 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        @if (Auth::user()->level != 'D')
-                            <th>Aksi</th>
-                        @endif
-                        <th>Nama Mitra</th>
-                        <th>Tingkat</th>
+                        <th>Aksi</th>
+                        <th>Bentuk Kegiatan</th>
                     </tr>
                 </thead>
 
@@ -53,50 +43,35 @@
                         $nomor = 1;
                     @endphp
 
-                    @foreach ($mitras as $data)
+                    @foreach ($bentukKegiatans as $data)
                         <tr>
                             <td>
                                 {{-- $data->id --}}
                                 {{ $nomor++ }}
                             </td>
-                            @if (Auth::user()->level != 'D')
-                                <td>
-                                    {{-- Button Tampil --}}
-                                    {{-- <a href="{{ url('mitras/' . $data->id) }}" class="btn btn-sm btn-primary"
-                                    title="Tampil"><i class="nav-icon fas fa-eye"></i></a> --}}
+                            <td>
+                                {{-- Button Ubah --}}
+                                <a href="{{ route('bentuk_kegiatans.edit', ['bentuk_kegiatan' => $data->id]) }}"
+                                    class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit" title="Edit"></i></a>
 
-                                    {{-- Button Ubah --}}
-                                    <a href="{{ route('mitras.edit', ['mitra' => $data->id]) }}"
-                                        class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
-                                            title="Edit"></i></a>
-
-                                    @if (Auth::user()->level == 'A')
-                                        {{-- Button Hapus --}}
-                                        <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                            data-toggle="modal" data-target="#modal-sm"
-                                            data-namaMitra="{{ $data->nama_mitra }}"><i
-                                                class="nav-icon fas fa-trash"></i></button>
-                                    @endif
-                                </td>
-                            @endif
-
-                            <td>{{ $data->nama_mitra }}</td>
-                            <td>{{-- $data->tingkat --}}
-                                {{ Status::mitra($data->tingkat) }}
+                                {{-- Button Hapus --}}
+                                <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                    data-toggle="modal" data-target="#modal-sm"
+                                    data-bentuk_kegiatan="{{ $data->bentuk }}"><i
+                                        class="nav-icon fas fa-trash"></i></button>
                             </td>
 
+                            <td>{{ $data->bentuk }}</td>
                         </tr>
                     @endforeach
+
                 </tbody>
 
                 <tfoot>
                     <tr>
                         <th>No</th>
-                        @if (Auth::user()->level != 'D')
-                            <th>Aksi</th>
-                        @endif
-                        <th>Nama Mitra</th>
-                        <th>Tingkat</th>
+                        <th>Aksi</th>
+                        <th>Bentuk Kegiatan</th>
                     </tr>
                 </tfoot>
 
@@ -136,10 +111,10 @@
         // id disini adalah id mitra
         $('.btn-hapus').click(function() {
             let id = $(this).attr('data-id');
-            $('#formDelete').attr('action', '/mitras/' + id);
+            $('#formDelete').attr('action', '/bentuk_kegiatans/' + id);
 
-            let namaMitra = $(this).attr('data-namaMitra');
-            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus mitra : " + namaMitra + " ?")
+            let bentuk_kegiatan = $(this).attr('data-bentuk_kegiatan');
+            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus data : " + bentuk_kegiatan + " ?")
         })
 
         // jika tombol Ya, hapus ditekan, submit form hapus

@@ -100,7 +100,7 @@
 
                             <td>{{ $data->kerjasama->nama_kerja_sama }}</td>
 
-                            <td>{{ $data->bentuk_kegiatan }}</td>
+                            <td>{{ $data->bentukKegiatan->bentuk }}</td>
 
                             <td>{{ $data->keterangan }}</td>
 

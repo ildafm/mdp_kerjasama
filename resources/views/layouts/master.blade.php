@@ -473,14 +473,14 @@
                                 {{-- Semua Kerjasama --}}
                                 <li class="nav-item">
                                     <a href="{{ url('/kerjasamas') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fas fa-folder nav-icon"></i>
                                         <p>Semua Kerjasama</p>
                                     </a>
                                 </li>
                                 {{-- Kerjasama yang tidak memiliki kegiatan --}}
                                 <li class="nav-item">
                                     <a href="{{ url('/kerjasama_tanpa_kegiatans') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fas fa-folder nav-icon"></i>
                                         <p>Tanpa Kegiatan</p>
                                     </a>
                                 </li>
@@ -500,61 +500,84 @@
                                 {{-- Semua Kegiatan --}}
                                 <li class="nav-item">
                                     <a href="{{ url('/kegiatans') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fas fa-folder nav-icon"></i>
                                         <p>Semua Kegiatan</p>
                                     </a>
                                 </li>
                                 {{-- Kegiatan yang ditampilkan berdasarkan mitra --}}
                                 <li class="nav-item">
                                     <a href="{{ url('/kegiatan_berdasarkan_mitras') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fas fa-folder nav-icon"></i>
                                         <p>Berdasarkan Mitra</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
 
+                        {{-- Admin Only --}}
                         @if (Auth::user()->level == 'A')
-                            {{-- Users --}}
+                            {{-- Other --}}
                             <li class="nav-item">
-                                <a href="{{ url('/users') }}" class="nav-link">
-                                    <i class="nav-icon fas fa-user"></i>
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-archive"></i>
                                     <p>
-                                        User
+                                        Other
+                                        <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
-                            </li>
+                                <ul class="nav nav-treeview">
+                                    {{-- Users --}}
+                                    <li class="nav-item">
+                                        <a href="{{ url('/users') }}" class="nav-link">
+                                            <i class="nav-icon fas fa-user"></i>
+                                            <p>
+                                                User
+                                            </p>
+                                        </a>
+                                    </li>
 
-                            {{-- Units --}}
-                            <li class="nav-item">
-                                <a href="{{ url('/units') }}" class="nav-link">
-                                    <i class="nav-icon fas fa-users"></i>
-                                    <p>
-                                        Unit
-                                    </p>
-                                </a>
-                            </li>
+                                    {{-- Units --}}
+                                    <li class="nav-item">
+                                        <a href="{{ url('/units') }}" class="nav-link">
+                                            <i class="nav-icon fas fa-users"></i>
+                                            <p>
+                                                Unit
+                                            </p>
+                                        </a>
+                                    </li>
 
-                            {{-- Statuses --}}
-                            <li class="nav-item">
-                                <a href="{{ url('/statuses') }}" class="nav-link">
-                                    <i class="nav-icon fas fa-flag"></i>
-                                    <p>
-                                        Status
-                                    </p>
-                                </a>
-                            </li>
+                                    {{-- Statuses --}}
+                                    <li class="nav-item">
+                                        <a href="{{ url('/statuses') }}" class="nav-link">
+                                            <i class="nav-icon fas fa-flag"></i>
+                                            <p>
+                                                Status
+                                            </p>
+                                        </a>
+                                    </li>
 
-                            {{-- Kategoris --}}
-                            <li class="nav-item">
-                                <a href="{{ url('/kategoris') }}" class="nav-link">
-                                    <i class="nav-icon fas fa-layer-group"></i>
-                                    <p>
-                                        Kategori
-                                    </p>
-                                </a>
+                                    {{-- Kategoris --}}
+                                    <li class="nav-item">
+                                        <a href="{{ url('/kategoris') }}" class="nav-link">
+                                            <i class="nav-icon fas fa-layer-group"></i>
+                                            <p>
+                                                Kategori
+                                            </p>
+                                        </a>
+                                    </li>
+
+                                    {{-- Bentuk Kegiatan --}}
+                                    <li class="nav-item">
+                                        <a href="{{ url('/bentuk_kegiatans') }}" class="nav-link">
+                                            <i class="nav-icon fas fa-shapes"></i>
+                                            <p>Bentuk Kegiatan</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
                             </li>
                         @endif
+
                     </ul>
                 </nav>
             </div>

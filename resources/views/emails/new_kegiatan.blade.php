@@ -8,8 +8,7 @@
 <body>
     <h1>{{ $details['title'] }}</h1>
     <p>
-        Hai <b>{{ $details['user_name'] }}</b>, anda ditugaskan pada kegiatan
-        '<b>{{ $details['bentuk_kegiatan'] }}</b>',
+        Hai <b>{{ $details['user_name'] }}</b>, anda ditugaskan pada kegiatan baru,
         yang dimulai pada tanggal <b>{{ $details['tanggal_mulai'] }}</b> sampai dengan tanggal
         <b>{{ $details['tanggal_sampai'] }}</b>, silahkan klik link di bawah untuk informasi lebih detail.
     </p>

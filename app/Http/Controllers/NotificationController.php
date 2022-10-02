@@ -22,24 +22,27 @@ class NotificationController extends Controller
         $getUserUnit = Auth::user()->unit_id; //variabel penampung unit user
 
         // Variabel untuk login dosen
-        $kegiatansUnRead = DB::select("SELECT kegiatans.id AS 'id', kerjasamas.nama_kerja_sama, bentuk_kegiatan, keterangan, users.name AS 'name', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, kegiatans.status 
+        $kegiatansUnRead = DB::select("SELECT kegiatans.id AS 'id', kerjasamas.nama_kerja_sama, bentuk_kegiatans.bentuk AS 'bentuk_kegiatan', keterangan, users.name AS 'name', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, kegiatans.status 
         FROM kegiatans 
+        JOIN bentuk_kegiatans ON bentuk_kegiatan_id = bentuk_kegiatans.id
         JOIN kerjasamas ON kerjasama_id = kerjasamas.id 
         JOIN users ON user_id = users.id 
         WHERE user_id = $getUserID AND kegiatans.status = '0' 
         ORDER BY id");
 
         // Variabel untuk login admin
-        $kegiatansUnReadForAdmin = DB::select("SELECT kegiatans.id AS 'id', kerjasamas.nama_kerja_sama, bentuk_kegiatan, keterangan, users.name AS 'name', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, kegiatans.status 
+        $kegiatansUnReadForAdmin = DB::select("SELECT kegiatans.id AS 'id', kerjasamas.nama_kerja_sama, bentuk_kegiatans.bentuk AS 'bentuk_kegiatan', keterangan, users.name AS 'name', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, kegiatans.status 
         FROM kegiatans 
+        JOIN bentuk_kegiatans ON bentuk_kegiatan_id = bentuk_kegiatans.id
         JOIN kerjasamas ON kerjasama_id = kerjasamas.id 
         JOIN users ON kegiatans.user_id = users.id 
         WHERE kegiatans.status = '0' 
         ORDER BY id");
 
         // Variabel untuk login dekan
-        $kegiatansUnReadForDekan = DB::select("SELECT kegiatans.id AS 'id', kerjasamas.nama_kerja_sama, bentuk_kegiatan, kegiatans.keterangan, users.name AS 'name', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, kegiatans.status, usulans.usulan, units.nama_unit, units.parent_unit
+        $kegiatansUnReadForDekan = DB::select("SELECT kegiatans.id AS 'id', kerjasamas.nama_kerja_sama, bentuk_kegiatans.bentuk AS 'bentuk_kegiatan', kegiatans.keterangan, users.name AS 'name', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, kegiatans.status, usulans.usulan, units.nama_unit, units.parent_unit
         FROM kegiatans 
+        JOIN bentuk_kegiatans ON bentuk_kegiatan_id = bentuk_kegiatans.id
         JOIN kerjasamas ON kerjasama_id = kerjasamas.id 
         JOIN usulans ON usulans.id = kerjasamas.usulan_id
         JOIN users ON kegiatans.user_id = users.id 
@@ -48,8 +51,9 @@ class NotificationController extends Controller
         ORDER BY id");
 
         // Variabel untuk login kaprodi dan kepala unit
-        $kegiatansUnReadForKaprodiDanKepalaUnit = DB::select("SELECT kegiatans.id AS 'id', kerjasamas.nama_kerja_sama, bentuk_kegiatan, kegiatans.keterangan, users.name AS 'name', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, kegiatans.status, nama_unit
+        $kegiatansUnReadForKaprodiDanKepalaUnit = DB::select("SELECT kegiatans.id AS 'id', kerjasamas.nama_kerja_sama, bentuk_kegiatans.bentuk AS 'bentuk_kegiatan', kegiatans.keterangan, users.name AS 'name', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, kegiatans.status, nama_unit
         FROM kegiatans 
+        JOIN bentuk_kegiatans ON bentuk_kegiatan_id = bentuk_kegiatans.id
         JOIN kerjasamas ON kerjasama_id = kerjasamas.id 
         JOIN usulans ON kerjasamas.usulan_id = usulans.id
         JOIN units ON usulans.unit_id = units.id
@@ -77,58 +81,62 @@ class NotificationController extends Controller
                 
         // Variabel untuk login dosen
         $listKegiatanTanpaBukti = DB::select("SELECT * FROM (
-            SELECT kegiatans.id AS 'id', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, kegiatans.keterangan, kerjasamas.nama_kerja_sama, users.name AS 'name', kegiatans.status, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti', units.nama_unit
+            SELECT kegiatans.id AS 'id', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatans.bentuk AS 'bentuk_kegiatan', kegiatans.keterangan, kerjasamas.nama_kerja_sama, users.name AS 'name', kegiatans.status, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti', units.nama_unit
             FROM kegiatans
+            JOIN bentuk_kegiatans ON bentuk_kegiatan_id = bentuk_kegiatans.id
             JOIN kerjasamas ON kerjasamas.id = kerjasama_id
             JOIN usulans ON usulans.id = kerjasamas.usulan_id
             JOIN units ON units.id = usulans.unit_id
             JOIN users ON users.id = kegiatans.user_id
             LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
             WHERE users.id = $getUserID
-            GROUP BY kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, keterangan,  kerjasamas.nama_kerja_sama, users.name, kegiatans.status, units.nama_unit
+            GROUP BY kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatans.bentuk, keterangan,  kerjasamas.nama_kerja_sama, users.name, kegiatans.status, units.nama_unit
         ) AS tbl_kegiatan_tanpa_bukti
         WHERE tbl_kegiatan_tanpa_bukti.total_bukti = 0
         ORDER BY tbl_kegiatan_tanpa_bukti.tanggal_mulai");
 
         // Variabel untuk login admin
         $listKegiatanTanpaBuktiForAdmin = DB::select("SELECT * FROM (
-            SELECT kegiatans.id AS 'id', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, kegiatans.keterangan, kerjasamas.nama_kerja_sama, users.name AS 'name', kegiatans.status, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti', units.nama_unit
-            FROM kegiatans 
+            SELECT kegiatans.id AS 'id', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatans.bentuk AS 'bentuk_kegiatan', kegiatans.keterangan, kerjasamas.nama_kerja_sama, users.name AS 'name', kegiatans.status, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti', units.nama_unit
+            FROM kegiatans
+            JOIN bentuk_kegiatans ON bentuk_kegiatan_id = bentuk_kegiatans.id 
             JOIN kerjasamas ON kerjasamas.id = kerjasama_id 
             JOIN usulans ON usulans.id = kerjasamas.usulan_id
             JOIN units ON units.id = usulans.unit_id
             JOIN users ON users.id = kegiatans.user_id 
             LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id 
-            GROUP BY kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, keterangan,  kerjasamas.nama_kerja_sama, users.name, kegiatans.status, units.nama_unit
+            GROUP BY kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatans.bentuk, keterangan,  kerjasamas.nama_kerja_sama, users.name, kegiatans.status, units.nama_unit
         ) AS tbl_kegiatan_tanpa_bukti
         WHERE tbl_kegiatan_tanpa_bukti.total_bukti = 0
         ORDER BY tbl_kegiatan_tanpa_bukti.tanggal_mulai");
 
         // Variabel untuk login dekan
         $listKegiatanTanpaBuktiForDekan = DB::select("SELECT * FROM (
-            SELECT kegiatans.id AS 'id', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, kegiatans.keterangan, kerjasamas.nama_kerja_sama, users.name AS 'name', kegiatans.status, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti', units.nama_unit
-            FROM kegiatans 
+            SELECT kegiatans.id AS 'id', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatans.bentuk AS 'bentuk_kegiatan', kegiatans.keterangan, kerjasamas.nama_kerja_sama, users.name AS 'name', kegiatans.status, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti', units.nama_unit
+            FROM kegiatans
+            JOIN bentuk_kegiatans ON bentuk_kegiatan_id = bentuk_kegiatans.id 
             JOIN kerjasamas ON kerjasamas.id = kegiatans.kerjasama_id 
             JOIN usulans ON usulans.id = kerjasamas.usulan_id
             JOIN units ON units.id = usulans.unit_id
             JOIN users ON users.id = kegiatans.user_id 
             LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id 
             WHERE units.parent_unit = $getUserUnit OR units.id = $getUserUnit OR users.id = $getUserID
-            GROUP BY kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, kegiatans.keterangan,kerjasamas.nama_kerja_sama, users.name, kegiatans.status, units.nama_unit, kerjasamas.usulan_id
+            GROUP BY kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatans.bentuk, kegiatans.keterangan,kerjasamas.nama_kerja_sama, users.name, kegiatans.status, units.nama_unit, kerjasamas.usulan_id
         ) AS tbl_kegiatan_tanpa_bukti
         WHERE tbl_kegiatan_tanpa_bukti.total_bukti = 0
         ORDER BY tbl_kegiatan_tanpa_bukti.tanggal_mulai");
 
         // Variabel untuk login kaprodi dan kepala unit
         $listKegiatanTanpaBuktiForKaprodiDanKepalaUnit = DB::select("SELECT tbl_kegiatan_tanpa_bukti.* FROM (
-            SELECT kegiatans.id AS 'id', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, kegiatans.keterangan, kerjasamas.nama_kerja_sama, users.name AS 'name', kegiatans.status, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti', units.nama_unit, users.id AS 'user_id', units.id AS 'unit_id'
-            FROM kegiatans 
+            SELECT kegiatans.id AS 'id', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatans.bentuk AS 'bentuk_kegiatan', kegiatans.keterangan, kerjasamas.nama_kerja_sama, users.name AS 'name', kegiatans.status, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti', units.nama_unit, users.id AS 'user_id', units.id AS 'unit_id'
+            FROM kegiatans
+            JOIN bentuk_kegiatans ON bentuk_kegiatan_id = bentuk_kegiatans.id 
             JOIN kerjasamas ON kerjasamas.id = kegiatans.kerjasama_id 
             JOIN usulans ON usulans.id = kerjasamas.usulan_id
             JOIN units ON units.id = usulans.unit_id
             JOIN users ON users.id = kegiatans.user_id 
             LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id 
-            GROUP BY kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatan, kegiatans.keterangan,kerjasamas.nama_kerja_sama, users.name, kegiatans.status, units.nama_unit, kerjasamas.usulan_id, users.id, units.id
+            GROUP BY kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatans.bentuk, kegiatans.keterangan,kerjasamas.nama_kerja_sama, users.name, kegiatans.status, units.nama_unit, kerjasamas.usulan_id, users.id, units.id
         ) AS tbl_kegiatan_tanpa_bukti
         WHERE tbl_kegiatan_tanpa_bukti.total_bukti = 0 AND (tbl_kegiatan_tanpa_bukti.user_id = $getUserID OR tbl_kegiatan_tanpa_bukti.unit_id = $getUserUnit)
         ORDER BY tbl_kegiatan_tanpa_bukti.tanggal_mulai");

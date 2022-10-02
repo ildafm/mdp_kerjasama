@@ -39,7 +39,7 @@
 
                     <tr>
                         <td>Bentuk Kegiatan</td>
-                        <td>{{ $kegiatan->bentuk_kegiatan }}</td>
+                        <td>{{ $kegiatan->bentukKegiatan->bentuk }}</td>
                     </tr>
 
                     <tr>

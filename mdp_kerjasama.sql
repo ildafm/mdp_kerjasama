@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 01, 2022 at 12:52 PM
+-- Generation Time: Oct 02, 2022 at 09:40 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -20,6 +20,27 @@ SET time_zone = "+00:00";
 --
 -- Database: `mdp_kerjasama`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bentuk_kegiatans`
+--
+
+CREATE TABLE `bentuk_kegiatans` (
+  `id` int(11) NOT NULL,
+  `bentuk` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `bentuk_kegiatans`
+--
+
+INSERT INTO `bentuk_kegiatans` (`id`, `bentuk`, `created_at`, `updated_at`) VALUES
+(1, 'Bentuk 1', '2022-10-01 11:52:33', '2022-10-01 11:52:33'),
+(2, 'Bentuk 2', '2022-10-01 16:22:01', '2022-10-01 16:22:01');
 
 -- --------------------------------------------------------
 
@@ -172,7 +193,7 @@ CREATE TABLE `kegiatans` (
   `id` int(11) NOT NULL,
   `tanggal_mulai` date NOT NULL,
   `tanggal_sampai` date NOT NULL,
-  `bentuk_kegiatan` text NOT NULL,
+  `bentuk_kegiatan_id` int(11) NOT NULL,
   `PIC` enum('F','P') DEFAULT NULL,
   `keterangan` text NOT NULL,
   `kerjasama_id` int(11) NOT NULL,
@@ -186,11 +207,10 @@ CREATE TABLE `kegiatans` (
 -- Dumping data for table `kegiatans`
 --
 
-INSERT INTO `kegiatans` (`id`, `tanggal_mulai`, `tanggal_sampai`, `bentuk_kegiatan`, `PIC`, `keterangan`, `kerjasama_id`, `user_id`, `status`, `created_at`, `updated_at`) VALUES
-(108, '2022-09-19', '2022-09-23', 'Kegiatan SI 1.1', NULL, 'Keterangan SI 1.1', 39, 26, '1', '2022-09-08 15:25:17', '2022-09-08 15:31:04'),
-(109, '2022-09-24', '2022-09-29', 'kegiatan Baru', NULL, 'kegiatan Baru', 40, 15, '1', '2022-09-21 23:43:22', '2022-09-22 00:26:11'),
-(111, '2022-09-23', '2022-09-30', 'Kegiatan AK 1.1', NULL, 'Kegiatan AK 1.1', 42, 25, '1', '2022-09-22 00:14:12', '2022-09-22 00:28:14'),
-(112, '2022-09-22', '2022-09-27', 'kef\\giats', NULL, 'ket', 43, 15, '0', '2022-09-22 06:52:20', '2022-09-22 06:53:46');
+INSERT INTO `kegiatans` (`id`, `tanggal_mulai`, `tanggal_sampai`, `bentuk_kegiatan_id`, `PIC`, `keterangan`, `kerjasama_id`, `user_id`, `status`, `created_at`, `updated_at`) VALUES
+(108, '2022-09-19', '2022-09-23', 1, NULL, 'Keterangan SI 1.1', 39, 26, '1', '2022-09-08 15:25:17', '2022-09-08 15:31:04'),
+(109, '2022-09-24', '2022-09-29', 1, NULL, 'kegiatan Baru', 40, 15, '1', '2022-09-21 23:43:22', '2022-09-22 00:26:11'),
+(111, '2022-09-23', '2022-09-30', 1, NULL, 'Kegiatan AK 1.1', 42, 25, '1', '2022-09-22 00:14:12', '2022-09-22 00:28:14');
 
 -- --------------------------------------------------------
 
@@ -220,11 +240,11 @@ INSERT INTO `kerjasamas` (`id`, `nama_kerja_sama`, `no_mou`, `bidang`, `tanggal_
 (39, 'Kerjasama SI 1', 'MoU001', 'P', '2022-09-08', '2022-10-08', 1, 1, 44, '2022-09-08 15:22:38', '2022-09-08 15:22:38'),
 (40, 'Kerjasama Baru', '', 'P', '2022-09-22', '2022-11-22', 2, 1, 45, '2022-09-21 23:42:11', '2022-09-21 23:42:11'),
 (41, 'Kerjasama Sudah Kadaluarsa', '', 'N', '2022-08-01', '2022-08-31', 2, 2, 43, '2022-09-22 00:04:50', '2022-09-24 06:48:41'),
-(42, 'Kerjasama AK 1', 'MoU001', 'P', '2022-09-22', '2022-09-30', 1, 1, 47, '2022-09-22 00:13:38', '2022-09-22 00:13:38'),
-(43, 'kerjama 1', '', 'P', '2022-09-22', '2022-09-30', 2, 1, 48, '2022-09-22 06:49:00', '2022-09-22 06:49:00'),
+(42, 'Kerjasama AK 1', 'MoU001', 'P', '2022-09-22', '2022-09-30', 1, 2, 47, '2022-09-22 00:13:38', '2022-10-01 17:08:07'),
+(43, 'kerjama 1', '', 'P', '2022-09-22', '2022-09-30', 2, 2, 48, '2022-09-22 06:49:00', '2022-10-01 17:08:07'),
 (44, 'kj', '', 'A', '2022-09-22', '2022-10-06', 2, 3, 48, '2022-09-22 06:49:54', '2022-09-24 06:48:53'),
-(45, 'mdp', '123', 'B', '2022-09-22', '2022-09-30', 1, 1, 45, '2022-09-22 07:30:14', '2022-09-24 06:51:17'),
-(46, 'Kerjasama baru 1', '', 'A', '2022-09-24', '2022-09-25', 2, 1, 43, '2022-09-24 06:35:13', '2022-09-24 06:35:13');
+(45, 'mdp', '123', 'B', '2022-09-22', '2022-09-30', 1, 2, 45, '2022-09-22 07:30:14', '2022-10-01 17:08:07'),
+(46, 'Kerjasama baru 1', '', 'A', '2022-09-24', '2022-09-25', 2, 2, 43, '2022-09-24 06:35:13', '2022-10-01 17:08:07');
 
 -- --------------------------------------------------------
 
@@ -442,6 +462,12 @@ INSERT INTO `usulans` (`id`, `usulan`, `bentuk_kerjasama`, `rencana_kegiatan`, `
 --
 
 --
+-- Indexes for table `bentuk_kegiatans`
+--
+ALTER TABLE `bentuk_kegiatans`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `bukti_kegiatans`
 --
 ALTER TABLE `bukti_kegiatans`
@@ -490,7 +516,8 @@ ALTER TABLE `kategoris`
 ALTER TABLE `kegiatans`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_kegiatans_kerjasamas1_idx` (`kerjasama_id`),
-  ADD KEY `fk_kegiatans_dosens1_idx` (`user_id`);
+  ADD KEY `fk_kegiatans_dosens1_idx` (`user_id`),
+  ADD KEY `fk_bentuk_kegiatans1` (`bentuk_kegiatan_id`);
 
 --
 -- Indexes for table `kerjasamas`
@@ -562,6 +589,12 @@ ALTER TABLE `usulans`
 --
 
 --
+-- AUTO_INCREMENT for table `bentuk_kegiatans`
+--
+ALTER TABLE `bentuk_kegiatans`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `bukti_kegiatans`
 --
 ALTER TABLE `bukti_kegiatans`
@@ -595,7 +628,7 @@ ALTER TABLE `kategoris`
 -- AUTO_INCREMENT for table `kegiatans`
 --
 ALTER TABLE `kegiatans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 
 --
 -- AUTO_INCREMENT for table `kerjasamas`
@@ -660,6 +693,7 @@ ALTER TABLE `bukti_kerjasamas`
 -- Constraints for table `kegiatans`
 --
 ALTER TABLE `kegiatans`
+  ADD CONSTRAINT `fk_bentuk_kegiatans1` FOREIGN KEY (`bentuk_kegiatan_id`) REFERENCES `bentuk_kegiatans` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_kegiatans_kerjasamas1` FOREIGN KEY (`kerjasama_id`) REFERENCES `kerjasamas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_kegiatans_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
@@ -695,7 +729,7 @@ DELIMITER $$
 --
 -- Events
 --
-CREATE DEFINER=`root`@`localhost` EVENT `auto_update_status_kerjasama` ON SCHEDULE EVERY 1 DAY STARTS '2022-07-31 11:08:07' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE kerjasamas
+CREATE DEFINER=`root`@`localhost` EVENT `auto_update_status_kerjasama` ON SCHEDULE EVERY 10 MINUTE STARTS '2022-07-31 11:08:07' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE kerjasamas
 SET status_id = 2
 WHERE tanggal_sampai < NOW() AND status_id = 1$$
 
