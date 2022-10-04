@@ -18,6 +18,8 @@ use App\Http\Controllers\BuktiKerjasama2Controller;
 use App\Http\Controllers\KegiatanBerdasarkanMitraController;
 use App\Http\Controllers\KerjasamaTanpaKegiatanController;
 use App\Http\Controllers\KerjasamaBerdasarkanMitraController;
+use App\Http\Controllers\KlasifikasiMitraController;
+use App\Http\Controllers\NegaraController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 
@@ -56,9 +58,13 @@ Route::resource('profiles', ProfileController::class)->middleware(['auth']);
 Route::resource('buktiKerjasamas', BuktiKerjasamaController::class)->middleware(['auth']);//route yang mengarah untuk memperlihatkan bukti kerjasama
 Route::resource('buktiKerjasama2s', BuktiKerjasama2Controller::class)->middleware(['auth']);//route yang mengarah untuk memperlihatkan bukti kerjasama
 Route::resource('buktiKegiatans', BuktiKegiatanController::class)->middleware(['auth']); //route yang mengarah untuk memperlihatkan bukti kegiatan
+Route::resource('bentuk_kegiatans', BentukKegiatanController::class)->middleware(['auth']); //bentuk kegiatan
+Route::resource('negaras', NegaraController::class)->middleware(['auth']); //negara
+Route::resource('klasifikasi_mitras', KlasifikasiMitraController::class)->middleware(['auth']); //negara
+
+// notification route
 Route::resource('kerjasama_tanpa_kegiatans', KerjasamaTanpaKegiatanController::class)->middleware(['auth']); //route untuk mengarah ke kerjasama yang tidak memiliki kegiatan
 Route::resource('kegiatan_berdasarkan_mitras', KegiatanBerdasarkanMitraController::class)->middleware(['auth']); //notifikasi kegaitan terbaru
-Route::resource('bentuk_kegiatans', BentukKegiatanController::class)->middleware(['auth']); //notifikasi kegaitan terbaru
 
 // route notifikasi
 Route::get('notification_kegiatans', [App\Http\Controllers\NotificationController::class, 'kegiatan'])->middleware(['auth']); //notifikasi kegaitan terbaru

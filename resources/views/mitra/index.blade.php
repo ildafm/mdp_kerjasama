@@ -44,6 +44,8 @@
                         @endif
                         <th>Nama Mitra</th>
                         <th>Tingkat</th>
+                        <th>Klasifikasi</th>
+                        <th>Negara Asal</th>
                     </tr>
                 </thead>
 
@@ -53,40 +55,77 @@
                         $nomor = 1;
                     @endphp
 
-                    @foreach ($mitras as $data)
+                    {{-- @foreach ($mitras as $data)
                         <tr>
                             <td>
-                                {{-- $data->id --}}
                                 {{ $nomor++ }}
                             </td>
-                            @if (Auth::user()->level != 'D')
-                                <td>
-                                    {{-- Button Tampil --}}
-                                    {{-- <a href="{{ url('mitras/' . $data->id) }}" class="btn btn-sm btn-primary"
-                                    title="Tampil"><i class="nav-icon fas fa-eye"></i></a> --}}
-
-                                    {{-- Button Ubah --}}
+                            <td>
+                                @if (Auth::user()->level != 'D')
+                                    Button Ubah
                                     <a href="{{ route('mitras.edit', ['mitra' => $data->id]) }}"
                                         class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
                                             title="Edit"></i></a>
+                                @endif
 
-                                    @if (Auth::user()->level == 'A')
-                                        {{-- Button Hapus --}}
-                                        <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                            data-toggle="modal" data-target="#modal-sm"
-                                            data-namaMitra="{{ $data->nama_mitra }}"><i
-                                                class="nav-icon fas fa-trash"></i></button>
-                                    @endif
-                                </td>
-                            @endif
-
-                            <td>{{ $data->nama_mitra }}</td>
-                            <td>{{-- $data->tingkat --}}
-                                {{ Status::mitra($data->tingkat) }}
+                                @if (Auth::user()->level == 'A')
+                                    Button Hapus
+                                    <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                        data-toggle="modal" data-target="#modal-sm"
+                                        data-namaMitra="{{ $data->nama_mitra }}"><i
+                                            class="nav-icon fas fa-trash"></i></button>
+                                @endif
                             </td>
 
+                            <td>{{ $data->nama_mitra }}</td>
+                            <td>{{ Status::mitra($data->tingkat) }}</td>
+                            <td>{{ $data->classification }}</td>
+                            <td>{{ $data->negara->nama_negara }}</td>
+
                         </tr>
-                    @endforeach
+                    @endforeach --}}
+
+                    @if (count($mitraWithQuerrys) > 0)
+                        @foreach ($mitraWithQuerrys as $data)
+                            <tr>
+                                <td>
+                                    {{ $nomor++ }}
+                                </td>
+                                @if (Auth::user()->level != 'D')
+                                    <td>
+                                        {{-- Button Ubah --}}
+                                        <a href="{{ route('mitras.edit', ['mitra' => $data->id]) }}"
+                                            class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
+                                                title="Edit"></i></a>
+
+                                        @if (Auth::user()->level == 'A')
+                                            {{-- Button Hapus --}}
+                                            <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                                data-toggle="modal" data-target="#modal-sm"
+                                                data-namaMitra="{{ $data->nama_mitra }}"><i
+                                                    class="nav-icon fas fa-trash"></i></button>
+                                        @endif
+                                    </td>
+                                @endif
+
+                                <td>{{ $data->nama_mitra }}</td>
+                                <td>
+                                    @php
+                                        if ($data->tingkat == 'I') {
+                                            echo 'Internasional';
+                                        } elseif ($data->tingkat == 'N') {
+                                            echo 'Nasional';
+                                        } else {
+                                            echo 'Wilayah/Lokal';
+                                        }
+                                    @endphp
+                                </td>
+                                <td>{{ $data->klasifikasi_mitra }}</td>
+                                <td>{{ $data->nama_negara }}</td>
+
+                            </tr>
+                        @endforeach
+                    @endif
                 </tbody>
 
                 <tfoot>
@@ -97,6 +136,8 @@
                         @endif
                         <th>Nama Mitra</th>
                         <th>Tingkat</th>
+                        <th>Klasifikasi</th>
+                        <th>Negara Asal</th>
                     </tr>
                 </tfoot>
 

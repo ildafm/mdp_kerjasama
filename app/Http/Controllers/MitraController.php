@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KlasifikasiMitra;
 use Illuminate\Http\Request;
 use App\Models\Mitra;
+use App\Models\Negara;
 use Illuminate\Contracts\Support\ValidatedData;
+use Illuminate\Support\Facades\DB;
 
 class MitraController extends Controller
 {
@@ -13,7 +16,14 @@ class MitraController extends Controller
     {
         //
         $mitras = Mitra::all();
-        return view('mitra.index')->with('mitras', $mitras);
+        $mitraWithQuerrys = DB::select("SELECT mitras.id, mitras.nama_mitra, mitras.tingkat, klasifikasi_mitras.klasifikasi_mitra, negaras.nama_negara 
+        FROM mitras
+        JOIN klasifikasi_mitras ON klasifikasi_id = klasifikasi_mitras.id
+        JOIN negaras ON negara_id = negaras.id");
+
+        return view('mitra.index')
+            ->with('mitras', $mitras)
+            ->with('mitraWithQuerrys', $mitraWithQuerrys);
     }
 
     /**
@@ -24,7 +34,13 @@ class MitraController extends Controller
     public function create()
     {
         //
-        return view('mitra.create');
+        $this->authorize('viewAny', User::class);
+        
+        $klasifikasiMitras = KlasifikasiMitra::all();
+        $negaras = Negara::all();
+        return view('mitra.create')
+            ->with('klasifikasiMitras', $klasifikasiMitras)
+            ->with('negaras', $negaras);
     }
 
     /**
@@ -36,14 +52,19 @@ class MitraController extends Controller
     public function store(Request $request)
     {
         //
+        $this->authorize('viewAny', User::class);
         $validateData = $request->validate([
             'nama_mitra' => 'required',
-            'tingkat' => 'required'
+            'tingkat' => 'required',
+            'klasifikasi_mitra' => 'required',
+            'nama_negara' => 'required',
         ]);
 
         $mitra = new Mitra();
         $mitra->nama_mitra = $validateData['nama_mitra'];
         $mitra->tingkat = $validateData['tingkat'];
+        $mitra->klasifikasi_id = $validateData['klasifikasi_mitra'];
+        $mitra->negara_id = $validateData['nama_negara'];
         $mitra->save();
 
         $request->session()->flash('pesan', 'Penambahan data berhasil');
@@ -59,7 +80,7 @@ class MitraController extends Controller
     public function show(Mitra $mitra)
     {
         //
-        return view('mitra.show')->with('mitra', $mitra);
+        // return view('mitra.show')->with('mitra', $mitra);
     }
 
     /**
@@ -72,8 +93,14 @@ class MitraController extends Controller
     {
         //
         // dump($mitra);
+        $this->authorize('viewAny', User::class);
 
-        return view('mitra.edit')->with('mitra', $mitra);
+        $klasifikasiMitras = KlasifikasiMitra::all();
+        $negaras = Negara::all();
+        return view('mitra.edit')
+            ->with('mitra', $mitra)
+            ->with('klasifikasiMitras', $klasifikasiMitras)
+            ->with('negaras', $negaras);
     }
 
     /**
@@ -86,13 +113,20 @@ class MitraController extends Controller
     public function update(Request $request, Mitra $mitra)
     {
         //
-
+        $this->authorize('viewAny', User::class);
         $validateData = $request->validate([
             'nama_mitra' => 'required',
-            'tingkat' => 'required'
+            'tingkat' => 'required',
+            'klasifikasi_mitra' => 'required',
+            'nama_negara' => 'required',
         ]);
 
-        Mitra::where('id', $mitra->id)->update($validateData);
+        $mitra->update([
+            'nama_mitra' => $request->nama_mitra,
+            'tingkat' => $request->tingkat,
+            'klasifikasi_id' => $request->klasifikasi_mitra,
+            'negara_id' => $request->nama_negara,
+        ]);
 
         $request->session()->flash('pesan', 'Perubahan data berhasil');
         return redirect()->route('mitras.index');
@@ -107,7 +141,7 @@ class MitraController extends Controller
     public function destroy(Mitra $mitra)
     {
         //
-        $this->authorize('viewAny', User::class);
+        $this->authorize('adminOnly', User::class);
 
         $mitra->delete();
         return redirect()->route('mitras.index')->with('pesan', "Hapus data $mitra->nama_mitra berhasil");

@@ -17,5 +17,13 @@ class Mitra extends Model
         return $this->hasMany(Usulan::class);
     }
 
-    protected $fillable = ['nama_mitra', 'tingkat'];
+    public function negara(){
+        return $this->belongsTo(Negara::class);
+    }
+
+    public function classification(){
+        return $this->belongsTo(KlasifikasiMitra::class);
+    }
+
+    protected $fillable = ['nama_mitra', 'tingkat', 'klasifikasi_id', 'negara_id'];
 }

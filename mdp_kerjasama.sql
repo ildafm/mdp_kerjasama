@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 02, 2022 at 09:40 AM
+-- Generation Time: Oct 04, 2022 at 02:07 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -210,7 +210,8 @@ CREATE TABLE `kegiatans` (
 INSERT INTO `kegiatans` (`id`, `tanggal_mulai`, `tanggal_sampai`, `bentuk_kegiatan_id`, `PIC`, `keterangan`, `kerjasama_id`, `user_id`, `status`, `created_at`, `updated_at`) VALUES
 (108, '2022-09-19', '2022-09-23', 1, NULL, 'Keterangan SI 1.1', 39, 26, '1', '2022-09-08 15:25:17', '2022-09-08 15:31:04'),
 (109, '2022-09-24', '2022-09-29', 1, NULL, 'kegiatan Baru', 40, 15, '1', '2022-09-21 23:43:22', '2022-09-22 00:26:11'),
-(111, '2022-09-23', '2022-09-30', 1, NULL, 'Kegiatan AK 1.1', 42, 25, '1', '2022-09-22 00:14:12', '2022-09-22 00:28:14');
+(111, '2022-09-23', '2022-09-30', 1, NULL, 'Kegiatan AK 1.1', 42, 25, '1', '2022-09-22 00:14:12', '2022-09-22 00:28:14'),
+(116, '2022-10-04', '2022-10-12', 2, NULL, 'kegiatan minggu 2', 40, 15, '1', '2022-10-04 11:58:27', '2022-10-04 12:05:51');
 
 -- --------------------------------------------------------
 
@@ -249,6 +250,27 @@ INSERT INTO `kerjasamas` (`id`, `nama_kerja_sama`, `no_mou`, `bidang`, `tanggal_
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `klasifikasi_mitras`
+--
+
+CREATE TABLE `klasifikasi_mitras` (
+  `id` int(11) NOT NULL,
+  `klasifikasi_mitra` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `klasifikasi_mitras`
+--
+
+INSERT INTO `klasifikasi_mitras` (`id`, `klasifikasi_mitra`, `created_at`, `updated_at`) VALUES
+(1, 'Klasifikasi 1', '2022-10-04 10:32:33', '2022-10-04 10:54:23'),
+(2, 'Klasifikasi 2', '2022-10-04 10:33:36', '2022-10-04 10:33:36');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `migrations`
 --
 
@@ -278,6 +300,8 @@ CREATE TABLE `mitras` (
   `id` int(11) NOT NULL,
   `nama_mitra` varchar(45) NOT NULL,
   `tingkat` enum('I','N','W') NOT NULL DEFAULT 'W',
+  `klasifikasi_id` int(11) NOT NULL,
+  `negara_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -286,19 +310,42 @@ CREATE TABLE `mitras` (
 -- Dumping data for table `mitras`
 --
 
-INSERT INTO `mitras` (`id`, `nama_mitra`, `tingkat`, `created_at`, `updated_at`) VALUES
-(1, 'Universitas Indonesia', 'I', '2022-04-21 08:19:25', '2022-04-24 08:00:27'),
-(2, 'Universitas Palembang', 'N', '2022-04-21 08:19:25', '2022-04-24 08:00:33'),
-(3, 'Universitas Indonesia Sejahtera', 'N', '2022-04-21 08:19:25', '2022-04-24 07:26:30'),
-(4, 'Halaman Berkah', 'W', '2022-04-21 08:19:25', '2022-04-24 07:26:57'),
-(10, 'Vietnam University', 'I', '2022-04-21 01:27:59', '2022-07-12 18:49:28'),
-(15, 'UI', 'W', '2022-06-11 08:23:14', '2022-06-11 08:23:14'),
-(16, 'Universitas A', 'N', '2022-06-11 11:28:37', '2022-07-12 19:50:58'),
-(17, 'Universitas B', 'I', '2022-06-11 11:30:00', '2022-06-11 11:30:00'),
-(18, 'Universitas C', 'I', '2022-06-11 11:30:56', '2022-06-11 11:30:56'),
-(19, 'Universitas D', 'W', '2022-06-29 02:41:08', '2022-07-13 23:55:59'),
-(20, 'Universitas F', 'W', '2022-07-12 18:49:40', '2022-07-24 18:55:57'),
-(21, 'Universitas E', 'N', '2022-07-24 18:55:48', '2022-07-24 18:55:48');
+INSERT INTO `mitras` (`id`, `nama_mitra`, `tingkat`, `klasifikasi_id`, `negara_id`, `created_at`, `updated_at`) VALUES
+(1, 'Universitas Indonesia', 'I', 2, 1, '2022-04-21 08:19:25', '2022-10-04 11:57:27'),
+(2, 'Universitas Palembang', 'N', 1, 1, '2022-04-21 08:19:25', '2022-04-24 08:00:33'),
+(3, 'Universitas Indonesia Sejahtera', 'N', 1, 1, '2022-04-21 08:19:25', '2022-04-24 07:26:30'),
+(4, 'Halaman Berkah', 'W', 1, 1, '2022-04-21 08:19:25', '2022-04-24 07:26:57'),
+(10, 'Vietnam University', 'I', 2, 3, '2022-04-21 01:27:59', '2022-10-04 11:56:40'),
+(15, 'UI', 'W', 1, 1, '2022-06-11 08:23:14', '2022-06-11 08:23:14'),
+(16, 'Universitas A', 'I', 2, 2, '2022-06-11 11:28:37', '2022-10-04 11:56:55'),
+(17, 'Universitas B', 'I', 1, 1, '2022-06-11 11:30:00', '2022-06-11 11:30:00'),
+(18, 'Universitas C', 'I', 1, 1, '2022-06-11 11:30:56', '2022-06-11 11:30:56'),
+(19, 'Universitas D', 'W', 1, 1, '2022-06-29 02:41:08', '2022-07-13 23:55:59'),
+(20, 'Universitas F', 'W', 1, 1, '2022-07-12 18:49:40', '2022-07-24 18:55:57'),
+(21, 'Universitas E', 'N', 1, 1, '2022-07-24 18:55:48', '2022-07-24 18:55:48'),
+(22, 'Mitra Baru', 'I', 2, 2, '2022-10-04 11:47:51', '2022-10-04 11:47:51');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `negaras`
+--
+
+CREATE TABLE `negaras` (
+  `id` int(11) NOT NULL,
+  `nama_negara` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `negaras`
+--
+
+INSERT INTO `negaras` (`id`, `nama_negara`, `created_at`, `updated_at`) VALUES
+(1, 'Indonesia', '2022-10-03 12:28:38', '2022-10-04 10:54:48'),
+(2, 'Malaysia', '2022-10-03 12:34:19', '2022-10-03 12:34:19'),
+(3, 'Vietnam', '2022-10-03 12:34:29', '2022-10-03 12:34:29');
 
 -- --------------------------------------------------------
 
@@ -529,6 +576,12 @@ ALTER TABLE `kerjasamas`
   ADD KEY `fk_kerjasamas_usulan1` (`usulan_id`);
 
 --
+-- Indexes for table `klasifikasi_mitras`
+--
+ALTER TABLE `klasifikasi_mitras`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
@@ -538,6 +591,14 @@ ALTER TABLE `migrations`
 -- Indexes for table `mitras`
 --
 ALTER TABLE `mitras`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_klasifikasi` (`klasifikasi_id`),
+  ADD KEY `fk_negara` (`negara_id`);
+
+--
+-- Indexes for table `negaras`
+--
+ALTER TABLE `negaras`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -628,7 +689,7 @@ ALTER TABLE `kategoris`
 -- AUTO_INCREMENT for table `kegiatans`
 --
 ALTER TABLE `kegiatans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
 
 --
 -- AUTO_INCREMENT for table `kerjasamas`
@@ -637,10 +698,22 @@ ALTER TABLE `kerjasamas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
+-- AUTO_INCREMENT for table `klasifikasi_mitras`
+--
+ALTER TABLE `klasifikasi_mitras`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `mitras`
 --
 ALTER TABLE `mitras`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `negaras`
+--
+ALTER TABLE `negaras`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `statuses`
@@ -704,6 +777,13 @@ ALTER TABLE `kerjasamas`
   ADD CONSTRAINT `fk_kerjasamas_kategoris1` FOREIGN KEY (`kategori_id`) REFERENCES `kategoris` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_kerjasamas_status1` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_kerjasamas_usulan1` FOREIGN KEY (`usulan_id`) REFERENCES `usulans` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `mitras`
+--
+ALTER TABLE `mitras`
+  ADD CONSTRAINT `fk_klasifikasi` FOREIGN KEY (`klasifikasi_id`) REFERENCES `klasifikasi_mitras` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_negara` FOREIGN KEY (`negara_id`) REFERENCES `negaras` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `units`

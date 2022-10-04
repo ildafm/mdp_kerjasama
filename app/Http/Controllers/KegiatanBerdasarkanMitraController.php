@@ -58,8 +58,9 @@ class KegiatanBerdasarkanMitraController extends Controller
     public function show($id)
     {
         //
-        $listKegiatans = DB::select("SELECT kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, kegiatans.keterangan, kegiatans.bentuk_kegiatan, kerjasamas.nama_kerja_sama, users.name AS 'name'
+        $listKegiatans = DB::select("SELECT kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, kegiatans.keterangan, bentuk_kegiatans.bentuk AS 'bentuk_kegiatan', kerjasamas.nama_kerja_sama, users.name AS 'name'
         FROM kegiatans
+        JOIN bentuk_kegiatans ON bentuk_kegiatan_id = bentuk_kegiatans.id
         JOIN users ON users.id = kegiatans.user_id
         JOIN kerjasamas ON kerjasamas.id = kegiatans.kerjasama_id
         JOIN usulans ON usulans.id = kerjasamas.usulan_id

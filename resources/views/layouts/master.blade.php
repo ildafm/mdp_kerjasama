@@ -546,6 +546,14 @@
                                         </a>
                                     </li>
 
+                                    {{-- Negara --}}
+                                    <li class="nav-item">
+                                        <a href="{{ url('/negaras') }}" class="nav-link">
+                                            <i class="nav-icon fas fa-globe"></i>
+                                            <p>Negara</p>
+                                        </a>
+                                    </li>
+
                                     {{-- Statuses --}}
                                     <li class="nav-item">
                                         <a href="{{ url('/statuses') }}" class="nav-link">
@@ -563,6 +571,14 @@
                                             <p>
                                                 Kategori
                                             </p>
+                                        </a>
+                                    </li>
+
+                                    {{-- Klasisifikasi Mitra --}}
+                                    <li class="nav-item">
+                                        <a href="{{ url('/klasifikasi_mitras') }}" class="nav-link">
+                                            <i class="nav-icon far fa-object-group"></i>
+                                            <p>Klasisifikasi Mitra</p>
                                         </a>
                                     </li>
 
@@ -604,7 +620,6 @@
                                     </li>
                                     <li class="breadcrumb-item active">@yield('title')</li>
                                 @endif
-
                             </ol>
                         </div>
                     </div>
