@@ -21,7 +21,7 @@ class Mitra extends Model
         return $this->belongsTo(Negara::class);
     }
 
-    public function classification(){
+    public function klasifikasi(){
         return $this->belongsTo(KlasifikasiMitra::class);
     }
 

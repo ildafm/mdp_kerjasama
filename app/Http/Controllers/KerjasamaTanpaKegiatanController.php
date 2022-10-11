@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BentukKegiatan;
 use App\Models\BuktiKerjasama;
 use App\Models\Kategori;
 use App\Models\Kegiatan;
@@ -25,9 +26,10 @@ class KerjasamaTanpaKegiatanController extends Controller
     {
         //
         $kerjasamas = DB::select("SELECT * FROM (
-            SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, kegiatans.bentuk_kegiatan, kerjasamas.no_mou, kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, statuses.nama_status, usulans.usulan
+            SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, bentuk_kegiatans.bentuk AS 'bentuk_kegiatan', kerjasamas.no_mou, kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, statuses.nama_status, usulans.usulan
             FROM kerjasamas
             LEFT JOIN kegiatans ON kegiatans.kerjasama_id = kerjasamas.id
+            LEFT JOIN bentuk_kegiatans ON bentuk_kegiatans.id = kegiatans.bentuk_kegiatan_id
             JOIN kategoris ON kategoris.id = kerjasamas.kategori_id
             JOIN statuses ON statuses.id = kerjasamas.status_id
             JOIN usulans ON usulans.id = kerjasamas.usulan_id
@@ -40,9 +42,10 @@ class KerjasamaTanpaKegiatanController extends Controller
             $tanggal_sampai = ($_GET['filter_tanggal_sampai']);
             
             $kerjasamas = DB::select("SELECT * FROM (
-                SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, kegiatans.bentuk_kegiatan, kerjasamas.no_mou, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, statuses.nama_status, usulans.usulan
+                SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, bentuk_kegiatans.bentuk AS 'bentuk_kegiatan', kerjasamas.no_mou, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, statuses.nama_status, usulans.usulan, kerjasamas.bidang
                 FROM kerjasamas
                 LEFT JOIN kegiatans ON kegiatans.kerjasama_id = kerjasamas.id
+                LEFT JOIN bentuk_kegiatans ON bentuk_kegiatans.id = kegiatans.bentuk_kegiatan_id
                 JOIN kategoris ON kategoris.id = kerjasamas.kategori_id
                 JOIN statuses ON statuses.id = kerjasamas.status_id
                 JOIN usulans ON usulans.id = kerjasamas.usulan_id
@@ -156,7 +159,7 @@ class KerjasamaTanpaKegiatanController extends Controller
     
             $kegiatan->tanggal_mulai = $validateData['tanggal_mulai'];
             $kegiatan->tanggal_sampai = $validateData['tanggal_sampai'];
-            $kegiatan->bentuk_kegiatan = $validateData['bentuk_kegiatan'];
+            $kegiatan->bentuk_kegiatan_id = $validateData['bentuk_kegiatan'];
             $kegiatan->kerjasama_id = $validateData['kerjasama_id'];
             $kegiatan->user_id = $validateData['pic_dosen'];
             $kegiatan->keterangan =$validateData['keterangan'];
@@ -197,9 +200,10 @@ class KerjasamaTanpaKegiatanController extends Controller
     {
         //
         $kerjasama = DB::select("SELECT * FROM (
-            SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, kegiatans.bentuk_kegiatan, kerjasamas.no_mou, kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kerjasamas.kategori_id, kategoris.nama_kategori, kerjasamas.status_id, statuses.nama_status, usulans.usulan
+            SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, bentuk_kegiatans.bentuk AS 'bentuk_kegiatan', kerjasamas.no_mou, kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kerjasamas.kategori_id, kategoris.nama_kategori, kerjasamas.status_id, statuses.nama_status, usulans.usulan
             FROM kerjasamas
             LEFT JOIN kegiatans ON kegiatans.kerjasama_id = kerjasamas.id
+            LEFT JOIN bentuk_kegiatans ON bentuk_kegiatans.id = kegiatans.id
             JOIN kategoris ON kategoris.id = kerjasamas.kategori_id
             JOIN statuses ON statuses.id = kerjasamas.status_id
             JOIN usulans ON usulans.id = kerjasamas.usulan_id
@@ -220,15 +224,17 @@ class KerjasamaTanpaKegiatanController extends Controller
                 FROM users 
                 LEFT JOIN kegiatans ON kegiatans.user_id = users.id 
                 LEFT JOIN bukti_kegiatans on bukti_kegiatans.kegiatans_id = kegiatans.id 
-                WHERE (kegiatans.bentuk_kegiatan IS NOT NULL AND bukti_kegiatans.nama_bukti_kegiatan IS NULL) 
+                WHERE (kegiatans.bentuk_kegiatan_id IS NOT NULL AND bukti_kegiatans.nama_bukti_kegiatan IS NULL) 
                 ORDER BY users.id )");
                 
             $kegiatans = Kegiatan::All();
+            $bentukKegiatans = BentukKegiatan::all();
 
             return view('kerjasama_tanpa_kegiatan.show')
                 ->with('kerjasama', $kerjasama[0])
                 ->with('buktiKerjasama', $buktiKerjasama)
                 ->with('users', $users)
+                ->with('bentukKegiatans', $bentukKegiatans)
                 ->with('kegiatans', $kegiatans);
         }
         // Jika kerjasama sudah memiliki kegiatan
@@ -251,11 +257,13 @@ class KerjasamaTanpaKegiatanController extends Controller
                 ORDER BY users.id )");
                 
             $kegiatans = Kegiatan::All();
+            $bentukKegiatans = BentukKegiatan::all();
 
             return view('kerjasama.show')
                 ->with('kerjasama', $kerjasama)
                 ->with('buktiKerjasama', $buktiKerjasama)
                 ->with('users', $users)
+                ->with('bentukKegiatans', $bentukKegiatans)
                 ->with('kegiatans', $kegiatans);
         }
     }
@@ -272,9 +280,10 @@ class KerjasamaTanpaKegiatanController extends Controller
         $this->authorize('viewAny', User::class);
 
         $kerjasama = DB::select("SELECT * FROM (
-            SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, kegiatans.bentuk_kegiatan, kerjasamas.no_mou, kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategori_id, kategoris.nama_kategori, status_id, statuses.nama_status, usulan_id, usulans.usulan
+            SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, bentuk_kegiatans.bentuk AS 'bentuk_kegiatan', kerjasamas.no_mou, kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategori_id, kategoris.nama_kategori, status_id, statuses.nama_status, usulan_id, usulans.usulan
             FROM kerjasamas
             LEFT JOIN kegiatans ON kegiatans.kerjasama_id = kerjasamas.id
+            LEFT JOIN bentuk_kegiatans ON bentuk_kegiatans.id = kegiatans.bentuk_kegiatan_id
             JOIN kategoris ON kategoris.id = kerjasamas.kategori_id
             JOIN statuses ON statuses.id = kerjasamas.status_id
             JOIN usulans ON usulans.id = kerjasamas.usulan_id

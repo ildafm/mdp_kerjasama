@@ -13,5 +13,5 @@ class KlasifikasiMitra extends Model
         return $this->hasMany(Mitra::class);
     }
 
-    protected $fillable = ['klasifikasi_mitra'];
+    protected $fillable = ['id', 'klasifikasi_mitra', 'keterangan'];
 }

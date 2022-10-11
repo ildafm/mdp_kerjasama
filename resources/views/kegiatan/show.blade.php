@@ -193,7 +193,6 @@
         </div>
     @endif
 
-
     {{-- Tabel Bukti Kegiatan --}}
     <div class="card">
         <div class="card-header">
@@ -211,7 +210,7 @@
 
         <div class="card-body">
 
-            {{-- Tabel Data --}}
+            {{-- Tabel Data Bukti --}}
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -246,7 +245,9 @@
                                     <a href="{{ route('buktiKegiatans.edit', ['buktiKegiatan' => $data->id_bukti_kegiatan]) }}"
                                         class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
                                             title="Edit"></i></a>
+                                @endif
 
+                                @if (Auth::user()->id == $kegiatan->user_id || Auth::user()->level == 'A')
                                     {{-- Button Hapus --}}
                                     <button class="btn btn-sm btn-danger btn-hapus"
                                         data-id="{{ $data->id_bukti_kegiatan }}" data-toggle="modal"

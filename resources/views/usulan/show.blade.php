@@ -27,7 +27,7 @@
                 </div>
             @endif
 
-            {{-- Tabel Data --}}
+            {{-- Tabel Data Usulan --}}
             <table id="" class="table table-bordered table-striped">
                 <tbody>
                     <tr>
@@ -321,15 +321,15 @@
                                         <a href="{{ route('kerjasamas.edit', ['kerjasama' => $data->id_kerjasama]) }}"
                                             class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
                                                 title="Edit"></i></a>
+                                    @endif
 
-                                        @if (Auth::user()->level == 'A')
-                                            {{-- Button Hapus --}}
-                                            <button class="btn btn-sm btn-danger btn-hapus"
-                                                data-id_kerjasama="{{ $data->id_kerjasama }}"
-                                                data-namaKerjasama="{{ $data->nama_kerja_sama }}" data-toggle="modal"
-                                                data-target="#modal-sm"><i class="nav-icon fas fa-trash"
-                                                    title="Hapus"></i></button>
-                                        @endif
+                                    @if (Auth::user()->level == 'A')
+                                        {{-- Button Hapus --}}
+                                        <button class="btn btn-sm btn-danger btn-hapus-kerjasama"
+                                            data-id_kerjasama="{{ $data->id_kerjasama }}"
+                                            data-namaKerjasama="{{ $data->nama_kerja_sama }}" data-toggle="modal"
+                                            data-target="#modal-sm"><i class="nav-icon fas fa-trash"
+                                                title="Hapus"></i></button>
                                     @endif
                                 </td>
 
@@ -422,12 +422,12 @@
     <script>
         // jika tombol hapus ditekan, generate alamat URL untuk proses hapus
         // id disini adalah id kerjasama
-        $('.btn-hapus').click(function() {
+        $('.btn-hapus-kerjasama').click(function() {
             let id_kerjasama = $(this).attr('data-id_kerjasama');
             $('#formDelete').attr('action', '/kerjasamas/customDestroyKerjasama/' + id_kerjasama);
 
             let nama_kerja_sama = $(this).attr('data-namaKerjasama');
-            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus Kerjasama " + nama_kerja_sama + " ?")
+            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus kerjasama " + nama_kerja_sama + " ?")
         })
 
         // jika tombol Ya, hapus ditekan, submit form hapus

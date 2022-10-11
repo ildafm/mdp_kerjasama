@@ -123,183 +123,211 @@
                 {{-- Panel Kegiatan --}}
                 <div class="tab-pane fade show active" id="custom-tabs-two-kegiatan" role="tabpanel"
                     aria-labelledby="custom-tabs-two-kegiatan-tab">
+                    @php
+                        $getKerjasamaID = $kerjasama->id;
+                        $kerjasamaBelumMemilikiFileSPK = DB::select("SELECT * FROM kerjasamas WHERE id NOT IN ( SELECT kerjasama_id FROM bukti_kerjasamas WHERE bukti_kerjasamas.jenis_file = 'S') AND id = $getKerjasamaID");
+                    @endphp
                     {{-- Form Menambahkan data Kegiatan jika kerjasama tidak kadaluarsa dan login bukan dosen --}}
                     @if ($kerjasama->status_id != '2' && Auth::user()->level != 'D')
-                        <h3>Tambah Data Kegiatan</h3>
-                        <form action="{{ route('kerjasamas.store') }}" method="POST">
-                            @csrf
+                        {{-- Jika kerjasama tidak memiliki file spk maka form untuk tambah data tidak akan ditampilkan --}}
+                        @if (count($kerjasamaBelumMemilikiFileSPK) > 0)
+                            <h3>Kerjasama ini belum memiliki file SPK</h3>
+                            <p>Silahkan tambahkan file SPK terlebih dahulu di bagian file kerjasama untuk dapat menambahkan
+                                kegiatan</p>
+                        @else
+                            <h3>Tambah Data Kegiatan</h3>
+                            <form action="{{ route('kerjasamas.store') }}" method="POST">
+                                @csrf
 
-                            {{-- getKerjasamaID --}}
-                            <div class="form-group" hidden>
-                                <label for="kerjasama_id">getKerjasamaID </label>
-                                <input type="text" name='kerjasama_id' value="{{ $kerjasama->id }}"
-                                    class="form-control @error('kerjasama_id') is-invalid @enderror"
-                                    placeholder="Masukan ID Kerjasama" readonly>
-                                @error('kerjasama_id')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            {{-- Bentuk Kegiatan --}}
-                            <div class="form-group">
-                                <label for="bentuk_kegiatan">Bentuk Kegiatan </label>
-                                <input type="text" name='bentuk_kegiatan' value="{{ old('bentuk_kegiatan') }}"
-                                    class="form-control @error('bentuk_kegiatan') is-invalid @enderror"
-                                    placeholder="Masukan Bentuk Kegiatan">
-                                @error('bentuk_kegiatan')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="row">
-                                {{-- Tanggal Mulai --}}
-                                <div class="form-group col-lg-4">
-                                    <label for="tanggal_mulai">Tanggal Mulai</label>
-                                    <input type="date" name="tanggal_mulai" id="" class="form-control"
-                                        min="{{ $kerjasama->tanggal_mulai }}" max="{{ $kerjasama->tanggal_sampai }}"
-                                        value="{{ old('tanggal_mulai') }}">
-                                    @error('tanggal_mulai')
+                                {{-- getKerjasamaID --}}
+                                <div class="form-group" hidden>
+                                    <label for="kerjasama_id">getKerjasamaID </label>
+                                    <input type="text" name='kerjasama_id' value="{{ $kerjasama->id }}"
+                                        class="form-control @error('kerjasama_id') is-invalid @enderror"
+                                        placeholder="Masukan ID Kerjasama" readonly>
+                                    @error('kerjasama_id')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
-                                {{-- Tanggal Sampai --}}
-                                <div class="form-group col-lg-4">
-                                    <label for="tanggal_sampai">Tanggal Sampai</label>
-                                    <input type="date" name="tanggal_sampai" id="" class="form-control"
-                                        min="{{ $kerjasama->tanggal_mulai }}" max="{{ $kerjasama->tanggal_sampai }}"
-                                        value="{{ old('tanggal_sampai') }}">
-                                    @error('tanggal_sampai')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                {{-- Dosen --}}
-                                <div class="form-group col-lg-4">
-                                    <label for="pic_dosen">PIC Dosen</label>
+                                {{-- Bentuk Kegiatan --}}
+                                <div class="form-group">
+                                    <label for="bentuk_kegiatan">Bentuk Kegiatan </label>
 
                                     @php
-                                        if (old('pic_dosen') !== null) {
-                                            $option = old('pic_dosen');
+                                        if (old('bentuk_kegiatan') !== null) {
+                                            $option = old('bentuk_kegiatan');
                                         } else {
                                             $option = 1;
                                         }
                                     @endphp
 
-                                    <select class="form-control select2" name="pic_dosen" id="">
-                                        @foreach ($users as $data)
+                                    <select class="form-control select2" name="bentuk_kegiatan" id="">
+                                        @foreach ($bentukKegiatans as $data)
                                             <option value="{{ $data->id }}"
                                                 {{ $option == $data->id ? 'selected' : '' }}>
-                                                {{ $data->kode_dosen }} - {{ $data->name }}
+                                                {{ $data->bentuk }}
                                             </option>
                                         @endforeach
                                     </select>
-                                    @error('pic_dosen')
+                                    @error('bentuk_kegiatan')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
-                            </div>
+                                <div class="row">
+                                    {{-- Tanggal Mulai --}}
+                                    <div class="form-group col-lg-4">
+                                        <label for="tanggal_mulai">Tanggal Mulai</label>
+                                        <input type="date" name="tanggal_mulai" id="" class="form-control"
+                                            min="{{ $kerjasama->tanggal_mulai }}" max="{{ $kerjasama->tanggal_sampai }}"
+                                            value="{{ old('tanggal_mulai') }}">
+                                        @error('tanggal_mulai')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
-                            <div class="form-group">
-                                <label for="keterangan">Keterangan</label>
-                                <input type="text" name="keterangan" id="" value="{{ old('keterangan') }}"
-                                    class="form-control @error('keterangan') is-invalid @enderror"
-                                    placeholder="Masukan Keterangan">
-                                @error('keterangan')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
+                                    {{-- Tanggal Sampai --}}
+                                    <div class="form-group col-lg-4">
+                                        <label for="tanggal_sampai">Tanggal Sampai</label>
+                                        <input type="date" name="tanggal_sampai" id="" class="form-control"
+                                            min="{{ $kerjasama->tanggal_mulai }}" max="{{ $kerjasama->tanggal_sampai }}"
+                                            value="{{ old('tanggal_sampai') }}">
+                                        @error('tanggal_sampai')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
-                            <br>
-                            {{-- Button --}}
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
+                                    {{-- Dosen --}}
+                                    <div class="form-group col-lg-4">
+                                        <label for="pic_dosen">PIC Dosen</label>
+
+                                        @php
+                                            if (old('pic_dosen') !== null) {
+                                                $option = old('pic_dosen');
+                                            } else {
+                                                $option = 1;
+                                            }
+                                        @endphp
+
+                                        <select class="form-control select2" name="pic_dosen" id="">
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}"
+                                                    {{ $option == $data->id ? 'selected' : '' }}>
+                                                    {{ $data->kode_dosen }} - {{ $data->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('pic_dosen')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="keterangan">Keterangan</label>
+                                    <input type="text" name="keterangan" id="" value="{{ old('keterangan') }}"
+                                        class="form-control @error('keterangan') is-invalid @enderror"
+                                        placeholder="Masukan Keterangan">
+                                    @error('keterangan')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <br>
+                                {{-- Button --}}
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        @endif
                         <br><br>
                     @endif
-                    {{-- info no mou --}}
-                    <h3>
-                        @if ($kerjasama->no_mou != null || $kerjasama->no_mou != '')
-                            Nomor MoU : {{ $kerjasama->no_mou }}
-                        @else
-                            Tanpa MoU
-                        @endif
-                    </h3>
-                    {{-- Tabel data Kegiatan --}}
-                    <table id="example3" class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Aksi</th>
-                                <th>Bentuk Kegiatan</th>
-                                <th>Keterangan</th>
-                                <th>PIC Dosen</th>
-                                <th>Tanggal Mulai</th>
-                                <th>Tanggal Sampai</th>
-                            </tr>
-                        </thead>
 
-                        <tbody>
+                    @if (count($kerjasamaBelumMemilikiFileSPK) < 1)
+                        {{-- info no mou --}}
+                        <h3>
+                            @if ($kerjasama->no_mou != null || $kerjasama->no_mou != '')
+                                Nomor MoU : {{ $kerjasama->no_mou }}
+                            @else
+                                Tanpa MoU
+                            @endif
+                        </h3>
+                        {{-- Tabel data Kegiatan --}}
+                        <table id="example3" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Aksi</th>
+                                    <th>Bentuk Kegiatan</th>
+                                    <th>Keterangan</th>
+                                    <th>PIC Dosen</th>
+                                    <th>Tanggal Mulai</th>
+                                    <th>Tanggal Sampai</th>
+                                </tr>
+                            </thead>
 
-                            @php
-                                $nomor = 1;
-                            @endphp
+                            <tbody>
 
-                            @foreach ($kegiatans as $data)
-                                @if ($data->kerjasama_id == $kerjasama->id)
-                                    <tr>
-                                        <td>{{ $nomor++ }}</td>
+                                @php
+                                    $nomor = 1;
+                                @endphp
 
-                                        <td>
-                                            {{-- Button Tampil --}}
-                                            <a href="{{ url('kegiatans/' . $data->id) }}"
-                                                class="btn btn-sm btn-primary"><i class="nav-icon fas fa-eye"
-                                                    title="Tampil"></i></a>
+                                @foreach ($kegiatans as $data)
+                                    @if ($data->kerjasama_id == $kerjasama->id)
+                                        <tr>
+                                            <td>{{ $nomor++ }}</td>
 
-                                            @if (Auth::user()->level != 'D')
-                                                {{-- Button Ubah --}}
-                                                <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
-                                                    class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
-                                                        title="Edit"></i></a>
+                                            <td>
+                                                {{-- Button Tampil --}}
+                                                <a href="{{ url('kegiatans/' . $data->id) }}"
+                                                    class="btn btn-sm btn-primary"><i class="nav-icon fas fa-eye"
+                                                        title="Tampil"></i></a>
 
-                                                @if (Auth::user()->level == 'A')
-                                                    {{-- Button Hapus --}}
-                                                    <button class="btn btn-sm btn-danger btn-hapus-kegiatan"
-                                                        data-id-kegiatan="{{ $data->id }}"
-                                                        data-bentukKegiatan="{{ $data->bentuk_kegiatan }}"
-                                                        data-toggle="modal" data-target="#modal-sm-kegiatan"><i
-                                                            class="nav-icon fas fa-trash" title="Hapus"></i></button>
+                                                @if (Auth::user()->level != 'D')
+                                                    {{-- Button Ubah --}}
+                                                    <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
+                                                        class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
+                                                            title="Edit"></i></a>
+
+                                                    @if (Auth::user()->level == 'A')
+                                                        {{-- Button Hapus --}}
+                                                        <button class="btn btn-sm btn-danger btn-hapus-kegiatan"
+                                                            data-id-kegiatan="{{ $data->id }}"
+                                                            data-bentukKegiatan="{{ $data->bentukKegiatan->bentuk }}"
+                                                            data-toggle="modal" data-target="#modal-sm-kegiatan"><i
+                                                                class="nav-icon fas fa-trash" title="Hapus"></i></button>
+                                                    @endif
                                                 @endif
-                                            @endif
-                                        </td>
+                                            </td>
 
-                                        <td>{{ $data->bentuk_kegiatan }}</td>
+                                            <td>{{ $data->bentukKegiatan->bentuk }}</td>
 
-                                        <td>{{ $data->keterangan }}</td>
+                                            <td>{{ $data->keterangan }}</td>
 
-                                        <td>{{ $data->user->name }}</td>
+                                            <td>{{ $data->user->name }}</td>
 
-                                        <td>{{ $data->tanggal_mulai }}</td>
+                                            <td>{{ $data->tanggal_mulai }}</td>
 
-                                        <td>{{ $data->tanggal_sampai }}</td>
-                                    </tr>
-                                @endif
-                            @endforeach
-                        </tbody>
+                                            <td>{{ $data->tanggal_sampai }}</td>
+                                        </tr>
+                                    @endif
+                                @endforeach
+                            </tbody>
 
-                        <tfoot>
-                            <tr>
-                                <th>No</th>
-                                <th>Aksi</th>
-                                <th>Bentuk Kegiatan</th>
-                                <th>Keterangan</th>
-                                <th>PIC Dosen</th>
-                                <th>Tanggal Mulai</th>
-                                <th>Tanggal Sampai</th>
-                            </tr>
-                        </tfoot>
+                            <tfoot>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Aksi</th>
+                                    <th>Bentuk Kegiatan</th>
+                                    <th>Keterangan</th>
+                                    <th>PIC Dosen</th>
+                                    <th>Tanggal Mulai</th>
+                                    <th>Tanggal Sampai</th>
+                                </tr>
+                            </tfoot>
 
-                    </table>
+                        </table>
+                    @endif
                 </div>
 
                 {{-- Panel File --}}
@@ -434,7 +462,7 @@
                                     <td>
                                         @php
                                             if ($data->jenis_file == 'M') {
-                                                echo 'Mou';
+                                                echo 'MoU';
                                             } elseif ($data->jenis_file == 'S') {
                                                 echo 'SPK';
                                             } else {

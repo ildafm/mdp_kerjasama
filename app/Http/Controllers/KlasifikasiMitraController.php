@@ -42,10 +42,12 @@ class KlasifikasiMitraController extends Controller
         $this->authorize('adminOnly', User::class);
         $validateData = $request->validate([
             'klasifikasi_mitra' => 'required',
+            'keterangan' => '',
         ]);
 
         $klasifikasiMitra = new KlasifikasiMitra();
         $klasifikasiMitra->klasifikasi_mitra = $validateData['klasifikasi_mitra'];
+        $klasifikasiMitra->keterangan = $validateData['keterangan'];
         $klasifikasiMitra->save();
 
         $request->session()->flash('pesan', 'Penambahan data berhasil');
@@ -89,6 +91,7 @@ class KlasifikasiMitraController extends Controller
         $this->authorize('adminOnly', User::class);
         $validateData = $request->validate([
             'klasifikasi_mitra' => 'required',
+            'keterangan' => '',
         ]);
 
         KlasifikasiMitra::where('id', $klasifikasiMitra->id)->update($validateData);

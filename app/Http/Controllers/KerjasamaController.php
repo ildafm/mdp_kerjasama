@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BentukKegiatan;
 use App\Models\BuktiKerjasama;
 use App\Models\Kategori;
 use App\Models\Kegiatan;
@@ -137,7 +138,7 @@ class KerjasamaController extends Controller
     
             $kegiatan->tanggal_mulai = $validateData['tanggal_mulai'];
             $kegiatan->tanggal_sampai = $validateData['tanggal_sampai'];
-            $kegiatan->bentuk_kegiatan = $validateData['bentuk_kegiatan'];
+            $kegiatan->bentuk_kegiatan_id = $validateData['bentuk_kegiatan'];
             // $kegiatan->PIC = $validateData['PIC'];
             $kegiatan->kerjasama_id = $validateData['kerjasama_id'];
             $kegiatan->user_id = $validateData['pic_dosen'];
@@ -190,15 +191,17 @@ class KerjasamaController extends Controller
             FROM users 
             LEFT JOIN kegiatans ON kegiatans.user_id = users.id 
             LEFT JOIN bukti_kegiatans on bukti_kegiatans.kegiatans_id = kegiatans.id 
-            WHERE (kegiatans.bentuk_kegiatan IS NOT NULL AND bukti_kegiatans.nama_bukti_kegiatan IS NULL) 
+            WHERE (kegiatans.bentuk_kegiatan_id IS NOT NULL AND bukti_kegiatans.nama_bukti_kegiatan IS NULL) 
             ORDER BY users.id )");
             
         $kegiatans = Kegiatan::All();
+        $bentukKegiatans = BentukKegiatan::all();
 
         return view('kerjasama.show')
             ->with('kerjasama', $kerjasama)
             ->with('buktiKerjasama', $buktiKerjasama)
             ->with('users', $users)
+            ->with('bentukKegiatans', $bentukKegiatans)
             ->with('kegiatans', $kegiatans);
     }
 

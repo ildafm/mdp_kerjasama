@@ -41,6 +41,7 @@
                         <th>No</th>
                         <th>Aksi</th>
                         <th>Klasifikasi Mitra</th>
+                        <th>Keterangan</th>
                     </tr>
                 </thead>
 
@@ -68,6 +69,7 @@
                             </td>
 
                             <td>{{ $data->klasifikasi_mitra }}</td>
+                            <td>{{ $data->keterangan }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -77,6 +79,7 @@
                         <th>No</th>
                         <th>Aksi</th>
                         <th>Klasifikasi Mitra</th>
+                        <th>Keterangan</th>
                     </tr>
                 </tfoot>
 

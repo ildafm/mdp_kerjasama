@@ -536,6 +536,31 @@
                                         </a>
                                     </li>
 
+                                    {{-- Klasisifikasi Mitra --}}
+                                    <li class="nav-item">
+                                        <a href="{{ url('/klasifikasi_mitras') }}" class="nav-link">
+                                            <i class="nav-icon far fa-object-group"></i>
+                                            <p>Klasifikasi Mitra</p>
+                                        </a>
+                                    </li>
+
+                                    {{-- Bentuk Kegiatan --}}
+                                    <li class="nav-item">
+                                        <a href="{{ url('/bentuk_kegiatans') }}" class="nav-link">
+                                            <i class="nav-icon fas fa-shapes"></i>
+                                            <p>Bentuk Kegiatan</p>
+                                        </a>
+                                    </li>
+                                    
+                                    {{-- Negara --}}
+                                    <li class="nav-item">
+                                        <a href="{{ url('/negaras') }}" class="nav-link">
+                                            <i class="nav-icon fas fa-globe"></i>
+                                            <p>Negara</p>
+                                        </a>
+                                    </li>
+                                    
+
                                     {{-- Units --}}
                                     <li class="nav-item">
                                         <a href="{{ url('/units') }}" class="nav-link">
@@ -543,14 +568,6 @@
                                             <p>
                                                 Unit
                                             </p>
-                                        </a>
-                                    </li>
-
-                                    {{-- Negara --}}
-                                    <li class="nav-item">
-                                        <a href="{{ url('/negaras') }}" class="nav-link">
-                                            <i class="nav-icon fas fa-globe"></i>
-                                            <p>Negara</p>
                                         </a>
                                     </li>
 
@@ -571,22 +588,6 @@
                                             <p>
                                                 Kategori
                                             </p>
-                                        </a>
-                                    </li>
-
-                                    {{-- Klasisifikasi Mitra --}}
-                                    <li class="nav-item">
-                                        <a href="{{ url('/klasifikasi_mitras') }}" class="nav-link">
-                                            <i class="nav-icon far fa-object-group"></i>
-                                            <p>Klasisifikasi Mitra</p>
-                                        </a>
-                                    </li>
-
-                                    {{-- Bentuk Kegiatan --}}
-                                    <li class="nav-item">
-                                        <a href="{{ url('/bentuk_kegiatans') }}" class="nav-link">
-                                            <i class="nav-icon fas fa-shapes"></i>
-                                            <p>Bentuk Kegiatan</p>
                                         </a>
                                     </li>
 
@@ -702,6 +703,15 @@
                 "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#example3_wrapper .col-md-6:eq(0)');
+            $('#dashboardOnly1').DataTable({
+                "paging": false,
+                "ordering": false,
+                "lengthChange": false,
+                "searching": false,
+                "info": false,
+                "autoWidth": false,
+                "responsive": true,
+            });
         });
     </script>
 

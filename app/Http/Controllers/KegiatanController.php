@@ -60,7 +60,7 @@ class KegiatanController extends Controller
             ORDER BY users.id )");
             
         $kerjasamas = Kerjasama::where("status_id", "!=" , "2")->get();
-        $bentukKegiatans = BentukKegiatan::all();
+        $bentukKegiatans = BentukKegiatan::orderBy('bentuk', 'asc')->get();
         return view('kegiatan.create')
             ->with('users', $users)
             ->with('kerjasamas', $kerjasamas)

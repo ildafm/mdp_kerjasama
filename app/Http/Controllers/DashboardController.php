@@ -44,6 +44,45 @@ class DashboardController extends Controller
         // countKategoriInKerjasama
         $countKategoriInKerjasama = DB::select("SELECT kategoris.nama_kategori AS 'nama_kategori', COUNT(kategori_id) AS 'jumlah_kategori' FROM kerjasamas JOIN kategoris ON kerjasamas.kategori_id = kategoris.id GROUP BY kategoris.nama_kategori");
 
+        //countTop10NegaraMitra
+        $countTotalKegiatanBerdasarkanNegara = DB::select("SELECT * FROM (
+            SELECT negaras.nama_negara, COUNT(kegiatans.id) AS 'total_kegiatan'
+            FROM negaras
+            JOIN mitras ON mitras.negara_id = negaras.id
+            JOIN usulans ON usulans.mitra_id = mitras.id
+            JOIN kerjasamas ON kerjasamas.usulan_id = usulans.id
+            JOIN kegiatans ON kegiatans.kerjasama_id = kerjasamas.id
+            GROUP BY negaras.nama_negara
+            LIMIT 10
+        ) AS tbl_total_kegiatan_negaras
+        ORDER BY tbl_total_kegiatan_negaras.total_kegiatan DESC");
+        
+        //count top 5 klasifikasi mitra
+        $top5BentukKegiatan = DB::select("SELECT * FROM (
+            SELECT bentuk_kegiatans.id, bentuk_kegiatans.bentuk AS 'bentuk_kegiatan', COUNT(kegiatans.id) AS 'total_kegiatan'
+            FROM bentuk_kegiatans
+            JOIN kegiatans ON kegiatans.bentuk_kegiatan_id = bentuk_kegiatans.id
+            GROUP BY bentuk_kegiatans.id, bentuk_kegiatans.bentuk
+        ) AS tbl_top_5_bentuk_kegiatan
+        ORDER BY tbl_top_5_bentuk_kegiatan.total_kegiatan DESC
+        LIMIT 5");
+
+        //top 5 bentuk kegiatan drill down (belum terpakai)
+        // $top5BentukKegiatanDrillDown = DB::select("SELECT YEAR(kegiatans.tanggal_mulai) AS 'tahun', COUNT(bentuk_kegiatan_id) AS 'total' 
+        // FROM kegiatans 
+        // WHERE kegiatans.bentuk_kegiatan_id = 1
+        // GROUP BY YEAR(kegiatans.tanggal_mulai) 
+        // LIMIT 5");
+
+        $top5KlasifikasiMitra = DB::select("SELECT * FROM (
+            SELECT klasifikasi_mitras.id, klasifikasi_mitras.klasifikasi_mitra, COUNT(mitras.id) AS 'total'
+            FROM klasifikasi_mitras
+            JOIN mitras ON mitras.klasifikasi_id = klasifikasi_mitras.id
+            GROUP BY klasifikasi_mitras.id, klasifikasi_mitras.klasifikasi_mitra
+        ) AS tbl_top_5_klasifikasi_mitra
+        ORDER BY tbl_top_5_klasifikasi_mitra.total DESC
+        LIMIT 5");
+
         return view('dashboard')
             //info box
             ->with('getJumlahMitra', $getJumlahMitra)
@@ -60,6 +99,14 @@ class DashboardController extends Controller
             ->with('getJumlahUsulanDosen', $getJumlahUsulanDosen)
             ->with('getJumlahLaporanPerUnit', $getJumlahLaporanPerUnit)
             ->with('countKategoriInKerjasama', $countKategoriInKerjasama)
-            ->with('getJumlahMitraBerdasarkanTingkatannya', $getJumlahMitraBerdasarkanTingkatannya);
+            ->with('getJumlahMitraBerdasarkanTingkatannya', $getJumlahMitraBerdasarkanTingkatannya)
+            //top 10 negara mitra
+            ->with('countTotalKegiatanBerdasarkanNegara', $countTotalKegiatanBerdasarkanNegara)
+            //top 5 bentuk kegiatan
+            ->with('top5BentukKegiatan', $top5BentukKegiatan)
+            // ->with('top5BentukKegiatanDrillDown', $top5BentukKegiatanDrillDown)
+            //top 5 klasifikasi mitra
+            ->with('top5KlasifikasiMitra', $top5KlasifikasiMitra)
+            ;
     }
 }

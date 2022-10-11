@@ -44,54 +44,57 @@
             <form action="{{ route('kegiatans.store') }}" method="POST">
                 @csrf
 
-                {{-- Kerjasama --}}
-                <div class="form-group">
-                    <label for="kerjasamas">Nama Kerjasama</label>
+                <div class="row">
+                    {{-- Kerjasama --}}
+                    <div class="form-group col-lg-6">
+                        <label for="kerjasamas">Nama Kerjasama</label>
 
-                    @php
-                        if (old('kerjasamas') !== null) {
-                            $option = old('kerjasamas');
-                        } else {
-                            $option = 1;
-                        }
-                    @endphp
+                        @php
+                            if (old('kerjasamas') !== null) {
+                                $option = old('kerjasamas');
+                            } else {
+                                $option = 1;
+                            }
+                        @endphp
 
-                    <select class="form-control select2" name="kerjasamas" id="kerjasamas" onchange="getTanggal()">
-                        <option value="">-- Pilih Kerjasama --</option>
-                        @foreach ($kerjasamas as $data)
-                            <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                {{ $data->nama_kerja_sama }} | {{ $data->usulan->mitra->nama_mitra }}
-                                |{{ $data->tanggal_mulai }}|{{ $data->tanggal_sampai }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('kerjasamas')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
+                        <select class="form-control select2" name="kerjasamas" id="kerjasamas" onchange="getTanggal()">
+                            <option value="">-- Pilih Kerjasama --</option>
+                            @foreach ($kerjasamas as $data)
+                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                    {{ $data->nama_kerja_sama }} | {{ $data->usulan->mitra->nama_mitra }}
+                                    |{{ $data->tanggal_mulai }}|{{ $data->tanggal_sampai }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('kerjasamas')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                {{-- Bentuk Kegiatan --}}
-                <div class="form-group">
-                    <label for="bentuk_kegiatan">Bentuk Kegiatan</label>
+                    {{-- Bentuk Kegiatan --}}
+                    <div class="form-group col-lg-6">
+                        <label for="bentuk_kegiatan">Bentuk Kegiatan</label>
 
-                    @php
-                        if (old('bentuk_kegiatan') !== null) {
-                            $option = old('bentuk_kegiatan');
-                        } else {
-                            $option = 1;
-                        }
-                    @endphp
-
-                    <select class="form-control select2" name="bentuk_kegiatan" id="">
-                        @foreach ($bentukKegiatans as $data)
-                            <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                {{ $data->bentuk }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('bentuk_kegiatan')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                        @php
+                            if (old('bentuk_kegiatan') !== null) {
+                                $option = old('bentuk_kegiatan');
+                            } else {
+                                $getIdFromSortingQuerry = DB::select('SELECT * FROM bentuk_kegiatans ORDER BY bentuk ASC LIMIT 1');
+                            
+                                $option = $getIdFromSortingQuerry[0]->id;
+                            }
+                        @endphp
+                        <select class="form-control select2" name="bentuk_kegiatan" id="">
+                            @foreach ($bentukKegiatans as $data)
+                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                    {{ $data->bentuk }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('bentuk_kegiatan')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
 
                 <div class="row">

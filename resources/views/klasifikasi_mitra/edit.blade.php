@@ -32,6 +32,16 @@
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
+
+                {{-- ubah keterangan --}}
+                <div class="form-group">
+                    <label for="keterangan">Keterangan</label>
+                    <input type="text" name='keterangan' class="form-control @error('keterangan') is-invalid @enderror"
+                        placeholder="Masukan Keterangan" value="{{ $klasifikasiMitra->keterangan }}">
+                    @error('keterangan')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
                 
                 <br>
                 {{-- Button --}}
