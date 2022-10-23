@@ -59,12 +59,14 @@
 
                         <select class="form-control select2" name="kerjasamas" id="kerjasamas" onchange="getTanggal()">
                             <option value="">-- Pilih Kerjasama --</option>
-                            @foreach ($kerjasamas as $data)
-                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
-                                    {{ $data->nama_kerja_sama }} | {{ $data->usulan->mitra->nama_mitra }}
-                                    |{{ $data->tanggal_mulai }}|{{ $data->tanggal_sampai }}
-                                </option>
-                            @endforeach
+                            @if (count($kerjasamas) > 0)
+                                @foreach ($kerjasamas as $data)
+                                    <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                        {{ $data->nama_kerja_sama }} | {{ $data->nama_mitra }}
+                                        |{{ $data->tanggal_mulai }}|{{ $data->tanggal_sampai }}
+                                    </option>
+                                @endforeach
+                            @endif
                         </select>
                         @error('kerjasamas')
                             <div class="text-danger">{{ $message }}</div>

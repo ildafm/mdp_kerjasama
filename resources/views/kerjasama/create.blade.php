@@ -133,7 +133,7 @@
 
                     {{-- Bidang --}}
                     @php
-                    $option = old('bidang');
+                        $option = old('bidang');
                     @endphp
 
                     <div class="form-group col-lg-4 col-sm-12">
@@ -148,7 +148,7 @@
                             <option value='B' {{ $option == 'B' ? 'selected' : '' }}>
                                 Pengabdian
                             </option>
-                            <option value='A' {{ $option == 'A' ? 'selected' : ''}}>
+                            <option value='A' {{ $option == 'A' ? 'selected' : '' }}>
                                 Pendidikan, Penelitian, Pengabdian
                             </option>
                             <option value='L' {{ $option == 'L' ? 'selected' : '' }}>

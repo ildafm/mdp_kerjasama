@@ -31,7 +31,7 @@
 
                 <tbody>
                     <tr>
-                        <td>Nama Kerja Sama</td>
+                        <td>Nama Kerjasama</td>
                         <td>{{ $kerjasama->nama_kerja_sama }}</td>
                     </tr>
 

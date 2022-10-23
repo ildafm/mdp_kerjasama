@@ -59,7 +59,13 @@ class KegiatanController extends Controller
             WHERE (kegiatans.bentuk_kegiatan_id IS NOT NULL AND bukti_kegiatans.nama_bukti_kegiatan IS NULL) 
             ORDER BY users.id )");
             
-        $kerjasamas = Kerjasama::where("status_id", "!=" , "2")->get();
+        // $kerjasamas = Kerjasama::where("status_id", "!=" , "2")->get();
+        $kerjasamas = DB::select("SELECT kerjasamas.*, mitras.nama_mitra
+        FROM kerjasamas
+        JOIN usulans ON usulans.id = kerjasamas.usulan_id
+        JOIN mitras ON mitras.id = usulans.mitra_id
+        WHERE status_id != 2 AND kerjasamas.id IN(SELECT DISTINCT kerjasama_id FROM bukti_kerjasamas WHERE jenis_file = 'S')");
+        
         $bentukKegiatans = BentukKegiatan::orderBy('bentuk', 'asc')->get();
         return view('kegiatan.create')
             ->with('users', $users)
@@ -158,7 +164,13 @@ class KegiatanController extends Controller
         //
         $this->authorize('viewAny', User::class);
         
-        $kerjasamas = Kerjasama::All();
+        // $kerjasamas = Kerjasama::All();
+        $kerjasamas = DB::select("SELECT kerjasamas.*, mitras.nama_mitra
+        FROM kerjasamas
+        JOIN usulans ON usulans.id = kerjasamas.usulan_id
+        JOIN mitras ON mitras.id = usulans.mitra_id
+        WHERE status_id != 2 AND kerjasamas.id IN(SELECT DISTINCT kerjasama_id FROM bukti_kerjasamas WHERE jenis_file = 'S')");
+        
         $users = User::All();
         $bentukKegiatans = BentukKegiatan::all();
 

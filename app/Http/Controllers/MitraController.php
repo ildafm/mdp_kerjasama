@@ -35,7 +35,7 @@ class MitraController extends Controller
     {
         //
         $this->authorize('viewAny', User::class);
-        
+
         $klasifikasiMitras = KlasifikasiMitra::all();
         $negaras = Negara::all();
         return view('mitra.create')
@@ -148,5 +148,4 @@ class MitraController extends Controller
         // dump($mitra->id);
 
     }
-
 }
