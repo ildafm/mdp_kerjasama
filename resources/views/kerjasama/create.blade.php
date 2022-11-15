@@ -3,6 +3,8 @@
 
 @section('content')
     <script>
+        document.getElementById("no_mou").addEventListener("load", getStatus(@php echo old('nama_kategori') @endphp));
+
         function getStatus(status) {
             let nk = document.getElementById("nama_kategori")
 
@@ -54,7 +56,7 @@
                         <label for="nama_kategori">Kategori</label>
 
                         @php
-                            if (old('nama_kategori') !== null) {
+                            if (old('nama_kategori') != null) {
                                 $option = old('nama_kategori');
                             } else {
                                 $option = 1;
@@ -79,7 +81,7 @@
                     <label for="nama_kerja_sama">Nama Kerjasama</label>
                     <input type="text" name='nama_kerja_sama' value="{{ old('nama_kerja_sama') }}"
                         class="form-control @error('nama_kerja_sama') is-invalid @enderror"
-                        placeholder="Masukan Nama Kerja Sama">
+                        placeholder="Masukan Nama Kerjasama">
                     @error('nama_kerja_sama')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror

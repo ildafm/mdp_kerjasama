@@ -243,7 +243,95 @@
                         <br><br>
                     @endif
 
-                    @if (count($kerjasamaBelumMemilikiFileSPK) < 1)
+                    @if (Auth::user()->level != 'D')
+                        {{-- Jika file belum memiliki spk dan user sekarang bukan dosen, maka tabel ini tidak akan ditampilkan --}}
+                        @if (count($kerjasamaBelumMemilikiFileSPK) < 1)
+                            {{-- info no mou --}}
+                            <h3>
+                                @if ($kerjasama->no_mou != null || $kerjasama->no_mou != '')
+                                    Nomor MoU : {{ $kerjasama->no_mou }}
+                                @else
+                                    Tanpa MoU
+                                @endif
+                            </h3>
+                            {{-- Tabel data Kegiatan --}}
+                            <table id="example3" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Aksi</th>
+                                        <th>Bentuk Kegiatan</th>
+                                        <th>Keterangan</th>
+                                        <th>PIC Dosen</th>
+                                        <th>Tanggal Mulai</th>
+                                        <th>Tanggal Sampai</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    @php
+                                        $nomor = 1;
+                                    @endphp
+
+                                    @foreach ($kegiatans as $data)
+                                        @if ($data->kerjasama_id == $kerjasama->id)
+                                            <tr>
+                                                <td>{{ $nomor++ }}</td>
+
+                                                <td>
+                                                    {{-- Button Tampil --}}
+                                                    <a href="{{ url('kegiatans/' . $data->id) }}"
+                                                        class="btn btn-sm btn-primary"><i class="nav-icon fas fa-eye"
+                                                            title="Tampil"></i></a>
+
+                                                    @if (Auth::user()->level != 'D')
+                                                        {{-- Button Ubah --}}
+                                                        <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
+                                                            class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
+                                                                title="Edit"></i></a>
+                                                    @endif
+
+                                                    @if (Auth::user()->level == 'A')
+                                                        {{-- Button Hapus --}}
+                                                        <button class="btn btn-sm btn-danger btn-hapus-kegiatan"
+                                                            data-id-kegiatan="{{ $data->id }}"
+                                                            data-bentukKegiatan="{{ $data->bentukKegiatan->bentuk }}"
+                                                            data-toggle="modal" data-target="#modal-sm-kegiatan"><i
+                                                                class="nav-icon fas fa-trash" title="Hapus"></i></button>
+                                                    @endif
+                                                </td>
+
+                                                <td>{{ $data->bentukKegiatan->bentuk }}</td>
+
+                                                <td>{{ $data->keterangan }}</td>
+
+                                                <td>{{ $data->user->name }}</td>
+
+                                                <td>{{ $data->tanggal_mulai }}</td>
+
+                                                <td>{{ $data->tanggal_sampai }}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                </tbody>
+
+                                <tfoot>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Aksi</th>
+                                        <th>Bentuk Kegiatan</th>
+                                        <th>Keterangan</th>
+                                        <th>PIC Dosen</th>
+                                        <th>Tanggal Mulai</th>
+                                        <th>Tanggal Sampai</th>
+                                    </tr>
+                                </tfoot>
+
+                            </table>
+                        @endif
+                    @else
+                        {{-- Jika login adalah dosen, dan kerjasama belum memiliki spk, maka menampilkan tabel koson --}}
                         {{-- info no mou --}}
                         <h3>
                             @if ($kerjasama->no_mou != null || $kerjasama->no_mou != '')
@@ -288,15 +376,15 @@
                                                     <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
                                                         class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
                                                             title="Edit"></i></a>
+                                                @endif
 
-                                                    @if (Auth::user()->level == 'A')
-                                                        {{-- Button Hapus --}}
-                                                        <button class="btn btn-sm btn-danger btn-hapus-kegiatan"
-                                                            data-id-kegiatan="{{ $data->id }}"
-                                                            data-bentukKegiatan="{{ $data->bentukKegiatan->bentuk }}"
-                                                            data-toggle="modal" data-target="#modal-sm-kegiatan"><i
-                                                                class="nav-icon fas fa-trash" title="Hapus"></i></button>
-                                                    @endif
+                                                @if (Auth::user()->level == 'A')
+                                                    {{-- Button Hapus --}}
+                                                    <button class="btn btn-sm btn-danger btn-hapus-kegiatan"
+                                                        data-id-kegiatan="{{ $data->id }}"
+                                                        data-bentukKegiatan="{{ $data->bentukKegiatan->bentuk }}"
+                                                        data-toggle="modal" data-target="#modal-sm-kegiatan"><i
+                                                            class="nav-icon fas fa-trash" title="Hapus"></i></button>
                                                 @endif
                                             </td>
 

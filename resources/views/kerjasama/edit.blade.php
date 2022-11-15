@@ -3,7 +3,6 @@
 
 @section('content')
 
-
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Ubah Data Kerjasama {{ $kerjasama->nama_kerja_sama }}</h3>
