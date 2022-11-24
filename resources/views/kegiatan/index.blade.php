@@ -61,7 +61,7 @@
                         <th>Nama Kerjasama</th>
                         <th>Bentuk Kegiatan</th>
                         <th>Keterangan</th>
-                        <th>PIC Dosen</th>
+                        <th>PIC</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
                     </tr>
@@ -120,7 +120,7 @@
                         <th>Nama Kerjasama</th>
                         <th>Bentuk Kegiatan</th>
                         <th>Keterangan</th>
-                        <th>PIC Dosen</th>
+                        <th>PIC</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
                     </tr>

@@ -131,8 +131,9 @@
                     @if ($kerjasama->status_id != '2' && Auth::user()->level != 'D')
                         {{-- Jika kerjasama tidak memiliki file spk maka form untuk tambah data tidak akan ditampilkan --}}
                         @if (count($kerjasamaBelumMemilikiFileSPK) > 0)
-                            <h3>Kerjasama ini belum memiliki file SPK</h3>
-                            <p>Silahkan tambahkan file SPK terlebih dahulu di bagian file kerjasama untuk dapat menambahkan
+                            <h3>Kerjasama ini belum memiliki file SPK/MoA</h3>
+                            <p>Silahkan tambahkan file SPK/MoA terlebih dahulu di bagian file kerjasama untuk dapat
+                                menambahkan
                                 kegiatan</p>
                         @else
                             <h3>Tambah Data Kegiatan</h3>
@@ -453,10 +454,10 @@
 
                                     <select class="form-control" name="jenis_file" id="">
                                         <option value="B" {{ $option == 'B' ? 'selected' : '' }}>
-                                            Bukti Kerjasama
+                                            Lain-lain
                                         </option>
                                         <option value="S" {{ $option == 'S' ? 'selected' : '' }}>
-                                            SPK
+                                            SPK/MoA
                                         </option>
                                         @if ($kerjasama->kategori_id == '1')
                                             <option value="M" {{ $option == 'M' ? 'selected' : '' }}>
@@ -473,7 +474,7 @@
 
                             {{-- add file --}}
                             <div class="form-group">
-                                <label for="file">Masukan File(Max:5mb)</label>
+                                <label for="file">Upload File(pdf,jpg,png,docx,doc|Max:10MB)</label>
                                 <div class="input-group">
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" name="file"
@@ -552,9 +553,9 @@
                                             if ($data->jenis_file == 'M') {
                                                 echo 'MoU';
                                             } elseif ($data->jenis_file == 'S') {
-                                                echo 'SPK';
+                                                echo 'SPK/MoA';
                                             } else {
-                                                echo 'Bukti Kerjasama';
+                                                echo 'Lain-lain';
                                             }
                                         @endphp
                                     </td>
