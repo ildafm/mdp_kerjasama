@@ -44,7 +44,7 @@ class BuktiKerjasamaController extends Controller
         $validateData = $request->validate([
             'nama_file' => 'required',
             'jenis_file' => 'required',
-            'file' => 'required | file |mimes:pdf,jpg,png,docx,doc| max:5000',
+            'file' => 'required | file |mimes:pdf,jpg,png,docx,doc| max:10240',
             'kerjasama_id' => 'required',
         ]);
 
