@@ -9,9 +9,17 @@ class BuktiKerjasama extends Model
 {
     use HasFactory;
 
-    public function kerjasama(){
+    public function kegiatan()
+    {
+        return $this->hasMany(Kegiatan::class);
+    }
+
+    public function kerjasama()
+    {
         return $this->belongsTo(Kerjasama::class);
     }
+
+
 
     protected $fillable = ['nama_file', 'jenis_file', 'file'];
 }

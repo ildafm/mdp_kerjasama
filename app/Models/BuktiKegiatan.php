@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class BuktiKegiatan extends Model
 {
     use HasFactory;
-    public function kegiatan(){
+    public function kegiatan()
+    {
         return $this->belongsTo(Kegiatan::class);
     }
-    public function buktiKegiatanUnit(){
+    public function buktiKegiatanUnit()
+    {
         return $this->hasMany(BuktiKegiatanUnit::class);
     }
 

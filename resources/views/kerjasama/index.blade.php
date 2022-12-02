@@ -33,7 +33,7 @@
                 </div>
             @endif
 
-            {{-- form untuk memfilter kegiatan berdasarkan tanggal mulai dan tanggal sampai --}}
+            {{-- form untuk memfilter kerjasama berdasarkan tanggal mulai dan tanggal sampai --}}
             <form action="{{ route('kerjasamas.index') }}" method="GET">
                 @csrf
                 <label for="filter">Filter berdasarkan tanggal</label>
@@ -110,13 +110,13 @@
                             </td>
                             <td>
                                 @php
-                                    if($data->bidang == 'P'){
+                                    if ($data->bidang == 'P') {
                                         echo 'Pendidikan';
-                                    } elseif($data->bidang == 'N'){
+                                    } elseif ($data->bidang == 'N') {
                                         echo 'Penelitian';
                                     } elseif ($data->bidang == 'B') {
                                         echo 'Pengabdian';
-                                    } elseif($data->bidang == 'A'){
+                                    } elseif ($data->bidang == 'A') {
                                         echo 'Pendidikan, Penelitian, Pengabdian';
                                     } else {
                                         echo 'Lain-lain';

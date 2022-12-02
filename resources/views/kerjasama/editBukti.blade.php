@@ -62,7 +62,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="file">Masukan File(Max:5mb | Kosongkan jika tidak ingin mengubah)</label>
+                    <label for="file">Upload File(pdf,jpg,png,docx,doc | Max:10mb | Kosongkan jika tidak ingin
+                        mengubah)</label>
                     <div class="input-group">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" name="file" id="exampleInputFile">

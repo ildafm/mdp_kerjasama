@@ -30,12 +30,12 @@ class KerjasamaController extends Controller
         if (isset($_GET['filter_tanggal_mulai']) && isset($_GET['filter_tanggal_sampai'])) {
             $tanggal_mulai = ($_GET['filter_tanggal_mulai']);
             $tanggal_sampai = ($_GET['filter_tanggal_sampai']);
-            
+
             $kerjasamas = Kerjasama::where('tanggal_mulai', '>=', $tanggal_mulai)->where('tanggal_sampai', '<=', $tanggal_sampai)->get();
-        } else{
+        } else {
             $tanggal_mulai = date('Y-m-d');
             $tanggal_sampai = date('Y-m-d');
-        }   
+        }
 
         return view('kerjasama.index')
             ->with('kerjasamas', $kerjasamas)
@@ -76,7 +76,7 @@ class KerjasamaController extends Controller
         $this->authorize('viewAny', User::class);
         // Input kerjasama baru
         if ($request->nama_kerja_sama != '' || $request->nama_kerja_sama != null) {
-            if($request->nama_kategori == '1'){
+            if ($request->nama_kategori == '1') {
                 $validateData = $request->validate([
                     'nama_kerja_sama' => 'required',
                     'tanggal_mulai' => 'required',
@@ -87,8 +87,7 @@ class KerjasamaController extends Controller
                     'bidang' => 'required',
                     'no_mou' => 'required',
                 ]);
-            }
-            else{
+            } else {
                 $validateData = $request->validate([
                     'nama_kerja_sama' => 'required',
                     'tanggal_mulai' => 'required',
@@ -99,16 +98,15 @@ class KerjasamaController extends Controller
                     'bidang' => 'required',
                 ]);
             }
-    
+
             $kerjasama = new Kerjasama();
-    
-            if($request->no_mou != '' || $request->no_mou != null){
+
+            if ($request->no_mou != '' || $request->no_mou != null) {
                 $kerjasama->no_mou = $validateData['no_mou'];
-            }
-            else{
+            } else {
                 $kerjasama->no_mou = '';
             }
-    
+
             $kerjasama->nama_kerja_sama = $validateData['nama_kerja_sama'];
             $kerjasama->bidang = $validateData['bidang'];
             $kerjasama->tanggal_mulai = $validateData['tanggal_mulai'];
@@ -116,14 +114,14 @@ class KerjasamaController extends Controller
             $kerjasama->kategori_id = $validateData['nama_kategori'];
             $kerjasama->status_id = $validateData['nama_status'];
             $kerjasama->usulan_id = $validateData['usulan'];
-    
+
             $kerjasama->save();
-    
+
             $request->session()->flash('pesan', 'Penambahan data berhasil');
             return redirect()->route('kerjasamas.index');
         }
         // Input kegiatan baru melalui kerjasama show
-        else{
+        else {
             $validateData = $request->validate([
                 'tanggal_mulai' => 'required',
                 'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
@@ -132,27 +130,29 @@ class KerjasamaController extends Controller
                 'kerjasama_id' => 'required',
                 'pic_dosen' => 'required',
                 'keterangan' => 'required',
+                'spk' => 'required'
             ]);
-    
+
             $kegiatan = new Kegiatan();
-    
+
             $kegiatan->tanggal_mulai = $validateData['tanggal_mulai'];
             $kegiatan->tanggal_sampai = $validateData['tanggal_sampai'];
             $kegiatan->bentuk_kegiatan_id = $validateData['bentuk_kegiatan'];
             // $kegiatan->PIC = $validateData['PIC'];
             $kegiatan->kerjasama_id = $validateData['kerjasama_id'];
             $kegiatan->user_id = $validateData['pic_dosen'];
-            $kegiatan->keterangan =$validateData['keterangan'];
-    
+            $kegiatan->keterangan = $validateData['keterangan'];
+            $kegiatan->bukti_kerjasama_spk_id = $validateData['spk'];
+
             $kegiatan->save();
-    
+
             // send mail
             $findUser = User::findOrFail($kegiatan->user_id);
             $bentukKegiatan = $validateData['bentuk_kegiatan'];
-            $tanggalMulaiKegiatan = $validateData['tanggal_mulai']; 
+            $tanggalMulaiKegiatan = $validateData['tanggal_mulai'];
             $tanggalSampaiKegiatan = $validateData['tanggal_sampai'];
             $id_kegiatan = $kegiatan->id; //get id kegiatan for send email
-            
+
             $details = [
                 'title' => 'Kegiatan Baru',
                 'user_name' => $findUser->name,
@@ -164,10 +164,9 @@ class KerjasamaController extends Controller
 
             Mail::to($findUser->email)->send(new \App\Mail\MyTestMail($details));
 
-
             $request->session()->flash('pesan', 'Penambahan data berhasil');
             return redirect()->route('kerjasamas.show', $kegiatan->kerjasama_id);
-        } 
+        }
     }
 
     /**
@@ -193,16 +192,20 @@ class KerjasamaController extends Controller
             LEFT JOIN bukti_kegiatans on bukti_kegiatans.kegiatans_id = kegiatans.id 
             WHERE (kegiatans.bentuk_kegiatan_id IS NOT NULL AND bukti_kegiatans.nama_bukti_kegiatan IS NULL) 
             ORDER BY users.id )");
-            
-        $kegiatans = Kegiatan::All();
+
+        $kegiatans = Kegiatan::all();
         $bentukKegiatans = BentukKegiatan::all();
+
+        $SPK = DB::select("SELECT * FROM bukti_kerjasamas
+        WHERE jenis_file = 'S' AND kerjasama_id = $kerjasama->id");
 
         return view('kerjasama.show')
             ->with('kerjasama', $kerjasama)
             ->with('buktiKerjasama', $buktiKerjasama)
             ->with('users', $users)
             ->with('bentukKegiatans', $bentukKegiatans)
-            ->with('kegiatans', $kegiatans);
+            ->with('kegiatans', $kegiatans)
+            ->with('SPK', $SPK);
     }
 
     /**
@@ -218,7 +221,7 @@ class KerjasamaController extends Controller
         $kategoris = Kategori::All();
         $statuses = Status::All();
         $usulans = Usulan::All()->where('hasil_penjajakan', 'L');
-        
+
         return view('kerjasama.edit')
             ->with('kerjasama', $kerjasama)
             ->with('kategoris', $kategoris)
@@ -237,7 +240,7 @@ class KerjasamaController extends Controller
     {
         //
         $this->authorize('viewAny', User::class);
-        if($request->nama_kategori == '1'){
+        if ($request->nama_kategori == '1') {
             $this->validate($request, [
                 'nama_kerja_sama' => 'required',
                 'tanggal_mulai' => 'required',
@@ -248,8 +251,7 @@ class KerjasamaController extends Controller
                 'bidang' => 'required',
                 'no_mou' => 'required',
             ]);
-        }
-        else{
+        } else {
             $this->validate($request, [
                 'nama_kerja_sama' => 'required',
                 'tanggal_mulai' => 'required',
@@ -263,7 +265,7 @@ class KerjasamaController extends Controller
 
         $kerjasama = Kerjasama::findOrFail($kerjasama->id);
 
-        if($request->nama_kategori == '1'){
+        if ($request->nama_kategori == '1') {
             $kerjasama->update([
                 'no_mou' => $request->no_mou,
                 'nama_kerja_sama' => $request->nama_kerja_sama,
@@ -274,8 +276,7 @@ class KerjasamaController extends Controller
                 'status_id' => $request->nama_status,
                 'usulan_id' => $request->usulan,
             ]);
-        }
-        else{
+        } else {
             $kerjasama->update([
                 'nama_kerja_sama' => $request->nama_kerja_sama,
                 'bidang' => $request->bidang,
@@ -304,9 +305,9 @@ class KerjasamaController extends Controller
         $getBuktiKerjasama = DB::select("SELECT * FROM bukti_kerjasamas WHERE kerjasama_id = $kerjasama->id");
 
         // unlink semua file sekaligus
-        if(count($getBuktiKerjasama) > 0){
+        if (count($getBuktiKerjasama) > 0) {
             for ($i = 0; $i < count($getBuktiKerjasama); $i++) {
-                unlink(storage_path('app/public/kerjasama/'.$getBuktiKerjasama[$i]->file));
+                unlink(storage_path('app/public/kerjasama/' . $getBuktiKerjasama[$i]->file));
             }
         }
         $kerjasama->delete();
@@ -314,22 +315,22 @@ class KerjasamaController extends Controller
     }
 
     // Delete from usulan show.blade.php
-    public function customDestroy($id_kerjasama){
+    public function customDestroy($id_kerjasama)
+    {
         $this->authorize('adminOnly', User::class);
-        
+
         $kerjasama = Kerjasama::findOrFail($id_kerjasama);
 
         $getBuktiKerjasama = DB::select("SELECT * FROM bukti_kerjasamas WHERE kerjasama_id = $kerjasama->id");
 
         // unlink semua file sekaligus
-        if(count($getBuktiKerjasama) > 0){
+        if (count($getBuktiKerjasama) > 0) {
             for ($i = 0; $i < count($getBuktiKerjasama); $i++) {
-                unlink(storage_path('app/public/kerjasama/'.$getBuktiKerjasama[$i]->file));
+                unlink(storage_path('app/public/kerjasama/' . $getBuktiKerjasama[$i]->file));
             }
         }
-        
+
         $kerjasama->delete();
         return redirect()->route('usulans.show', $kerjasama->usulan_id)->with('pesan', "Hapus data kerjasama : $kerjasama->nama_kerja_sama berhasil");
-
     }
 }

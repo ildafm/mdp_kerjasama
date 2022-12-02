@@ -9,17 +9,25 @@ class Kegiatan extends Model
 {
     use HasFactory;
 
-    public function kerjasama(){
+    public function kerjasama()
+    {
         return $this->belongsTo(Kerjasama::class);
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function bentukKegiatan(){
+    public function bentukKegiatan()
+    {
         return $this->belongsTo(BentukKegiatan::class);
     }
 
-    protected $fillable = ['tanggal_mulai', 'tanggal_sampai', 'bentuk_kegiatan_id', 'PIC', 'keterangan', 'kerjasama_id', 'user_id'];
+    public function buktiKerjasamaSpk()
+    {
+        return $this->belongsTo(BuktiKerjasama::class);
+    }
+
+    protected $fillable = ['tanggal_mulai', 'tanggal_sampai', 'bentuk_kegiatan_id', 'PIC', 'keterangan', 'kerjasama_id', 'user_id', 'bukti_kerjasama_spk_id'];
 }

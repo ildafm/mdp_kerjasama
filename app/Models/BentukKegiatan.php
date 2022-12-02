@@ -9,7 +9,8 @@ class BentukKegiatan extends Model
 {
     use HasFactory;
 
-    public function kegiatan(){
+    public function kegiatan()
+    {
         return $this->hasMany(Kegiatan::class);
     }
 

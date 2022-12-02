@@ -9,26 +9,31 @@ class Kerjasama extends Model
 {
     use HasFactory;
 
-    public function kategori(){
+    public function kategori()
+    {
         return $this->belongsTo(Kategori::class);
     }
 
-    public function status(){
+    public function status()
+    {
         return $this->belongsTo(Status::class);
     }
-    
-    public function usulan(){
+
+    public function usulan()
+    {
         return $this->belongsTo(Usulan::class);
     }
 
-    public function kegiatans(){
+    public function kegiatans()
+    {
         return $this->hasMany(Kegiatan::class);
     }
 
-    public function buktiKerjasama(){
+    public function buktiKerjasama()
+    {
         return $this->hasMany(BuktiKerjasama::class);
     }
-    
+
 
     protected $fillable = ['nama_kerja_sama', 'tanggal_mulai', 'tanggal_sampai', 'kategori_id', 'status_id', 'usulan_id', 'no_mou', 'bidang'];
 }

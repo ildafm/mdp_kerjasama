@@ -87,14 +87,14 @@
                                     <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
                                         class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
                                             title="Edit"></i></a>
+                                @endif
 
-                                    @if (Auth::user()->level == 'A')
-                                        {{-- Button Hapus --}}
-                                        <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                            data-bentukKegiatan="{{ $data->bentuk_kegiatan }}" data-toggle="modal"
-                                            data-target="#modal-sm"><i class="nav-icon fas fa-trash"
-                                                title="Hapus"></i></button>
-                                    @endif
+                                @if (Auth::user()->level == 'A')
+                                    {{-- Button Hapus --}}
+                                    <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                        data-bentukKegiatan="{{ $data->bentukKegiatan->bentuk }}" data-toggle="modal"
+                                        data-target="#modal-sm"><i class="nav-icon fas fa-trash"
+                                            title="Hapus"></i></button>
                                 @endif
                             </td>
 

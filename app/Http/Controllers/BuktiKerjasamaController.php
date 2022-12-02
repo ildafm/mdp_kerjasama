@@ -53,15 +53,15 @@ class BuktiKerjasamaController extends Controller
         $ext = $request->file->getClientOriginalExtension();
 
         //ubah nama file file
-        $rename_file = 'file-'.time().".".$ext; //contoh file : file-timestamp.jpg
+        $rename_file = 'file-' . time() . "." . $ext; //contoh file : file-timestamp.jpg
 
         //upload foler ke dalam folder public
         $request->file->storeAs('public/kerjasama', $rename_file); //bisa diletakan difolder lain dengan store ke public/(folderlain)
-        
+
 
         // 2. simpan file
         $buktiKerjasama = new BuktiKerjasama();
-        
+
         $buktiKerjasama->nama_file = $validateData['nama_file'];
         $buktiKerjasama->jenis_file = $validateData['jenis_file'];
         $buktiKerjasama->file = $rename_file;
@@ -116,17 +116,17 @@ class BuktiKerjasamaController extends Controller
 
         $buktiKerjasama = BuktiKerjasama::findOrFail($buktiKerjasama->id);
 
-        if($request->file != ""){
+        if ($request->file != "") {
 
-            if($buktiKerjasama->file != null || $buktiKerjasama->file != ''){
-                unlink(storage_path('app/public/kerjasama/'.$buktiKerjasama->file));
+            if ($buktiKerjasama->file != null || $buktiKerjasama->file != '') {
+                unlink(storage_path('app/public/kerjasama/' . $buktiKerjasama->file));
             }
 
             //ambil extensi //png / jpg / gif
             $ext = $request->file->getClientOriginalExtension();
 
             //ubah nama file file
-            $rename_file = 'file-'.time().".".$ext; //contoh file : file-timestamp.jpg
+            $rename_file = 'file-' . time() . "." . $ext; //contoh file : file-timestamp.jpg
 
             //upload foler ke dalam folder public
             $request->file->storeAs('public/kerjasama', $rename_file); //bisa diletakan difolder lain dengan store ke public/(folderlain)
@@ -135,9 +135,8 @@ class BuktiKerjasamaController extends Controller
                 'nama_file' => $request->nama_file,
                 'jenis_file' => $request->jenis_file,
                 'file' => $rename_file,
-            ]); 
-        }
-        else{
+            ]);
+        } else {
             $buktiKerjasama->update([
                 'nama_file' => $request->nama_file,
                 'jenis_file' => $request->jenis_file,
@@ -157,10 +156,10 @@ class BuktiKerjasamaController extends Controller
     public function destroy(BuktiKerjasama $buktiKerjasama)
     {
         //
-        if($buktiKerjasama->file != null || $buktiKerjasama->file != ''){
-            unlink(storage_path('app/public/kerjasama/'.$buktiKerjasama->file));
+        if ($buktiKerjasama->file != null || $buktiKerjasama->file != '') {
+            unlink(storage_path('app/public/kerjasama/' . $buktiKerjasama->file));
         }
-        
+
         $buktiKerjasama->delete();
         return redirect()->route('kerjasamas.show', $buktiKerjasama->kerjasama_id)->with('pesan', "Hapus data file $buktiKerjasama->nama_file berhasil");
     }

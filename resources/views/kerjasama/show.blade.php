@@ -128,14 +128,19 @@
                         $kerjasamaBelumMemilikiFileSPK = DB::select("SELECT * FROM kerjasamas WHERE id NOT IN ( SELECT kerjasama_id FROM bukti_kerjasamas WHERE bukti_kerjasamas.jenis_file = 'S') AND id = $getKerjasamaID");
                     @endphp
                     {{-- Form Menambahkan data Kegiatan jika kerjasama tidak kadaluarsa dan login bukan dosen --}}
-                    @if ($kerjasama->status_id != '2' && Auth::user()->level != 'D')
-                        {{-- Jika kerjasama tidak memiliki file spk maka form untuk tambah data tidak akan ditampilkan --}}
+                    @if (Auth::user()->level != 'D')
+                        {{-- Jika kerjasama tidak memiliki file spk maka form untuk tambah data kegiatan tidak akan ditampilkan --}}
                         @if (count($kerjasamaBelumMemilikiFileSPK) > 0)
-                            <h3>Kerjasama ini belum memiliki file SPK/MoA</h3>
-                            <p>Silahkan tambahkan file SPK/MoA terlebih dahulu di bagian file kerjasama untuk dapat
-                                menambahkan
-                                kegiatan</p>
+                            @if ($kerjasama->status_id != '2')
+                                <h3>Kerjasama ini belum memiliki file SPK/MoA</h3>
+                                <p>Silahkan tambahkan file SPK/MoA terlebih dahulu di bagian file kerjasama untuk dapat
+                                    menambahkan
+                                    kegiatan</p>
+                            @else
+                                <h3>Kerjasama ini sudah kadaluarsa dan belum memiliki file SPK/MoA</h3>
+                            @endif
                         @else
+                            {{-- Form tambah data kegiatan --}}
                             <h3>Tambah Data Kegiatan</h3>
                             <form action="{{ route('kerjasamas.store') }}" method="POST">
                                 @csrf
@@ -178,7 +183,7 @@
 
                                 <div class="row">
                                     {{-- Tanggal Mulai --}}
-                                    <div class="form-group col-lg-4">
+                                    <div class="form-group col-lg-3">
                                         <label for="tanggal_mulai">Tanggal Mulai</label>
                                         <input type="date" name="tanggal_mulai" id="" class="form-control"
                                             min="{{ $kerjasama->tanggal_mulai }}" max="{{ $kerjasama->tanggal_sampai }}"
@@ -189,7 +194,7 @@
                                     </div>
 
                                     {{-- Tanggal Sampai --}}
-                                    <div class="form-group col-lg-4">
+                                    <div class="form-group col-lg-3">
                                         <label for="tanggal_sampai">Tanggal Sampai</label>
                                         <input type="date" name="tanggal_sampai" id="" class="form-control"
                                             min="{{ $kerjasama->tanggal_mulai }}" max="{{ $kerjasama->tanggal_sampai }}"
@@ -199,9 +204,9 @@
                                         @enderror
                                     </div>
 
-                                    {{-- Dosen --}}
-                                    <div class="form-group col-lg-4">
-                                        <label for="pic_dosen">PIC Dosen</label>
+                                    {{-- PIC --}}
+                                    <div class="form-group col-lg-3">
+                                        <label for="pic_dosen">PIC</label>
 
                                         @php
                                             if (old('pic_dosen') !== null) {
@@ -224,11 +229,37 @@
                                         @enderror
                                     </div>
 
+                                    {{-- SPK --}}
+                                    <div class="form-group col-lg-3">
+                                        <label for="spk">SPK</label>
+
+                                        @php
+                                            if (old('spk') !== null) {
+                                                $option = old('spk');
+                                            } else {
+                                                $option = 1;
+                                            }
+                                        @endphp
+
+                                        <select class="form-control select2" name="spk" id="">
+                                            @foreach ($SPK as $data)
+                                                <option value="{{ $data->id }}"
+                                                    {{ $option == $data->id ? 'selected' : '' }}>
+                                                    {{ $data->nama_file }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('spk')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
                                 </div>
 
                                 <div class="form-group">
                                     <label for="keterangan">Keterangan</label>
-                                    <input type="text" name="keterangan" id="" value="{{ old('keterangan') }}"
+                                    <input type="text" name="keterangan" id=""
+                                        value="{{ old('keterangan') }}"
                                         class="form-control @error('keterangan') is-invalid @enderror"
                                         placeholder="Masukan Keterangan">
                                     @error('keterangan')
@@ -263,9 +294,10 @@
                                         <th>Aksi</th>
                                         <th>Bentuk Kegiatan</th>
                                         <th>Keterangan</th>
-                                        <th>PIC Dosen</th>
+                                        <th>PIC</th>
                                         <th>Tanggal Mulai</th>
                                         <th>Tanggal Sampai</th>
+                                        <th>Mengacu pada SPK</th>
                                     </tr>
                                 </thead>
 
@@ -312,6 +344,8 @@
                                                 <td>{{ $data->tanggal_mulai }}</td>
 
                                                 <td>{{ $data->tanggal_sampai }}</td>
+
+                                                <td>{{ $data->buktiKerjasamaSpk->nama_file }}</td>
                                             </tr>
                                         @endif
                                     @endforeach
@@ -326,13 +360,14 @@
                                         <th>PIC Dosen</th>
                                         <th>Tanggal Mulai</th>
                                         <th>Tanggal Sampai</th>
+                                        <th>Mengacu pada SPK</th>
                                     </tr>
                                 </tfoot>
 
                             </table>
                         @endif
                     @else
-                        {{-- Jika login adalah dosen, dan kerjasama belum memiliki spk, maka menampilkan tabel koson --}}
+                        {{-- Jika login adalah dosen, dan kerjasama belum memiliki spk, maka menampilkan tabel kosong --}}
                         {{-- info no mou --}}
                         <h3>
                             @if ($kerjasama->no_mou != null || $kerjasama->no_mou != '')
@@ -352,6 +387,7 @@
                                     <th>PIC Dosen</th>
                                     <th>Tanggal Mulai</th>
                                     <th>Tanggal Sampai</th>
+                                    <th>Mengacu pada SPK</th>
                                 </tr>
                             </thead>
 
@@ -398,6 +434,8 @@
                                             <td>{{ $data->tanggal_mulai }}</td>
 
                                             <td>{{ $data->tanggal_sampai }}</td>
+
+                                            <td>{{ $data->buktiKerjasamaSpk->nama_file }}</td>
                                         </tr>
                                     @endif
                                 @endforeach
@@ -412,6 +450,7 @@
                                     <th>PIC Dosen</th>
                                     <th>Tanggal Mulai</th>
                                     <th>Tanggal Sampai</th>
+                                    <th>Mengacu pada SPK</th>
                                 </tr>
                             </tfoot>
 
@@ -453,7 +492,7 @@
                                     @endphp
 
                                     <select class="form-control" name="jenis_file" id="">
-                                        <option value="B" {{ $option == 'B' ? 'selected' : '' }}>
+                                        <option value="L" {{ $option == 'L' ? 'selected' : '' }}>
                                             Lain-lain
                                         </option>
                                         <option value="S" {{ $option == 'S' ? 'selected' : '' }}>
