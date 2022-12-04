@@ -82,10 +82,12 @@
                                 $option = old('bentuk_kegiatan');
                             } else {
                                 $getIdFromSortingQuerry = DB::select('SELECT * FROM bentuk_kegiatans ORDER BY bentuk ASC LIMIT 1');
-                            
-                                $option = $getIdFromSortingQuerry[0]->id;
+                                if (count($getIdFromSortingQuerry) > 0) {
+                                    $option = $getIdFromSortingQuerry[0]->id;
+                                }
                             }
                         @endphp
+
                         <select class="form-control select2" name="bentuk_kegiatan" id="">
                             @foreach ($bentukKegiatans as $data)
                                 <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
@@ -101,7 +103,7 @@
 
                 <div class="row">
                     {{-- Tanggal Mulai --}}
-                    <div class="form-group col-lg-4">
+                    <div class="form-group col-lg-3">
                         <label for="tanggal_mulai">Tanggal Mulai</label>
                         <input type="date" name="tanggal_mulai" id="tanggal_mulai" class="form-control"
                             value="{{ old('tanggal_mulai') }}" min="">
@@ -111,7 +113,7 @@
                     </div>
 
                     {{-- Tanggal Sampai --}}
-                    <div class="form-group col-lg-4">
+                    <div class="form-group col-lg-3">
                         <label for="tanggal_sampai">Tanggal Sampai</label>
                         <input type="date" name="tanggal_sampai" id="tanggal_sampai" class="form-control"
                             value="{{ old('tanggal_sampai') }}">
@@ -120,9 +122,9 @@
                         @enderror
                     </div>
 
-                    {{-- Dosen --}}
-                    <div class="form-group col-lg-4">
-                        <label for="pic_dosen">PIC Dosen</label>
+                    {{-- PIC --}}
+                    <div class="form-group col-lg-3">
+                        <label for="pic_dosen">PIC</label>
 
                         @php
                             if (old('pic_dosen') !== null) {
@@ -143,6 +145,35 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+                    {{-- SPK --}}
+                    {{-- <div class="form-group col-lg-3">
+                        <label for="spk">SPK</label>
+
+                        @php
+                            if (old('spk') !== null) {
+                                $option = old('spk');
+                            } else {
+                                $SPK = DB::select("SELECT * FROM bukti_kerjasamas
+                                WHERE jenis_file = 'S' AND kerjasama_id = $kerjasama->id");
+                                if (count($SPK) > 0) {
+                                    $option = $getIdFromSortingQuerry[0]->id;
+                                }
+                                $option = 1;
+                            }
+                        @endphp
+
+                        <select class="form-control select2" name="spk" id="">
+                            @foreach ($SPK as $data)
+                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                    {{ $data->nama_file }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('spk')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div> --}}
+
                 </div>
 
                 <div class="form-group">

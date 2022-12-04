@@ -33,6 +33,7 @@ class KerjasamaTanpaKegiatanController extends Controller
             JOIN kategoris ON kategoris.id = kerjasamas.kategori_id
             JOIN statuses ON statuses.id = kerjasamas.status_id
             JOIN usulans ON usulans.id = kerjasamas.usulan_id
+            WHERE kategoris.id = '1'
         ) AS c
         WHERE c.bentuk_kegiatan IS NULL
         ORDER BY c.id");
@@ -40,7 +41,7 @@ class KerjasamaTanpaKegiatanController extends Controller
         if (isset($_GET['filter_tanggal_mulai']) && isset($_GET['filter_tanggal_sampai'])) {
             $tanggal_mulai = ($_GET['filter_tanggal_mulai']);
             $tanggal_sampai = ($_GET['filter_tanggal_sampai']);
-            
+
             $kerjasamas = DB::select("SELECT * FROM (
                 SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, bentuk_kegiatans.bentuk AS 'bentuk_kegiatan', kerjasamas.no_mou, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, statuses.nama_status, usulans.usulan, kerjasamas.bidang
                 FROM kerjasamas
@@ -49,13 +50,14 @@ class KerjasamaTanpaKegiatanController extends Controller
                 JOIN kategoris ON kategoris.id = kerjasamas.kategori_id
                 JOIN statuses ON statuses.id = kerjasamas.status_id
                 JOIN usulans ON usulans.id = kerjasamas.usulan_id
+                WHERE kategoris.id = '1'
             ) AS c
             WHERE c.bentuk_kegiatan IS NULL AND (c.tanggal_mulai >= '$tanggal_mulai' AND c.tanggal_sampai <= '$tanggal_sampai')
             ORDER BY c.id");
-        } else{
+        } else {
             $tanggal_mulai = date('Y-m-d');
             $tanggal_sampai = date('Y-m-d');
-        }  
+        }
 
         return view('kerjasama_tanpa_kegiatan.index')
             ->with('kerjasamas', $kerjasamas)
@@ -97,8 +99,8 @@ class KerjasamaTanpaKegiatanController extends Controller
         $this->authorize('viewAny', User::class);
 
         // input kerjasama baru
-        if($request->nama_kerja_sama != '' || $request->nama_kerja_sama != null){
-            if($request->nama_kategori == '1'){
+        if ($request->nama_kerja_sama != '' || $request->nama_kerja_sama != null) {
+            if ($request->nama_kategori == '1') {
                 $validateData = $request->validate([
                     'nama_kerja_sama' => 'required',
                     'tanggal_mulai' => 'required',
@@ -109,8 +111,7 @@ class KerjasamaTanpaKegiatanController extends Controller
                     'bidang' => 'required',
                     'no_mou' => 'required',
                 ]);
-            }
-            else{
+            } else {
                 $validateData = $request->validate([
                     'nama_kerja_sama' => 'required',
                     'tanggal_mulai' => 'required',
@@ -121,30 +122,29 @@ class KerjasamaTanpaKegiatanController extends Controller
                     'bidang' => 'required',
                 ]);
             }
-    
+
             $kerjasama = new Kerjasama();
-    
-            if($request->no_mou != '' || $request->no_mou != null){
+
+            if ($request->no_mou != '' || $request->no_mou != null) {
                 $kerjasama->no_mou = $validateData['no_mou'];
-            }
-            else{
+            } else {
                 $kerjasama->no_mou = '';
             }
-    
+
             $kerjasama->nama_kerja_sama = $validateData['nama_kerja_sama'];
             $kerjasama->tanggal_mulai = $validateData['tanggal_mulai'];
             $kerjasama->tanggal_sampai = $validateData['tanggal_sampai'];
             $kerjasama->kategori_id = $validateData['nama_kategori'];
             $kerjasama->status_id = $validateData['nama_status'];
             $kerjasama->usulan_id = $validateData['usulan'];
-    
+
             $kerjasama->save();
-    
+
             $request->session()->flash('pesan', 'Penambahan data berhasil');
-            return redirect()->route('kerjasama_tanpa_kegiatans.index');   
+            return redirect()->route('kerjasama_tanpa_kegiatans.index');
         }
         // input kegiatan baru melalui show
-        else{
+        else {
             $validateData = $request->validate([
                 'tanggal_mulai' => 'required',
                 'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
@@ -154,25 +154,25 @@ class KerjasamaTanpaKegiatanController extends Controller
                 'pic_dosen' => 'required',
                 'keterangan' => 'required',
             ]);
-    
+
             $kegiatan = new Kegiatan();
-    
+
             $kegiatan->tanggal_mulai = $validateData['tanggal_mulai'];
             $kegiatan->tanggal_sampai = $validateData['tanggal_sampai'];
             $kegiatan->bentuk_kegiatan_id = $validateData['bentuk_kegiatan'];
             $kegiatan->kerjasama_id = $validateData['kerjasama_id'];
             $kegiatan->user_id = $validateData['pic_dosen'];
-            $kegiatan->keterangan =$validateData['keterangan'];
-    
+            $kegiatan->keterangan = $validateData['keterangan'];
+
             $kegiatan->save();
-    
+
             // Send mail
             $findUser = User::findOrFail($kegiatan->user_id);
             $bentukKegiatan = $validateData['bentuk_kegiatan'];
-            $tanggalMulaiKegiatan = $validateData['tanggal_mulai']; 
+            $tanggalMulaiKegiatan = $validateData['tanggal_mulai'];
             $tanggalSampaiKegiatan = $validateData['tanggal_sampai'];
             $id_kegiatan = $kegiatan->id; //get id kegiatan for send email
-            
+
             $details = [
                 'title' => 'Kegiatan Baru',
                 'user_name' => $findUser->name,
@@ -184,7 +184,7 @@ class KerjasamaTanpaKegiatanController extends Controller
 
             Mail::to($findUser->email)->send(new \App\Mail\MyTestMail($details));
 
-    
+
             $request->session()->flash('pesan', 'Penambahan data berhasil');
             return redirect()->route('kerjasama_tanpa_kegiatans.show', $kegiatan->kerjasama_id);
         }
@@ -211,7 +211,7 @@ class KerjasamaTanpaKegiatanController extends Controller
         WHERE c.bentuk_kegiatan IS NULL AND c.id = $id");
 
         // Jika Kerjasama belum memiliki kegiatan
-        if(count($kerjasama) > 0){
+        if (count($kerjasama) > 0) {
             $buktiKerjasama = DB::select("SELECT bukti_kerjasamas.*, LEFT(bukti_kerjasamas.created_at, 10) as tanggalUpload 
             FROM bukti_kerjasamas
             JOIN kerjasamas ON bukti_kerjasamas.kerjasama_id = kerjasamas.id
@@ -226,7 +226,7 @@ class KerjasamaTanpaKegiatanController extends Controller
                 LEFT JOIN bukti_kegiatans on bukti_kegiatans.kegiatans_id = kegiatans.id 
                 WHERE (kegiatans.bentuk_kegiatan_id IS NOT NULL AND bukti_kegiatans.nama_bukti_kegiatan IS NULL) 
                 ORDER BY users.id )");
-                
+
             $kegiatans = Kegiatan::All();
             $bentukKegiatans = BentukKegiatan::all();
 
@@ -238,9 +238,9 @@ class KerjasamaTanpaKegiatanController extends Controller
                 ->with('kegiatans', $kegiatans);
         }
         // Jika kerjasama sudah memiliki kegiatan
-        else{
+        else {
             $kerjasama = Kerjasama::findOrFail($id);
-            
+
             $buktiKerjasama = DB::select("SELECT bukti_kerjasamas.*, LEFT(bukti_kerjasamas.created_at, 10) as tanggalUpload 
             FROM bukti_kerjasamas
             JOIN kerjasamas ON bukti_kerjasamas.kerjasama_id = kerjasamas.id
@@ -255,7 +255,7 @@ class KerjasamaTanpaKegiatanController extends Controller
                 LEFT JOIN bukti_kegiatans on bukti_kegiatans.kegiatans_id = kegiatans.id 
                 WHERE (kegiatans.bentuk_kegiatan IS NOT NULL AND bukti_kegiatans.nama_bukti_kegiatan IS NULL) 
                 ORDER BY users.id )");
-                
+
             $kegiatans = Kegiatan::All();
             $bentukKegiatans = BentukKegiatan::all();
 
@@ -293,7 +293,7 @@ class KerjasamaTanpaKegiatanController extends Controller
         $kategoris = Kategori::All();
         $statuses = Status::All();
         $usulans = Usulan::All()->where('hasil_penjajakan', 'L');
-        
+
         return view('kerjasama_tanpa_kegiatan.edit')
             ->with('kerjasama', $kerjasama[0])
             ->with('kategoris', $kategoris)
@@ -313,7 +313,7 @@ class KerjasamaTanpaKegiatanController extends Controller
         //
         $this->authorize('viewAny', User::class);
 
-        if($request->nama_kategori == '1'){
+        if ($request->nama_kategori == '1') {
             $this->validate($request, [
                 'nama_kerja_sama' => 'required',
                 'tanggal_mulai' => 'required',
@@ -324,8 +324,7 @@ class KerjasamaTanpaKegiatanController extends Controller
                 'bidang' => 'required',
                 'no_mou' => 'required',
             ]);
-        }
-        else{
+        } else {
             $this->validate($request, [
                 'nama_kerja_sama' => 'required',
                 'tanggal_mulai' => 'required',
@@ -339,7 +338,7 @@ class KerjasamaTanpaKegiatanController extends Controller
 
         $kerjasama = Kerjasama::findOrFail($id);
 
-        if($request->nama_kategori == '1'){
+        if ($request->nama_kategori == '1') {
             $kerjasama->update([
                 'no_mou' => $request->no_mou,
                 'nama_kerja_sama' => $request->nama_kerja_sama,
@@ -350,8 +349,7 @@ class KerjasamaTanpaKegiatanController extends Controller
                 'status_id' => $request->nama_status,
                 'usulan_id' => $request->usulan
             ]);
-        }
-        else{
+        } else {
             $kerjasama->update([
                 'nama_kerja_sama' => $request->nama_kerja_sama,
                 'bidang' => $request->bidang,
@@ -381,9 +379,9 @@ class KerjasamaTanpaKegiatanController extends Controller
         $getBuktiKerjasama = DB::select("SELECT * FROM bukti_kerjasamas WHERE kerjasama_id = $id");
 
         // unlink semua file sekaligus
-        if(count($getBuktiKerjasama) > 0){
+        if (count($getBuktiKerjasama) > 0) {
             for ($i = 0; $i < count($getBuktiKerjasama); $i++) {
-                unlink(storage_path('app/public/kerjasama/'.$getBuktiKerjasama[$i]->file));
+                unlink(storage_path('app/public/kerjasama/' . $getBuktiKerjasama[$i]->file));
             }
         }
         $kerjasama = Kerjasama::findOrFail($id);

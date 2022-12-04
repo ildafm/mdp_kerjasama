@@ -95,7 +95,7 @@
                         WHERE tbl_kegiatan_sudah_waktu_mulai.total_bukti_kegiatan = 0 AND tbl_kegiatan_sudah_waktu_mulai.get_day >= 0
                         GROUP BY tbl_kegiatan_sudah_waktu_mulai.total_bukti_kegiatan");
                     }
-
+                    
                     // Login Dekan
                     elseif (Auth::user()->level == 'E') {
                         // menghitung jumlah kegiatan yang baru yang belum dilihat
@@ -156,7 +156,7 @@
                         WHERE tbl_kegiatan_sudah_waktu_mulai.total_bukti_kegiatan = 0 AND tbl_kegiatan_sudah_waktu_mulai.get_day >= 0
                         GROUP BY tbl_kegiatan_sudah_waktu_mulai.total_bukti_kegiatan");
                     }
-
+                    
                     // Login Kaprodi(K) atau Kepala Unit(U)
                     elseif (Auth::user()->level == 'K' || Auth::user()->level == 'U') {
                         // menghitung jumlah kegiatan yang baru yang belum dilihat
@@ -218,7 +218,7 @@
                         WHERE tbl_kegiatan_sudah_waktu_mulai.total_bukti_kegiatan = 0 AND tbl_kegiatan_sudah_waktu_mulai.get_day >= 0
                         GROUP BY tbl_kegiatan_sudah_waktu_mulai.total_bukti_kegiatan");
                     }
-
+                    
                     // Login Dosen
                     else {
                         // menghitung jumlah kegiatan yang baru yang belum dilihat
@@ -484,6 +484,13 @@
                                         <p>Tanpa Kegiatan</p>
                                     </a>
                                 </li>
+                                {{-- Kerjasama yang tidak memiliki mou --}}
+                                <li class="nav-item">
+                                    <a href="{{ url('/kerjasama_tanpa_mous') }}" class="nav-link">
+                                        <i class="fas fa-folder nav-icon"></i>
+                                        <p>Tanpa MoU</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
 
@@ -509,6 +516,13 @@
                                     <a href="{{ url('/kegiatan_berdasarkan_mitras') }}" class="nav-link">
                                         <i class="fas fa-folder nav-icon"></i>
                                         <p>Berdasarkan Mitra</p>
+                                    </a>
+                                </li>
+                                {{-- Semua Bukti/Laporan Kegiatan --}}
+                                <li class="nav-item">
+                                    <a href="{{ url('/semua_laporan_kegiatans') }}" class="nav-link">
+                                        <i class="fas fa-folder nav-icon"></i>
+                                        <p>Laporan Kegiatan</p>
                                     </a>
                                 </li>
                             </ul>
@@ -551,7 +565,7 @@
                                             <p>Bentuk Kegiatan</p>
                                         </a>
                                     </li>
-                                    
+
                                     {{-- Negara --}}
                                     <li class="nav-item">
                                         <a href="{{ url('/negaras') }}" class="nav-link">
@@ -559,7 +573,7 @@
                                             <p>Negara</p>
                                         </a>
                                     </li>
-                                    
+
 
                                     {{-- Units --}}
                                     <li class="nav-item">

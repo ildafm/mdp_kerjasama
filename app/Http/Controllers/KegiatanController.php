@@ -29,14 +29,14 @@ class KegiatanController extends Controller
             $tanggal_sampai = ($_GET['filter_tanggal_sampai']);
 
             $kegiatans = Kegiatan::where('tanggal_mulai', '>=', $tanggal_mulai)->where('tanggal_sampai', '<=', $tanggal_sampai)->get();
-        } else{
+        } else {
             $tanggal_mulai = date('Y-m-d');
             $tanggal_sampai = date('Y-m-d');
-        }        
+        }
         return view('kegiatan.index')
-        ->with('kegiatans', $kegiatans)
-        ->with('tanggal_mulai', $tanggal_mulai)
-        ->with('tanggal_sampai', $tanggal_sampai);
+            ->with('kegiatans', $kegiatans)
+            ->with('tanggal_mulai', $tanggal_mulai)
+            ->with('tanggal_sampai', $tanggal_sampai);
     }
 
     /**
@@ -58,14 +58,14 @@ class KegiatanController extends Controller
             LEFT JOIN bukti_kegiatans on bukti_kegiatans.kegiatans_id = kegiatans.id 
             WHERE (kegiatans.bentuk_kegiatan_id IS NOT NULL AND bukti_kegiatans.nama_bukti_kegiatan IS NULL) 
             ORDER BY users.id )");
-            
+
         // $kerjasamas = Kerjasama::where("status_id", "!=" , "2")->get();
         $kerjasamas = DB::select("SELECT kerjasamas.*, mitras.nama_mitra
         FROM kerjasamas
         JOIN usulans ON usulans.id = kerjasamas.usulan_id
         JOIN mitras ON mitras.id = usulans.mitra_id
         WHERE status_id != 2 AND kerjasamas.id IN(SELECT DISTINCT kerjasama_id FROM bukti_kerjasamas WHERE jenis_file = 'S')");
-        
+
         $bentukKegiatans = BentukKegiatan::orderBy('bentuk', 'asc')->get();
         return view('kegiatan.create')
             ->with('users', $users)
@@ -100,16 +100,16 @@ class KegiatanController extends Controller
         $kegiatan->bentuk_kegiatan_id = $validateData['bentuk_kegiatan'];
         $kegiatan->kerjasama_id = $validateData['kerjasamas'];
         $kegiatan->user_id = $validateData['pic_dosen'];
-        $kegiatan->keterangan =$validateData['keterangan'];
+        $kegiatan->keterangan = $validateData['keterangan'];
 
         $kegiatan->save();
 
         // Send email to user
         $findUser = User::findOrFail($kegiatan->user_id);
-        $tanggalMulaiKegiatan = $validateData['tanggal_mulai']; 
+        $tanggalMulaiKegiatan = $validateData['tanggal_mulai'];
         $tanggalSampaiKegiatan = $validateData['tanggal_sampai'];
         $id_kegiatan = $kegiatan->id; //get id kegiatan for send email
-        
+
         $details = [
             'title' => 'Kegiatan Baru',
             'user_name' => $findUser->name,
@@ -163,14 +163,14 @@ class KegiatanController extends Controller
     {
         //
         $this->authorize('viewAny', User::class);
-        
+
         // $kerjasamas = Kerjasama::All();
         $kerjasamas = DB::select("SELECT kerjasamas.*, mitras.nama_mitra
         FROM kerjasamas
         JOIN usulans ON usulans.id = kerjasamas.usulan_id
         JOIN mitras ON mitras.id = usulans.mitra_id
         WHERE status_id != 2 AND kerjasamas.id IN(SELECT DISTINCT kerjasama_id FROM bukti_kerjasamas WHERE jenis_file = 'S')");
-        
+
         $users = User::All();
         $bentukKegiatans = BentukKegiatan::all();
 
@@ -232,33 +232,33 @@ class KegiatanController extends Controller
         $getBuktiKegiatan = DB::select("SELECT id, nama_bukti_kegiatan, bukti_kegiatans.file AS 'file', kegiatans_id FROM bukti_kegiatans WHERE kegiatans_id = $kegiatan->id");
 
         // unlink semua file sekaligus
-        if(count($getBuktiKegiatan) > 0){
+        if (count($getBuktiKegiatan) > 0) {
             for ($i = 0; $i < count($getBuktiKegiatan); $i++) {
-                unlink(storage_path('app/public/kegiatan/'.$getBuktiKegiatan[$i]->file));
+                unlink(storage_path('app/public/kegiatan/' . $getBuktiKegiatan[$i]->file));
             }
         }
-        
+
         $kegiatan->delete();
-            return redirect()->route('kegiatans.index')->with('pesan', "Hapus data kegiatan : $kegiatan->bentuk_kegiatan berhasil");
+        return redirect()->route('kegiatans.index')->with('pesan', "Hapus data kegiatan : $kegiatan->bentuk_kegiatan berhasil");
     }
 
     // Delete from kerjasama show.blade.php
-    public function customDestroy($id_kegiatan){
+    public function customDestroy($id_kegiatan)
+    {
         $this->authorize('adminOnly', User::class);
-        
+
         $kegiatan = Kegiatan::findOrFail($id_kegiatan);
 
         $getBuktiKegiatan = DB::select("SELECT id, nama_bukti_kegiatan, bukti_kegiatans.file AS 'file', kegiatans_id FROM bukti_kegiatans WHERE kegiatans_id = $kegiatan->id");
 
         // unlink semua file sekaligus
-        if(count($getBuktiKegiatan) > 0){
+        if (count($getBuktiKegiatan) > 0) {
             for ($i = 0; $i < count($getBuktiKegiatan); $i++) {
-                unlink(storage_path('app/public/kegiatan/'.$getBuktiKegiatan[$i]->file));
+                unlink(storage_path('app/public/kegiatan/' . $getBuktiKegiatan[$i]->file));
             }
         }
-        
+
         $kegiatan->delete();
         return redirect()->route('kerjasamas.show', $kegiatan->kerjasama_id)->with('pesan', "Hapus data kegiatan : $kegiatan->bentuk_kegiatan berhasil");
-
     }
 }

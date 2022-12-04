@@ -131,9 +131,9 @@
                         @enderror
                     </div>
 
-                    {{-- PIC Dosen --}}
+                    {{-- PIC --}}
                     <div class="form-group col-lg-4">
-                        <label for="pic_dosen">PIC Dosen</label>
+                        <label for="pic_dosen">PIC</label>
 
                         @php
                             if (old('pic_dosen') !== null) {
@@ -155,26 +155,6 @@
                         @enderror
                     </div>
 
-                    {{-- PIC --}}
-                    {{-- <div class="form-group col-lg-4">
-                        <label for="PIC">PIC</label>
-
-                        @php
-                            if (old('PIC') !== null) {
-                                $option = old('PIC');
-                            } else {
-                                $option = $kegiatans->PIC;
-                            }
-                        @endphp
-
-                        <select class="form-control" name="PIC" id="">
-                            <option value="F">Fakultas</option>
-                            <option value="P">Program Studi</option>
-                        </select>
-                        @error('PIC')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div> --}}
                 </div>
 
                 {{-- Keterangan --}}

@@ -1,16 +1,16 @@
 @extends('layouts.master')
-@section('title', 'Kegiatan')
+@section('title', 'Kerjasama Tanpa MoU')
 
 @section('content')
-
     <div class="card">
         <div class="card-header">
+            <!-- <h3 class="card-title">Tabel Daftar Kerjasama</h3> -->
             @if (Auth::user()->level != 'D')
                 {{-- Button Tambah --}}
-                <a href="{{ url('/kegiatans/create') }}" class='btn btn-primary'>Tambah Kegiatan</a>
+                <a href="{{ url('/kerjasama_tanpa_mous/create') }}" class='btn btn-primary'>Tambah Kerjasama</a>
             @else
                 <div class="card-title">
-                    <h4 class="">Tabel Daftar Kegiatan</h4>
+                    <h4 class="">Tabel Daftar Kerjasama</h4>
                 </div>
             @endif
 
@@ -34,7 +34,7 @@
             @endif
 
             {{-- form untuk memfilter kegiatan berdasarkan tanggal mulai dan tanggal sampai --}}
-            <form action="{{ route('kegiatans.index') }}" method="GET">
+            <form action="{{ route('kerjasama_tanpa_mous.index') }}" method="GET">
                 @csrf
                 <label for="filter">Filter berdasarkan tanggal</label>
                 <div class="row">
@@ -54,17 +54,19 @@
 
             {{-- Tabel Data --}}
             <table id="example1" class="table table-bordered table-striped">
+
                 <thead>
                     <tr>
                         <th>No</th>
                         <th>Aksi</th>
                         <th>Nama Kerjasama</th>
-                        <th>Bentuk Kegiatan</th>
-                        <th>Keterangan</th>
-                        <th>PIC</th>
+                        <th>Nomor MoU</th>
+                        <th>Bidang</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
-                        <th>Mengacu pada SPK</th>
+                        <th>Kategori</th>
+                        <th>Status</th>
+                        <th>Usulan</th>
                     </tr>
                 </thead>
 
@@ -74,44 +76,58 @@
                         $nomor = 1;
                     @endphp
 
-                    @foreach ($kegiatans as $data)
+                    @foreach ($kerjasamas as $data)
                         <tr>
                             <td>{{ $nomor++ }}</td>
-
                             <td>
                                 {{-- Button Tampil --}}
-                                <a href="{{ url('kegiatans/' . $data->id) }}" class="btn btn-sm btn-primary"><i
+                                <a href="{{ url('kerjasama_tanpa_mous/' . $data->id) }}" class="btn btn-sm btn-primary"><i
                                         class="nav-icon fas fa-eye" title="Tampil"></i></a>
 
                                 @if (Auth::user()->level != 'D')
                                     {{-- Button Ubah --}}
-                                    <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
-                                        class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
-                                            title="Edit"></i></a>
+                                    <a href="{{ route('kerjasama_tanpa_mous.edit', ['kerjasama_tanpa_mou' => $data->id]) }}"
+                                        class="btn btn-sm btn-warning">
+                                        <i class="nav-icon fas fa-edit" title="Edit"></i>
+                                    </a>
                                 @endif
 
                                 @if (Auth::user()->level == 'A')
                                     {{-- Button Hapus --}}
                                     <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                        data-bentukKegiatan="{{ $data->bentukKegiatan->bentuk }}" data-toggle="modal"
+                                        data-namaKerjasama="{{ $data->nama_kerja_sama }}" data-toggle="modal"
                                         data-target="#modal-sm"><i class="nav-icon fas fa-trash"
                                             title="Hapus"></i></button>
                                 @endif
                             </td>
-
-                            <td>{{ $data->kerjasama->nama_kerja_sama }}</td>
-
-                            <td>{{ $data->bentukKegiatan->bentuk }}</td>
-
-                            <td>{{ $data->keterangan }}</td>
-
-                            <td>{{ $data->user->name }}</td>
-
+                            <td>{{ $data->nama_kerja_sama }}</td>
+                            <td>
+                                @if ($data->no_mou == '')
+                                    Tanpa MoU
+                                @else
+                                    {{ $data->no_mou }}
+                                @endif
+                            </td>
+                            <td>
+                                @php
+                                    if ($data->bidang == 'P') {
+                                        echo 'Pendidikan';
+                                    } elseif ($data->bidang == 'N') {
+                                        echo 'Penelitian';
+                                    } elseif ($data->bidang == 'B') {
+                                        echo 'Pengabdian';
+                                    } elseif ($data->bidang == 'A') {
+                                        echo 'Pendidikan, Penelitian, Pengabdian';
+                                    } else {
+                                        echo 'Lain-lain';
+                                    }
+                                @endphp
+                            </td>
                             <td>{{ $data->tanggal_mulai }}</td>
-
                             <td>{{ $data->tanggal_sampai }}</td>
-
-                            <td>{{ $data->buktiKerjasamaSpk->nama_file }}</td>
+                            <td>{{ $data->nama_kategori }}</td>
+                            <td>{{ $data->nama_status }}</td>
+                            <td>{{ $data->usulan }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -121,12 +137,13 @@
                         <th>No</th>
                         <th>Aksi</th>
                         <th>Nama Kerjasama</th>
-                        <th>Bentuk Kegiatan</th>
-                        <th>Keterangan</th>
-                        <th>PIC</th>
+                        <th>Nomor MoU</th>
+                        <th>Bidang</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
-                        <th>Mengacu pada SPK</th>
+                        <th>Kategori</th>
+                        <th>Status</th>
+                        <th>Usulan</th>
                     </tr>
                 </tfoot>
 
@@ -161,18 +178,16 @@
         </div>
     </div>
 
-
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <script>
         // jika tombol hapus ditekan, generate alamat URL untuk proses hapus
-        // id disini adalah id kegiatan
+        // id disini adalah id kerjasama
         $('.btn-hapus').click(function() {
             let id = $(this).attr('data-id');
-            $('#formDelete').attr('action', '/kegiatans/' + id);
+            $('#formDelete').attr('action', '/kerjasama_tanpa_mous/' + id);
 
-            let dataBentukKegiatan = $(this).attr('data-bentukKegiatan')
-            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus kegiatan : " + dataBentukKegiatan +
-                " ?")
+            let namaKerjasama = $(this).attr('data-namaKerjasama');
+            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus kerjasama : " + namaKerjasama + " ?")
         })
 
         // jika tombol Ya, hapus ditekan, submit form hapus

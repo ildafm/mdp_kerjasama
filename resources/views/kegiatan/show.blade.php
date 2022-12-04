@@ -53,13 +53,18 @@
                     </tr>
 
                     <tr>
-                        <td>PIC Dosen</td>
+                        <td>PIC</td>
                         <td>{{ $kegiatan->user->name }}</td>
                     </tr>
 
                     <tr>
                         <td>Keterangan</td>
                         <td>{{ $kegiatan->keterangan }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Mengacu pada SPK</td>
+                        <td>{{ $kegiatan->buktiKerjasamaSpk->nama_file }}</td>
                     </tr>
 
                 </tbody>
@@ -261,14 +266,13 @@
                             <td>
                                 @if ($data->bidang == 'P')
                                     Pendidikan
-                                @endif
-                                @if ($data->bidang == 'N')
+                                @elseif ($data->bidang == 'N')
                                     Penelitian
-                                @endif
-                                @if ($data->bidang == 'B')
+                                @elseif ($data->bidang == 'B')
                                     Pengabdian
-                                @endif
-                                @if ($data->bidang == 'L')
+                                @elseif ($data->bidang == 'A')
+                                    Pendidikan, Penelitian, Pengabdian
+                                @else
                                     Lain-lain
                                 @endif
                             </td>
