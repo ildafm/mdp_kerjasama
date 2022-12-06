@@ -48,7 +48,7 @@
                         <button type="submit" class="btn btn-primary">Filter</button>
                         @php
                             if (isset($_GET['filter_berdasarkan_unit'])) {
-                                echo "<a href='/semua_laporan_kegiatans' class='btn btn-secondary'>Batal</a>";
+                                echo "<a href='/semua_laporan_kegiatans' class='btn btn-secondary' title='Hapus filter'>Batal</a>";
                             }
                         @endphp
 
@@ -62,6 +62,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Aksi</th>
                         <th>Nama Laporan</th>
                         <th>PIC</th>
                         <th>Kegiatan</th>
@@ -80,13 +81,13 @@
                     @foreach ($buktiKegiatans as $data)
                         <tr>
                             <td>{{ $nomor++ }}</td>
+                            <td>
+                                <a href="{{ url('kegiatans/' . $data->kegiatans_id) }}" class="btn btn-sm btn-primary"
+                                    title="Lihat kegiatan"><i class="fas fa-eye"></i></a>
+                            </td>
                             <td>{{ $data->nama_bukti_kegiatan }}</td>
                             <td>{{ $data->pic_name }}</td>
-                            <td>
-                                {{-- {{ $data->bentuk_kegiatan }} --}}
-                                <a href="{{ url('kegiatans/' . $data->kegiatans_id) }}"
-                                    class="btn-link">{{ $data->bentuk_kegiatan }}</a>
-                            </td>
+                            <td> {{ $data->bentuk_kegiatan }} </td>
                             <td>
                                 @if ($data->bidang == 'P')
                                     Pendidikan
@@ -102,8 +103,8 @@
                             </td>
                             <td>{{ $data->nama_unit }}</td>
                             <td>
-                                <a href="{{ url('storage/kegiatan/' . $data->file) }}"
-                                    class="btn btn-primary btn-sm">File</a>
+                                <a href="{{ url('storage/kegiatan/' . $data->file) }}" class="btn btn-primary btn-sm"
+                                    title='Lihat file laporan'>File</a>
                             </td>
                         </tr>
                     @endforeach
@@ -112,6 +113,7 @@
                 <tfoot>
                     <tr>
                         <th>No</th>
+                        <th>Aksi</th>
                         <th>Nama Laporan</th>
                         <th>PIC</th>
                         <th>Kegiatan</th>

@@ -344,9 +344,8 @@
                                                 <td>{{ $data->tanggal_mulai }}</td>
 
                                                 <td>{{ $data->tanggal_sampai }}</td>
-                                                @if ($data->bukti_kerjasama_spk_id != null)
-                                                    <td>{{ $data->buktiKerjasamaSpk->nama_file }}</td>
-                                                @endif
+
+                                                <td>{{ $data->buktiKerjasamaSpk->nama_file }}</td>
                                             </tr>
                                         @endif
                                     @endforeach
@@ -435,9 +434,8 @@
                                             <td>{{ $data->tanggal_mulai }}</td>
 
                                             <td>{{ $data->tanggal_sampai }}</td>
-                                            @if ($data->bukti_kerjasama_spk_id != null)
-                                                <td>{{ $data->buktiKerjasamaSpk->nama_file }}</td>
-                                            @endif
+
+                                            <td>{{ $data->buktiKerjasamaSpk->nama_file }}</td>
                                         </tr>
                                     @endif
                                 @endforeach

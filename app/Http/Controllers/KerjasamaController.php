@@ -130,7 +130,7 @@ class KerjasamaController extends Controller
                 'kerjasama_id' => 'required',
                 'pic_dosen' => 'required',
                 'keterangan' => 'required',
-                'spk' => 'required'
+                'spk' => 'required',
             ]);
 
             $kegiatan = new Kegiatan();

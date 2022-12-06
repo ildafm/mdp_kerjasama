@@ -153,6 +153,7 @@ class KerjasamaTanpaKegiatanController extends Controller
                 'kerjasama_id' => 'required',
                 'pic_dosen' => 'required',
                 'keterangan' => 'required',
+                'spk' => 'required',
             ]);
 
             $kegiatan = new Kegiatan();
@@ -163,6 +164,7 @@ class KerjasamaTanpaKegiatanController extends Controller
             $kegiatan->kerjasama_id = $validateData['kerjasama_id'];
             $kegiatan->user_id = $validateData['pic_dosen'];
             $kegiatan->keterangan = $validateData['keterangan'];
+            $kegiatan->bukti_kerjasama_spk_id = $validateData['spk'];
 
             $kegiatan->save();
 
@@ -230,12 +232,16 @@ class KerjasamaTanpaKegiatanController extends Controller
             $kegiatans = Kegiatan::All();
             $bentukKegiatans = BentukKegiatan::all();
 
+            $SPK = DB::select("SELECT * FROM bukti_kerjasamas
+            WHERE jenis_file = 'S' AND kerjasama_id = $id");
+
             return view('kerjasama_tanpa_kegiatan.show')
                 ->with('kerjasama', $kerjasama[0])
                 ->with('buktiKerjasama', $buktiKerjasama)
                 ->with('users', $users)
                 ->with('bentukKegiatans', $bentukKegiatans)
-                ->with('kegiatans', $kegiatans);
+                ->with('kegiatans', $kegiatans)
+                ->with('SPK', $SPK);
         }
         // Jika kerjasama sudah memiliki kegiatan
         else {

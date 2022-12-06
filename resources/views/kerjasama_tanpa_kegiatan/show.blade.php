@@ -113,8 +113,8 @@
                 {{-- Nav File Kerjasama --}}
                 <li class="nav-item">
                     <a class="nav-link" id="custom-tabs-two-file_kerjasama-tab" data-toggle="pill"
-                        href="#custom-tabs-two-file_kerjasama" role="tab"
-                        aria-controls="custom-tabs-two-file_kerjasama" aria-selected="false">File Kerjasama</a>
+                        href="#custom-tabs-two-file_kerjasama" role="tab" aria-controls="custom-tabs-two-file_kerjasama"
+                        aria-selected="false">File Kerjasama</a>
                 </li>
             </ul>
         </div>
@@ -178,7 +178,7 @@
 
                                 <div class="row">
                                     {{-- Tanggal Mulai --}}
-                                    <div class="form-group col-lg-4">
+                                    <div class="form-group col-lg-3">
                                         <label for="tanggal_mulai">Tanggal Mulai</label>
                                         <input type="date" name="tanggal_mulai" id="" class="form-control"
                                             min="{{ $kerjasama->tanggal_mulai }}" max="{{ $kerjasama->tanggal_sampai }}"
@@ -189,7 +189,7 @@
                                     </div>
 
                                     {{-- Tanggal Sampai --}}
-                                    <div class="form-group col-lg-4">
+                                    <div class="form-group col-lg-3">
                                         <label for="tanggal_sampai">Tanggal Sampai</label>
                                         <input type="date" name="tanggal_sampai" id="" class="form-control"
                                             min="{{ $kerjasama->tanggal_mulai }}" max="{{ $kerjasama->tanggal_sampai }}"
@@ -199,9 +199,9 @@
                                         @enderror
                                     </div>
 
-                                    {{-- Dosen --}}
-                                    <div class="form-group col-lg-4">
-                                        <label for="pic_dosen">PIC Dosen</label>
+                                    {{-- PIC --}}
+                                    <div class="form-group col-lg-3">
+                                        <label for="pic_dosen">PIC</label>
 
                                         @php
                                             if (old('pic_dosen') !== null) {
@@ -224,11 +224,37 @@
                                         @enderror
                                     </div>
 
+                                    {{-- mengacu pada spk --}}
+                                    <div class="form-group col-lg-3">
+                                        <label for="spk">SPK</label>
+
+                                        @php
+                                            if (old('spk') !== null) {
+                                                $option = old('spk');
+                                            } else {
+                                                $option = 1;
+                                            }
+                                        @endphp
+
+                                        <select class="form-control select2" name="spk" id="">
+                                            @foreach ($SPK as $data)
+                                                <option value="{{ $data->id }}"
+                                                    {{ $option == $data->id ? 'selected' : '' }}>
+                                                    {{ $data->nama_file }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('spk')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
                                 </div>
 
                                 <div class="form-group">
                                     <label for="keterangan">Keterangan</label>
-                                    <input type="text" name="keterangan" id="" value="{{ old('keterangan') }}"
+                                    <input type="text" name="keterangan" id=""
+                                        value="{{ old('keterangan') }}"
                                         class="form-control @error('keterangan') is-invalid @enderror"
                                         placeholder="Masukan Keterangan">
                                     @error('keterangan')
@@ -264,6 +290,7 @@
                                     <th>PIC Dosen</th>
                                     <th>Tanggal Mulai</th>
                                     <th>Tanggal Sampai</th>
+                                    <th>Mengacu pada SPK</th>
                                 </tr>
                             </thead>
 
@@ -310,6 +337,8 @@
                                             <td>{{ $data->tanggal_mulai }}</td>
 
                                             <td>{{ $data->tanggal_sampai }}</td>
+
+                                            <td>{{ $data->buktiKerjasamaSpk->nama_file }}</td>
                                         </tr>
                                     @endif
                                 @endforeach
@@ -324,6 +353,7 @@
                                     <th>PIC Dosen</th>
                                     <th>Tanggal Mulai</th>
                                     <th>Tanggal Sampai</th>
+                                    <th>Mengacu pada SPK</th>
                                 </tr>
                             </tfoot>
 
@@ -412,7 +442,7 @@
 
                             <br>
                             {{-- Button --}}
-                            <button type="submit" class="btn btn-primary">Tambahkan Bukti</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                         <br><br>
                     @endif

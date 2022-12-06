@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kerjasama;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -119,5 +120,18 @@ class KerjasamaTanpaMouController extends Controller
     public function destroy($id)
     {
         //
+        $this->authorize('adminOnly', User::class);
+        $kerjasama = Kerjasama::findOrFail($id);
+
+        $getBuktiKerjasama = DB::select("SELECT * FROM bukti_kerjasamas WHERE kerjasama_id = $kerjasama->id");
+
+        // unlink semua file sekaligus
+        if (count($getBuktiKerjasama) > 0) {
+            for ($i = 0; $i < count($getBuktiKerjasama); $i++) {
+                unlink(storage_path('app/public/kerjasama/' . $getBuktiKerjasama[$i]->file));
+            }
+        }
+        $kerjasama->delete();
+        return redirect()->route('kerjasama_tanpa_mous.index')->with('pesan', "Hapus data $kerjasama->nama_kerja_sama berhasil");
     }
 }

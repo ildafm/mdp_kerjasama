@@ -84,7 +84,7 @@
                     {{-- input password --}}
                     <div class="form-group col-lg-4 col-sm-12 col-md-12">
                         <label for="password">Password</label>
-                        <input type="text" name='password' autocomplete="new-password" value="{{ old('password') }}"
+                        <input type="password" name='password' autocomplete="new-password" value="{{ old('password') }}"
                             class="form-control @error('password') is-invalid @enderror" required
                             placeholder="Masukan Password">
                         @error('password')
@@ -95,7 +95,7 @@
                     {{-- konfirmasi password --}}
                     <div class="form-group col-lg-4 col-sm-12 col-md-12">
                         <label for="password-confirm">Konfirmasi Password</label>
-                        <input id="password-confirm" type="text" class="form-control" name="password_confirmation"
+                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
                             required placeholder="Konfirmasi Password" autocomplete="new-password">
                     </div>
 

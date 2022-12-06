@@ -176,6 +176,8 @@
                                     Penelitian</option>
                                 <option value='B' {{ $option == 'B' ? 'selected' : '' }}>
                                     Pengabdian</option>
+                                <option value='A' {{ $option == 'A' ? 'selected' : '' }}>
+                                    Pendidikan, Penelitian, Pengabdian</option>
                                 <option value='L' {{ $option == 'L' ? 'selected' : '' }}>Lain-lain
                                 </option>
                             </select>

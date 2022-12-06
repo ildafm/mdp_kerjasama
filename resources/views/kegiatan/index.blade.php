@@ -48,6 +48,11 @@
                     </div>
                     <div class="form-group col-lg-2">
                         <button type="submit" class="btn btn-primary">Cari</button>
+                        @php
+                            if (isset($_GET['filter_tanggal_mulai']) && isset($_GET['filter_tanggal_sampai'])) {
+                                echo "<a href='/kerjasamas' class='btn btn-secondary' title='Hapus filter'>Batal</a>";
+                            }
+                        @endphp
                     </div>
                 </div>
             </form>
