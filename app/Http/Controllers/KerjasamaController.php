@@ -48,7 +48,7 @@ class KerjasamaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
         $this->authorize('viewAny', User::class);
@@ -57,11 +57,15 @@ class KerjasamaController extends Controller
         $kerjasamas = Kerjasama::All();
         $usulans = Usulan::All()->where('hasil_penjajakan', 'L');
 
+        //Digunakan untuk return redirect()-route() di function store
+        $type = $request->type;
+
         return view('kerjasama.create')
             ->with('kategoris', $kategoris)
             ->with('statuses', $statuses)
             ->with('kerjasamas', $kerjasamas)
-            ->with('usulans', $usulans);
+            ->with('usulans', $usulans)
+            ->with('type', $type);
     }
 
     /**
@@ -74,6 +78,7 @@ class KerjasamaController extends Controller
     {
         //
         $this->authorize('viewAny', User::class);
+
         // Input kerjasama baru
         if ($request->nama_kerja_sama != '' || $request->nama_kerja_sama != null) {
             if ($request->nama_kategori == '1') {
@@ -118,8 +123,16 @@ class KerjasamaController extends Controller
             $kerjasama->save();
 
             $request->session()->flash('pesan', 'Penambahan data berhasil');
-            return redirect()->route('kerjasamas.index');
+            if ($request->type == 1) {
+                return redirect()->route('kerjasama_tanpa_kegiatans.index');
+            } elseif ($request->type == 2) {
+                return redirect()->route('kerjasama_tanpa_mous.index');
+            } else {
+                return redirect()->route('kerjasamas.index');
+            }
         }
+
+
         // Input kegiatan baru melalui kerjasama show
         else {
             $validateData = $request->validate([
@@ -214,19 +227,22 @@ class KerjasamaController extends Controller
      * @param  \App\Models\Kerjasama  $kerjasama
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kerjasama $kerjasama)
+    public function edit(Request $request, Kerjasama $kerjasama)
     {
         //
+
         $this->authorize('viewAny', User::class);
         $kategoris = Kategori::All();
         $statuses = Status::All();
         $usulans = Usulan::All()->where('hasil_penjajakan', 'L');
+        $type = $request->type;
 
         return view('kerjasama.edit')
             ->with('kerjasama', $kerjasama)
             ->with('kategoris', $kategoris)
             ->with('statuses', $statuses)
-            ->with('usulans', $usulans);
+            ->with('usulans', $usulans)
+            ->with('type', $type);
     }
 
     /**
@@ -250,6 +266,8 @@ class KerjasamaController extends Controller
                 'usulan' => 'required',
                 'bidang' => 'required',
                 'no_mou' => 'required',
+                //digunakan untuk return redirect()->route()
+                'type' => '',
             ]);
         } else {
             $this->validate($request, [
@@ -260,6 +278,8 @@ class KerjasamaController extends Controller
                 'nama_status' => 'required',
                 'usulan' => 'required',
                 'bidang' => 'required',
+                //digunakan untuk return redirect()->route()
+                'type' => '',
             ]);
         }
 
@@ -289,7 +309,14 @@ class KerjasamaController extends Controller
         }
 
         $request->session()->flash('pesan', 'Perubahan data berhasil');
-        return redirect()->route('kerjasamas.index');
+        if ($request->type == 1) {
+            return redirect()->route('kerjasama_tanpa_kegiatans.index');
+        } elseif ($request->type == 2) {
+            return redirect()->route('kerjasama_tanpa_mous.index');
+        } else {
+            return redirect()->route('kerjasamas.index');
+        }
+        // return redirect()->route('kerjasamas.index');
     }
 
     /**
@@ -311,7 +338,7 @@ class KerjasamaController extends Controller
             }
         }
         $kerjasama->delete();
-        return redirect()->route('kerjasamas.index')->with('pesan', "Hapus data $kerjasama->nama_kerja_sama berhasil");
+        return redirect()->back()->with('pesan', "Hapus data $kerjasama->nama_kerja_sama berhasil");
     }
 
     // Delete from usulan show.blade.php

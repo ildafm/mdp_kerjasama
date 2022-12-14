@@ -6,7 +6,8 @@
     <div class="card">
         <div class="card-header">
             {{-- Button Kembali --}}
-            <a href="{{ url('/kerjasamas') }}" class='btn btn-primary'>Kembali</a>
+            {{-- <a href="{{ url('/kerjasamas') }}" class='btn btn-primary'>Kembali</a> --}}
+            <h3 class="card-title">{{ $kerjasama->nama_kerja_sama }}</h3>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">

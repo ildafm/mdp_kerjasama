@@ -1,0 +1,1 @@
+Di folder kerjasama_tanpa_kegiatan ini, file blade yang digunakan hanyalah index.blade.php

@@ -163,4 +163,8 @@ class BuktiKerjasamaController extends Controller
         $buktiKerjasama->delete();
         return redirect()->route('kerjasamas.show', $buktiKerjasama->kerjasama_id)->with('pesan', "Hapus data file $buktiKerjasama->nama_file berhasil");
     }
+
+    // public function getSpkInKegiatan($id)
+    // {
+    // }
 }

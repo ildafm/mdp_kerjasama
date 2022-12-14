@@ -7,7 +7,8 @@
             <!-- <h3 class="card-title">Tabel Daftar Kerjasama</h3> -->
             @if (Auth::user()->level != 'D')
                 {{-- Button Tambah --}}
-                <a href="{{ url('/kerjasama_tanpa_kegiatans/create') }}" class='btn btn-primary'>Tambah Kerjasama</a>
+                {{-- <a href="{{ url('/kerjasamas/create') }}" class='btn btn-primary'>Tambah Kerjasama</a> --}}
+                <a href="{{ route('kerjasamas.create', ['type' => 1]) }}" class="btn btn-primary">Tambah Kerjasama</a>
             @else
                 <div class="card-title">
                     <h4 class="">Tabel Daftar Kerjasama</h4>
@@ -33,7 +34,7 @@
                 </div>
             @endif
 
-            {{-- form untuk memfilter kegiatan berdasarkan tanggal mulai dan tanggal sampai --}}
+            {{-- form untuk memfilter kerjasama berdasarkan tanggal mulai dan tanggal sampai --}}
             <form action="{{ route('kerjasama_tanpa_kegiatans.index') }}" method="GET">
                 @csrf
                 <label for="filter">Filter berdasarkan tanggal</label>
@@ -48,6 +49,11 @@
                     </div>
                     <div class="form-group col-lg-2">
                         <button type="submit" class="btn btn-primary">Cari</button>
+                        @php
+                            if (isset($_GET['filter_tanggal_mulai']) && isset($_GET['filter_tanggal_sampai'])) {
+                                echo "<a href='/kerjasama_tanpa_kegiatans' title='Hapus Filter' class='btn btn-secondary'>Batal</a>";
+                            }
+                        @endphp
                     </div>
                 </div>
             </form>
@@ -81,12 +87,12 @@
                             <td>{{ $nomor++ }}</td>
                             <td>
                                 {{-- Button Tampil --}}
-                                <a href="{{ url('kerjasama_tanpa_kegiatans/' . $data->id) }}"
-                                    class="btn btn-sm btn-primary"><i class="nav-icon fas fa-eye" title="Tampil"></i></a>
+                                <a href="{{ url('kerjasamas/' . $data->id) }}" class="btn btn-sm btn-primary"><i
+                                        class="nav-icon fas fa-eye" title="Tampil"></i></a>
 
                                 @if (Auth::user()->level != 'D')
                                     {{-- Button Ubah --}}
-                                    <a href="{{ route('kerjasama_tanpa_kegiatans.edit', ['kerjasama_tanpa_kegiatan' => $data->id]) }}"
+                                    <a href="{{ route('kerjasamas.edit', ['kerjasama' => $data->id, 'type' => 1]) }}"
                                         class="btn btn-sm btn-warning">
                                         <i class="nav-icon fas fa-edit" title="Edit"></i>
                                     </a>
@@ -183,7 +189,7 @@
         // id disini adalah id kerjasama
         $('.btn-hapus').click(function() {
             let id = $(this).attr('data-id');
-            $('#formDelete').attr('action', '/kerjasama_tanpa_kegiatans/' + id);
+            $('#formDelete').attr('action', '/kerjasamas/' + id);
 
             let namaKerjasama = $(this).attr('data-namaKerjasama');
             $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus kerjasama : " + namaKerjasama + " ?")

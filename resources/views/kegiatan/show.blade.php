@@ -6,7 +6,7 @@
         <div class="card-header">
 
             {{-- Button Kembali --}}
-            <a href="{{ url('/kegiatans') }}" class='btn btn-primary'>Kembali</a>
+            {{-- <a href="{{ url('/kegiatans') }}" class='btn btn-primary'>Kembali</a> --}}
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -79,7 +79,7 @@
         {{-- card tambah bukti kegiatan --}}
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Tambah Bukti Kegiatan</h3>
+                <h3 class="card-title">Tambah Laporan Kegiatan</h3>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                         <i class="fas fa-minus"></i>
@@ -91,16 +91,16 @@
             </div>
             <div class="card-body">
 
-                {{-- Barisan Menambahkan data Bukti --}}
+                {{-- Barisan Menambahkan data Laporan --}}
                 <form action="{{ route('buktiKegiatans.store') }}" method="POST" enctype="multipart/form-data"
                     id="formBuktiKegiatan">
                     @csrf
 
-                    {{-- Nama Bukti Kegiatan --}}
+                    {{-- Nama Laporan --}}
                     <div class="form-group">
-                        <label for="nama_bukti_kegiatan">Nama Bukti Kegiatan</label>
+                        <label for="nama_bukti_kegiatan">Nama Laporan</label>
                         <input type="text" class="form-control" name="nama_bukti_kegiatan"
-                            placeholder="Enter Nama Bukti Kegiatan" value="{{ old('nama_bukti_kegiatan') }}">
+                            placeholder="Enter Nama Laporan" value="{{ old('nama_bukti_kegiatan') }}">
                         @error('nama_bukti_kegiatan')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -108,7 +108,7 @@
 
                     {{-- add file --}}
                     <div class="form-group">
-                        <label for="file">Bukti Kegiatan(Max:5mb)</label>
+                        <label for="file">File Laporan(pdf,jpg,png,docx,doc | Max:10mb)</label>
                         <div class="input-group">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
@@ -178,7 +178,8 @@
                                     Pengabdian</option>
                                 <option value='A' {{ $option == 'A' ? 'selected' : '' }}>
                                     Pendidikan, Penelitian, Pengabdian</option>
-                                <option value='L' {{ $option == 'L' ? 'selected' : '' }}>Lain-lain
+                                <option value='L' {{ $option == 'L' ? 'selected' : '' }}>
+                                    Lain-lain
                                 </option>
                             </select>
                             @error('bidang')
@@ -194,16 +195,16 @@
                     </div>
 
                     {{-- Button Submit --}}
-                    <button type="submit" id="" class="btn btn-primary">Tambahkan Bukti</button>
+                    <button type="submit" id="" class="btn btn-primary">Submit</button>
                 </form>
             </div>
         </div>
     @endif
 
-    {{-- Tabel Bukti Kegiatan --}}
+    {{-- Tabel Laporan --}}
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Bukti Kegiatan</h3>
+            <h3 class="card-title">Laporan</h3>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                     <i class="fas fa-minus"></i>
@@ -217,13 +218,13 @@
 
         <div class="card-body">
 
-            {{-- Tabel Data Bukti --}}
+            {{-- Tabel Data Laporan --}}
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th>No</th>
                         <th>Aksi</th>
-                        <th>Nama Bukti Kegiatan</th>
+                        <th>Nama Laporan Kegiatan</th>
                         <th>Bidang</th>
                         <th>Nama Unit</th>
                         <th>APT</th>
@@ -309,7 +310,7 @@
                     <tr>
                         <th>No</th>
                         <th>Aksi</th>
-                        <th>Nama Bukti Kegiatan</th>
+                        <th>Nama Laporan Kegiatan</th>
                         <th>Bidang</th>
                         <th>Nama Unit</th>
                         <th>APT</th>
@@ -352,13 +353,14 @@
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <script>
         // jika tombol hapus ditekan, generate alamat URL untuk proses hapus
-        // id disini adalah id bukti kegiatan
+        // id disini adalah id laporan kegiatan
         $('.btn-hapus').click(function() {
             let id = $(this).attr('data-id');
             $('#formDelete').attr('action', '/buktiKegiatans/' + id);
 
             let dataNamaBuktiKegiatan = $(this).attr('data-namaBuktiKegiatan')
-            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus bukti kegiatan : " + dataNamaBuktiKegiatan +
+            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus laporan kegiatan : " +
+                dataNamaBuktiKegiatan +
                 " ?")
         })
 

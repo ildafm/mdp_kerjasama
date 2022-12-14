@@ -188,11 +188,20 @@
 
                 </div>
 
+                <div class="form-group" hidden>
+                    <label for="type">Hidden Type</label>
+                    <input type="text" value="{{ $type }}" name='type'
+                        class="form-control @error('type') is-invalid @enderror" readonly>
+                    @error('type')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
                 <br>
                 {{-- Button --}}
                 <button type="submit" class="btn btn-primary">Submit</button>
-                &nbsp;
-                <a href="/kerjasamas" class="btn btn-outline-dark">Kembali</a>
+                {{-- &nbsp;
+                <a href="/kerjasamas" class="btn btn-outline-dark">Kembali</a> --}}
             </form>
         </div>
     </div>

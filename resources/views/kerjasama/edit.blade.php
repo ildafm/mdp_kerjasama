@@ -66,7 +66,7 @@
                     <label for="nama_kerja_sama">Nama Kerjasama</label>
                     <input type="text" value="{{ old('nama_kerja_sama', $kerjasama->nama_kerja_sama) }}"
                         name='nama_kerja_sama' class="form-control @error('nama_kerja_sama') is-invalid @enderror"
-                        placeholder="Masukan Nama Kerja Sama">
+                        placeholder="Masukan Nama Kerjasama">
                     @error('nama_kerja_sama')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -161,11 +161,21 @@
                     </div>
                 </div>
 
+                {{-- digunakan untuk return redirect()->route() di function update KerjasamaController --}}
+                <div class="form-group" hidden>
+                    <label for="type">Hidden Type</label>
+                    <input type="text" value="{{ $type }}" name='type'
+                        class="form-control @error('type') is-invalid @enderror" readonly>
+                    @error('type')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
                 <br>
                 {{-- Button --}}
                 <button type="submit" class="btn btn-primary">Submit</button>
-                &nbsp;
-                <a href="/kerjasamas" class="btn btn-outline-dark">Kembali</a>
+                {{-- &nbsp;
+                <a href="/kerjasamas" class="btn btn-outline-dark">Kembali</a> --}}
             </form>
         </div>
     </div>

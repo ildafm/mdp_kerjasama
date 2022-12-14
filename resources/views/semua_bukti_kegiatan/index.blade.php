@@ -45,7 +45,7 @@
 
                     {{-- Button Submit --}}
                     <div class="form-group col-lg-2">
-                        <button type="submit" class="btn btn-primary">Filter</button>
+                        <button type="submit" class="btn btn-primary">Cari</button>
                         @php
                             if (isset($_GET['filter_berdasarkan_unit'])) {
                                 echo "<a href='/semua_laporan_kegiatans' class='btn btn-secondary' title='Hapus filter'>Batal</a>";
@@ -83,7 +83,7 @@
                             <td>{{ $nomor++ }}</td>
                             <td>
                                 <a href="{{ url('kegiatans/' . $data->kegiatans_id) }}" class="btn btn-sm btn-primary"
-                                    title="Lihat kegiatan"><i class="fas fa-eye"></i></a>
+                                    title="Menuju kegiatan"><i class="fas fa-eye"></i></a>
                             </td>
                             <td>{{ $data->nama_bukti_kegiatan }}</td>
                             <td>{{ $data->pic_name }}</td>

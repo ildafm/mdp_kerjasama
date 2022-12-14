@@ -43,6 +43,8 @@ Route::get('/', function () {
 // custom delete route
 Route::delete('kegiatans/customDestroyKegiatan/{id_kegiatan}', [App\Http\Controllers\KegiatanController::class, 'customDestroy'])->name('customDestroyKegiatan')->middleware(['auth']); //route untuk melakukan delete data kegiatan melalui show kerjasama
 
+// Route::get();
+
 Route::delete('kerjasamas/customDestroyKerjasama/{id_kerjasama}', [App\Http\Controllers\KerjasamaController::class, 'customDestroy'])->name('customDestroyKerjasama')->middleware(['auth']); //route untuk melakukan delete data kerjasama melalui usulan show blade
 
 Route::resource('mitras', MitraController::class)->middleware(['auth']);

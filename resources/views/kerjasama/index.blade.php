@@ -7,7 +7,7 @@
             <!-- <h3 class="card-title">Tabel Daftar Kerjasama</h3> -->
             @if (Auth::user()->level != 'D')
                 {{-- Button Tambah --}}
-                <a href="{{ url('/kerjasamas/create') }}" class='btn btn-primary'>Tambah Kerjasama</a>
+                <a href="{{ route('kerjasamas.create', ['type' => 0]) }}" class="btn btn-primary">Tambah Kerjasama</a>
             @else
                 <div class="card-title">
                     <h4 class="">Tabel Daftar Kerjasama</h4>
@@ -89,20 +89,19 @@
                                 <a href="{{ url('kerjasamas/' . $data->id) }}" class="btn btn-sm btn-primary"><i
                                         class="nav-icon fas fa-eye" title="Tampil"></i></a>
 
-
                                 @if (Auth::user()->level != 'D')
                                     {{-- Button Ubah --}}
-                                    <a href="{{ route('kerjasamas.edit', ['kerjasama' => $data->id]) }}"
+                                    <a href="{{ route('kerjasamas.edit', ['kerjasama' => $data->id, 'type' => 0]) }}"
                                         class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
                                             title="Edit"></i></a>
+                                @endif
 
-                                    @if (Auth::user()->level == 'A')
-                                        {{-- Button Hapus --}}
-                                        <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                            data-namaKerjasama="{{ $data->nama_kerja_sama }}" data-toggle="modal"
-                                            data-target="#modal-sm"><i class="nav-icon fas fa-trash"
-                                                title="Hapus"></i></button>
-                                    @endif
+                                @if (Auth::user()->level == 'A')
+                                    {{-- Button Hapus --}}
+                                    <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                        data-namaKerjasama="{{ $data->nama_kerja_sama }}" data-toggle="modal"
+                                        data-target="#modal-sm"><i class="nav-icon fas fa-trash"
+                                            title="Hapus"></i></button>
                                 @endif
                             </td>
                             <td>{{ $data->nama_kerja_sama }}</td>

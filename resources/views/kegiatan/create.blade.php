@@ -188,8 +188,8 @@
                 <br>
                 {{-- Button --}}
                 <button type="submit" class="btn btn-primary">Submit</button>
-                &nbsp;
-                <a href="/kegiatans" class="btn btn-outline-dark">Kembali</a>
+                {{-- &nbsp;
+                <a href="/kegiatans" class="btn btn-outline-dark">Kembali</a> --}}
             </form>
         </div>
     </div>

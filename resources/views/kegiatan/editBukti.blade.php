@@ -5,7 +5,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Ubah Data Bukti Kegiatan {{ $buktiKegiatan->nama_bukti_kegiatan }}</h3>
+            <h3 class="card-title">Ubah Data Laporan Kegiatan {{ $buktiKegiatan->nama_bukti_kegiatan }}</h3>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                     <i class="fas fa-minus"></i>
@@ -17,17 +17,17 @@
         </div>
 
         <div class="card-body">
-            {{-- Barisan edit data Bukti --}}
+            {{-- Barisan edit data Laporan --}}
             <form action="{{ route('buktiKegiatans.update', ['buktiKegiatan' => $buktiKegiatan->id]) }}" method="POST"
                 enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
 
-                {{-- Nama Bukti Kegiatan --}}
+                {{-- Nama Laporan Kegiatan --}}
                 <div class="form-group">
-                    <label for="nama_bukti_kegiatan">Nama Bukti Kegiatan</label>
+                    <label for="nama_bukti_kegiatan">Nama Laporan Kegiatan</label>
                     <input type="text" class="form-control" name="nama_bukti_kegiatan"
-                        placeholder="Enter Nama Bukti Kegiatan"
+                        placeholder="Enter Nama Laporan Kegiatan"
                         value="{{ old('nama_bukti_kegiatan', $buktiKegiatan->nama_bukti_kegiatan) }}">
 
                     @error('nama_bukti_kegiatan')
@@ -40,7 +40,7 @@
                     {{-- APT --}}
                     @php
                         $option_apt = $buktiKegiatan->ceklist_apt;
-                        $checked_apt="";
+                        $checked_apt = '';
                         if (old('apt') == 'Y') {
                             $checked_apt = 'checked';
                         }
@@ -57,14 +57,14 @@
                     {{-- APS --}}
                     @php
                         $option_aps = $buktiKegiatan->ceklist_aps;
-                        $checked_aps="";
+                        $checked_aps = '';
                         if (old('aps') == 'Y') {
                             $checked_aps = 'checked';
                         }
                         if ($option_aps == 'Y') {
                             $checked_aps = 'checked';
                         }
-
+                        
                         // if ($option_aps == 'Y') {
                         //     $checked_aps = 'checked';
                         // }
@@ -88,7 +88,7 @@
                     {{-- LAMEMBA --}}
                     @php
                         $option_lamemba = $buktiKegiatan->ceklist_lamemba;
-                        $checked_lamemba="";
+                        $checked_lamemba = '';
                         if (old('lamemba') == 'Y') {
                             $checked_lamemba = 'checked';
                         }
@@ -145,8 +145,11 @@
                                 Penelitian</option>
                             <option value='B' <?= $option == 'B' ? 'selected' : '' ?>>
                                 Pengabdian</option>
-                            <option value='L' <?= $option == 'L' ? 'selected' : '' ?>>
-                                Lain-lain</option>
+                            <option value='A' {{ $option == 'A' ? 'selected' : '' }}>
+                                Pendidikan, Penelitian, Pengabdian</option>
+                            <option value='L' {{ $option == 'L' ? 'selected' : '' }}>
+                                Lain-lain
+                            </option>
                         </select>
                         @error('bidang')
                             <div class="text-danger">{{ $message }}</div>
@@ -155,7 +158,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="file">Bukti Kegiatan(Max:5mb | Kosongkan jika tidak ingin mengubah)</label>
+                    <label for="file">File Laporan (pdf,jpg,png,docx,doc | Max:10mb | Kosongkan jika tidak ingin
+                        mengubah)</label>
                     <div class="input-group">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
