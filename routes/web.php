@@ -24,6 +24,7 @@ use App\Http\Controllers\NegaraController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SemuaBuktiKegiatanController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +70,8 @@ Route::resource('kerjasama_tanpa_kegiatans', KerjasamaTanpaKegiatanController::c
 Route::resource('kerjasama_tanpa_mous', KerjasamaTanpaMouController::class)->middleware(['auth']); //route untuk mengarah ke kerjasama yang tidak memiliki kegiatan
 Route::resource('kegiatan_berdasarkan_mitras', KegiatanBerdasarkanMitraController::class)->middleware(['auth']); //notifikasi kegaitan terbaru
 Route::resource('semua_laporan_kegiatans', SemuaBuktiKegiatanController::class)->middleware(['auth']); //notifikasi kegaitan terbaru
+Route::get('/reminder', [App\Http\Controllers\ReminderController::class, 'index'])->name('reminder');
+
 
 // route notifikasi
 Route::get('notification_kegiatans', [App\Http\Controllers\NotificationController::class, 'kegiatan'])->middleware(['auth']); //notifikasi kegaitan terbaru

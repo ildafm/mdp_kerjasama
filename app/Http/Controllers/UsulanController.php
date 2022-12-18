@@ -27,7 +27,7 @@ class UsulanController extends Controller
         $usulans = Usulan::All();
 
         return view('usulan.index')
-        ->with('usulans', $usulans);
+            ->with('usulans', $usulans);
     }
 
     /**
@@ -72,7 +72,7 @@ class UsulanController extends Controller
                 'nama_unit' => 'required',
                 'type' => 'required',
             ]);
-    
+
             $usulan = new Usulan();
             $usulan->usulan = $validateData['usulan'];
             $usulan->bentuk_kerjasama = $validateData['bentuk_kerjasama'];
@@ -81,8 +81,8 @@ class UsulanController extends Controller
             $usulan->type = $validateData['type'];
             $usulan->mitra_id = $validateData['nama_mitra'];
             $usulan->user_id = $validateData['nama_pengusul'];
-            $usulan->unit_id =$validateData['nama_unit'];
-    
+            $usulan->unit_id = $validateData['nama_unit'];
+
             $usulan->save();
 
             // Send email to user
@@ -94,15 +94,15 @@ class UsulanController extends Controller
             $nowHour = $nowHourQuerry[0]->jam_sekarang;
             if ($nowHour <= 10) {
                 $salam = 'Selamat pagi';
-            } elseif($nowHour <= 14){
+            } elseif ($nowHour <= 14) {
                 $salam = 'Selamat siang';
-            } elseif($nowHour <= 18){
+            } elseif ($nowHour <= 18) {
                 $salam = 'Selamat sore';
-            } elseif($nowHour < 24){
+            } elseif ($nowHour < 24) {
                 $salam = 'Selamat malam';
             }
             $nama_usulan = $validateData['usulan'];
-            $bentuk_kerjasama = $validateData['bentuk_kerjasama']; 
+            $bentuk_kerjasama = $validateData['bentuk_kerjasama'];
             $kontak_kerjasama = $validateData['kontak_kerjasama'];
 
             $pengusul_id = $validateData['nama_pengusul'];
@@ -110,8 +110,8 @@ class UsulanController extends Controller
             FROM users
             WHERE users.id = $pengusul_id");
 
-            $id_usulan = $usulan->id;//get id usulan for send emails            
-            for ($i=0; $i < count($findUser); $i++) { 
+            $id_usulan = $usulan->id; //get id usulan for send emails            
+            for ($i = 0; $i < count($findUser); $i++) {
                 $details = [
                     'title' => 'Usulan Baru',
                     'user_name' => $findUser[$i]->name,
@@ -124,13 +124,13 @@ class UsulanController extends Controller
                 ];
                 Mail::to($findUser[$i]->email)->send(new \App\Mail\newUsulanMail($details));
             }
-            
+
             $request->session()->flash('pesan', 'Penambahan data berhasil');
             return redirect()->route('usulans.index');
         }
         // simpan kerjasama
-        else{
-            if($request->nama_kategori == '1'){
+        else {
+            if ($request->nama_kategori == '1') {
                 $validateData = $request->validate([
                     'nama_kerja_sama' => 'required',
                     'tanggal_mulai' => 'required',
@@ -140,8 +140,7 @@ class UsulanController extends Controller
                     'usulan_id' => 'required',
                     'no_mou' => 'required',
                 ]);
-            }
-            else{
+            } else {
                 $validateData = $request->validate([
                     'nama_kerja_sama' => 'required',
                     'tanggal_mulai' => 'required',
@@ -151,28 +150,27 @@ class UsulanController extends Controller
                     'usulan_id' => 'required',
                 ]);
             }
-    
+
             $kerjasama = new Kerjasama();
-    
-            if($request->no_mou != '' || $request->no_mou != null){
+
+            if ($request->no_mou != '' || $request->no_mou != null) {
                 $kerjasama->no_mou = $validateData['no_mou'];
-            }
-            else{
+            } else {
                 $kerjasama->no_mou = '';
             }
-    
+
             $kerjasama->nama_kerja_sama = $validateData['nama_kerja_sama'];
             $kerjasama->tanggal_mulai = $validateData['tanggal_mulai'];
             $kerjasama->tanggal_sampai = $validateData['tanggal_sampai'];
             $kerjasama->kategori_id = $validateData['nama_kategori'];
             $kerjasama->status_id = $validateData['nama_status'];
             $kerjasama->usulan_id = $validateData['usulan_id'];
-    
+
             $kerjasama->save();
-    
+
             $request->session()->flash('pesan', 'Penambahan data berhasil');
             return redirect()->route('usulans.show', $kerjasama->usulan_id);
-        }        
+        }
     }
 
     /**
@@ -213,7 +211,7 @@ class UsulanController extends Controller
     public function edit(Usulan $usulan)
     {
         //
-        
+
         $this->authorize('viewAny', User::class);
 
         $mitras = Mitra::All();
@@ -256,7 +254,7 @@ class UsulanController extends Controller
                 'keterangan_hasil_penjajakan' => 'required',
             ]);
         }
-        
+
         $usulan = Usulan::findOrFail($usulan->id);
 
         $usulan->update([

@@ -6,7 +6,7 @@
         <div class="card-header">
 
             <div class="card-title">
-                <h4 class="">Tabel Daftar Kerjasama</h4>
+                <h4 class="">Tabel Daftar Laporan Kegiatan</h4>
             </div>
 
             <div class="card-tools">

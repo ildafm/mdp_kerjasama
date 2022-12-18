@@ -16,16 +16,18 @@ class KegiatanBerdasarkanMitraController extends Controller
     public function index()
     {
         //
-        $listMitras = DB::select("SELECT mitras.id, nama_mitra, COUNT(kegiatans.id) AS 'total_kegiatan'
-        FROM mitras
-        LEFT JOIN usulans ON usulans.mitra_id = mitras.id
-        LEFT JOIN kerjasamas ON kerjasamas.usulan_id = usulans.id
-        LEFT JOIN kegiatans ON kegiatans.kerjasama_id = kerjasamas.id
-        GROUP BY mitras.id, mitras.nama_mitra
-        ORDER BY mitras.id");
+        $listMitras = DB::select("SELECT * FROM (
+            SELECT mitras.id, nama_mitra, COUNT(kegiatans.id) AS 'total_kegiatan'
+            FROM mitras
+            LEFT JOIN usulans ON usulans.mitra_id = mitras.id
+            LEFT JOIN kerjasamas ON kerjasamas.usulan_id = usulans.id
+            LEFT JOIN kegiatans ON kegiatans.kerjasama_id = kerjasamas.id
+            GROUP BY mitras.id, mitras.nama_mitra
+            ) AS tbl_list_mitra
+        ORDER BY tbl_list_mitra.total_kegiatan DESC");
 
         return view('kegiatan_berdasarkan_mitra.index')
-        ->with('listMitras', $listMitras);
+            ->with('listMitras', $listMitras);
     }
 
     /**
@@ -66,7 +68,7 @@ class KegiatanBerdasarkanMitraController extends Controller
         JOIN usulans ON usulans.id = kerjasamas.usulan_id
         JOIN mitras ON mitras.id = usulans.mitra_id
         WHERE mitras.id = $id");
-        
+
         $mitra = Mitra::find($id);
 
         return view("kegiatan_berdasarkan_mitra.show")

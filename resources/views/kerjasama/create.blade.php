@@ -81,7 +81,7 @@
                     <label for="nama_kerja_sama">Nama Kerjasama</label>
                     <input type="text" name='nama_kerja_sama' value="{{ old('nama_kerja_sama') }}"
                         class="form-control @error('nama_kerja_sama') is-invalid @enderror"
-                        placeholder="Masukan Nama Kerjasama">
+                        placeholder="Masukan Nama Kerjasama" required>
                     @error('nama_kerja_sama')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror

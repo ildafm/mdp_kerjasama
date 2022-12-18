@@ -11,6 +11,10 @@
 
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
 
+    {{-- cdn --}}
+    {{-- toastr --}}
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
+
     {{-- css table --}}
     <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
@@ -327,6 +331,7 @@
                             @endif
 
                         </a>
+
                         <div class="dropdown-divider"></div>
                         {{-- Notifikasi kegiatan belum memiliki bukti kegiatan --}}
                         <a href="/notification_kegiatan_belum_ada_buktis" class="dropdown-item">
@@ -343,6 +348,19 @@
                             @endif
 
                         </a>
+
+                        @if (Auth::user()->level == 'A')
+                            <div class="dropdown-divider"></div>
+                            {{-- Button Reminders --}}
+                            <a href="{{ url('reminder') }}" class="dropdown-item">
+                                <button class="btn btn-primary btn-block"
+                                    title="Kirimkan pesan email kepada semua pic yang belum memberikan laporan terkait kegiatan selama lebih dari 30 hari terakhir"><i
+                                        class="fas fa-paper-plane mr-2">
+                                    </i><span>Send Reminder</span>
+                                </button>
+                            </a>
+                        @endif
+
                         <div class="dropdown-divider"></div>
                     </div>
                 </li>
@@ -684,6 +702,13 @@
     {{-- chart --}}
     <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
 
+    {{-- toastr --}}
+    {{-- <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script> --}}
+
+    {{-- cdn --}}
+    {{-- toastr --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+
     <script>
         $(function() {
             //Initialize Select2 Elements
@@ -759,6 +784,30 @@
         $(function() {
             bsCustomFileInput.init();
         });
+    </script>
+
+    {{-- call the toastr --}}
+    <script>
+        @if (Session::has('info'))
+            var type = "{{ Session::get('alert-type', 'info') }}";
+            switch (type) {
+                case 'info':
+                    toastr.info("{{ Session::get('info') }}");
+                    break;
+
+                case 'warning':
+                    toastr.warning("{{ Session::get('info') }}");
+                    break;
+
+                case 'success':
+                    toastr.success("{{ Session::get('info') }}");
+                    break;
+
+                case 'error':
+                    toastr.error("{{ Session::get('info') }}");
+                    break;
+            }
+        @endif
     </script>
 </body>
 

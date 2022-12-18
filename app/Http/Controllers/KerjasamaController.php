@@ -81,32 +81,20 @@ class KerjasamaController extends Controller
 
         // Input kerjasama baru
         if ($request->nama_kerja_sama != '' || $request->nama_kerja_sama != null) {
-            if ($request->nama_kategori == '1') {
-                $validateData = $request->validate([
-                    'nama_kerja_sama' => 'required',
-                    'tanggal_mulai' => 'required',
-                    'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
-                    'nama_kategori' => 'required',
-                    'nama_status' => 'required',
-                    'usulan' => 'required',
-                    'bidang' => 'required',
-                    'no_mou' => 'required',
-                ]);
-            } else {
-                $validateData = $request->validate([
-                    'nama_kerja_sama' => 'required',
-                    'tanggal_mulai' => 'required',
-                    'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
-                    'nama_kategori' => 'required',
-                    'nama_status' => 'required',
-                    'usulan' => 'required',
-                    'bidang' => 'required',
-                ]);
-            }
+            $validateData = $request->validate([
+                'nama_kerja_sama' => 'required',
+                'tanggal_mulai' => 'required',
+                'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
+                'nama_kategori' => 'required',
+                'nama_status' => 'required',
+                'usulan' => 'required',
+                'bidang' => 'required',
+                'no_mou' => '',
+            ]);
 
             $kerjasama = new Kerjasama();
 
-            if ($request->no_mou != '' || $request->no_mou != null) {
+            if (($request->no_mou != '' || $request->no_mou != null) && $request->nama_kategori == '1') {
                 $kerjasama->no_mou = $validateData['no_mou'];
             } else {
                 $kerjasama->no_mou = '';
