@@ -4,14 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Kegiatan;
 use Illuminate\Http\Request;
-use App\Models\Kerjasama;
 use App\Models\User;
 use App\Models\Unit;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\MyTestMail;
 use App\Models\BentukKegiatan;
+use App\Models\BuktiKerjasama;
 
 class KegiatanController extends Controller
 {
@@ -44,7 +43,7 @@ class KegiatanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
         $this->authorize('viewAny', User::class);
@@ -67,10 +66,22 @@ class KegiatanController extends Controller
         WHERE status_id != 2 AND kerjasamas.id IN(SELECT DISTINCT kerjasama_id FROM bukti_kerjasamas WHERE jenis_file = 'S')");
 
         $bentukKegiatans = BentukKegiatan::orderBy('bentuk', 'asc')->get();
+
+        // $SPK = DB::select("SELECT * FROM bukti_kerjasamas
+        // WHERE jenis_file = 'S' AND kerjasama_id = $kerjasama->id");
+        $getIdKerjasama = 0;
+        if ($request->id != null) {
+            $getIdKerjasama = $request->id;
+        }
+
+        $SPK = DB::select("SELECT * FROM bukti_kerjasamas
+        WHERE jenis_file = 'S' AND kerjasama_id = $getIdKerjasama");
+
         return view('kegiatan.create')
             ->with('users', $users)
             ->with('kerjasamas', $kerjasamas)
-            ->with('bentukKegiatans', $bentukKegiatans);
+            ->with('bentukKegiatans', $bentukKegiatans)
+            ->with('SPK', $SPK);
     }
 
     /**
@@ -91,6 +102,7 @@ class KegiatanController extends Controller
             'kerjasamas' => 'required',
             'pic_dosen' => 'required',
             'keterangan' => 'required',
+            'spk' => 'required',
         ]);
 
         $kegiatan = new Kegiatan();
@@ -100,6 +112,7 @@ class KegiatanController extends Controller
         $kegiatan->bentuk_kegiatan_id = $validateData['bentuk_kegiatan'];
         $kegiatan->kerjasama_id = $validateData['kerjasamas'];
         $kegiatan->user_id = $validateData['pic_dosen'];
+        $kegiatan->bukti_kerjasama_spk_id = $validateData['spk'];
         $kegiatan->keterangan = $validateData['keterangan'];
 
         $kegiatan->save();
@@ -159,7 +172,7 @@ class KegiatanController extends Controller
      * @param  \App\Models\Kegiatan  $kegiatan
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kegiatan $kegiatan)
+    public function edit(Kegiatan $kegiatan, Request $request)
     {
         //
         $this->authorize('viewAny', User::class);
@@ -171,14 +184,34 @@ class KegiatanController extends Controller
         JOIN mitras ON mitras.id = usulans.mitra_id
         WHERE status_id != 2 AND kerjasamas.id IN(SELECT DISTINCT kerjasama_id FROM bukti_kerjasamas WHERE jenis_file = 'S')");
 
-        $users = User::All();
+        $users = DB::select("SELECT tbl_user_yang_belum_ditugaskan.id, tbl_user_yang_belum_ditugaskan.kode_dosen, tbl_user_yang_belum_ditugaskan.name
+        FROM users tbl_user_yang_belum_ditugaskan 
+        WHERE tbl_user_yang_belum_ditugaskan.kode_dosen NOT IN ( 
+            SELECT DISTINCT users.kode_dosen 
+            FROM users 
+            LEFT JOIN kegiatans ON kegiatans.user_id = users.id 
+            LEFT JOIN bukti_kegiatans on bukti_kegiatans.kegiatans_id = kegiatans.id 
+            WHERE (kegiatans.bentuk_kegiatan_id IS NOT NULL AND bukti_kegiatans.nama_bukti_kegiatan IS NULL) 
+            ORDER BY users.id )");
+
         $bentukKegiatans = BentukKegiatan::all();
+
+
+        $getIdKerjasama = $kegiatan->kerjasama_id;
+        if ($request->id != null) {
+            $getIdKerjasama = $request->id;
+        }
+        $SPK = DB::select("SELECT * FROM bukti_kerjasamas
+        WHERE jenis_file = 'S' AND kerjasama_id = $getIdKerjasama");
+
+        // $SPK = BuktiKerjasama::where('kerjasama_id', $getIdKerjasama);
 
         return view('kegiatan.edit')
             ->with('kerjasamas', $kerjasamas)
             ->with('kegiatan', $kegiatan)
             ->with('bentukKegiatans', $bentukKegiatans)
-            ->with('users', $users);
+            ->with('users', $users)
+            ->with('SPK', $SPK);
     }
 
     /**
@@ -201,6 +234,7 @@ class KegiatanController extends Controller
             'pic_dosen' => 'required',
             'keterangan' => 'required',
             'kerjasamas' => 'required',
+            'spk' => 'required',
         ]);
 
         $kegiatan = Kegiatan::findOrFail($kegiatan->id);
@@ -213,6 +247,7 @@ class KegiatanController extends Controller
             'user_id' => $request->pic_dosen,
             'keterangan' => $request->keterangan,
             'kerjasama_id' => $request->kerjasamas,
+            'bukti_kerjasama_spk_id' => $request->spk,
         ]);
 
         $request->session()->flash('pesan', 'Perubahan data berhasil');
@@ -238,8 +273,10 @@ class KegiatanController extends Controller
             }
         }
 
+        $getBentukKegiatan = $kegiatan->bentukKegiatan->bentuk;
+
         $kegiatan->delete();
-        return redirect()->route('kegiatans.index')->with('pesan', "Hapus data kegiatan : $kegiatan->bentuk_kegiatan berhasil");
+        return redirect()->route('kegiatans.index')->with('pesan', "Hapus data kegiatan : $getBentukKegiatan berhasil");
     }
 
     // Delete from kerjasama show.blade.php

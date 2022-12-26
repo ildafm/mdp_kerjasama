@@ -4,14 +4,16 @@
 @section('content')
 
     <script>
-        getTanggal();
-
-        function getTanggal() {
+        function getTanggalDanSPK() {
             let kerjasamas = document.getElementById("kerjasamas");
             let tanggal_mulai = document.getElementById("tanggal_mulai");
             let tanggal_sampai = document.getElementById("tanggal_sampai");
+            let spk = document.getElementById('spk')
+            spk.innerHTML = ""
 
             let text = kerjasamas.options[kerjasamas.selectedIndex].text;
+            let id_kerjasama = kerjasamas.options[kerjasamas.selectedIndex].value;
+
             // Mengubah text menjadi array
             let texts = text.split("|");
 
@@ -22,10 +24,28 @@
             tanggal_sampai.setAttribute("min", texts[2]) //set atribut min tanggal sampai
             tanggal_sampai.setAttribute("max", texts[3]) //set atribut max tanggal sampai
             tanggal_sampai.setAttribute("value", texts[3]) //set atribut value tanggal sampai
+
+            //get SPK
+            fetch("{{ url('kegiatans/create/') }}/" + id_kerjasama)
+                .then((response) => response.json())
+                .then((data) => {
+                    // console.log(data.spk)
+                    let spk = data.spk
+                    spk.forEach(getSPK);
+                })
+        }
+
+        function getSPK(item, index) {
+            // text += index + ": " + item + "<br>";
+            // console.log(item)
+            var option = document.createElement("option");
+            option.value = item.id;
+            option.text = item.nama_file;
+            spk.appendChild(option);
         }
     </script>
 
-    <div class="card">
+    <div class="card" onload="">
         <div class="card-header">
             <h3 class="card-title">Ubah Data Kegiatan {{ $kegiatan->nama_kegiatan }}</h3>
 
@@ -58,7 +78,8 @@
                             }
                         @endphp
 
-                        <select class="form-control select2" name="kerjasamas" id="kerjasamas" onchange="getTanggal()">
+                        <select class="form-control select2" name="kerjasamas" id="kerjasamas"
+                            onchange="getTanggalDanSPK()">
                             @if (count($kerjasamas) > 0)
                                 @foreach ($kerjasamas as $data)
                                     <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
@@ -108,7 +129,7 @@
                         WHERE kegiatans.id = $kegiatan->id");
                     @endphp
                     {{-- Tanggal Mulai --}}
-                    <div class="form-group col-lg-4">
+                    <div class="form-group col-lg-3">
                         <label for="tanggal_mulai">Tanggal Mulai</label>
                         <input type="date" name="tanggal_mulai" id="tanggal_mulai" class="form-control"
                             value='{{ old('tanggal_mulai', $kegiatan->tanggal_mulai) }}'
@@ -120,7 +141,7 @@
                     </div>
 
                     {{-- Tanggal Sampai --}}
-                    <div class="form-group col-lg-4">
+                    <div class="form-group col-lg-3">
                         <label for="tanggal_sampai">Tanggal Sampai</label>
                         <input type="date" name="tanggal_sampai" id="tanggal_sampai" class="form-control"
                             value="{{ old('tanggal_sampai', $kegiatan->tanggal_sampai) }}"
@@ -132,7 +153,7 @@
                     </div>
 
                     {{-- PIC --}}
-                    <div class="form-group col-lg-4">
+                    <div class="form-group col-lg-3">
                         <label for="pic_dosen">PIC</label>
 
                         @php
@@ -151,6 +172,44 @@
                             @endforeach
                         </select>
                         @error('pic_dosen')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- SPK --}}
+                    <div class="form-group col-lg-3">
+                        <label for="spk">SPK</label>
+
+                        {{-- @php
+                            if (old('spk') !== null) {
+                                $option = old('spk');
+                            } else {
+                                $option = 1;
+                            
+                                $getIdFromSortingQuerry = DB::select("SELECT * FROM bukti_kerjasamas
+                                WHERE jenis_file = 'S' AND kerjasama_id = $kegiatan->kerjasama_id LIMIT 1");
+                                if (count($getIdFromSortingQuerry) > 0) {
+                                    $option = $getIdFromSortingQuerry[0]->id;
+                                }
+                            }
+                        @endphp --}}
+
+                        @php
+                            if (old('spk') !== null) {
+                                $option = old('spk');
+                            } else {
+                                $option = $kegiatan->bukti_kerjasama_spk_id;
+                            }
+                        @endphp
+
+                        <select class="form-control select2" name="spk" id="spk">
+                            @foreach ($SPK as $data)
+                                <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
+                                    {{ $data->nama_file }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('spk')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>

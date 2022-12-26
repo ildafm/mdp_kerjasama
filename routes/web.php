@@ -24,7 +24,10 @@ use App\Http\Controllers\NegaraController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SemuaBuktiKegiatanController;
+use App\Models\BuktiKerjasama;
+use App\Models\Kerjasama;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,3 +83,69 @@ Route::get('notification_kegiatan_belum_ada_buktis', [App\Http\Controllers\Notif
 Auth::routes();
 
 Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+
+Route::get('/kegiatans/create/{id_kerjasama}', function ($id_kerjasama) {
+    $data = Kerjasama::find($id_kerjasama);
+    // $SPK = BuktiKerjasama::where('kerjasama_id', $id_kerjasama);
+    $SPK = DB::select("SELECT bukti_kerjasamas.* 
+    FROM bukti_kerjasamas
+    JOIN kerjasamas ON kerjasamas.id = bukti_kerjasamas.kerjasama_id
+    WHERE jenis_file = 'S' AND kerjasama_id = $id_kerjasama");
+
+    if (isset($data->id)) {
+        $val = [
+            'id' => $data->id,
+            'name' => $data->nama_kerja_sama,
+        ];
+        // $SPK1 = [
+        //     'id_spk' => $SPK->id,
+        //     'name' => $SPK->nama_file,
+        //     'jenis' => $SPK->jenis_file,
+        // ];
+        $response = [
+            'success' => true,
+            'message' => "Kerjasama ditemukan",
+            'data' => $val,
+            'spk' => $SPK,
+        ];
+    } else {
+        $response = [
+            'success' => false,
+            'message' => "Kerjasama tidak ditemukan"
+        ];
+    }
+    return response()->json($response);
+});
+
+Route::get('/kegiatans/edit/{id_kerjasama}', function ($id_kerjasama) {
+    $data = Kerjasama::find($id_kerjasama);
+    // $SPK = BuktiKerjasama::where('kerjasama_id', $id_kerjasama);
+    $SPK = DB::select("SELECT bukti_kerjasamas.* 
+    FROM bukti_kerjasamas
+    JOIN kerjasamas ON kerjasamas.id = bukti_kerjasamas.kerjasama_id
+    WHERE jenis_file = 'S' AND kerjasama_id = $id_kerjasama");
+
+    if (isset($data->id)) {
+        $val = [
+            'id' => $data->id,
+            'name' => $data->nama_kerja_sama,
+        ];
+        // $SPK1 = [
+        //     'id_spk' => $SPK->id,
+        //     'name' => $SPK->nama_file,
+        //     'jenis' => $SPK->jenis_file,
+        // ];
+        $response = [
+            'success' => true,
+            'message' => "Kerjasama ditemukan",
+            'data' => $val,
+            'spk' => $SPK,
+        ];
+    } else {
+        $response = [
+            'success' => false,
+            'message' => "Kerjasama tidak ditemukan"
+        ];
+    }
+    return response()->json($response);
+});

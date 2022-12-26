@@ -4,14 +4,17 @@
 @section('content')
 
     <script>
-        getTanggal();
-
-        function getTanggal() {
+        function getTanggalDanSPK() {
             let kerjasamas = document.getElementById("kerjasamas");
             let tanggal_mulai = document.getElementById("tanggal_mulai");
             let tanggal_sampai = document.getElementById("tanggal_sampai");
+            let spk = document.getElementById('spk')
+            spk.innerHTML = ""
 
             let text = kerjasamas.options[kerjasamas.selectedIndex].text;
+            let id_kerjasama = kerjasamas.options[kerjasamas.selectedIndex].value;
+            // console.log(id_kerjasama)
+
             // Mengubah text menjadi array
             let texts = text.split("|");
 
@@ -22,6 +25,25 @@
             tanggal_sampai.setAttribute("min", texts[2]) //set atribut min tanggal sampai
             tanggal_sampai.setAttribute("max", texts[3]) //set atribut max tanggal sampai
             tanggal_sampai.setAttribute("value", texts[3]) //set atribut value tanggal sampai
+
+            //get SPK
+            fetch("{{ url('kegiatans/create/') }}/" + id_kerjasama)
+                .then((response) => response.json())
+                .then((data) => {
+                    // console.log(data.spk)
+                    let spk = data.spk
+                    spk.forEach(getSPK);
+                })
+        }
+
+
+        function getSPK(item, index) {
+            // text += index + ": " + item + "<br>";
+            // console.log(item)
+            var option = document.createElement("option");
+            option.value = item.id;
+            option.text = item.nama_file;
+            spk.appendChild(option);
         }
     </script>
 
@@ -57,14 +79,22 @@
                             }
                         @endphp
 
-                        <select class="form-control select2" name="kerjasamas" id="kerjasamas" onchange="getTanggal()">
-                            <option value="">-- Pilih Kerjasama --</option>
+                        <select class="form-control select2" name="kerjasamas" id="kerjasamas"
+                            onchange="getTanggalDanSPK(); ">
+                            <option value="">-- Pilih
+                                Kerjasama --</option>
                             @if (count($kerjasamas) > 0)
                                 @foreach ($kerjasamas as $data)
                                     <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
                                         {{ $data->nama_kerja_sama }} | {{ $data->nama_mitra }}
                                         |{{ $data->tanggal_mulai }}|{{ $data->tanggal_sampai }}
                                     </option>
+
+                                    {{-- <option value="{{ route('kegiatans.create'), ['id_kerjasama' => $data->id] }}"
+                                        {{ $option == $data->id ? 'selected' : '' }}>
+                                        {{ $data->nama_kerja_sama }} | {{ $data->nama_mitra }}
+                                        |{{ $data->tanggal_mulai }}|{{ $data->tanggal_sampai }}
+                                    </option> --}}
                                 @endforeach
                             @endif
                         </select>
@@ -146,10 +176,10 @@
                         @enderror
                     </div>
                     {{-- SPK --}}
-                    {{-- <div class="form-group col-lg-3">
+                    <div class="form-group col-lg-3">
                         <label for="spk">SPK</label>
 
-                        @php
+                        {{-- @php
                             if (old('spk') !== null) {
                                 $option = old('spk');
                             } else {
@@ -160,9 +190,10 @@
                                 }
                                 $option = 1;
                             }
-                        @endphp
+                        @endphp --}}
 
-                        <select class="form-control select2" name="spk" id="">
+                        <select class="form-control select2" name="spk" id="spk">
+                            <option value="">-- Pilih SPK --</option>
                             @foreach ($SPK as $data)
                                 <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
                                     {{ $data->nama_file }}
@@ -172,7 +203,7 @@
                         @error('spk')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
-                    </div> --}}
+                    </div>
 
                 </div>
 
@@ -193,4 +224,12 @@
             </form>
         </div>
     </div>
+
+    <script>
+        // function getSPK() {
+        //     fetch("{{ url('kegiatans/create/54') }}")
+        //         .then((response) => response.json())
+        //         .then((data) => console.log(data));
+        // }
+    </script>
 @endsection

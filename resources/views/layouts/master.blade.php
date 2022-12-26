@@ -4,7 +4,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title') @yield('dashboard')</title>
+    <title>
+        @if (View::hasSection('dashboard'))
+            @yield('dashboard')
+        @else
+            @yield('title')
+        @endif
+    </title>
 
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -87,6 +93,16 @@
                             ORDER BY DATEDIFF(NOW(), kegiatans.tanggal_mulai) DESC
                         ) AS tbl_kegiatan_sudah_waktu_mulai
                         WHERE tbl_kegiatan_sudah_waktu_mulai.total_bukti_kegiatan = 0 AND tbl_kegiatan_sudah_waktu_mulai.get_day >= 0");
+                    
+                        /*
+                        $totalKegiatanSudahWaktuSelesai = DB::select("SELECT * FROM  (
+                            SELECT kegiatans.id, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti_kegiatan', DATEDIFF(kegiatans.tanggal_sampai, NOW()) AS 'get_day'
+                            FROM kegiatans
+                            LEFT JOIN bukti_kegiatans ON kegiatans.id = bukti_kegiatans.kegiatans_id
+                            GROUP BY kegiatans.id, bukti_kegiatans.kegiatans_id, kegiatans.tanggal_sampai
+                        ) AS tbl_kegiatan_sudah_selesai
+                        WHERE tbl_kegiatan_sudah_selesai.total_bukti_kegiatan = 0 AND tbl_kegiatan_sudah_selesai.get_day <= 0");
+                        */
                     
                         // menghitung total kegiatan yang sudah memasuki waktu mulai tetapi belum memiliki bukti
                         $totalKegiatanSudahWaktuMulai = DB::select("SELECT COUNT(*) AS 'total_kegiatan_sudah_mulai_dan_tidak_memiliki_bukti' FROM  (
@@ -495,18 +511,18 @@
                                         <p>Semua Kerjasama</p>
                                     </a>
                                 </li>
-                                {{-- Kerjasama yang tidak memiliki kegiatan --}}
+                                {{-- Kerjasama yang Hanya memiliki MoU --}}
                                 <li class="nav-item">
                                     <a href="{{ url('/kerjasama_tanpa_kegiatans') }}" class="nav-link">
                                         <i class="fas fa-folder nav-icon"></i>
-                                        <p>Tanpa Kegiatan</p>
+                                        <p>Kerjasama Hanya MoU</p>
                                     </a>
                                 </li>
                                 {{-- Kerjasama yang tidak memiliki mou --}}
                                 <li class="nav-item">
                                     <a href="{{ url('/kerjasama_tanpa_mous') }}" class="nav-link">
                                         <i class="fas fa-folder nav-icon"></i>
-                                        <p>Tanpa MoU</p>
+                                        <p>Kerjasama Tanpa MoU</p>
                                     </a>
                                 </li>
                             </ul>

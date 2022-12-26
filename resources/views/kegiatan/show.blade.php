@@ -124,8 +124,8 @@
                         @enderror
                     </div>
 
-
-                    <div class="row">
+                    {{-- Tidak dipakai lagi --}}
+                    {{-- <div class="row">
                         <div class="form-check col">
                             <input class="form-check-input" type="checkbox" name="apt"
                                 @if (old('apt') == 'on') checked @endif>
@@ -141,7 +141,7 @@
                                 @if (old('lamemba') == 'on') checked @endif>
                             <label class="form-check-label">LAMEMBA</label>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="row">
                         {{-- Nama Unit --}}
@@ -227,9 +227,9 @@
                         <th>Nama Laporan Kegiatan</th>
                         <th>Bidang</th>
                         <th>Nama Unit</th>
-                        <th>APT</th>
+                        {{-- <th>APT</th>
                         <th>APS</th>
-                        <th>LAMEMBA</th>
+                        <th>LAMEMBA</th> --}}
                         <th>Tanggal Upload</th>
                     </tr>
                 </thead>
@@ -280,7 +280,7 @@
                                 @endif
                             </td>
                             <td> {{ $data->nama_unit }} </td>
-                            <td>
+                            {{-- <td>
                                 @if ($data->ceklist_apt == 'Y')
                                     Ya
                                 @else
@@ -300,7 +300,7 @@
                                 @else
                                     Tidak
                                 @endif
-                            </td>
+                            </td> --}}
                             <td> {{ $data->tanggal_upload_bukti }} </td>
                         </tr>
                     @endforeach
@@ -313,9 +313,9 @@
                         <th>Nama Laporan Kegiatan</th>
                         <th>Bidang</th>
                         <th>Nama Unit</th>
-                        <th>APT</th>
+                        {{-- <th>APT</th>
                         <th>APS</th>
-                        <th>LAMEMBA</th>
+                        <th>LAMEMBA</th> --}}
                         <th>Tanggal Upload</th>
                     </tr>
                 </tfoot>

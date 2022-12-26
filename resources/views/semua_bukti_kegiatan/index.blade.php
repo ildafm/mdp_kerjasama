@@ -1,5 +1,17 @@
 @extends('layouts.master')
-@section('title', 'Laporan Kegiatan')
+@php
+    $getTitle = 'Laporan Kegiatan';
+    if (isset($_GET['filter_berdasarkan_unit'])) {
+        $getFilter = $_GET['filter_berdasarkan_unit'];
+        $unit = DB::select("SELECT * FROM units WHERE id = $getFilter LIMIT 1");
+        $getUnitName = $unit[0]->nama_unit;
+        if (!empty($unit)) {
+            // echo $unit[0]->nama_unit;
+            $getTitle = "Laporan Kegiatan $getUnitName";
+        }
+    }
+@endphp
+@section('title', $getTitle)
 
 @section('content')
     <div class="card">
@@ -103,8 +115,9 @@
                             </td>
                             <td>{{ $data->nama_unit }}</td>
                             <td>
-                                <a href="{{ url('storage/kegiatan/' . $data->file) }}" class="btn btn-primary btn-sm"
-                                    title='Lihat file laporan'>File</a>
+                                <a href="{{ url('storage/kegiatan/' . $data->file) }}" title='Lihat file laporan'>
+                                    {{ url('storage/kegiatan/' . $data->file) }}
+                                </a>
                             </td>
                         </tr>
                     @endforeach
@@ -128,48 +141,4 @@
         </div>
 
     </div>
-
-    {{-- Modal Layout --}}
-    <div class="modal fade" id="modal-sm">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <form action="" method="POST" id="formDelete">
-                    @method('DELETE')
-                    @csrf
-                    <div class="modal-header">
-                        <h4 class="modal-title">Peringatan !!!</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" id="mb-konfirmasi">
-                        {{-- <p>Apakah anda yakin ingin menghapus data ini?</p> --}}
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Tidak</button>
-                        <button type="submit" class="btn btn-danger">Iya, Hapus</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-    <script>
-        // jika tombol hapus ditekan, generate alamat URL untuk proses hapus
-        // id disini adalah id laporan kegiatan
-        $('.btn-hapus').click(function() {
-            let id = $(this).attr('data-id');
-            $('#formDelete').attr('action', '/kerjasamas/' + id);
-
-            let namaKerjasama = $(this).attr('data-namaKerjasama');
-            $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus kerjasama : " + namaKerjasama + " ?")
-        })
-
-        // jika tombol Ya, hapus ditekan, submit form hapus
-        $('#formDelete [type="submit"]').click(function() {
-            $('#formDelete').submit();
-        })
-    </script>
-
 @endsection

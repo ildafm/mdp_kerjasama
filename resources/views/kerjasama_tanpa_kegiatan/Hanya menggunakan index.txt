@@ -1,1 +1,3 @@
-Di folder kerjasama_tanpa_kegiatan ini, file blade yang digunakan hanyalah index.blade.php
+-Di folder kerjasama_tanpa_kegiatan ini, file blade yang digunakan hanyalah index.blade.php
+
+-Dalam aplikasi kerjasama_tanpa_kegiatan ini disebut dengan Kerjasama Hanya MoU

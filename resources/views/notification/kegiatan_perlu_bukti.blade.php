@@ -1,11 +1,14 @@
 @extends('layouts.master')
-@section('title', 'Kegiatan Tanpa Bukti')
+@php
+    $TITLE = 'Kegiatan Belum Memiliki Laporan';
+@endphp
+@section('title', $TITLE)
 
 @section('content')
 
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Kegiatan Tanpa Bukti</h3>
+            <h3 class="card-title">{{ $TITLE }}</h3>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                     <i class="fas fa-minus"></i>
@@ -35,7 +38,7 @@
                             <th>Nama Kerjasama</th>
                             <th>Bentuk Kegiatan</th>
                             <th>Keterangan</th>
-                            <th>PIC Dosen</th>
+                            <th>PIC</th>
                             <th>Unit</th>
                             <th>Tanggal Mulai</th>
                             <th>Tanggal Sampai</th>
@@ -95,7 +98,7 @@
                             <th>Nama Kerjasama</th>
                             <th>Bentuk Kegiatan</th>
                             <th>Keterangan</th>
-                            <th>PIC Dosen</th>
+                            <th>PIC</th>
                             <th>Unit</th>
                             <th>Tanggal Mulai</th>
                             <th>Tanggal Sampai</th>

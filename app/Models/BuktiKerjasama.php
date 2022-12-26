@@ -21,5 +21,5 @@ class BuktiKerjasama extends Model
 
 
 
-    protected $fillable = ['nama_file', 'jenis_file', 'file'];
+    protected $fillable = ['nama_file', 'jenis_file', 'file', 'kerjasama_id'];
 }
