@@ -44,7 +44,6 @@
     {{-- Menu Show --}}
     <div class="card">
         <div class="card-header">
-            {{-- Button Kembali --}}
             <h3 class="card-title">{{ $kerjasama->nama_kerja_sama }}</h3>
 
             <div class="card-tools">
@@ -648,7 +647,7 @@
                                     <td>
                                         {{-- Button Tampil --}}
                                         <a href="{{ url('storage/kerjasama/' . $data->file) }}"
-                                            class="btn btn-sm btn-primary">
+                                            class="btn btn-sm btn-primary" target="_blank">
                                             <i class="nav-icon fas fa-eye" title="Tampil"></i></a>
 
                                         @if (Auth::user()->level != 'D')
@@ -680,9 +679,9 @@
                                             }
                                         @endphp
                                     </td>
-                                    <td>{{ $data->kategori_mou_id }}</td>
+                                    <td>{{ $data->nama_kategori }}</td>
 
-                                    <td>{{ $data->tanggalUpload }}</td>
+                                    <td>{{ $data->tanggal_upload }}</td>
                                 </tr>
                             @endforeach
 

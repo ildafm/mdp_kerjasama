@@ -180,9 +180,10 @@ class KerjasamaController extends Controller
     public function show(Kerjasama $kerjasama)
     {
         //
-        $buktiKerjasama = DB::select("SELECT bukti_kerjasamas.*, LEFT(bukti_kerjasamas.created_at, 10) as tanggalUpload 
+        $buktiKerjasama = DB::select("SELECT bukti_kerjasamas.id, bukti_kerjasamas.nama_file, bukti_kerjasamas.nomor_file, bukti_kerjasamas.jenis_file, bukti_kerjasamas.file, bukti_kerjasamas.kerjasama_id, kategori_mous.nama_kategori, LEFT(bukti_kerjasamas.created_at, 10) AS 'tanggal_upload'
         FROM bukti_kerjasamas
         JOIN kerjasamas ON bukti_kerjasamas.kerjasama_id = kerjasamas.id
+        LEFT JOIN kategori_mous ON bukti_kerjasamas.kategori_mou_id = kategori_mous.id
         WHERE bukti_kerjasamas.kerjasama_id = $kerjasama->id");
 
         $users = DB::select("SELECT b.id, b.kode_dosen, b.name
@@ -191,7 +192,7 @@ class KerjasamaController extends Controller
             SELECT DISTINCT users.kode_dosen 
             FROM users 
             LEFT JOIN kegiatans ON kegiatans.user_id = users.id 
-            LEFT JOIN bukti_kegiatans on bukti_kegiatans.kegiatans_id = kegiatans.id 
+            LEFT JOIN bukti_kegiatans ON bukti_kegiatans.kegiatans_id = kegiatans.id 
             WHERE (kegiatans.bentuk_kegiatan_id IS NOT NULL AND bukti_kegiatans.nama_bukti_kegiatan IS NULL) 
             ORDER BY users.id )");
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BuktiKerjasama;
+use App\Models\KategoriMou;
 use App\Models\Kerjasama;
 use Illuminate\Http\Request;
 
@@ -97,9 +98,12 @@ class BuktiKerjasamaController extends Controller
     {
         //
         $kerjasama = Kerjasama::findOrFail($buktiKerjasama->kerjasama_id);
+        $kategoriMous = KategoriMou::all();
+
         return view('kerjasama.editBukti')
             ->with('buktiKerjasama', $buktiKerjasama)
-            ->with('kerjasama', $kerjasama);
+            ->with('kerjasama', $kerjasama)
+            ->with('kategoriMous', $kategoriMous);
     }
 
     /**
@@ -115,7 +119,9 @@ class BuktiKerjasamaController extends Controller
         $this->validate($request, [
             'nama_file' => 'required',
             'jenis_file' => 'required',
-            'file' => 'file |mimes:pdf,jpg,png,docx,doc| max:5120',
+            'nomor_file' => '',
+            'kategori_mou' => '',
+            'file' => 'file |mimes:pdf,jpg,png,docx,doc| max:10240',
         ]);
 
         $buktiKerjasama = BuktiKerjasama::findOrFail($buktiKerjasama->id);
@@ -138,12 +144,16 @@ class BuktiKerjasamaController extends Controller
             $buktiKerjasama->update([
                 'nama_file' => $request->nama_file,
                 'jenis_file' => $request->jenis_file,
+                'nomor_file' => $request->nomor_file,
+                'kategori_mou_id' => $request->kategori_mou,
                 'file' => $rename_file,
             ]);
         } else {
             $buktiKerjasama->update([
                 'nama_file' => $request->nama_file,
                 'jenis_file' => $request->jenis_file,
+                'nomor_file' => $request->nomor_file,
+                'kategori_mou_id' => $request->kategori_mou,
             ]);
         }
 
