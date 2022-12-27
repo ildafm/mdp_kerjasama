@@ -1,10 +1,10 @@
 @extends('layouts.master')
-@section('title', 'Kategori Kerjasama')
+@section('title', 'Kategori MoU')
 
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Ubah Kategori {{ $kategori->nama_kategori }}</h3>
+            <h3 class="card-title">Ubah Kategori {{ $kategoriMou->nama_kategori }}</h3>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -19,13 +19,13 @@
 
         <div class="card-body">
             {{-- Form edit data --}}
-            <form action="{{ route('kategoris.update', ['kategori' => $kategori->id]) }}" method="POST">
+            <form action="{{ route('kategori_mous.update', ['kategori_mou' => $kategoriMou->id]) }}" method="POST">
                 @method('PUT')
                 @csrf
 
                 <div class="form-group">
                     <label for="nama_kategori">Nama Kategori</label>
-                    <input type="text" value="{{ $kategori->nama_kategori }}" name='nama_kategori'
+                    <input type="text" value="{{ $kategoriMou->nama_kategori }}" name='nama_kategori'
                         class="form-control @error('nama_kategori') is-invalid @enderror"
                         placeholder="Masukan Nama Kategori">
                     @error('nama_kategori')
@@ -37,7 +37,7 @@
                 {{-- Button --}}
                 <button type="submit" class="btn btn-primary">Submit</button>
                 &nbsp;
-                <a href="/kategoris" class="btn btn-outline-dark">Kembali</a>
+                <a href="/kategori_mous" class="btn btn-outline-dark">Kembali</a>
             </form>
         </div>
     </div>

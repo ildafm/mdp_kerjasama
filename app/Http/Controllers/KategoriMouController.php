@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kategori;
-use Illuminate\Contracts\Support\ValidatedData;
+use App\Models\KategoriMou;
 use Illuminate\Http\Request;
 
-class KategoriController extends Controller
+class KategoriMouController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +17,10 @@ class KategoriController extends Controller
         //
         $this->authorize('adminOnly', User::class);
 
-        $kategoris = Kategori::All();
-        return view('kategori.index')->with('kategoris', $kategoris);
+        $kategoriMous = KategoriMou::all();
+
+        return view("kategori_mou.index")
+            ->with('kategoriMous', $kategoriMous);
     }
 
     /**
@@ -31,8 +32,7 @@ class KategoriController extends Controller
     {
         //
         $this->authorize('adminOnly', User::class);
-
-        return view('kategori.create');
+        return view('kategori_mou.create');
     }
 
     /**
@@ -45,85 +45,80 @@ class KategoriController extends Controller
     {
         //
         $this->authorize('adminOnly', User::class);
-
         $validateData = $request->validate([
             'nama_kategori' => 'required'
         ]);
 
-        $kategori = new Kategori();
+        $kategori = new KategoriMou();
         $kategori->nama_kategori = $validateData['nama_kategori'];
         $kategori->save();
 
         $request->session()->flash('pesan', 'Penambahan data berhasil');
-        return redirect()->route('kategoris.index');
+        return redirect()->route('kategori_mous.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Kategori  $kategori
+     * @param  \App\Models\KategoriMou  $kategoriMou
      * @return \Illuminate\Http\Response
      */
-    public function show(Kategori $kategori)
+    public function show(KategoriMou $kategoriMou)
     {
         //
         $this->authorize('adminOnly', User::class);
-
-        return view('kategori.show')->with('kategori', $kategori);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Kategori  $kategori
+     * @param  \App\Models\KategoriMou  $kategoriMou
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kategori $kategori)
+    public function edit(KategoriMou $kategoriMou)
     {
         //
         $this->authorize('adminOnly', User::class);
-
-        return view('kategori.edit')->with('kategori', $kategori);
+        return view('kategori_mou.edit')->with('kategoriMou', $kategoriMou);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Kategori  $kategori
+     * @param  \App\Models\KategoriMou  $kategoriMou
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kategori $kategori)
+    public function update(Request $request, KategoriMou $kategoriMou)
     {
         //
         $this->authorize('adminOnly', User::class);
-
         $this->validate($request, [
             'nama_kategori' => 'required'
         ]);
 
-        $kategori = Kategori::findOrFail($kategori->id);
+        $kategori = KategoriMou::findOrFail($kategoriMou->id);
 
         $kategori->update([
             'nama_kategori' => $request->nama_kategori
         ]);
 
         $request->session()->flash('pesan', 'Perubahan data berhasil');
-        return redirect()->route('kategoris.index');
+        return redirect()->route('kategori_mous.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Kategori  $kategori
+     * @param  \App\Models\KategoriMou  $kategoriMou
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kategori $kategori)
+    public function destroy(KategoriMou $kategoriMou)
     {
         //
         $this->authorize('adminOnly', User::class);
 
-        $kategori->delete();
-        return redirect()->route('kategoris.index')->with('pesan', "Hapus data $kategori->nama_kategori berhasil");
+        $kategoriMou->delete();
+        return redirect()->route('kategori_mous.index')->with('pesan', "Hapus data $kategoriMou->nama_kategori berhasil");
     }
 }

@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Kategori Kerjasama')
+@section('title', 'Kategori MoU')
 
 @section('content')
 
@@ -7,7 +7,7 @@
         <div class="card-header">
 
             {{-- Button tambah --}}
-            <a href="{{ url('/kategoris/create') }}" class='btn btn-primary'>Tambah Kategori</a>
+            <a href="{{ url('/kategori_mous/create') }}" class='btn btn-primary'>Tambah Kategori</a>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -45,16 +45,12 @@
                         $nomor = 1;
                     @endphp
 
-                    @foreach ($kategoris as $data)
+                    @foreach ($kategoriMous as $data)
                         <tr>
                             <td>{{ $nomor++ }}</td>
                             <td>
-                                {{-- Button Tampil --}}
-                                {{-- <a href="{{ url('kategoris/' . $data->id) }}" class="btn btn-sm btn-primary"><i
-                                        class="nav-icon fas fa-eye" title="Tampil"></i></a> --}}
-
                                 {{-- Button Ubah --}}
-                                <a href="{{ route('kategoris.edit', ['kategori' => $data->id]) }}"
+                                <a href="{{ route('kategori_mous.edit', ['kategori_mou' => $data->id]) }}"
                                     class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit" title="Edit"></i></a>
 
                                 {{-- Button Hapus --}}
@@ -109,10 +105,10 @@
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <script>
         // jika tombol hapus ditekan, generate alamat URL untuk proses hapus
-        // id disini adalah id kategori
+        // id disini adalah id kategori mou
         $('.btn-hapus').click(function() {
             let id = $(this).attr('data-id');
-            $('#formDelete').attr('action', '/kategoris/' + id);
+            $('#formDelete').attr('action', '/kategori_mous/' + id);
 
             let namaKategori = $(this).attr('data-namaKategori');
             $('#mb-konfirmasi').text("Apakah anda yakin ingin menghapus kategori : " + namaKategori + " ?")

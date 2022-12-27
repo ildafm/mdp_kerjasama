@@ -622,17 +622,36 @@
                                             </p>
                                         </a>
                                     </li>
-
-                                    {{-- Kategoris --}}
                                     <li class="nav-item">
-                                        <a href="{{ url('/kategoris') }}" class="nav-link">
+                                        <a href="#" class="nav-link">
                                             <i class="nav-icon fas fa-layer-group"></i>
                                             <p>
                                                 Kategori
+                                                <i class="right fas fa-angle-left"></i>
                                             </p>
                                         </a>
+                                        {{-- Kategori --}}
+                                        <ul class="nav nav-treeview">
+                                            {{-- Kategori Kerjasama --}}
+                                            <li class="nav-item">
+                                                <a href="{{ url('/kategoris') }}" class="nav-link">
+                                                    <i class="nav-icon fas fa-folder"></i>
+                                                    <p>
+                                                        Kategori Kerjasama
+                                                    </p>
+                                                </a>
+                                            </li>
+                                            {{-- Kategori Mou --}}
+                                            <li class="nav-item">
+                                                <a href="{{ url('/kategori_mous') }}" class="nav-link">
+                                                    <i class="nav-icon fas fa-folder"></i>
+                                                    <p>
+                                                        Kategori Mou
+                                                    </p>
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </li>
-
                                 </ul>
                             </li>
                         @endif

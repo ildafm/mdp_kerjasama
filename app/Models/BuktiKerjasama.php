@@ -18,6 +18,10 @@ class BuktiKerjasama extends Model
     {
         return $this->belongsTo(Kerjasama::class);
     }
+    public function kategori_mou()
+    {
+        return $this->belongsTo(KategoriMou::class);
+    }
 
 
 

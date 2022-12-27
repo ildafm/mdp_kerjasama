@@ -15,6 +15,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\BuktiKerjasamaController;
 use App\Http\Controllers\BuktiKegiatanController;
 use App\Http\Controllers\BuktiKerjasama2Controller;
+use App\Http\Controllers\KategoriMouController;
 use App\Http\Controllers\KegiatanBerdasarkanMitraController;
 use App\Http\Controllers\KerjasamaTanpaKegiatanController;
 use App\Http\Controllers\KerjasamaBerdasarkanMitraController;
@@ -61,6 +62,7 @@ Route::resource('statuses', StatusController::class)->middleware(['auth']);
 Route::resource('kategoris', KategoriController::class)->middleware(['auth']);
 Route::resource('users', UserController::class)->middleware(['auth']);
 Route::resource('profiles', ProfileController::class)->middleware(['auth']);
+Route::resource('kategori_mous', KategoriMouController::class)->middleware(['auth']);
 
 // other route
 Route::resource('buktiKerjasamas', BuktiKerjasamaController::class)->middleware(['auth']); //route yang mengarah untuk memperlihatkan bukti kerjasama
