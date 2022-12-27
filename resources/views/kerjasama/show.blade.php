@@ -2,11 +2,49 @@
 @section('title', 'Kerjasama')
 
 @section('content')
+    <script>
+        document.getElementById("nomor_file").addEventListener("load", getStatus(@php echo old('jenis_file') @endphp));
+
+        function getStatus(status) {
+            let jenis_file = document.getElementById("jenis_file")
+            let nomor_file = document.getElementById("nomor_file")
+
+            let opt_kategori_mou = document.getElementsByName("opt_kategori_mou")
+            let select_kategori_mou = document.getElementById("select_kategori_mou")
+            let bukan_mou = document.getElementById("bukan_mou")
+
+            if (jenis_file.value != "L") {
+                nomor_file.readOnly = false
+                nomor_file.required = true
+
+            } else {
+                nomor_file.value = ""
+                nomor_file.readOnly = true
+                nomor_file.required = false
+            }
+
+            if (jenis_file.value == "M") {
+                select_kategori_mou.value = 1
+                for (let i = 0; i < opt_kategori_mou.length; i++) {
+                    opt_kategori_mou[i].hidden = false;
+                }
+                bukan_mou.hidden = true
+            } else {
+                select_kategori_mou.value = ""
+                for (let i = 0; i < opt_kategori_mou.length; i++) {
+                    opt_kategori_mou[i].hidden = true;
+                }
+                bukan_mou.hidden = false
+            }
+
+
+        }
+    </script>
+
     {{-- Menu Show --}}
     <div class="card">
         <div class="card-header">
             {{-- Button Kembali --}}
-            {{-- <a href="{{ url('/kerjasamas') }}" class='btn btn-primary'>Kembali</a> --}}
             <h3 class="card-title">{{ $kerjasama->nama_kerja_sama }}</h3>
 
             <div class="card-tools">
@@ -473,7 +511,7 @@
                                 <div class="form-group col-lg-8">
                                     <label for="nama_file">Nama File</label>
                                     <input type="text" class="form-control" name="nama_file"
-                                        placeholder="Enter Nama File" value="{{ old('nama_file') }}">
+                                        placeholder="Enter Nama File" value="{{ old('nama_file') }}" required>
 
                                     @error('nama_file')
                                         <div class="text-danger">{{ $message }}</div>
@@ -481,7 +519,7 @@
                                 </div>
 
                                 {{-- Jenis File --}}
-                                <div class="form-group col-lg-4">
+                                <div class="form-group col-lg-2">
                                     <label for="jenis_file">Jenis File</label>
 
                                     @php
@@ -492,7 +530,8 @@
                                         }
                                     @endphp
 
-                                    <select class="form-control" name="jenis_file" id="">
+                                    <select class="form-control" name="jenis_file" id="jenis_file"
+                                        onchange="getStatus(this)">
                                         <option value="L" {{ $option == 'L' ? 'selected' : '' }}>
                                             Lain-lain
                                         </option>
@@ -505,11 +544,49 @@
                                             </option>
                                         @endif
                                     </select>
-
                                     @error('jenis_file')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
+                                {{-- kategori mou --}}
+                                <div class="form-group col-lg-2">
+                                    <label for="kategori_mou">Kategori MoU</label>
+
+                                    @php
+                                        if (old('kategori_mou') !== null) {
+                                            $option = old('kategori_mou');
+                                        } else {
+                                            $option = null;
+                                        }
+                                    @endphp
+
+                                    <select class="form-control" name="kategori_mou" id="select_kategori_mou">
+                                        <option value="" id="bukan_mou">
+                                            -- Bukan MoU --
+                                        </option>
+                                        @foreach ($kategoriMous as $data)
+                                            <option value="{{ $data->id }}"
+                                                {{ $option == $data->id ? 'selected' : '' }} name="opt_kategori_mou"
+                                                hidden>
+                                                {{ $data->nama_kategori }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('kategori_mou')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            {{-- nomor file --}}
+                            <div class="form-group">
+                                <label for="nomor_file">Nomor File</label>
+                                <input type="text" class="form-control" name="nomor_file" id="nomor_file"
+                                    placeholder="Enter Nomor File" value="{{ old('nomor_file') }}" readonly>
+                                @error('nomor_file')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             {{-- add file --}}
@@ -518,7 +595,7 @@
                                 <div class="input-group">
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" name="file"
-                                            id="exampleInputFile">
+                                            id="exampleInputFile" required>
                                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                     </div>
                                     <div class="input-group-append">
@@ -550,8 +627,10 @@
                             <tr>
                                 <th>No</th>
                                 <th>Aksi</th>
-                                <th>Nama File Kerjasama</th>
+                                <th>Nama File</th>
+                                <th>Nomor File</th>
                                 <th>Jenis File</th>
+                                <th>Kategori MoU</th>
                                 <th>Tanggal Upload</th>
                             </tr>
                         </thead>
@@ -565,6 +644,7 @@
                             @foreach ($buktiKerjasama as $data)
                                 <tr>
                                     <td> {{ $nomor++ }} </td>
+                                    {{-- Button Aksi --}}
                                     <td>
                                         {{-- Button Tampil --}}
                                         <a href="{{ url('storage/kerjasama/' . $data->file) }}"
@@ -588,6 +668,7 @@
                                         @endif
                                     </td>
                                     <td>{{ $data->nama_file }}</td>
+                                    <td>{{ $data->nomor_file }}</td>
                                     <td>
                                         @php
                                             if ($data->jenis_file == 'M') {
@@ -599,18 +680,21 @@
                                             }
                                         @endphp
                                     </td>
+                                    <td>{{ $data->kategori_mou_id }}</td>
+
                                     <td>{{ $data->tanggalUpload }}</td>
                                 </tr>
                             @endforeach
 
                         </tbody>
-
                         <tfoot>
                             <tr>
                                 <th>No</th>
                                 <th>Aksi</th>
-                                <th>Nama File Kerjasama</th>
+                                <th>Nama File</th>
+                                <th>Nomor File</th>
                                 <th>Jenis File</th>
+                                <th>Kategori MoU</th>
                                 <th>Tanggal Upload</th>
                             </tr>
                         </tfoot>

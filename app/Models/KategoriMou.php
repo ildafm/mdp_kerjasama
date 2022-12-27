@@ -9,7 +9,7 @@ class KategoriMou extends Model
 {
     use HasFactory;
 
-    public function bukti_kerjasamas()
+    public function buktiKerjasamas()
     {
         return $this->hasMany(BuktiKerjasama::class);
     }

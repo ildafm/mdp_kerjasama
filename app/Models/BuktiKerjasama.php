@@ -18,12 +18,13 @@ class BuktiKerjasama extends Model
     {
         return $this->belongsTo(Kerjasama::class);
     }
-    public function kategori_mou()
+
+    public function kategoriMou()
     {
         return $this->belongsTo(KategoriMou::class);
     }
 
 
 
-    protected $fillable = ['nama_file', 'jenis_file', 'file', 'kerjasama_id'];
+    protected $fillable = ['nama_file', 'jenis_file', 'file', 'kerjasama_id', 'kategori_mou_id', 'nomor_file'];
 }

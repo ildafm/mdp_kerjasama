@@ -46,6 +46,8 @@ class BuktiKerjasamaController extends Controller
             'jenis_file' => 'required',
             'file' => 'required | file |mimes:pdf,jpg,png,docx,doc| max:10240',
             'kerjasama_id' => 'required',
+            'nomor_file' => '',
+            'kategori_mou' => '',
         ]);
 
 
@@ -66,6 +68,8 @@ class BuktiKerjasamaController extends Controller
         $buktiKerjasama->jenis_file = $validateData['jenis_file'];
         $buktiKerjasama->file = $rename_file;
         $buktiKerjasama->kerjasama_id = $validateData['kerjasama_id'];
+        $buktiKerjasama->nomor_file = $validateData['nomor_file'];
+        $buktiKerjasama->kategori_mou_id = $validateData['kategori_mou'];
 
         $buktiKerjasama->save(); // simpan ke tabel bukti_kerjasama
         $request->session()->flash('pesan', 'Penambahan data file berhasil');

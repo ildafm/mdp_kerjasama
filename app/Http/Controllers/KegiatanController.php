@@ -19,10 +19,11 @@ class KegiatanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         //
         $kegiatans = Kegiatan::All();
+
         if (isset($_GET['filter_tanggal_mulai']) && isset($_GET['filter_tanggal_sampai'])) {
             $tanggal_mulai = ($_GET['filter_tanggal_mulai']);
             $tanggal_sampai = ($_GET['filter_tanggal_sampai']);
@@ -32,6 +33,7 @@ class KegiatanController extends Controller
             $tanggal_mulai = date('Y-m-d');
             $tanggal_sampai = date('Y-m-d');
         }
+
         return view('kegiatan.index')
             ->with('kegiatans', $kegiatans)
             ->with('tanggal_mulai', $tanggal_mulai)

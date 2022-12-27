@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BentukKegiatan;
 use App\Models\BuktiKerjasama;
 use App\Models\Kategori;
+use App\Models\KategoriMou;
 use App\Models\Kegiatan;
 use App\Models\Kerjasama;
 use App\Models\Status;
@@ -196,6 +197,7 @@ class KerjasamaController extends Controller
 
         $kegiatans = Kegiatan::all();
         $bentukKegiatans = BentukKegiatan::all();
+        $kategoriMous = KategoriMou::all();
 
         $SPK = DB::select("SELECT * FROM bukti_kerjasamas
         WHERE jenis_file = 'S' AND kerjasama_id = $kerjasama->id");
@@ -206,7 +208,8 @@ class KerjasamaController extends Controller
             ->with('users', $users)
             ->with('bentukKegiatans', $bentukKegiatans)
             ->with('kegiatans', $kegiatans)
-            ->with('SPK', $SPK);
+            ->with('SPK', $SPK)
+            ->with('kategoriMous', $kategoriMous);
     }
 
     /**
