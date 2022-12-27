@@ -57,7 +57,7 @@
                                             class="nav-icon fas fa-eye" title="Tampil"></i></a>
 
                                     {{-- Button Ubah --}}
-                                    <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
+                                    <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id, 'type' => 1]) }}"
                                         class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
                                             title="Edit"></i></a>
 

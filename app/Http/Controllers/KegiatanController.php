@@ -176,6 +176,7 @@ class KegiatanController extends Controller
     {
         //
         $this->authorize('viewAny', User::class);
+        $type = $request->type;
 
         // $kerjasamas = Kerjasama::All();
         $kerjasamas = DB::select("SELECT kerjasamas.*, mitras.nama_mitra
@@ -184,15 +185,16 @@ class KegiatanController extends Controller
         JOIN mitras ON mitras.id = usulans.mitra_id
         WHERE status_id != 2 AND kerjasamas.id IN(SELECT DISTINCT kerjasama_id FROM bukti_kerjasamas WHERE jenis_file = 'S')");
 
+        $idPIC = $kegiatan->user_id;
         $users = DB::select("SELECT tbl_user_yang_belum_ditugaskan.id, tbl_user_yang_belum_ditugaskan.kode_dosen, tbl_user_yang_belum_ditugaskan.name
         FROM users tbl_user_yang_belum_ditugaskan 
-        WHERE tbl_user_yang_belum_ditugaskan.kode_dosen NOT IN ( 
+        WHERE tbl_user_yang_belum_ditugaskan.id = $idPIC OR tbl_user_yang_belum_ditugaskan.kode_dosen NOT IN ( 
             SELECT DISTINCT users.kode_dosen 
             FROM users 
             LEFT JOIN kegiatans ON kegiatans.user_id = users.id 
             LEFT JOIN bukti_kegiatans on bukti_kegiatans.kegiatans_id = kegiatans.id 
             WHERE (kegiatans.bentuk_kegiatan_id IS NOT NULL AND bukti_kegiatans.nama_bukti_kegiatan IS NULL) 
-            ORDER BY users.id )");
+            ORDER BY users.id)");
 
         $bentukKegiatans = BentukKegiatan::all();
 
@@ -211,7 +213,8 @@ class KegiatanController extends Controller
             ->with('kegiatan', $kegiatan)
             ->with('bentukKegiatans', $bentukKegiatans)
             ->with('users', $users)
-            ->with('SPK', $SPK);
+            ->with('SPK', $SPK)
+            ->with('type', $type);
     }
 
     /**
@@ -230,11 +233,11 @@ class KegiatanController extends Controller
             'tanggal_mulai' => 'required',
             'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
             'bentuk_kegiatan' => 'required',
-            // 'PIC' => 'required',
             'pic_dosen' => 'required',
             'keterangan' => 'required',
             'kerjasamas' => 'required',
             'spk' => 'required',
+            'type' => '',
         ]);
 
         $kegiatan = Kegiatan::findOrFail($kegiatan->id);
@@ -251,7 +254,13 @@ class KegiatanController extends Controller
         ]);
 
         $request->session()->flash('pesan', 'Perubahan data berhasil');
-        return redirect()->route('kegiatans.index');
+        if ($request->type == 1) {
+            return redirect('/notification_kegiatans');
+        } elseif ($request->type == 2) {
+            return redirect('/notification_kegiatan_belum_ada_buktis');
+        } else {
+            return redirect()->route('kegiatans.index');
+        }
     }
 
     /**

@@ -90,7 +90,7 @@
 
                                 @if (Auth::user()->level != 'D')
                                     {{-- Button Ubah --}}
-                                    <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id]) }}"
+                                    <a href="{{ route('kegiatans.edit', ['kegiatan' => $data->id, 'type' => 0]) }}"
                                         class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
                                             title="Edit"></i></a>
                                 @endif

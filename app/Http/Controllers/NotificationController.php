@@ -78,7 +78,7 @@ class NotificationController extends Controller
         //
         $getUserID = Auth::user()->id; //variabel penampung id user
         $getUserUnit = Auth::user()->unit_id; //variabel penampung unit user
-                
+
         // Variabel untuk login dosen
         $listKegiatanTanpaBukti = DB::select("SELECT * FROM (
             SELECT kegiatans.id AS 'id', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatans.bentuk AS 'bentuk_kegiatan', kegiatans.keterangan, kerjasamas.nama_kerja_sama, users.name AS 'name', kegiatans.status, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti', units.nama_unit
@@ -93,7 +93,7 @@ class NotificationController extends Controller
             GROUP BY kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatans.bentuk, keterangan,  kerjasamas.nama_kerja_sama, users.name, kegiatans.status, units.nama_unit
         ) AS tbl_kegiatan_tanpa_bukti
         WHERE tbl_kegiatan_tanpa_bukti.total_bukti = 0
-        ORDER BY tbl_kegiatan_tanpa_bukti.tanggal_mulai");
+        ORDER BY tbl_kegiatan_tanpa_bukti.tanggal_sampai");
 
         // Variabel untuk login admin
         $listKegiatanTanpaBuktiForAdmin = DB::select("SELECT * FROM (
@@ -108,7 +108,7 @@ class NotificationController extends Controller
             GROUP BY kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatans.bentuk, keterangan,  kerjasamas.nama_kerja_sama, users.name, kegiatans.status, units.nama_unit
         ) AS tbl_kegiatan_tanpa_bukti
         WHERE tbl_kegiatan_tanpa_bukti.total_bukti = 0
-        ORDER BY tbl_kegiatan_tanpa_bukti.tanggal_mulai");
+        ORDER BY tbl_kegiatan_tanpa_bukti.tanggal_sampai");
 
         // Variabel untuk login dekan
         $listKegiatanTanpaBuktiForDekan = DB::select("SELECT * FROM (
@@ -124,7 +124,7 @@ class NotificationController extends Controller
             GROUP BY kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatans.bentuk, kegiatans.keterangan,kerjasamas.nama_kerja_sama, users.name, kegiatans.status, units.nama_unit, kerjasamas.usulan_id
         ) AS tbl_kegiatan_tanpa_bukti
         WHERE tbl_kegiatan_tanpa_bukti.total_bukti = 0
-        ORDER BY tbl_kegiatan_tanpa_bukti.tanggal_mulai");
+        ORDER BY tbl_kegiatan_tanpa_bukti.tanggal_sampai");
 
         // Variabel untuk login kaprodi dan kepala unit
         $listKegiatanTanpaBuktiForKaprodiDanKepalaUnit = DB::select("SELECT tbl_kegiatan_tanpa_bukti.* FROM (
@@ -139,14 +139,13 @@ class NotificationController extends Controller
             GROUP BY kegiatans.id, kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatans.bentuk, kegiatans.keterangan,kerjasamas.nama_kerja_sama, users.name, kegiatans.status, units.nama_unit, kerjasamas.usulan_id, users.id, units.id
         ) AS tbl_kegiatan_tanpa_bukti
         WHERE tbl_kegiatan_tanpa_bukti.total_bukti = 0 AND (tbl_kegiatan_tanpa_bukti.user_id = $getUserID OR tbl_kegiatan_tanpa_bukti.unit_id = $getUserUnit)
-        ORDER BY tbl_kegiatan_tanpa_bukti.tanggal_mulai");
-        
+        ORDER BY tbl_kegiatan_tanpa_bukti.tanggal_sampai");
+
         return view("notification.kegiatan_perlu_bukti")
             ->with('listKegiatanTanpaBuktiForAdmin', $listKegiatanTanpaBuktiForAdmin)
             ->with('listKegiatanTanpaBuktiForDekan', $listKegiatanTanpaBuktiForDekan)
             ->with('listKegiatanTanpaBuktiForKaprodiDanKepalaUnit', $listKegiatanTanpaBuktiForKaprodiDanKepalaUnit)
             ->with('listKegiatanTanpaBukti', $listKegiatanTanpaBukti);
-        
     }
 
     /**
