@@ -14,7 +14,7 @@
     </p>
 
     <p>
-        Silahkan klik link di bawah untuk informasi lebih lanjut.
+        Silahkan klik link di bawah untuk informasi lebih lanjut. <br>
         <a href="{{ url('kegiatans', $details['id_kegiatan']) }}">Kegiatan Baru</a>
     </p>
 

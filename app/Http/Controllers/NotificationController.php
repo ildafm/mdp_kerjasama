@@ -97,7 +97,7 @@ class NotificationController extends Controller
 
         // Variabel untuk login admin
         $listKegiatanTanpaBuktiForAdmin = DB::select("SELECT * FROM (
-            SELECT kegiatans.id AS 'id', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatans.bentuk AS 'bentuk_kegiatan', kegiatans.keterangan, kerjasamas.nama_kerja_sama, users.name AS 'name', kegiatans.status, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti', units.nama_unit
+            SELECT kegiatans.id AS 'id', kegiatans.tanggal_mulai, kegiatans.tanggal_sampai, bentuk_kegiatans.bentuk AS 'bentuk_kegiatan', kegiatans.keterangan, kerjasamas.nama_kerja_sama, users.name AS 'name', kegiatans.status, COUNT(bukti_kegiatans.kegiatans_id) AS 'total_bukti', units.nama_unit, ABS(DATEDIFF(kegiatans.tanggal_sampai, NOW())) as 'lewat_hari'
             FROM kegiatans
             JOIN bentuk_kegiatans ON bentuk_kegiatan_id = bentuk_kegiatans.id 
             JOIN kerjasamas ON kerjasamas.id = kerjasama_id 
