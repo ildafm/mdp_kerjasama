@@ -66,12 +66,15 @@
                         <th>Aksi</th>
                         <th>Nama Kerjasama</th>
                         <th>Nomor MoU</th>
+                        <th>File MoU</th>
                         <th>Bidang</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
                         <th>Kategori</th>
                         <th>Status</th>
                         <th>Usulan</th>
+                        <th>Nomor SPK</th>
+                        <th>File SPK</th>
                     </tr>
                 </thead>
 
@@ -81,59 +84,112 @@
                         $nomor = 1;
                     @endphp
 
-                    @foreach ($kerjasamas as $data)
-                        <tr>
-                            <td>{{ $nomor++ }}</td>
-                            <td>
-                                {{-- Button Tampil --}}
-                                <a href="{{ url('kerjasamas/' . $data->id) }}" class="btn btn-sm btn-primary"><i
-                                        class="nav-icon fas fa-eye" title="Tampil"></i></a>
+                    @if (count($kerjasamas) > 0)
+                        @foreach ($kerjasamas as $data)
+                            @php
+                                $getSPK = DB::select("SELECT kerjasamas.id, spk.nomor_file AS 'nomor_spk', spk.jenis_file, spk.nama_file, spk.file AS 'file_spk'
+                                    FROM kerjasamas
+                                    JOIN (SELECT * FROM bukti_kerjasamas WHERE jenis_file = 'S') AS spk ON spk.kerjasama_id = kerjasamas.id
+                                    WHERE kerjasamas.id = $data->id
+                                    ORDER BY kerjasamas.id");
+                            @endphp
+                            <tr>
+                                {{-- Nomor --}}
+                                <td>{{ $nomor++ }}</td>
+                                {{-- Button aksi --}}
+                                <td>
+                                    {{-- Button Tampil --}}
+                                    <a href="{{ url('kerjasamas/' . $data->id) }}" class="btn btn-sm btn-primary"><i
+                                            class="nav-icon fas fa-eye" title="Tampil"></i></a>
 
-                                @if (Auth::user()->level != 'D')
-                                    {{-- Button Ubah --}}
-                                    <a href="{{ route('kerjasamas.edit', ['kerjasama' => $data->id, 'type' => 0]) }}"
-                                        class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
-                                            title="Edit"></i></a>
-                                @endif
+                                    @if (Auth::user()->level != 'D')
+                                        {{-- Button Ubah --}}
+                                        <a href="{{ route('kerjasamas.edit', ['kerjasama' => $data->id, 'type' => 0]) }}"
+                                            class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
+                                                title="Edit"></i></a>
+                                    @endif
 
-                                @if (Auth::user()->level == 'A')
-                                    {{-- Button Hapus --}}
-                                    <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                        data-namaKerjasama="{{ $data->nama_kerja_sama }}" data-toggle="modal"
-                                        data-target="#modal-sm"><i class="nav-icon fas fa-trash"
-                                            title="Hapus"></i></button>
-                                @endif
-                            </td>
-                            <td>{{ $data->nama_kerja_sama }}</td>
-                            <td>
-                                @if ($data->no_mou == '')
-                                    Tanpa MoU
-                                @else
-                                    {{ $data->no_mou }}
-                                @endif
-                            </td>
-                            <td>
-                                @php
-                                    if ($data->bidang == 'P') {
-                                        echo 'Pendidikan';
-                                    } elseif ($data->bidang == 'N') {
-                                        echo 'Penelitian';
-                                    } elseif ($data->bidang == 'B') {
-                                        echo 'Pengabdian';
-                                    } elseif ($data->bidang == 'A') {
-                                        echo 'Pendidikan, Penelitian, Pengabdian';
-                                    } else {
-                                        echo 'Lain-lain';
-                                    }
-                                @endphp
-                            </td>
-                            <td>{{ $data->tanggal_mulai }}</td>
-                            <td>{{ $data->tanggal_sampai }}</td>
-                            <td>{{ $data->kategori->nama_kategori }}</td>
-                            <td>{{ $data->status->nama_status }}</td>
-                            <td>{{ $data->usulan->usulan }}</td>
-                        </tr>
-                    @endforeach
+                                    @if (Auth::user()->level == 'A')
+                                        {{-- Button Hapus --}}
+                                        <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
+                                            data-namaKerjasama="{{ $data->nama_kerja_sama }}" data-toggle="modal"
+                                            data-target="#modal-sm"><i class="nav-icon fas fa-trash"
+                                                title="Hapus"></i></button>
+                                    @endif
+                                </td>
+                                {{-- Nama Kerjasama --}}
+                                <td>{{ $data->nama_kerja_sama }}</td>
+                                {{-- Nomor MoU --}}
+                                <td>
+                                    @if ($data->nomor_mou == '' && $data->kategori_id == 1)
+                                        Belum ada file MoU yang diupload
+                                    @elseif($data->kategori_id == 2)
+                                        Tanpa MoU
+                                    @else
+                                        {{ $data->nomor_mou }}
+                                    @endif
+                                </td>
+                                {{-- File MoU --}}
+                                <td>
+                                    @if ($data->file_mou == '' && $data->kategori_id == 1)
+                                        Belum ada file MoU yang diupload
+                                    @elseif($data->kategori_id == 2)
+                                        Tanpa MoU
+                                    @else
+                                        <a href="{{ url('storage/kerjasama/' . $data->file_mou) }}"
+                                            target="_blank">{{ url('storage/kerjasama/' . $data->file_mou) }}</a>
+                                    @endif
+                                </td>
+                                {{-- Bidang kerjasama --}}
+                                <td>
+                                    @php
+                                        if ($data->bidang == 'P') {
+                                            echo 'Pendidikan';
+                                        } elseif ($data->bidang == 'N') {
+                                            echo 'Penelitian';
+                                        } elseif ($data->bidang == 'B') {
+                                            echo 'Pengabdian';
+                                        } elseif ($data->bidang == 'A') {
+                                            echo 'Pendidikan, Penelitian, Pengabdian';
+                                        } else {
+                                            echo 'Lain-lain';
+                                        }
+                                    @endphp
+                                </td>
+                                {{-- tanggal mulai --}}
+                                <td>{{ $data->tanggal_mulai }}</td>
+                                {{-- tanggal sampai --}}
+                                <td>{{ $data->tanggal_sampai }}</td>
+                                {{-- kategori --}}
+                                <td>{{ $data->nama_kategori }}</td>
+                                {{-- status --}}
+                                <td>{{ $data->nama_status }}</td>
+                                {{-- usulan --}}
+                                <td>{{ $data->usulan }}</td>
+                                {{-- Nomor SPK --}}
+                                <td>
+                                    @if (count($getSPK) > 0)
+                                        @foreach ($getSPK as $item)
+                                            {{ $item->nomor_spk }};
+                                        @endforeach
+                                    @else
+                                        Tidak ada SPK/MoA
+                                    @endif
+                                </td>
+                                {{-- File SPK --}}
+                                <td>
+                                    @if (count($getSPK) > 0)
+                                        @foreach ($getSPK as $item)
+                                            <a href="{{ url('storage/kerjasama/' . $item->file_spk) }}"
+                                                target="_blank">{{ url('storage/kerjasama/' . $item->file_spk) }}</a>;
+                                        @endforeach
+                                    @endif
+                                </td>
+
+                            </tr>
+                        @endforeach
+                    @endif
+
                 </tbody>
 
                 <tfoot>
@@ -142,12 +198,15 @@
                         <th>Aksi</th>
                         <th>Nama Kerjasama</th>
                         <th>Nomor MoU</th>
+                        <th>File MoU</th>
                         <th>Bidang</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
                         <th>Kategori</th>
                         <th>Status</th>
                         <th>Usulan</th>
+                        <th>Nomor SPK</th>
+                        <th>File SPK</th>
                     </tr>
                 </tfoot>
 

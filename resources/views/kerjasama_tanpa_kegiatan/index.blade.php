@@ -67,6 +67,7 @@
                         <th>Aksi</th>
                         <th>Nama Kerjasama</th>
                         <th>Nomor MoU</th>
+                        <th>File MoU</th>
                         <th>Bidang</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
@@ -106,12 +107,10 @@
                                 @endif
                             </td>
                             <td>{{ $data->nama_kerja_sama }}</td>
+                            <td> {{ $data->no_mou }} </td>
                             <td>
-                                @if ($data->no_mou == '')
-                                    Tanpa MoU
-                                @else
-                                    {{ $data->no_mou }}
-                                @endif
+                                <a
+                                    href="{{ url('storage/kerjasama/' . $data->file_mou) }}">{{ url('storage/kerjasama/' . $data->file_mou) }}</a>
                             </td>
                             <td>
                                 @php
@@ -143,6 +142,7 @@
                         <th>Aksi</th>
                         <th>Nama Kerjasama</th>
                         <th>Nomor MoU</th>
+                        <th>File MoU</th>
                         <th>Bidang</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>

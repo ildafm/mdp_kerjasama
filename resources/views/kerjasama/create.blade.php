@@ -2,7 +2,7 @@
 @section('title', 'Kerjasama')
 
 @section('content')
-    <script>
+    {{-- <script>
         document.getElementById("no_mou").addEventListener("load", getStatus(@php echo old('nama_kategori') @endphp));
 
         function getStatus(status) {
@@ -18,7 +18,7 @@
                 no_mou.readOnly = true
             }
         }
-    </script>
+    </script> --}}
 
     <div class="card">
         <div class="card-header">
@@ -41,12 +41,13 @@
                 @csrf
 
                 <div class="row">
-                    {{-- Nomor MoU --}}
+                    {{-- Nama Kerjasama --}}
                     <div class="form-group col-lg-6">
-                        <label for="no_mou">Nomor MoU</label>
-                        <input type="text" id="no_mou" name='no_mou' value="{{ old('no_mou') }}"
-                            class="form-control @error('no_mou') is-invalid @enderror" placeholder="Masukan Nomor MoU">
-                        @error('no_mou')
+                        <label for="nama_kerja_sama">Nama Kerjasama</label>
+                        <input type="text" name='nama_kerja_sama' value="{{ old('nama_kerja_sama') }}"
+                            class="form-control @error('nama_kerja_sama') is-invalid @enderror"
+                            placeholder="Masukan Nama Kerjasama" required>
+                        @error('nama_kerja_sama')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
@@ -63,7 +64,7 @@
                             }
                         @endphp
 
-                        <select class="form-control" id="nama_kategori" name='nama_kategori' onchange="getStatus(this)">
+                        <select class="form-control" id="nama_kategori" name='nama_kategori'>
                             @foreach ($kategoris as $data)
                                 <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
                                     {{ $data->nama_kategori }}
@@ -76,16 +77,7 @@
                     </div>
                 </div>
 
-                {{-- Nama Kerjasama --}}
-                <div class="form-group">
-                    <label for="nama_kerja_sama">Nama Kerjasama</label>
-                    <input type="text" name='nama_kerja_sama' value="{{ old('nama_kerja_sama') }}"
-                        class="form-control @error('nama_kerja_sama') is-invalid @enderror"
-                        placeholder="Masukan Nama Kerjasama" required>
-                    @error('nama_kerja_sama')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
+
                 <div class="row">
                     {{-- Tanggal Mulai --}}
                     <div class="form-group col-lg-6">

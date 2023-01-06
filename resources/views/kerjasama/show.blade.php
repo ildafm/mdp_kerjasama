@@ -74,17 +74,6 @@
                     </tr>
 
                     <tr>
-                        <td>Nomor Mou</td>
-                        <td>
-                            @if ($kerjasama->no_mou == '')
-                                Tanpa MoU
-                            @else
-                                {{ $kerjasama->no_mou }}
-                            @endif
-                        </td>
-                    </tr>
-
-                    <tr>
                         <td>Bidang</td>
                         <td>
                             @php
@@ -169,7 +158,7 @@
                     @if (Auth::user()->level != 'D')
                         {{-- Jika kerjasama tidak memiliki file spk maka form untuk tambah data kegiatan tidak akan ditampilkan --}}
                         @if (count($kerjasamaBelumMemilikiFileSPK) > 0)
-                            @if ($kerjasama->status_id != '2')
+                            @if ($kerjasama->status_id != 2)
                                 <h3>Kerjasama ini belum memiliki file SPK/MoA</h3>
                                 <p>Silahkan tambahkan file SPK/MoA terlebih dahulu di bagian file kerjasama untuk dapat
                                     menambahkan
@@ -177,6 +166,8 @@
                             @else
                                 <h3>Kerjasama ini sudah kadaluarsa dan belum memiliki file SPK/MoA</h3>
                             @endif
+                        @elseif($kerjasama->status_id == 2)
+                            <h2>Kerjasama ini sudah kadaluarsa</h2>
                         @else
                             {{-- Form tambah data kegiatan --}}
                             <h3>Tambah Data Kegiatan</h3>
@@ -311,18 +302,16 @@
                             </form>
                         @endif
                         <br><br>
+
+                        {{-- Jika Kerjasama ini sudah kadaluarsa --}}
+
                     @endif
 
                     @if (Auth::user()->level != 'D')
                         {{-- Jika file belum memiliki spk dan user sekarang bukan dosen, maka tabel ini tidak akan ditampilkan --}}
                         @if (count($kerjasamaBelumMemilikiFileSPK) < 1)
-                            {{-- info no mou --}}
                             <h3>
-                                @if ($kerjasama->no_mou != null || $kerjasama->no_mou != '')
-                                    Nomor MoU : {{ $kerjasama->no_mou }}
-                                @else
-                                    Tanpa MoU
-                                @endif
+                                Tabel Daftar Kegiatan
                             </h3>
                             {{-- Tabel data Kegiatan --}}
                             <table id="example3" class="table table-bordered table-striped">
@@ -406,13 +395,8 @@
                         @endif
                     @else
                         {{-- Jika login adalah dosen, dan kerjasama belum memiliki spk, maka menampilkan tabel kosong --}}
-                        {{-- info no mou --}}
                         <h3>
-                            @if ($kerjasama->no_mou != null || $kerjasama->no_mou != '')
-                                Nomor MoU : {{ $kerjasama->no_mou }}
-                            @else
-                                Tanpa MoU
-                            @endif
+                            Tabel Daftar Kegiatan
                         </h3>
                         {{-- Tabel data Kegiatan --}}
                         <table id="example3" class="table table-bordered table-striped">

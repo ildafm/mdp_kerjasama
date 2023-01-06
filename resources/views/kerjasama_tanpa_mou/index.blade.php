@@ -66,13 +66,14 @@
                         <th>No</th>
                         <th>Aksi</th>
                         <th>Nama Kerjasama</th>
-                        <th>Nomor MoU</th>
                         <th>Bidang</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
                         <th>Kategori</th>
                         <th>Status</th>
                         <th>Usulan</th>
+                        <th>Nomor SPK</th>
+                        <th>File SPK</th>
                     </tr>
                 </thead>
 
@@ -83,6 +84,13 @@
                     @endphp
 
                     @foreach ($kerjasamas as $data)
+                        @php
+                            $getSPK = DB::select("SELECT kerjasamas.id, spk.nomor_file AS 'nomor_spk', spk.jenis_file, spk.nama_file, spk.file AS 'file_spk'
+                                    FROM kerjasamas
+                                    JOIN (SELECT * FROM bukti_kerjasamas WHERE jenis_file = 'S') AS spk ON spk.kerjasama_id = kerjasamas.id
+                                    WHERE kerjasamas.id = $data->id
+                                    ORDER BY kerjasamas.id");
+                        @endphp
                         <tr>
                             <td>{{ $nomor++ }}</td>
                             <td>
@@ -108,13 +116,6 @@
                             </td>
                             <td>{{ $data->nama_kerja_sama }}</td>
                             <td>
-                                @if ($data->no_mou == '')
-                                    Tanpa MoU
-                                @else
-                                    {{ $data->no_mou }}
-                                @endif
-                            </td>
-                            <td>
                                 @php
                                     if ($data->bidang == 'P') {
                                         echo 'Pendidikan';
@@ -134,6 +135,25 @@
                             <td>{{ $data->nama_kategori }}</td>
                             <td>{{ $data->nama_status }}</td>
                             <td>{{ $data->usulan }}</td>
+                            <td>
+                                @if (count($getSPK) > 0)
+                                    @foreach ($getSPK as $item)
+                                        {{ $item->nomor_spk }};
+                                    @endforeach
+                                @else
+                                    Belum ada spk
+                                @endif
+                            </td>
+                            <td>
+                                @if (count($getSPK) > 0)
+                                    @foreach ($getSPK as $item)
+                                        <a
+                                            href="{{ url('storage/kerjasama/' . $item->file_spk) }}">{{ url('storage/kerjasama/' . $item->file_spk) }}</a>;
+                                    @endforeach
+                                @else
+                                    Belum ada spk
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -143,13 +163,14 @@
                         <th>No</th>
                         <th>Aksi</th>
                         <th>Nama Kerjasama</th>
-                        <th>Nomor MoU</th>
                         <th>Bidang</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
                         <th>Kategori</th>
                         <th>Status</th>
                         <th>Usulan</th>
+                        <th>Nomor SPK</th>
+                        <th>File SPK</th>
                     </tr>
                 </tfoot>
 
