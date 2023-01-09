@@ -29,7 +29,7 @@ class KerjasamaTanpaMouController extends Controller
             $tanggal_sampai = ($_GET['filter_tanggal_sampai']);
 
             $kerjasamas = DB::select("SELECT * FROM (
-                SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, statuses.nama_status, usulans.usulan, kerjasamas.bidang
+                 SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, statuses.nama_status, usulans.usulan
                 FROM kerjasamas
                 JOIN kategoris ON kategoris.id = kerjasamas.kategori_id
                 JOIN statuses ON statuses.id = kerjasamas.status_id

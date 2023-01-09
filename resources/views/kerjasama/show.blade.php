@@ -522,9 +522,18 @@
                                             SPK/MoA
                                         </option>
                                         @if ($kerjasama->kategori_id == '1')
-                                            <option value="M" {{ $option == 'M' ? 'selected' : '' }}>
-                                                MoU
-                                            </option>
+                                            @php
+                                                $getMoU = DB::select("SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, bukti_kerjasamas.nama_file, bukti_kerjasamas.jenis_file
+                                                FROM kerjasamas
+                                                JOIN bukti_kerjasamas ON bukti_kerjasamas.kerjasama_id = kerjasamas.id
+                                                WHERE kerjasamas.id = $kerjasama->id AND bukti_kerjasamas.jenis_file = 'M'");
+                                            @endphp
+                                            {{-- Jika 1 MoU sudah diupload, maka tidak bisa upload MoU lagi --}}
+                                            @if (count($getMoU) < 1)
+                                                <option value="M" {{ $option == 'M' ? 'selected' : '' }}>
+                                                    MoU
+                                                </option>
+                                            @endif
                                         @endif
                                     </select>
                                     @error('jenis_file')

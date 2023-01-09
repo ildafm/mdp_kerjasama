@@ -359,7 +359,7 @@
 
                         </a>
 
-                        @if (Auth::user()->level == 'A')
+                        @if (Auth::user()->level != 'D')
                             <div class="dropdown-divider"></div>
                             {{-- Button Reminders --}}
                             <a href="{{ url('reminder') }}" class="dropdown-item">
@@ -505,11 +505,11 @@
                                         <p>Semua Kerjasama</p>
                                     </a>
                                 </li>
-                                {{-- Kerjasama yang Hanya memiliki MoU --}}
+                                {{-- Kerjasama yang Hanya Dengan MoU --}}
                                 <li class="nav-item">
                                     <a href="{{ url('/kerjasama_tanpa_kegiatans') }}" class="nav-link">
                                         <i class="fas fa-folder nav-icon"></i>
-                                        <p>Kerjasama Hanya MoU</p>
+                                        <p>Kerjasama Dengan MoU</p>
                                     </a>
                                 </li>
                                 {{-- Kerjasama yang tidak memiliki mou --}}
@@ -517,6 +517,14 @@
                                     <a href="{{ url('/kerjasama_tanpa_mous') }}" class="nav-link">
                                         <i class="fas fa-folder nav-icon"></i>
                                         <p>Kerjasama Tanpa MoU</p>
+                                    </a>
+                                </li>
+
+                                {{-- arsip kerjasama (hanya view) --}}
+                                <li class="nav-item">
+                                    <a href="{{ url('/arsip_kerjasamas') }}" class="nav-link">
+                                        <i class="fas fa-folder nav-icon"></i>
+                                        <p>Arsip Kerjasama</p>
                                     </a>
                                 </li>
                             </ul>

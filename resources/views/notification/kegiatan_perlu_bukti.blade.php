@@ -42,7 +42,7 @@
                             <th>Unit</th>
                             <th>Tanggal Mulai</th>
                             <th>Tanggal Sampai</th>
-                            <th>Lewat(hari)</th>
+                            {{-- <th>Lewat(hari)</th> --}}
                         </tr>
                     </thead>
 
@@ -89,7 +89,7 @@
 
                                 <td>{{ $data->tanggal_sampai }}</td>
 
-                                <td>{{ $data->lewat_hari }}</td>
+                                {{-- <td>{{ $data->lewat_hari }}</td> --}}
                             </tr>
                         @endforeach
                     </tbody>
@@ -105,7 +105,7 @@
                             <th>Unit</th>
                             <th>Tanggal Mulai</th>
                             <th>Tanggal Sampai</th>
-                            <th>Lewat(hari)</th>
+                            {{-- <th>Lewat(hari)</th> --}}
                         </tr>
                     </tfoot>
 

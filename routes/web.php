@@ -63,6 +63,8 @@ Route::resource('kategoris', KategoriController::class)->middleware(['auth']);
 Route::resource('users', UserController::class)->middleware(['auth']);
 Route::resource('profiles', ProfileController::class)->middleware(['auth']);
 Route::resource('kategori_mous', KategoriMouController::class)->middleware(['auth']);
+Route::get('/arsip_kerjasamas', [App\Http\Controllers\KerjasamaController::class, 'arsip'])->name('arsip_kerjasamas')->middleware(['auth']);
+
 
 // other route
 Route::resource('buktiKerjasamas', BuktiKerjasamaController::class)->middleware(['auth']); //route yang mengarah untuk memperlihatkan bukti kerjasama

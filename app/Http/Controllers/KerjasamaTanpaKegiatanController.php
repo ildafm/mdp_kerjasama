@@ -43,8 +43,9 @@ class KerjasamaTanpaKegiatanController extends Controller
             $tanggal_mulai = ($_GET['filter_tanggal_mulai']);
             $tanggal_sampai = ($_GET['filter_tanggal_sampai']);
 
+
             $kerjasamas = DB::select("SELECT * FROM (
-                SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, bentuk_kegiatans.bentuk AS 'bentuk_kegiatan', mou.nomor_file AS 'no_mou', mou.file AS 'file_mou', kerjasamas.no_mou, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, statuses.nama_status, usulans.usulan, kerjasamas.bidang
+                SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, bentuk_kegiatans.bentuk AS 'bentuk_kegiatan', mou.nomor_file AS 'no_mou', mou.file AS 'file_mou', kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, statuses.nama_status, usulans.usulan
                 FROM kerjasamas
                 LEFT JOIN kegiatans ON kegiatans.kerjasama_id = kerjasamas.id
                 LEFT JOIN bentuk_kegiatans ON bentuk_kegiatans.id = kegiatans.bentuk_kegiatan_id
