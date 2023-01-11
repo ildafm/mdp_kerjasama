@@ -626,7 +626,7 @@
                                         <a href="{{ url('/statuses') }}" class="nav-link">
                                             <i class="nav-icon fas fa-flag"></i>
                                             <p>
-                                                Status
+                                                Status Kerjasama
                                             </p>
                                         </a>
                                     </li>

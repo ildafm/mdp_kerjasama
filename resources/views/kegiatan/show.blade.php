@@ -7,6 +7,7 @@
 
             {{-- Button Kembali --}}
             {{-- <a href="{{ url('/kegiatans') }}" class='btn btn-primary'>Kembali</a> --}}
+            <h3 class="card-title">{{ $kegiatan->bentukKegiatan->bentuk }}</h3>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -25,6 +26,10 @@
             @if (session()->has('pesan'))
                 <div class='alert alert-success'>
                     {{ session()->get('pesan') }}
+                </div>
+            @elseif (session()->has('pesan_error'))
+                <div class='alert alert-danger'>
+                    {{ session()->get('pesan_error') }}
                 </div>
             @endif
 
@@ -245,8 +250,8 @@
                             <td> {{ $nomor++ }} </td>
                             <td>
                                 {{-- Button Tampil --}}
-                                <a href="{{ url('storage/kegiatan/' . $data->file) }}" class="btn btn-sm btn-primary"><i
-                                        class="nav-icon fas fa-eye" title="Tampil"></i></a>
+                                <a href="{{ url('storage/kegiatan/' . $data->file) }}" class="btn btn-sm btn-primary"
+                                    target="_blank"><i class="nav-icon fas fa-eye" title="Tampil"></i></a>
 
                                 @if (Auth::user()->id == $kegiatan->user_id || Auth::user()->level != 'D')
                                     {{-- Button Ubah --}}
@@ -375,7 +380,6 @@
             $('.submitBtn').click(function() {
                 $('#formBuktiKegiatan').submit();
                 $('#formBuktiKegiatanUnit').submit();
-
             });
         });
     </script>

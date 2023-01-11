@@ -118,7 +118,11 @@ class KategoriMouController extends Controller
         //
         $this->authorize('adminOnly', User::class);
 
-        $kategoriMou->delete();
-        return redirect()->route('kategori_mous.index')->with('pesan', "Hapus data $kategoriMou->nama_kategori berhasil");
+        try {
+            $kategoriMou->delete();
+            return redirect()->back()->with('pesan', "Hapus data $kategoriMou->nama_kategori berhasil");
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('pesan_error', "Gagal Menghapus data $kategoriMou->nama_kategori");
+        }
     }
 }

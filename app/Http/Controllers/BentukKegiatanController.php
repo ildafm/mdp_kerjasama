@@ -67,7 +67,7 @@ class BentukKegiatanController extends Controller
     public function show(BentukKegiatan $bentukKegiatan)
     {
         //
-        
+
     }
 
     /**
@@ -121,7 +121,11 @@ class BentukKegiatanController extends Controller
         //
         $this->authorize('adminOnly', User::class);
 
-        $bentukKegiatan->delete();
-        return redirect()->route('bentuk_kegiatans.index')->with('pesan', "Hapus data $bentukKegiatan->bentuk berhasil");
+        try {
+            $bentukKegiatan->delete();
+            return redirect()->back()->with('pesan', "Hapus data $bentukKegiatan->bentuk berhasil");
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('pesan_error', "Gagal menghapus data $bentukKegiatan->bentuk");
+        }
     }
 }

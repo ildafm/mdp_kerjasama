@@ -111,7 +111,11 @@ class NegaraController extends Controller
         //
         $this->authorize('adminOnly', User::class);
 
-        $negara->delete();
-        return redirect()->route('negaras.index')->with('pesan', "Hapus data negara $negara->nama_negara berhasil");
+        try {
+            $negara->delete();
+            return redirect()->route('negaras.index')->with('pesan', "Hapus data negara $negara->nama_negara berhasil");
+        } catch (\Throwable $th) {
+            return redirect()->route('negaras.index')->with('pesan_error', "Gagal menghapus data negara $negara->nama_negara");
+        }
     }
 }

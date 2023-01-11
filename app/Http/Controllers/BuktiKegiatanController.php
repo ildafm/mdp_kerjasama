@@ -47,9 +47,6 @@ class BuktiKegiatanController extends Controller
         $validateData = $request->validate([
             'nama_bukti_kegiatan' => 'required',
             'file' => 'required | file |mimes:pdf,jpg,png,docx,doc| max:10240',
-            'apt' => '',
-            'aps' => '',
-            'lamemba' => '',
             'nama_unit' => 'required',
             'bidang' => 'required',
             'kegiatan_id' => 'required',
@@ -70,18 +67,6 @@ class BuktiKegiatanController extends Controller
         // 2. simpan file
         $buktiKegiatan->nama_bukti_kegiatan = $validateData['nama_bukti_kegiatan'];
         $buktiKegiatan->file = $rename_file;
-
-        if (!empty($validateData['apt'])) {
-            $buktiKegiatan->ceklist_apt = 'Y';
-        }
-
-        if (!empty($validateData['aps'])) {
-            $buktiKegiatan->ceklist_aps = 'Y';
-        }
-
-        if (!empty($validateData['lamemba'])) {
-            $buktiKegiatan->ceklist_lamemba = 'Y';
-        }
 
         $buktiKegiatan->bidang = $validateData['bidang'];
         $buktiKegiatan->kegiatans_id = $validateData['kegiatan_id'];
@@ -154,35 +139,11 @@ class BuktiKegiatanController extends Controller
         $this->validate($request, [
             'nama_bukti_kegiatan' => 'required',
             'file' => 'file |mimes:pdf,jpg,png,docx,doc| max:5120',
-            'apt' => '',
-            'aps' => '',
-            'lamemba' => '',
             'nama_unit' => 'required',
             'bidang' => 'required',
         ]);
 
         $buktiKegiatan = BuktiKegiatan::findOrFail($buktiKegiatan->id);
-
-        // checkbox apt
-        if (!empty($request->apt)) {
-            $option_apt = 'Y';
-        } else {
-            $option_apt = 'T';
-        }
-
-        // checkbox aps
-        if (!empty($request->aps)) {
-            $option_aps = 'Y';
-        } else {
-            $option_aps = 'T';
-        }
-
-        // checkbox lamemba
-        if (!empty($request->lamemba)) {
-            $option_lamemba = 'Y';
-        } else {
-            $option_lamemba = 'T';
-        }
 
         if ($request->file != "") {
 
@@ -201,18 +162,12 @@ class BuktiKegiatanController extends Controller
 
             $buktiKegiatan->update([
                 'nama_bukti_kegiatan' => $request->nama_bukti_kegiatan,
-                'ceklist_apt' => $option_apt,
-                'ceklist_aps' => $option_aps,
-                'ceklist_lamemba' => $option_lamemba,
                 'bidang' => $request->bidang,
                 'file' => $rename_file,
             ]);
         } else {
             $buktiKegiatan->update([
                 'nama_bukti_kegiatan' => $request->nama_bukti_kegiatan,
-                'ceklist_apt' => $option_apt,
-                'ceklist_aps' => $option_aps,
-                'ceklist_lamemba' => $option_lamemba,
                 'bidang' => $request->bidang,
             ]);
         }

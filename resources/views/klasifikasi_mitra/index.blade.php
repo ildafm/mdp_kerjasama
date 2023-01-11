@@ -31,6 +31,10 @@
                 <div class='alert alert-success'>
                     {{ session()->get('pesan') }}
                 </div>
+            @elseif (session()->has('pesan_error'))
+                <div class='alert alert-danger'>
+                    {{ session()->get('pesan_error') }}
+                </div>
             @endif
 
             {{-- Tabel Data --}}

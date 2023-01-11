@@ -31,6 +31,10 @@
                 <div class='alert alert-success'>
                     {{ session()->get('pesan') }}
                 </div>
+            @elseif (session()->has('pesan_error'))
+                <div class='alert alert-danger'>
+                    {{ session()->get('pesan_error') }}
+                </div>
             @endif
 
             {{-- form untuk memfilter kerjasama berdasarkan tanggal mulai dan tanggal sampai --}}
@@ -173,7 +177,7 @@
                                             {{ $item->nomor_spk }};
                                         @endforeach
                                     @else
-                                        Tidak ada SPK/MoA
+                                        Belum ada file SPK/MoA yang diupload
                                     @endif
                                 </td>
                                 {{-- File SPK --}}
@@ -183,6 +187,8 @@
                                             <a href="{{ url('storage/kerjasama/' . $item->file_spk) }}"
                                                 target="_blank">{{ url('storage/kerjasama/' . $item->file_spk) }}</a>;
                                         @endforeach
+                                    @else
+                                        Belum ada file SPK/MoA yang diupload
                                     @endif
                                 </td>
 

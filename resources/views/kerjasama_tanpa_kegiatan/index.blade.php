@@ -32,6 +32,10 @@
                 <div class='alert alert-success'>
                     {{ session()->get('pesan') }}
                 </div>
+            @elseif (session()->has('pesan_error'))
+                <div class='alert alert-danger'>
+                    {{ session()->get('pesan_error') }}
+                </div>
             @endif
 
             {{-- form untuk memfilter kerjasama berdasarkan tanggal mulai dan tanggal sampai --}}
@@ -47,11 +51,11 @@
                         <input type="date" name="filter_tanggal_sampai" class="form-control"
                             value="{{ $tanggal_sampai }}">
                     </div>
-                    <div class="form-group col-lg-2">
+                    <div class="form-group col-lg-3">
                         <button type="submit" class="btn btn-primary">Cari</button>
                         @php
                             if (isset($_GET['filter_tanggal_mulai']) && isset($_GET['filter_tanggal_sampai'])) {
-                                echo "<a href='/kerjasama_tanpa_kegiatans' title='Hapus Filter' class='btn btn-secondary'>Batal</a>";
+                                echo "<a href='/kerjasama_tanpa_kegiatans' title='Hapus Filter' class='btn btn-secondary'>Hapus Filter</a>";
                             }
                         @endphp
                     </div>

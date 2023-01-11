@@ -130,7 +130,11 @@ class UnitController extends Controller
         //
         $this->authorize('adminOnly', User::class);
 
-        $unit->delete();
-        return redirect()->route('units.index')->with('pesan', "Hapus data $unit->nama_unit berhasil");
+        try {
+            $unit->delete();
+            return redirect()->route('units.index')->with('pesan', "Hapus data $unit->nama_unit berhasil");
+        } catch (\Throwable $th) {
+            return redirect()->route('units.index')->with('pesan_error', "Gagal menghapus data $unit->nama_unit");
+        }
     }
 }

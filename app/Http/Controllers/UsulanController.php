@@ -182,13 +182,17 @@ class UsulanController extends Controller
     public function show(Usulan $usulan)
     {
         //
-        $getKerjasama = DB::select("SELECT kerjasamas.id as 'id_kerjasama', kerjasamas.nama_kerja_sama, kerjasamas.no_mou, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, statuses.nama_status, usulans.usulan, usulans.hasil_penjajakan
-        FROM kerjasamas
-        JOIN kategoris ON kerjasamas.kategori_id = kategoris.id
-        JOIN statuses ON kerjasamas.status_id = statuses.id
-        JOIN usulans ON kerjasamas.usulan_id = usulans.id
-        WHERE kerjasamas.usulan_id = $usulan->id
-        ORDER BY kerjasamas.id");
+        $getKerjasama = DB::select("SELECT * FROM (
+            SELECT kerjasamas.id AS 'id_kerjasama', kerjasamas.nama_kerja_sama, mou.nomor_file AS 'no_mou', mou.file AS 'file_mou', kategori_mous.nama_kategori AS 'kategori_mou', kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kerjasamas.kategori_id, kategoris.nama_kategori, statuses.nama_status
+            FROM kerjasamas 
+            LEFT JOIN (SELECT * FROM bukti_kerjasamas WHERE jenis_file = 'M') AS mou ON mou.kerjasama_id = kerjasamas.id 
+            LEFT JOIN kategori_mous ON mou.kategori_mou_id = kategori_mous.id
+            JOIN kategoris ON kategoris.id = kerjasamas.kategori_id 
+            JOIN statuses ON statuses.id = kerjasamas.status_id 
+            JOIN usulans ON usulans.id = kerjasamas.usulan_id
+            WHERE kerjasamas.usulan_id = $usulan->id
+        ) AS c
+        ORDER BY c.id_kerjasama");
 
         $kategoris = Kategori::All();
         $statuses = Status::All();
@@ -285,7 +289,11 @@ class UsulanController extends Controller
         //
         $this->authorize('viewAny', User::class);
 
-        $usulan->delete();
-        return redirect()->route('usulans.index')->with('pesan', "Hapus data usulan $usulan->nama_usulan berhasil");
+        try {
+            $usulan->delete();
+            return redirect()->route('usulans.index')->with('pesan', "Hapus data usulan $usulan->nama_usulan berhasil");
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('pesan_error', "Gagal menghapus data");
+        }
     }
 }

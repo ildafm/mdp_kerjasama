@@ -143,9 +143,11 @@ class MitraController extends Controller
         //
         $this->authorize('adminOnly', User::class);
 
-        $mitra->delete();
-        return redirect()->route('mitras.index')->with('pesan', "Hapus data $mitra->nama_mitra berhasil");
-        // dump($mitra->id);
-
+        try {
+            $mitra->delete();
+            return redirect()->route('mitras.index')->with('pesan', "Hapus data $mitra->nama_mitra berhasil");
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('pesan_error', "Gagal menghapus data $mitra->nama_mitra");
+        }
     }
 }

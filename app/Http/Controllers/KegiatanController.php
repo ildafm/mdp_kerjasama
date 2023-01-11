@@ -148,7 +148,7 @@ class KegiatanController extends Controller
     public function show(Kegiatan $kegiatan)
     {
         //
-        $buktiKegiatans = DB::select("SELECT bukti_kegiatans.id AS id_bukti_kegiatan, bukti_kegiatans.nama_bukti_kegiatan AS nama_bukti_kegiatan, bukti_kegiatans.bidang AS 'bidang', kegiatans.keterangan AS keterangan_kegiatan, units.nama_unit, ceklist_apt, ceklist_aps, ceklist_lamemba, LEFT(bukti_kegiatans.created_at, 10) AS tanggal_upload_bukti, bukti_kegiatans.file AS 'file'
+        $buktiKegiatans = DB::select("SELECT bukti_kegiatans.id AS id_bukti_kegiatan, bukti_kegiatans.nama_bukti_kegiatan AS nama_bukti_kegiatan, bukti_kegiatans.bidang AS 'bidang', kegiatans.keterangan AS keterangan_kegiatan, units.nama_unit, LEFT(bukti_kegiatans.created_at, 10) AS tanggal_upload_bukti, bukti_kegiatans.file AS 'file'
         FROM bukti_kegiatans 
         JOIN kegiatans ON bukti_kegiatans.kegiatans_id = kegiatans.id
         JOIN bukti_kegiatan_units ON bukti_kegiatans.id = bukti_kegiatan_units.bukti_kegiatans_id
@@ -275,19 +275,22 @@ class KegiatanController extends Controller
     {
         //
         $this->authorize('adminOnly', User::class);
-        $getBuktiKegiatan = DB::select("SELECT id, nama_bukti_kegiatan, bukti_kegiatans.file AS 'file', kegiatans_id FROM bukti_kegiatans WHERE kegiatans_id = $kegiatan->id");
+        try {
+            $kegiatan->delete();
 
-        // unlink semua file sekaligus
-        if (count($getBuktiKegiatan) > 0) {
-            for ($i = 0; $i < count($getBuktiKegiatan); $i++) {
-                unlink(storage_path('app/public/kegiatan/' . $getBuktiKegiatan[$i]->file));
+            $getBuktiKegiatan = DB::select("SELECT id, nama_bukti_kegiatan, bukti_kegiatans.file AS 'file', kegiatans_id FROM bukti_kegiatans WHERE kegiatans_id = $kegiatan->id");
+
+            // unlink semua file sekaligus
+            if (count($getBuktiKegiatan) > 0) {
+                for ($i = 0; $i < count($getBuktiKegiatan); $i++) {
+                    unlink(storage_path('app/public/kegiatan/' . $getBuktiKegiatan[$i]->file));
+                }
             }
+            $getBentukKegiatan = $kegiatan->bentukKegiatan->bentuk;
+            return redirect()->back()->with('pesan', "Hapus data kegiatan $getBentukKegiatan berhasil");
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('pesan_error', "Gagal Menghapus data kegiatan $getBentukKegiatan");
         }
-
-        $getBentukKegiatan = $kegiatan->bentukKegiatan->bentuk;
-
-        $kegiatan->delete();
-        return redirect()->route('kegiatans.index')->with('pesan', "Hapus data kegiatan : $getBentukKegiatan berhasil");
     }
 
     // Delete from kerjasama show.blade.php
@@ -295,18 +298,21 @@ class KegiatanController extends Controller
     {
         $this->authorize('adminOnly', User::class);
 
-        $kegiatan = Kegiatan::findOrFail($id_kegiatan);
+        try {
+            $kegiatan = Kegiatan::findOrFail($id_kegiatan);
+            $kegiatan->delete();
 
-        $getBuktiKegiatan = DB::select("SELECT id, nama_bukti_kegiatan, bukti_kegiatans.file AS 'file', kegiatans_id FROM bukti_kegiatans WHERE kegiatans_id = $kegiatan->id");
+            $getBuktiKegiatan = DB::select("SELECT id, nama_bukti_kegiatan, bukti_kegiatans.file AS 'file', kegiatans_id FROM bukti_kegiatans WHERE kegiatans_id = $kegiatan->id");
 
-        // unlink semua file sekaligus
-        if (count($getBuktiKegiatan) > 0) {
-            for ($i = 0; $i < count($getBuktiKegiatan); $i++) {
-                unlink(storage_path('app/public/kegiatan/' . $getBuktiKegiatan[$i]->file));
+            // unlink semua file sekaligus
+            if (count($getBuktiKegiatan) > 0) {
+                for ($i = 0; $i < count($getBuktiKegiatan); $i++) {
+                    unlink(storage_path('app/public/kegiatan/' . $getBuktiKegiatan[$i]->file));
+                }
             }
+            return redirect()->back()->with('pesan', "Hapus data kegiatan $kegiatan->bentuk_kegiatan berhasil");
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('pesan', "Gagal Menghapus data kegiatan $kegiatan->bentuk_kegiatan");
         }
-
-        $kegiatan->delete();
-        return redirect()->route('kerjasamas.show', $kegiatan->kerjasama_id)->with('pesan', "Hapus data kegiatan : $kegiatan->bentuk_kegiatan berhasil");
     }
 }

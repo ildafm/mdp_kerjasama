@@ -55,11 +55,11 @@
                     </div>
 
                     {{-- Button Submit --}}
-                    <div class="form-group col-lg-2">
+                    <div class="form-group col-lg-3">
                         <button type="submit" class="btn btn-primary">Cari</button>
                         @php
                             if (isset($_GET['filter_berdasarkan_kategori_mou'])) {
-                                echo "<a href='/arsip_kerjasamas' class='btn btn-secondary' title='Hapus filter'>Batal</a>";
+                                echo "<a href='/arsip_kerjasamas' class='btn btn-secondary' title='Hapus filter'>Hapus Filter</a>";
                             }
                         @endphp
 
@@ -81,7 +81,7 @@
                         <th>Bidang</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
-                        <th>Kategori</th>
+                        <th>Kategori Kerjasama</th>
                         <th>Status</th>
                         <th>Usulan</th>
                         <th>Nomor SPK</th>
@@ -169,7 +169,7 @@
                                 <td>{{ $data->tanggal_mulai }}</td>
                                 {{-- tanggal sampai --}}
                                 <td>{{ $data->tanggal_sampai }}</td>
-                                {{-- kategori --}}
+                                {{-- kategori kerjasama --}}
                                 <td>{{ $data->nama_kategori }}</td>
                                 {{-- status --}}
                                 <td>{{ $data->nama_status }}</td>
@@ -211,7 +211,7 @@
                         <th>Bidang</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Sampai</th>
-                        <th>Kategori</th>
+                        <th>Kategori Kerjasama</th>
                         <th>Status</th>
                         <th>Usulan</th>
                         <th>Nomor SPK</th>

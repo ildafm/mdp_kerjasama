@@ -303,16 +303,21 @@ class KerjasamaController extends Controller
     {
         //
         $this->authorize('adminOnly', User::class);
-        $getBuktiKerjasama = DB::select("SELECT * FROM bukti_kerjasamas WHERE kerjasama_id = $kerjasama->id");
 
-        // unlink semua file sekaligus
-        if (count($getBuktiKerjasama) > 0) {
-            for ($i = 0; $i < count($getBuktiKerjasama); $i++) {
-                unlink(storage_path('app/public/kerjasama/' . $getBuktiKerjasama[$i]->file));
+        try {
+            $kerjasama->delete();
+            $getBuktiKerjasama = DB::select("SELECT * FROM bukti_kerjasamas WHERE kerjasama_id = $kerjasama->id");
+
+            // unlink semua file sekaligus
+            if (count($getBuktiKerjasama) > 0) {
+                for ($i = 0; $i < count($getBuktiKerjasama); $i++) {
+                    unlink(storage_path('app/public/kerjasama/' . $getBuktiKerjasama[$i]->file));
+                }
             }
+            return redirect()->back()->with('pesan', "Hapus data $kerjasama->nama_kerja_sama berhasil");
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('pesan_error', "Gagal Menghapus data $kerjasama->nama_kerja_sama");
         }
-        $kerjasama->delete();
-        return redirect()->back()->with('pesan', "Hapus data $kerjasama->nama_kerja_sama berhasil");
     }
 
     // Delete from usulan show.blade.php
@@ -320,19 +325,23 @@ class KerjasamaController extends Controller
     {
         $this->authorize('adminOnly', User::class);
 
-        $kerjasama = Kerjasama::findOrFail($id_kerjasama);
+        try {
+            $kerjasama = Kerjasama::findOrFail($id_kerjasama);
+            $kerjasama->delete();
 
-        $getBuktiKerjasama = DB::select("SELECT * FROM bukti_kerjasamas WHERE kerjasama_id = $kerjasama->id");
+            $getBuktiKerjasama = DB::select("SELECT * FROM bukti_kerjasamas WHERE kerjasama_id = $kerjasama->id");
 
-        // unlink semua file sekaligus
-        if (count($getBuktiKerjasama) > 0) {
-            for ($i = 0; $i < count($getBuktiKerjasama); $i++) {
-                unlink(storage_path('app/public/kerjasama/' . $getBuktiKerjasama[$i]->file));
+            // unlink semua file sekaligus
+            if (count($getBuktiKerjasama) > 0) {
+                for ($i = 0; $i < count($getBuktiKerjasama); $i++) {
+                    unlink(storage_path('app/public/kerjasama/' . $getBuktiKerjasama[$i]->file));
+                }
             }
-        }
 
-        $kerjasama->delete();
-        return redirect()->route('usulans.show', $kerjasama->usulan_id)->with('pesan', "Hapus data kerjasama : $kerjasama->nama_kerja_sama berhasil");
+            return redirect()->back()->with('pesan', "Hapus data kerjasama $kerjasama->nama_kerja_sama berhasil");
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('pesan_error', "Gagal Menghapus data kerjasama $kerjasama->nama_kerja_sama");
+        }
     }
 
     public function arsip()

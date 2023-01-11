@@ -111,7 +111,11 @@ class KlasifikasiMitraController extends Controller
         //
         $this->authorize('adminOnly', User::class);
 
-        $klasifikasiMitra->delete();
-        return redirect()->route('klasifikasi_mitras.index')->with('pesan', "Hapus data klasifikasi $klasifikasiMitra->klasifikasi_mitra berhasil");
+        try {
+            $klasifikasiMitra->delete();
+            return redirect()->back()->with('pesan', "Hapus data klasifikasi $klasifikasiMitra->klasifikasi_mitra berhasil");
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('pesan_error', "Gagal menghapus data klasifikasi $klasifikasiMitra->klasifikasi_mitra");
+        }
     }
 }

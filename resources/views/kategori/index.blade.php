@@ -7,8 +7,8 @@
         <div class="card-header">
 
             {{-- Button tambah --}}
-            <a href="{{ url('/kategoris/create') }}" class='btn btn-primary'>Tambah Kategori</a>
-
+            {{-- <a href="{{ url('/kategoris/create') }}" class='btn btn-primary'>Tambah Kategori</a> --}}
+            <h3 class="card-title">Kategori Kerjasama</h3>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                     <i class="fas fa-minus"></i>
@@ -34,7 +34,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Aksi</th>
+                        {{-- <th>Aksi</th> --}}
                         <th>Nama Kategori</th>
                     </tr>
                 </thead>
@@ -48,20 +48,20 @@
                     @foreach ($kategoris as $data)
                         <tr>
                             <td>{{ $nomor++ }}</td>
-                            <td>
-                                {{-- Button Tampil --}}
-                                {{-- <a href="{{ url('kategoris/' . $data->id) }}" class="btn btn-sm btn-primary"><i
+                            {{-- <td> --}}
+                            {{-- Button Tampil --}}
+                            {{-- <a href="{{ url('kategoris/' . $data->id) }}" class="btn btn-sm btn-primary"><i
                                         class="nav-icon fas fa-eye" title="Tampil"></i></a> --}}
 
-                                {{-- Button Ubah --}}
-                                <a href="{{ route('kategoris.edit', ['kategori' => $data->id]) }}"
-                                    class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit" title="Edit"></i></a>
+                            {{-- Button Ubah --}}
+                            {{-- <a href="{{ route('kategoris.edit', ['kategori' => $data->id]) }}"
+                                    class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit" title="Edit"></i></a> --}}
 
-                                {{-- Button Hapus --}}
-                                <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
+                            {{-- Button Hapus --}}
+                            {{-- <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
                                     data-namaKategori="{{ $data->nama_kategori }}" data-toggle="modal"
-                                    data-target="#modal-sm"><i class="nav-icon fas fa-trash" title="Hapus"></i></button>
-                            </td>
+                                    data-target="#modal-sm"><i class="nav-icon fas fa-trash" title="Hapus"></i></button> --}}
+                            {{-- </td> --}}
                             <td>{{ $data->nama_kategori }}</td>
                         </tr>
                     @endforeach
@@ -70,7 +70,7 @@
                 <tfoot>
                     <tr>
                         <th>No</th>
-                        <th>Aksi</th>
+                        {{-- <th>Aksi</th> --}}
                         <th>Nama Kategori</th>
                     </tr>
                 </tfoot>
