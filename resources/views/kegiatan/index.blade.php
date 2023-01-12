@@ -73,7 +73,8 @@
                         <th>PIC</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Berakhir</th>
-                        <th>Mengacu pada SPK</th>
+                        <th>Nomor SPK</th>
+                        <th>File SPK</th>
                     </tr>
                 </thead>
 
@@ -120,7 +121,13 @@
 
                             <td>{{ $data->tanggal_sampai }}</td>
 
-                            <td>{{ $data->buktiKerjasamaSpk->nama_file }}</td>
+                            <td>{{ $data->buktiKerjasamaSpk->nomor_file }}</td>
+
+                            <td>
+                                <a href="{{ url('storage/kerjasama/' . $data->buktiKerjasamaSpk->file) }}"
+                                    target="_blank">{{ url('storage/kerjasama/' . $data->buktiKerjasamaSpk->file) }}</a>
+
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -135,7 +142,8 @@
                         <th>PIC</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Berakhir</th>
-                        <th>Mengacu pada SPK</th>
+                        <th>Nomor SPK</th>
+                        <th>File SPK</th>
                     </tr>
                 </tfoot>
 

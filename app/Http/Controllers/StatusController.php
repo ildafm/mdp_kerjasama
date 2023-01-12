@@ -19,7 +19,7 @@ class StatusController extends Controller
 
         $status = Status::All();
         return view('status.index')
-        ->with('statuses', $status);
+            ->with('statuses', $status);
     }
 
     /**
@@ -32,7 +32,8 @@ class StatusController extends Controller
         //
         $this->authorize('adminOnly', User::class);
 
-        return view('status.create');
+        // return view('status.create');
+        return redirect()->back();
     }
 
     /**
@@ -47,7 +48,7 @@ class StatusController extends Controller
         $this->authorize('adminOnly', User::class);
 
         $validateData = $request->validate([
-            
+
             'nama_status' => 'required'
         ]);
 
@@ -84,7 +85,8 @@ class StatusController extends Controller
         //
         $this->authorize('adminOnly', User::class);
 
-        return view('status.edit')->with('status', $status);
+        // return view('status.edit')->with('status', $status);
+        return redirect()->back();
     }
 
     /**
@@ -124,7 +126,8 @@ class StatusController extends Controller
         //
         $this->authorize('adminOnly', User::class);
 
-        $status->delete();
-        return redirect()->route('statuses.index')->with('pesan', "Hapus data $status->nama_status berhasil");
+        // $status->delete();
+        // return redirect()->route('statuses.index')->with('pesan', "Hapus data $status->nama_status berhasil");
+        return redirect()->back();
     }
 }

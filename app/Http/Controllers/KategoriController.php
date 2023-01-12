@@ -32,7 +32,8 @@ class KategoriController extends Controller
         //
         $this->authorize('adminOnly', User::class);
 
-        return view('kategori.create');
+        // return view('kategori.create');
+        return redirect()->back();
     }
 
     /**
@@ -83,7 +84,8 @@ class KategoriController extends Controller
         //
         $this->authorize('adminOnly', User::class);
 
-        return view('kategori.edit')->with('kategori', $kategori);
+        // return view('kategori.edit')->with('kategori', $kategori);
+        return redirect()->back();
     }
 
     /**
@@ -123,7 +125,8 @@ class KategoriController extends Controller
         //
         $this->authorize('adminOnly', User::class);
 
-        $kategori->delete();
-        return redirect()->route('kategoris.index')->with('pesan', "Hapus data $kategori->nama_kategori berhasil");
+        // $kategori->delete();
+        // return redirect()->route('kategoris.index')->with('pesan', "Hapus data $kategori->nama_kategori berhasil");
+        return redirect()->back();
     }
 }

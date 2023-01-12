@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 09, 2023 at 11:57 PM
+-- Generation Time: Jan 12, 2023 at 03:28 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -79,27 +79,10 @@ CREATE TABLE `bukti_kegiatans` (
   `nama_bukti_kegiatan` varchar(100) NOT NULL,
   `file` varchar(255) NOT NULL,
   `kegiatans_id` int(11) NOT NULL,
-  `ceklist_apt` enum('Y','T') NOT NULL DEFAULT 'T',
-  `ceklist_aps` enum('Y','T') NOT NULL DEFAULT 'T',
-  `ceklist_lamemba` enum('Y','T') NOT NULL DEFAULT 'T',
   `bidang` char(1) NOT NULL DEFAULT 'P',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `bukti_kegiatans`
---
-
-INSERT INTO `bukti_kegiatans` (`id`, `nama_bukti_kegiatan`, `file`, `kegiatans_id`, `ceklist_apt`, `ceklist_aps`, `ceklist_lamemba`, `bidang`, `created_at`, `updated_at`) VALUES
-(103, 'Laporan Kegiatan 0', 'file-1670119358.png', 129, 'T', 'T', 'T', 'P', '2022-12-04 02:02:38', '2022-12-05 02:12:14'),
-(104, 'Laporan Kegiatan ini', 'file-1670119380.png', 129, 'T', 'T', 'T', 'N', '2022-12-04 02:03:00', '2022-12-05 02:12:35'),
-(105, '1', 'file-1670119405.png', 131, 'T', 'T', 'T', 'P', '2022-12-04 02:03:25', '2022-12-04 02:03:25'),
-(106, '2', 'file-1670119418.png', 131, 'T', 'T', 'T', 'N', '2022-12-04 02:03:38', '2022-12-04 02:03:38'),
-(107, 'Laporan kegiatan', 'file-1670140447.pdf', 129, 'T', 'T', 'T', 'A', '2022-12-04 07:54:08', '2022-12-04 07:54:08'),
-(108, 'Laporan Kegiatan ini', 'file-1670462305.pdf', 132, 'T', 'T', 'T', 'A', '2022-12-08 01:18:25', '2022-12-08 01:18:25'),
-(110, 'Laporan Kegiatan ini', 'file-1670462464.pdf', 133, 'T', 'T', 'T', 'B', '2022-12-08 01:21:04', '2022-12-08 01:21:04'),
-(111, 'Laporan Kegiatan 0', 'file-1670463199.pdf', 135, 'T', 'T', 'T', 'A', '2022-12-08 01:33:19', '2022-12-08 01:33:19');
 
 -- --------------------------------------------------------
 
@@ -114,20 +97,6 @@ CREATE TABLE `bukti_kegiatan_units` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `bukti_kegiatan_units`
---
-
-INSERT INTO `bukti_kegiatan_units` (`id`, `units_id`, `bukti_kegiatans_id`, `created_at`, `updated_at`) VALUES
-(100, 2, 103, '2022-12-04 02:02:38', '2022-12-04 02:02:38'),
-(101, 2, 104, '2022-12-04 02:03:00', '2022-12-04 02:03:00'),
-(102, 4, 105, '2022-12-04 02:03:25', '2022-12-04 02:03:25'),
-(103, 5, 106, '2022-12-04 02:03:38', '2022-12-04 02:03:38'),
-(104, 1, 107, '2022-12-04 07:54:08', '2022-12-04 07:54:08'),
-(105, 4, 108, '2022-12-08 01:18:25', '2022-12-08 01:18:25'),
-(107, 1, 110, '2022-12-08 01:21:04', '2022-12-08 01:21:04'),
-(108, 4, 111, '2022-12-08 01:33:19', '2022-12-08 01:33:19');
 
 -- --------------------------------------------------------
 
@@ -146,32 +115,6 @@ CREATE TABLE `bukti_kerjasamas` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `bukti_kerjasamas`
---
-
-INSERT INTO `bukti_kerjasamas` (`id`, `nama_file`, `nomor_file`, `jenis_file`, `file`, `kerjasama_id`, `kategori_mou_id`, `created_at`, `updated_at`) VALUES
-(66, 'input file lain-lain', NULL, 'L', 'file-1669786081.png', 54, NULL, '2022-11-30 05:28:02', '2022-12-27 12:05:25'),
-(69, 'SPK/MoA', 'SPK 121212', 'S', 'file-1669786194.png', 54, NULL, '2022-11-30 05:29:54', '2022-12-27 12:24:15'),
-(71, 'SPK/MoA 2', 'SPK121', 'S', 'file-1669787685.PNG', 54, NULL, '2022-11-30 05:54:45', '2023-01-05 01:32:02'),
-(72, 'MoU', 'Nomor 112211', 'M', 'file-1669787779.png', 56, NULL, '2022-11-30 05:56:19', '2023-01-05 01:56:43'),
-(75, 'MoU (1)', 'Nomor SPK MI 1', 'M', 'file-1670118135.png', 57, 1, '2022-12-04 01:42:15', '2023-01-05 01:42:26'),
-(76, 'SPK Dari kerjasama ini', 'Nomor 11221', 'S', 'file-1670207249.pdf', 57, NULL, '2022-12-05 02:27:30', '2023-01-05 01:42:46'),
-(77, 'SPK Dari kerjasama ini', 'SPK1211', 'S', 'file-1670368060.pdf', 58, NULL, '2022-12-06 23:07:40', '2023-01-05 01:43:08'),
-(78, 'MoU 3.1', 'MoU00001', 'M', 'file-1671361194.pdf', 63, NULL, '2022-12-18 10:59:55', '2023-01-06 22:46:11'),
-(79, 'SPK 3.2', 'SPK 3.2', 'S', 'file-1671361238.png', 63, NULL, '2022-12-18 11:00:38', '2023-01-05 02:36:27'),
-(80, 'SPK 3.2', 'SPK 3.2.1', 'S', 'file-1671363167.pdf', 64, NULL, '2022-12-18 11:32:47', '2023-01-06 22:29:17'),
-(81, 'MoU', 'MoU00002', 'M', 'file-1671521297.pdf', 66, NULL, '2022-12-20 07:28:17', '2023-01-06 22:46:56'),
-(82, 'SPK12345678910', 'SPK12345678910', 'S', 'file-1671674043.png', 67, NULL, '2022-12-22 01:54:04', '2023-01-06 23:05:41'),
-(83, 'SPK MI 1', 'Nomor SPK MI 1', 'S', 'file-1671674343.pdf', 68, NULL, '2022-12-22 01:59:04', '2023-01-05 01:41:34'),
-(84, 'SPK FIKR 1', 'SPK00001', 'S', 'file-1672117437.docx', 69, NULL, '2022-12-27 05:03:57', '2023-01-06 23:10:21'),
-(85, 'File Lain-lain', NULL, 'L', 'file-1672139259.docx', 54, NULL, '2022-12-27 11:07:40', '2022-12-27 11:50:55'),
-(86, 'SPK Kerjasama Informatika bersama dengan Malaysia', 'Nomor SPK 11111', 'S', 'file-1672139314.docx', 54, NULL, '2022-12-27 11:08:34', '2022-12-27 11:50:55'),
-(88, 'SPK Dari kerjasama ini', 'Nomor SPK 11112', 'S', 'file-1672718425.pdf', 70, NULL, '2023-01-03 04:00:25', '2023-01-03 04:00:25'),
-(89, 'SPK FIKR 2', 'SPK00002', 'S', 'file-1673046642.jpg', 69, NULL, '2023-01-06 23:10:42', '2023-01-06 23:10:42'),
-(90, 'MoU 3', 'MoU00003', 'M', 'file-1673047265.png', 65, 1, '2023-01-06 23:21:05', '2023-01-06 23:21:05'),
-(91, 'MoU 1', 'MoU00001', 'M', 'file-1673303818.PNG', 54, 2, '2023-01-09 22:36:59', '2023-01-09 22:36:59');
 
 -- --------------------------------------------------------
 
@@ -254,22 +197,6 @@ CREATE TABLE `kegiatans` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `kegiatans`
---
-
-INSERT INTO `kegiatans` (`id`, `tanggal_mulai`, `tanggal_sampai`, `bentuk_kegiatan_id`, `PIC`, `keterangan`, `kerjasama_id`, `user_id`, `bukti_kerjasama_spk_id`, `status`, `created_at`, `updated_at`) VALUES
-(129, '2022-12-05', '2022-12-09', 27, NULL, 'Visiting Professor', 54, 15, 69, '1', '2022-12-02 12:29:12', '2022-12-26 01:45:45'),
-(131, '2022-12-04', '2023-02-04', 2, NULL, 'Magang', 54, 28, 71, '1', '2022-12-04 01:59:07', '2022-12-08 01:20:14'),
-(132, '2022-12-05', '2022-12-31', 1, NULL, 'Pertukaran pelajar dengan kampus merdeka', 57, 29, 76, '1', '2022-12-05 02:30:22', '2022-12-08 01:18:07'),
-(133, '2022-12-05', '2022-12-10', 27, NULL, 'Dicko sebagai PIC', 54, 30, 71, '1', '2022-12-05 02:35:47', '2022-12-05 02:39:20'),
-(135, '2022-12-08', '2022-12-29', 18, NULL, 'Kegiatan', 58, 13, 77, '1', '2022-12-08 01:21:54', '2022-12-08 01:32:57'),
-(140, '2022-10-01', '2022-12-20', 18, NULL, 'Pertukaran Dosen A dan B', 67, 28, 82, '1', '2022-12-22 01:55:03', '2022-12-27 04:23:50'),
-(141, '2022-10-01', '2022-10-31', 12, NULL, 'Pertukaran mahasiswa', 67, 15, 82, '1', '2022-12-22 01:56:53', '2022-12-26 03:10:36'),
-(142, '2022-10-01', '2022-10-31', 1, NULL, 'MI 1', 68, 26, 83, '1', '2022-12-22 02:00:03', '2022-12-22 02:01:56'),
-(143, '2022-10-01', '2022-10-31', 1, NULL, 'MI 2', 68, 25, 83, '1', '2022-12-22 02:00:34', '2022-12-26 01:49:14'),
-(144, '2022-08-01', '2022-08-31', 10, NULL, 'Pertukaran pelajar dengan kampus merdeka', 70, 31, 88, '1', '2023-01-03 04:08:03', '2023-01-04 03:14:18');
-
 -- --------------------------------------------------------
 
 --
@@ -288,26 +215,6 @@ CREATE TABLE `kerjasamas` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `kerjasamas`
---
-
-INSERT INTO `kerjasamas` (`id`, `nama_kerja_sama`, `bidang`, `tanggal_mulai`, `tanggal_sampai`, `kategori_id`, `status_id`, `usulan_id`, `created_at`, `updated_at`) VALUES
-(54, 'Kerjasama Informatika bersama dengan Malaysia', 'A', '2022-11-30', '2023-11-30', 1, 1, 51, '2022-11-30 05:26:25', '2022-11-30 05:26:25'),
-(56, 'Usulan Informatika', 'P', '2022-11-30', '2022-12-14', 1, 2, 53, '2022-11-30 05:55:48', '2022-12-19 17:18:07'),
-(57, 'KA(1)', 'A', '2022-12-04', '2023-12-04', 1, 1, 51, '2022-12-04 01:41:37', '2022-12-04 01:41:37'),
-(58, 'Kerjasama Tanpa MoU 2', 'A', '2022-12-07', '2023-12-07', 2, 1, 51, '2022-12-06 23:07:13', '2022-12-06 23:07:13'),
-(60, 'Kerjasama Bersama 2', 'A', '2022-12-15', '2023-02-02', 2, 1, 53, '2022-12-14 23:39:42', '2022-12-14 23:39:42'),
-(63, 'Kerjasama 3', 'P', '2022-10-01', '2023-01-31', 1, 1, 54, '2022-12-18 10:58:47', '2022-12-18 10:58:47'),
-(64, 'Kerjasama Tanpa MoU 2.1', 'L', '2022-09-30', '2022-12-18', 2, 2, 53, '2022-12-18 11:32:18', '2022-12-19 17:18:07'),
-(65, 'Kerjasama A', 'L', '2022-12-20', '2023-01-31', 1, 1, 54, '2022-12-19 17:30:50', '2022-12-19 17:30:50'),
-(66, 'Kerjasama Bersama', 'P', '2022-12-20', '2023-01-03', 1, 2, 56, '2022-12-20 07:27:45', '2023-01-02 23:10:46'),
-(67, 'Kerjasama Bersama 123', 'B', '2022-10-01', '2023-01-31', 2, 1, 57, '2022-12-22 01:51:48', '2022-12-22 01:51:48'),
-(68, 'Kerjasama MI', 'P', '2022-10-01', '2023-01-31', 2, 1, 54, '2022-12-22 01:58:33', '2022-12-22 01:58:33'),
-(69, 'Kerjasama Bersama', 'P', '2022-09-01', '2023-01-31', 2, 1, 59, '2022-12-27 05:03:13', '2022-12-27 05:03:13'),
-(70, 'Kerjasama Bersama Test Dekan', 'P', '2022-08-01', '2023-01-31', 2, 1, 60, '2023-01-03 03:59:47', '2023-01-04 03:12:46'),
-(71, 'Kerjasama IO', 'B', '2023-01-05', '2023-02-28', 2, 1, 60, '2023-01-05 02:38:04', '2023-01-05 02:38:04');
 
 -- --------------------------------------------------------
 
@@ -379,29 +286,6 @@ CREATE TABLE `mitras` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `mitras`
---
-
-INSERT INTO `mitras` (`id`, `nama_mitra`, `tingkat`, `klasifikasi_id`, `negara_id`, `created_at`, `updated_at`) VALUES
-(1, 'Universitas Indonesia', 'I', 2, 1, '2022-04-21 08:19:25', '2022-10-04 11:57:27'),
-(2, 'Universitas Palembang', 'N', 1, 1, '2022-04-21 08:19:25', '2022-04-24 08:00:33'),
-(3, 'Universitas Indonesia Sejahtera', 'N', 1, 1, '2022-04-21 08:19:25', '2022-04-24 07:26:30'),
-(4, 'Halaman Berkah', 'W', 1, 1, '2022-04-21 08:19:25', '2022-04-24 07:26:57'),
-(10, 'Vietnam University', 'I', 2, 3, '2022-04-21 01:27:59', '2022-10-04 11:56:40'),
-(15, 'UI', 'W', 1, 1, '2022-06-11 08:23:14', '2022-06-11 08:23:14'),
-(16, 'Universitas Malaysia', 'I', 2, 2, '2022-06-11 11:28:37', '2022-10-06 01:51:25'),
-(17, 'Universitas A (Malaysia)', 'I', 12, 2, '2022-06-11 11:30:00', '2022-10-09 23:52:52'),
-(18, 'Universitas B (Malaysia)', 'I', 13, 2, '2022-06-11 11:30:56', '2022-10-09 23:53:25'),
-(19, 'Mitra A (Vietnam)', 'I', 4, 3, '2022-06-29 02:41:08', '2022-10-09 23:55:21'),
-(20, 'Universitas F', 'W', 4, 2, '2022-07-12 18:49:40', '2022-11-15 22:47:20'),
-(21, 'Universitas E', 'N', 1, 1, '2022-07-24 18:55:48', '2022-07-24 18:55:48'),
-(22, 'Mitra Baru', 'I', 2, 2, '2022-10-04 11:47:51', '2022-10-04 11:47:51'),
-(23, 'Mitra B (Indonesia)', 'N', 5, 1, '2022-10-09 23:54:18', '2022-10-09 23:54:18'),
-(24, 'Mitra C (Vietnam)', 'I', 2, 3, '2022-10-09 23:56:33', '2022-10-09 23:56:33'),
-(25, 'Mitra D (Malaysia)', 'I', 13, 2, '2022-10-09 23:58:58', '2022-10-09 23:58:58'),
-(26, 'Mitra E (Singapura)', 'I', 8, 5, '2022-10-11 03:08:49', '2022-11-30 05:15:39');
 
 -- --------------------------------------------------------
 
@@ -547,14 +431,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `kode_dosen`, `name`, `email`, `level`, `unit_id`, `file`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(13, 'D00010', 'Admin User Main', 'usermain026@gmail.com', 'A', 1, NULL, NULL, '$2y$10$r9Xdrro1cYQqOvFK/2ps7udBtwc6KNX0ZHUGxCusDY2u3Y.vygJvi', NULL, '2022-08-03 15:36:10', '2022-09-01 08:55:01'),
-(15, 'D00012', 'Dosen Main Account', 'dosenmain026@gmail.com', 'D', 4, NULL, NULL, '$2y$10$GJbR9Jc6fC/ALpucdQbNTekuxNHTcKJrP9dlyXlTirRO6g4Y8KNT.', NULL, '2022-08-19 03:30:18', '2022-09-08 15:14:44'),
-(25, 'D00001', 'Dekan FIKR', 'ildafm4000@mhs.mdp.ac.id', 'E', 2, NULL, NULL, '$2y$10$n64JdaD5zFH3WDTU8FCwT.71Y0Zqb4EhsCBP1I30tNqd76oRtjudO', NULL, '2022-08-23 01:31:05', '2023-01-09 01:51:04'),
-(26, 'D00002', 'Akun Kaprodi MI', 'ildafm4000@gmail.com', 'K', 7, 'file-D00002-Kaprodi.png', NULL, '$2y$10$CEvTnO9sHV40u7w4ubsG.O56iLyB8qHP/iWIjSuEmjMVXNmkqBuky', NULL, '2022-08-23 01:39:05', '2022-12-22 01:44:00'),
-(28, 'D00003', 'Akun Kaprodi IF', 'ildafm502@gmail.com', 'K', 4, NULL, NULL, '$2y$10$De7e5Tl4lFguYQb7jkHt1OaQdEx.hjtjrzFDN7JKVBf/qB6M2eRem', NULL, '2022-08-30 22:18:21', '2022-12-22 01:43:52'),
-(29, 'D00013', 'User Baru', 'ildafm4000@premiumpedia.net', 'D', 7, NULL, NULL, '$2y$10$c6BCT/J5Zly/rUhrVsOOT.wdx0yVc.SxlId9zVeqpsjZxzeuPqixC', NULL, '2022-09-22 00:00:26', '2022-12-22 02:06:18'),
-(30, 'D00011', 'Dicko David Koniady', 'dicko953@gmail.com', 'D', 6, NULL, NULL, '$2y$10$Ni3HomeisDb25coPb/pILOuyWYLZWWXT3M9a5ArP3BSnR4dZqQb8O', NULL, '2022-12-05 02:33:33', '2022-12-05 02:33:33'),
-(31, 'D10001', 'Dosen 02', 'dosenmain027@gmail.com', 'D', 6, 'file-D10001-Dosen 02.jpg', NULL, '$2y$10$L//3Ipn5N/Z64pVB8HHlDeUAI4q18P6N6Ny5HsvazAj50tet5lZkq', NULL, '2023-01-03 04:05:43', '2023-01-06 22:34:23');
+(1, 'D00010', 'Admin Main', 'usermain026@gmail.com', 'A', 1, NULL, NULL, '$2y$10$bVXvjcHDUEXrrjWxiCSyS.j5RghhXCaumereKrBNW6g9Z6O.yQ1Pu', NULL, '2022-08-03 15:36:10', '2023-01-12 02:17:10');
 
 -- --------------------------------------------------------
 
@@ -577,21 +454,6 @@ CREATE TABLE `usulans` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `usulans`
---
-
-INSERT INTO `usulans` (`id`, `usulan`, `bentuk_kerjasama`, `rencana_kegiatan`, `kontak_kerjasama`, `type`, `mitra_id`, `user_id`, `unit_id`, `hasil_penjajakan`, `keterangan`, `created_at`, `updated_at`) VALUES
-(51, 'Informatika', 'FIKR', 'Kerjasama bersama malaysia', '0771-000001', 'I', 17, 26, 4, 'L', 'Kesepakatan disetujui', '2022-11-30 05:19:44', '2022-11-30 05:21:45'),
-(52, 'Sistem Informasi', 'Kerjasama FIKR', 'Kerjasama bersama Vietnam', '091132877810', 'O', 19, 15, 5, 'T', 'Kesepakatan tidak disetujui karena .......................', '2022-11-30 05:23:34', '2022-11-30 05:24:41'),
-(53, 'Teknik Elektro', 'FIKR', 'Kerjasama bersama Singapura', '07111-555555', 'I', 26, 25, 6, 'L', 'Hasil kesepakatan disetujui', '2022-11-30 05:46:39', '2022-11-30 05:47:03'),
-(54, 'MI', 'Kerjasama MI', 'Melakukan Kegiatan 1, Kegiatan 2, Kegiatan 3, dst.', '(0711) 567891', 'O', 24, 29, 7, 'L', 'Kesepakatan disetujui', '2022-12-18 10:54:15', '2022-12-18 10:56:44'),
-(56, 'kerjasama uitm perlis', 'pendidikan, penelitian', 'Melakukan Kegiatan 1, Kegiatan 2, Kegiatan 3, dst.', '+6016998732', 'I', 25, 15, 15, 'L', 'Kesepakatan disetujui', '2022-12-20 07:25:19', '2022-12-20 07:26:19'),
-(57, 'Kerjasama IF', 'Kerjasama IF', 'Melakukan Kegiatan 1, Kegiatan 2, Kegiatan 3, dst.', '(0711) 123456', 'I', 26, 28, 4, 'L', 'Kesepakatan disetujui', '2022-12-22 01:46:03', '2022-12-22 01:47:38'),
-(58, 'kerjasama uitm perlis v2', 'pendidikan, penelitian', 'dst', '+601691111', 'O', 19, 13, 15, 'L', 'Kesepakatan disetujui', '2022-12-22 01:47:11', '2022-12-27 05:01:24'),
-(59, 'Usulan baru', 'pendidikan', 'Melakukan Kegiatan 1, Kegiatan 2, Kegiatan 3, dst.', '(0711) 567891', 'I', 19, 15, 2, 'L', 'Kesepakatan disetujui', '2022-12-27 05:02:16', '2022-12-27 05:02:40'),
-(60, 'Usulan tes Dekan', 'Be', 'Melakukan Kegiatan 1, Kegiatan 2, Kegiatan 3, dst.', '(0711) 567891', 'I', 19, 28, 1, 'L', 'Kesepakatan disetujui', '2023-01-03 03:52:36', '2023-01-04 03:25:17');
 
 --
 -- Indexes for dumped tables
@@ -749,19 +611,19 @@ ALTER TABLE `bentuk_kegiatans`
 -- AUTO_INCREMENT for table `bukti_kegiatans`
 --
 ALTER TABLE `bukti_kegiatans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `bukti_kegiatan_units`
 --
 ALTER TABLE `bukti_kegiatan_units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `bukti_kerjasamas`
 --
 ALTER TABLE `bukti_kerjasamas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `kategoris`
@@ -779,13 +641,13 @@ ALTER TABLE `kategori_mous`
 -- AUTO_INCREMENT for table `kegiatans`
 --
 ALTER TABLE `kegiatans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `kerjasamas`
 --
 ALTER TABLE `kerjasamas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `klasifikasi_mitras`
@@ -797,7 +659,7 @@ ALTER TABLE `klasifikasi_mitras`
 -- AUTO_INCREMENT for table `mitras`
 --
 ALTER TABLE `mitras`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `negaras`
@@ -821,13 +683,13 @@ ALTER TABLE `units`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `usulans`
 --
 ALTER TABLE `usulans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables

@@ -133,8 +133,14 @@ class ReminderController extends Controller
             }
 
             $toastr = array(
-                'info' => 'Pengiriman Reminder berhasil',
+                'info' => 'Pengiriman Reminder Berhasil',
                 'alert-type' => 'success'
+            );
+            return redirect()->back()->with($toastr);
+        } else {
+            $toastr = array(
+                'info' => 'Tidak ada kegiatan yang perlu direminder',
+                'alert-type' => 'info'
             );
             return redirect()->back()->with($toastr);
         }

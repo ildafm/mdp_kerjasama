@@ -63,7 +63,7 @@
                     <div class="form-group col-lg-6">
                         {{-- ubah password --}}
                         <label for="password">Password (Jika tidak mau mengubah, kosongkan input password)</label>
-                        <input type="text" name='password' autocomplete="new-password"
+                        <input type="password" name='password' autocomplete="new-password"
                             class="form-control @error('password') is-invalid @enderror" placeholder="Masukan Password"
                             value="">
                         @error('password')
@@ -74,7 +74,7 @@
                     {{-- konfirmasi password --}}
                     <div class="form-group col-lg-6">
                         <label for="password-confirm">Konfirmasi Password</label>
-                        <input id="password-confirm" type="text" class="form-control" name="password_confirmation"
+                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
                             placeholder="Konfirmasi Password" autocomplete="new-password" value="">
                     </div>
                 </div>

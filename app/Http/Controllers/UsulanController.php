@@ -291,7 +291,7 @@ class UsulanController extends Controller
 
         try {
             $usulan->delete();
-            return redirect()->route('usulans.index')->with('pesan', "Hapus data usulan $usulan->nama_usulan berhasil");
+            return redirect()->route('usulans.index')->with('pesan', "Hapus data usulan $usulan->usulan berhasil");
         } catch (\Throwable $th) {
             return redirect()->back()->with('pesan_error', "Gagal menghapus data");
         }

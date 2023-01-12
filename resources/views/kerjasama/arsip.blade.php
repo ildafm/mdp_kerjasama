@@ -86,6 +86,8 @@
                         <th>Usulan</th>
                         <th>Nomor SPK</th>
                         <th>File SPK</th>
+                        <th>Tanggal Mulai SPK</th>
+                        <th>Tanggal Berakhir SPK</th>
                     </tr>
                 </thead>
 
@@ -193,7 +195,26 @@
                                     @endif
 
                                 </td>
-
+                                {{-- Tanggal Mulai SPK --}}
+                                <td>
+                                    @if ($data->nomor_spk == null)
+                                        Tidak Ada SPK
+                                    @elseif($data->tanggal_mulai_spk == null)
+                                        Kegiatan Belum Ditambahkan
+                                    @else
+                                        {{ $data->tanggal_mulai_spk }}
+                                    @endif
+                                </td>
+                                {{-- Tanggal Berakhir SPK --}}
+                                <td>
+                                    @if ($data->nomor_spk == null)
+                                        Tidak Ada SPK
+                                    @elseif($data->tanggal_sampai_spk == null)
+                                        Kegiatan Belum Ditambahkan
+                                    @else
+                                        {{ $data->tanggal_sampai_spk }}
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
                     @endif
@@ -216,6 +237,8 @@
                         <th>Usulan</th>
                         <th>Nomor SPK</th>
                         <th>File SPK</th>
+                        <th>Tanggal Mulai SPK</th>
+                        <th>Tanggal Berakhir SPK</th>
                     </tr>
                 </tfoot>
 
