@@ -140,9 +140,9 @@
                         @enderror
                     </div>
 
-                    {{-- Tanggal Sampai --}}
+                    {{-- Tanggal Berakhir --}}
                     <div class="form-group col-lg-3">
-                        <label for="tanggal_sampai">Tanggal Sampai</label>
+                        <label for="tanggal_sampai">Tanggal Berakhir</label>
                         <input type="date" name="tanggal_sampai" id="tanggal_sampai" class="form-control"
                             value="{{ old('tanggal_sampai', $kegiatan->tanggal_sampai) }}"
                             min="{{ $initial_tanggal_mulai_dan_tanggal_sampai_kerjasama[0]->tanggal_mulai }}"

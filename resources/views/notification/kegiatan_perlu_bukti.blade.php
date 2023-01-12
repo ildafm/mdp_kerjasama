@@ -41,7 +41,7 @@
                             <th>PIC</th>
                             <th>Unit</th>
                             <th>Tanggal Mulai</th>
-                            <th>Tanggal Sampai</th>
+                            <th>Tanggal Berakhir</th>
                             {{-- <th>Lewat(hari)</th> --}}
                         </tr>
                     </thead>
@@ -104,7 +104,7 @@
                             <th>PIC</th>
                             <th>Unit</th>
                             <th>Tanggal Mulai</th>
-                            <th>Tanggal Sampai</th>
+                            <th>Tanggal Berakhir</th>
                             {{-- <th>Lewat(hari)</th> --}}
                         </tr>
                     </tfoot>
@@ -122,10 +122,10 @@
                             <th>Nama Kerjasama</th>
                             <th>Bentuk Kegiatan</th>
                             <th>Keterangan</th>
-                            <th>PIC Dosen</th>
+                            <th>PIC</th>
                             <th>Unit</th>
                             <th>Tanggal Mulai</th>
-                            <th>Tanggal Sampai</th>
+                            <th>Tanggal Berakhir</th>
                         </tr>
                     </thead>
 
@@ -174,10 +174,10 @@
                             <th>Nama Kerjasama</th>
                             <th>Bentuk Kegiatan</th>
                             <th>Keterangan</th>
-                            <th>PIC Dosen</th>
+                            <th>PIC</th>
                             <th>Unit</th>
                             <th>Tanggal Mulai</th>
-                            <th>Tanggal Sampai</th>
+                            <th>Tanggal Berakhir</th>
                         </tr>
                     </tfoot>
 
@@ -194,10 +194,10 @@
                             <th>Nama Kerjasama</th>
                             <th>Bentuk Kegiatan</th>
                             <th>Keterangan</th>
-                            <th>PIC Dosen</th>
+                            <th>PIC</th>
                             <th>Unit</th>
                             <th>Tanggal Mulai</th>
-                            <th>Tanggal Sampai</th>
+                            <th>Tanggal Berakhir</th>
                         </tr>
                     </thead>
 
@@ -246,10 +246,10 @@
                             <th>Nama Kerjasama</th>
                             <th>Bentuk Kegiatan</th>
                             <th>Keterangan</th>
-                            <th>PIC Dosen</th>
+                            <th>PIC</th>
                             <th>Unit</th>
                             <th>Tanggal Mulai</th>
-                            <th>Tanggal Sampai</th>
+                            <th>Tanggal Berakhir</th>
                         </tr>
                     </tfoot>
 
@@ -266,9 +266,9 @@
                             <th>Nama Kerjasama</th>
                             <th>Bentuk Kegiatan</th>
                             <th>Keterangan</th>
-                            <th>PIC Dosen</th>
+                            <th>PIC</th>
                             <th>Tanggal Mulai</th>
-                            <th>Tanggal Sampai</th>
+                            <th>Tanggal Berakhir</th>
                         </tr>
                     </thead>
 
@@ -310,9 +310,9 @@
                             <th>Nama Kerjasama</th>
                             <th>Bentuk Kegiatan</th>
                             <th>Keterangan</th>
-                            <th>PIC Dosen</th>
+                            <th>PIC</th>
                             <th>Tanggal Mulai</th>
-                            <th>Tanggal Sampai</th>
+                            <th>Tanggal Berakhir</th>
                         </tr>
                     </tfoot>
 

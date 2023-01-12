@@ -80,7 +80,7 @@
                         <th>Kategori MoU</th>
                         <th>Bidang</th>
                         <th>Tanggal Mulai</th>
-                        <th>Tanggal Sampai</th>
+                        <th>Tanggal Berakhir</th>
                         <th>Kategori Kerjasama</th>
                         <th>Status</th>
                         <th>Usulan</th>
@@ -210,7 +210,7 @@
                         <th>Kategori MoU</th>
                         <th>Bidang</th>
                         <th>Tanggal Mulai</th>
-                        <th>Tanggal Sampai</th>
+                        <th>Tanggal Berakhir</th>
                         <th>Kategori Kerjasama</th>
                         <th>Status</th>
                         <th>Usulan</th>

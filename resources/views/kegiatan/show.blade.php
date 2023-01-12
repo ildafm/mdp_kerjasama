@@ -53,7 +53,7 @@
                     </tr>
 
                     <tr>
-                        <td>Tanggal Sampai</td>
+                        <td>Tanggal Berakhir</td>
                         <td>{{ $kegiatan->tanggal_sampai }}</td>
                     </tr>
 

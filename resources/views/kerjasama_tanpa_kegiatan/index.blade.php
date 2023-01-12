@@ -74,7 +74,7 @@
                         <th>File MoU</th>
                         <th>Bidang</th>
                         <th>Tanggal Mulai</th>
-                        <th>Tanggal Sampai</th>
+                        <th>Tanggal Berakhir</th>
                         <th>Kategori</th>
                         <th>Status</th>
                         <th>Usulan</th>
@@ -149,7 +149,7 @@
                         <th>File MoU</th>
                         <th>Bidang</th>
                         <th>Tanggal Mulai</th>
-                        <th>Tanggal Sampai</th>
+                        <th>Tanggal Berakhir</th>
                         <th>Kategori</th>
                         <th>Status</th>
                         <th>Usulan</th>

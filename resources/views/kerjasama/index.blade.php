@@ -50,11 +50,11 @@
                         <input type="date" name="filter_tanggal_sampai" class="form-control"
                             value="{{ $tanggal_sampai }}">
                     </div>
-                    <div class="form-group col-lg-2">
+                    <div class="form-group col-lg-3">
                         <button type="submit" class="btn btn-primary">Cari</button>
                         @php
                             if (isset($_GET['filter_tanggal_mulai']) && isset($_GET['filter_tanggal_sampai'])) {
-                                echo "<a href='/kerjasamas' class='btn btn-secondary' title='Hapus filter'>Batal</a>";
+                                echo "<a href='/kerjasamas' class='btn btn-secondary' title='hapus filter'>Hapus Filter</a>";
                             }
                         @endphp
                     </div>
@@ -73,7 +73,7 @@
                         <th>File MoU</th>
                         <th>Bidang</th>
                         <th>Tanggal Mulai</th>
-                        <th>Tanggal Sampai</th>
+                        <th>Tanggal Berakhir</th>
                         <th>Kategori</th>
                         <th>Status</th>
                         <th>Usulan</th>
@@ -207,7 +207,7 @@
                         <th>File MoU</th>
                         <th>Bidang</th>
                         <th>Tanggal Mulai</th>
-                        <th>Tanggal Sampai</th>
+                        <th>Tanggal Berakhir</th>
                         <th>Kategori</th>
                         <th>Status</th>
                         <th>Usulan</th>

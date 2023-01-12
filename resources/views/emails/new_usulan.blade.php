@@ -8,7 +8,7 @@
 <body>
     <h1>{{ $details['title'] }}</h1>
     <p>
-        {{ $details['salam'] }} {{ $details['user_name'] }}, Di informasikan bahwa terdapat usulan baru yang telah di
+        {{ $details['salam'] }} {{ $details['admin_name'] }}, Di informasikan bahwa terdapat usulan baru yang telah di
         input.
     </p>
     <p>

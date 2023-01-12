@@ -102,7 +102,7 @@
                     </tr>
 
                     <tr>
-                        <td>Tanggal Sampai</td>
+                        <td>Tanggal Berakhir</td>
                         <td>{{ $kerjasama->tanggal_sampai }}</td>
                     </tr>
 
@@ -226,9 +226,9 @@
                                         @enderror
                                     </div>
 
-                                    {{-- Tanggal Sampai --}}
+                                    {{-- Tanggal Berakhir --}}
                                     <div class="form-group col-lg-3">
-                                        <label for="tanggal_sampai">Tanggal Sampai</label>
+                                        <label for="tanggal_sampai">Tanggal Berakhir</label>
                                         <input type="date" name="tanggal_sampai" id="" class="form-control"
                                             min="{{ $kerjasama->tanggal_mulai }}" max="{{ $kerjasama->tanggal_sampai }}"
                                             value="{{ old('tanggal_sampai') }}">
@@ -327,7 +327,7 @@
                                         <th>Keterangan</th>
                                         <th>PIC</th>
                                         <th>Tanggal Mulai</th>
-                                        <th>Tanggal Sampai</th>
+                                        <th>Tanggal Berakhir</th>
                                         <th>Mengacu pada SPK</th>
                                     </tr>
                                 </thead>
@@ -390,7 +390,7 @@
                                         <th>Keterangan</th>
                                         <th>PIC Dosen</th>
                                         <th>Tanggal Mulai</th>
-                                        <th>Tanggal Sampai</th>
+                                        <th>Tanggal Berakhir</th>
                                         <th>Mengacu pada SPK</th>
                                     </tr>
                                 </tfoot>
@@ -412,7 +412,7 @@
                                     <th>Keterangan</th>
                                     <th>PIC Dosen</th>
                                     <th>Tanggal Mulai</th>
-                                    <th>Tanggal Sampai</th>
+                                    <th>Tanggal Berakhir</th>
                                     <th>Mengacu pada SPK</th>
                                 </tr>
                             </thead>
@@ -475,7 +475,7 @@
                                     <th>Keterangan</th>
                                     <th>PIC Dosen</th>
                                     <th>Tanggal Mulai</th>
-                                    <th>Tanggal Sampai</th>
+                                    <th>Tanggal Berakhir</th>
                                     <th>Mengacu pada SPK</th>
                                 </tr>
                             </tfoot>

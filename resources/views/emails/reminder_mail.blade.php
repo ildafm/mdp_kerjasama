@@ -15,7 +15,7 @@
         <b>Informasi Kegiatan</b><br>
         Bentuk Kegiatan : {{ $details['bentuk_kegiatan'] }}<br>
         Tanggal Mulai Kegiatan : {{ $details['tanggal_mulai'] }}<br>
-        Tanggal Sampai Kegiatan : {{ $details['tanggal_sampai'] }}<br>
+        Tanggal Berakhir Kegiatan : {{ $details['tanggal_sampai'] }}<br>
     </div>
     <hr>
     <p>

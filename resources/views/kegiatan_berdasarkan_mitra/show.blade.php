@@ -1,5 +1,10 @@
 @extends('layouts.master')
-@section('title', 'Kegiatan')
+
+@php
+    $getTitle = "Kegiatan Dengan Mitra $mitra->nama_mitra";
+@endphp
+
+@section('title', $getTitle)
 
 @section('content')
 
@@ -68,9 +73,9 @@
                         <th>Nama Kerjasama</th>
                         <th>Bentuk Kegiatan</th>
                         <th>Keterangan</th>
-                        <th>PIC Dosen</th>
+                        <th>PIC</th>
                         <th>Tanggal Mulai</th>
-                        <th>Tanggal Sampai</th>
+                        <th>Tanggal Berakhir</th>
                     </tr>
                 </thead>
 
@@ -129,7 +134,7 @@
                         <th>Keterangan</th>
                         <th>PIC</th>
                         <th>Tanggal Mulai</th>
-                        <th>Tanggal Sampai</th>
+                        <th>Tanggal Berakhir</th>
                     </tr>
                 </tfoot>
 

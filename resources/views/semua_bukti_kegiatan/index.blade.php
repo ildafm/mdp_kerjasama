@@ -6,7 +6,6 @@
         $unit = DB::select("SELECT * FROM units WHERE id = $getFilter LIMIT 1");
         $getUnitName = $unit[0]->nama_unit;
         if (!empty($unit)) {
-            // echo $unit[0]->nama_unit;
             $getTitle = "Laporan Kegiatan $getUnitName";
         }
     }
@@ -60,7 +59,7 @@
                         <button type="submit" class="btn btn-primary">Cari</button>
                         @php
                             if (isset($_GET['filter_berdasarkan_unit'])) {
-                                echo "<a href='/semua_laporan_kegiatans' class='btn btn-secondary' title='Hapus filter'>Batal</a>";
+                                echo "<a href='/semua_laporan_kegiatans' class='btn btn-secondary' title='hapus filter'>Hapus Filter</a>";
                             }
                         @endphp
 

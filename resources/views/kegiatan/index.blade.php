@@ -54,7 +54,7 @@
                         <button type="submit" class="btn btn-primary">Cari</button>
                         @php
                             if (isset($_GET['filter_tanggal_mulai']) && isset($_GET['filter_tanggal_sampai'])) {
-                                echo "<a href='/kegiatans' class='btn btn-secondary' title='Hapus filter'>Batal</a>";
+                                echo "<a href='/kegiatans' class='btn btn-secondary' title='hapus filter'>Hapus Filter</a>";
                             }
                         @endphp
                     </div>
@@ -72,7 +72,7 @@
                         <th>Keterangan</th>
                         <th>PIC</th>
                         <th>Tanggal Mulai</th>
-                        <th>Tanggal Sampai</th>
+                        <th>Tanggal Berakhir</th>
                         <th>Mengacu pada SPK</th>
                     </tr>
                 </thead>
@@ -134,7 +134,7 @@
                         <th>Keterangan</th>
                         <th>PIC</th>
                         <th>Tanggal Mulai</th>
-                        <th>Tanggal Sampai</th>
+                        <th>Tanggal Berakhir</th>
                         <th>Mengacu pada SPK</th>
                     </tr>
                 </tfoot>

@@ -89,9 +89,9 @@
                         @enderror
                     </div>
 
-                    {{-- Tanggal Sampai --}}
+                    {{-- Tanggal Berakhir --}}
                     <div class="form-group col-lg-6">
-                        <label for="tanggal_sampai"> Tanggal Sampai : </label>
+                        <label for="tanggal_sampai"> Tanggal Berakhir : </label>
                         <input type="date" name="tanggal_sampai" id="" class="form-control"
                             value="{{ old('tanggal_sampai') }}">
                         @error('tanggal_sampai')
