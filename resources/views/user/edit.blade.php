@@ -51,7 +51,7 @@
                 {{-- ubah nama --}}
                 <div class="form-group">
                     <label for="name">Nama User</label>
-                    <input type="text" name='name' autocomplete="name" autofocus
+                    <input required type="text" name='name' autocomplete="name" autofocus
                         value="{{ old('name', $user->name) }}" class="form-control @error('name') is-invalid @enderror"
                         placeholder="Masukan Nama User">
                     @error('name')
@@ -74,8 +74,9 @@
                     {{-- konfirmasi password --}}
                     <div class="form-group col-lg-6">
                         <label for="password-confirm">Konfirmasi Password</label>
-                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
-                            placeholder="Konfirmasi Password" autocomplete="new-password" value="">
+                        <input id="password-confirm" type="password" class="form-control"
+                            name="password_confirmation" placeholder="Konfirmasi Password" autocomplete="new-password"
+                            value="">
                     </div>
                 </div>
 

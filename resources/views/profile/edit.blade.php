@@ -50,7 +50,7 @@
 
                     {{-- add file --}}
                     <div class="form-group">
-                        <label for="file">Foto Profile(Max:500kb)</label>
+                        <label for="file">Foto Profile(jpg,png|Max:500kb)</label>
                         <div class="input-group">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
@@ -106,7 +106,7 @@
                 {{-- ubah nama --}}
                 <div class="form-group">
                     <label for="name">Nama User</label>
-                    <input type="text" name='name' autocomplete="name" autofocus
+                    <input required type="text" name='name' autocomplete="name" autofocus
                         value="{{ old('name', Auth::user()->name) }}"
                         class="form-control @error('name') is-invalid @enderror" placeholder="Masukan Nama User">
                     @error('name')

@@ -73,7 +73,7 @@
                         <td>Hasil Penjajakan</td>
                         <td>
                             @php
-                                if ($usulan->hasil_penjajakan == null || $usulan->hasil_penjajakan == '') {
+                                if ($usulan->hasil_penjajakan == null || $usulan->hasil_penjajakan == '' || $usulan->hasil_penjajakan == 'B') {
                                     echo 'Belum Ditentukan';
                                 } elseif ($usulan->hasil_penjajakan == 'L') {
                                     echo 'Lanjut';
@@ -163,17 +163,16 @@
                     <form action="{{ route('usulans.store') }}" method="POST">
                         @csrf
                         <div class="row">
-                            {{-- Nomor MoU --}}
-                            <div class="form-group col-lg-8">
-                                <label for="no_mou">Nomor MoU</label>
-                                <input type="text" id="no_mou" name='no_mou' value="{{ old('no_mou') }}"
-                                    class="form-control @error('no_mou') is-invalid @enderror"
-                                    placeholder="Masukan Nomor MoU">
-                                @error('no_mou')
+                            {{-- Nama Kerjasama --}}
+                            <div class="form-group col-lg-8 col-sm-12">
+                                <label for="nama_kerja_sama">Nama Kerjasama</label>
+                                <input type="text" name='nama_kerja_sama' value="{{ old('nama_kerja_sama') }}"
+                                    class="form-control @error('nama_kerja_sama') is-invalid @enderror"
+                                    placeholder="Masukan Nama Kerjasama">
+                                @error('nama_kerja_sama')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-
                             {{-- Kategori --}}
                             <div class="form-group col-lg-4 col-sm-12">
                                 <label for="nama_kategori">Kategori</label>
@@ -200,16 +199,6 @@
                             </div>
                         </div>
 
-                        {{-- Nama Kerjasama --}}
-                        <div class="form-group">
-                            <label for="nama_kerja_sama">Nama Kerjasama</label>
-                            <input type="text" name='nama_kerja_sama' value="{{ old('nama_kerja_sama') }}"
-                                class="form-control @error('nama_kerja_sama') is-invalid @enderror"
-                                placeholder="Masukan Nama Kerjasama">
-                            @error('nama_kerja_sama')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
                         <div class="row">
                             {{-- Tanggal Mulai --}}
                             <div class="form-group col-lg-4">

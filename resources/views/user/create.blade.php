@@ -27,7 +27,8 @@
                     <div class="form-group col-lg-8">
                         <label for="name">Nama User</label>
                         <input type="text" name='name' autocomplete="name" autofocus value="{{ old('name') }}"
-                            class="form-control @error('name') is-invalid @enderror" placeholder="Masukan Nama User">
+                            class="form-control @error('name') is-invalid @enderror" placeholder="Masukan Nama User"
+                            required>
                         @error('name')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -36,7 +37,7 @@
                     {{-- Input Kode Dosen --}}
                     <div class="form-group col-lg-4">
                         <label for="kode_dosen">Kode Dosen</label>
-                        <input type="text" name='kode_dosen' value="{{ old('kode_dosen') }}"
+                        <input required type="text" name='kode_dosen' value="{{ old('kode_dosen') }}"
                             class="form-control @error('kode_dosen') is-invalid @enderror" placeholder="Masukan Kode Dosen">
                         @error('kode_dosen')
                             <div class="text-danger">{{ $message }}</div>
@@ -48,7 +49,7 @@
                     {{-- input email --}}
                     <div class="form-group col-lg-8">
                         <label for="email">Email</label>
-                        <input type="text" name='email' autocomplete="email" value="{{ old('email') }}"
+                        <input required type="text" name='email' autocomplete="email" value="{{ old('email') }}"
                             class="form-control @error('email') is-invalid @enderror" placeholder="Masukan Email">
                         @error('email')
                             <div class="text-danger">{{ $message }}</div>
@@ -84,9 +85,9 @@
                     {{-- input password --}}
                     <div class="form-group col-lg-4 col-sm-12 col-md-12">
                         <label for="password">Password</label>
-                        <input type="password" name='password' autocomplete="new-password" value="{{ old('password') }}"
-                            class="form-control @error('password') is-invalid @enderror" required
-                            placeholder="Masukan Password">
+                        <input required type="password" name='password' autocomplete="new-password"
+                            value="{{ old('password') }}" class="form-control @error('password') is-invalid @enderror"
+                            required placeholder="Masukan Password">
                         @error('password')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -95,8 +96,9 @@
                     {{-- konfirmasi password --}}
                     <div class="form-group col-lg-4 col-sm-12 col-md-12">
                         <label for="password-confirm">Konfirmasi Password</label>
-                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
-                            required placeholder="Konfirmasi Password" autocomplete="new-password">
+                        <input required id="password-confirm" type="password" class="form-control"
+                            name="password_confirmation" required placeholder="Konfirmasi Password"
+                            autocomplete="new-password">
                     </div>
 
                     {{-- select unit --}}

@@ -23,8 +23,8 @@
                 @csrf
                 <div class="form-group">
                     <label for="nama_negara">Nama Negara</label>
-                    <input type="text" name='nama_negara' class="form-control @error('nama_negara') is-invalid @enderror"
-                        placeholder="Masukan Nama Negara">
+                    <input required type="text" name='nama_negara'
+                        class="form-control @error('nama_negara') is-invalid @enderror" placeholder="Masukan Nama Negara">
                     @error('nama_negara')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror

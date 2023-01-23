@@ -24,7 +24,8 @@
                 {{-- Klasifikasi Mitra --}}
                 <div class="form-group">
                     <label for="klasifikasi_mitra">Klasifikasi Mitra</label>
-                    <input type="text" name='klasifikasi_mitra' class="form-control @error('klasifikasi_mitra') is-invalid @enderror"
+                    <input required type="text" name='klasifikasi_mitra'
+                        class="form-control @error('klasifikasi_mitra') is-invalid @enderror"
                         placeholder="Masukan Klasifikasi Mitra">
                     @error('klasifikasi_mitra')
                         <div class="text-danger">{{ $message }}</div>
@@ -34,8 +35,8 @@
                 {{-- Keterangan --}}
                 <div class="form-group">
                     <label for="keterangan">Keterangan</label>
-                    <input type="text" name='keterangan' class="form-control @error('keterangan') is-invalid @enderror"
-                        placeholder="Masukan Keterangan">
+                    <input required type="text" name='keterangan'
+                        class="form-control @error('keterangan') is-invalid @enderror" placeholder="Masukan Keterangan">
                     @error('keterangan')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror

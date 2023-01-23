@@ -276,9 +276,9 @@ class KegiatanController extends Controller
         //
         $this->authorize('adminOnly', User::class);
         try {
-            $kegiatan->delete();
-
             $getBuktiKegiatan = DB::select("SELECT id, nama_bukti_kegiatan, bukti_kegiatans.file AS 'file', kegiatans_id FROM bukti_kegiatans WHERE kegiatans_id = $kegiatan->id");
+
+            $kegiatan->delete();
 
             // unlink semua file sekaligus
             if (count($getBuktiKegiatan) > 0) {
@@ -300,9 +300,10 @@ class KegiatanController extends Controller
 
         try {
             $kegiatan = Kegiatan::findOrFail($id_kegiatan);
-            $kegiatan->delete();
 
             $getBuktiKegiatan = DB::select("SELECT id, nama_bukti_kegiatan, bukti_kegiatans.file AS 'file', kegiatans_id FROM bukti_kegiatans WHERE kegiatans_id = $kegiatan->id");
+
+            $kegiatan->delete();
 
             // unlink semua file sekaligus
             if (count($getBuktiKegiatan) > 0) {

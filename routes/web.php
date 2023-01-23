@@ -68,7 +68,6 @@ Route::get('/arsip_kerjasamas', [App\Http\Controllers\KerjasamaController::class
 
 // other route
 Route::resource('buktiKerjasamas', BuktiKerjasamaController::class)->middleware(['auth']); //route yang mengarah untuk memperlihatkan bukti kerjasama
-Route::resource('buktiKerjasama2s', BuktiKerjasama2Controller::class)->middleware(['auth']); //route yang mengarah untuk memperlihatkan bukti kerjasama
 Route::resource('buktiKegiatans', BuktiKegiatanController::class)->middleware(['auth']); //route yang mengarah untuk memperlihatkan bukti kegiatan
 Route::resource('bentuk_kegiatans', BentukKegiatanController::class)->middleware(['auth']); //bentuk kegiatan
 Route::resource('negaras', NegaraController::class)->middleware(['auth']); //negara

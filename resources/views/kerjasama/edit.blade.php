@@ -28,7 +28,7 @@
                     {{-- Edit nama Kerjasama --}}
                     <div class="form-group col-lg-6 col-sm-12">
                         <label for="nama_kerja_sama">Nama Kerjasama</label>
-                        <input type="text" value="{{ old('nama_kerja_sama', $kerjasama->nama_kerja_sama) }}"
+                        <input required type="text" value="{{ old('nama_kerja_sama', $kerjasama->nama_kerja_sama) }}"
                             name='nama_kerja_sama' class="form-control @error('nama_kerja_sama') is-invalid @enderror"
                             placeholder="Masukan Nama Kerjasama">
                         @error('nama_kerja_sama')
@@ -65,7 +65,7 @@
                     {{-- Tanggal Mulai --}}
                     <div class="form-group col-lg-6">
                         <label for="tanggal_mulai">Tanggal Mulai : </label>
-                        <input type="date" name="tanggal_mulai"
+                        <input required type="date" name="tanggal_mulai"
                             value="{{ old('tanggal_mulai', $kerjasama->tanggal_mulai) }}" id=""
                             class="form-control">
                         @error('tanggal_mulai')
@@ -76,7 +76,7 @@
                     {{-- Tanggal Berakhir --}}
                     <div class="form-group col-lg-6">
                         <label for="tanggal_sampai"> Tanggal Berakhir : </label>
-                        <input type="date" name="tanggal_sampai"
+                        <input required type="date" name="tanggal_sampai"
                             value="{{ old('tanggal_sampai', $kerjasama->tanggal_sampai) }}" id=""
                             class="form-control">
                         @error('tanggal_sampai')

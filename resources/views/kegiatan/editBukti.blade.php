@@ -36,9 +36,9 @@
                 </div>
 
                 {{-- APT, APS, LAMEMBA --}}
-                <div class="row">
-                    {{-- APT --}}
-                    @php
+                {{-- <div class="row"> --}}
+                {{-- APT --}}
+                {{-- @php
                         $option_apt = $buktiKegiatan->ceklist_apt;
                         $checked_apt = '';
                         if (old('apt') == 'Y') {
@@ -52,10 +52,10 @@
                     <div class="form-check col">
                         <input class="form-check-input" type="checkbox" name="apt" value="Y" {{ $checked_apt }} />
                         <label class="form-check-label">APT</label>
-                    </div>
+                    </div> --}}
 
-                    {{-- APS --}}
-                    @php
+                {{-- APS --}}
+                {{-- @php
                         $option_aps = $buktiKegiatan->ceklist_aps;
                         $checked_aps = '';
                         if (old('aps') == 'Y') {
@@ -78,15 +78,15 @@
                         //     }
                         // }
                         
-                    @endphp
+                    @endphp --}}
 
-                    <div class="form-check col">
+                {{-- <div class="form-check col">
                         <input class="form-check-input" type="checkbox" name="aps" value="Y" {{ $checked_aps }} />
                         <label class="form-check-label">APS</label>
-                    </div>
+                    </div> --}}
 
-                    {{-- LAMEMBA --}}
-                    @php
+                {{-- LAMEMBA --}}
+                {{-- @php
                         $option_lamemba = $buktiKegiatan->ceklist_lamemba;
                         $checked_lamemba = '';
                         if (old('lamemba') == 'Y') {
@@ -102,7 +102,7 @@
                             {{ $checked_lamemba }} />
                         <label class="form-check-label">LAMEMBA</label>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="row">
                     {{-- Nama Unit --}}

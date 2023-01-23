@@ -25,8 +25,8 @@
                 {{-- Nama Mitra --}}
                 <div class="form-group">
                     <label for="nama_mitra">Nama Mitra</label>
-                    <input type="text" name='nama_mitra' class="form-control @error('nama_mitra') is-invalid @enderror"
-                        placeholder="Masukan Nama Mitra">
+                    <input type="text" name='nama_mitra' required
+                        class="form-control @error('nama_mitra') is-invalid @enderror" placeholder="Masukan Nama Mitra">
                     @error('nama_mitra')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror

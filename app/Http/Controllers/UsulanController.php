@@ -65,7 +65,7 @@ class UsulanController extends Controller
             $validateData = $request->validate([
                 'usulan' => 'required',
                 'bentuk_kerjasama' => 'required',
-                'kontak_kerjasama' => 'required|max:13',
+                'kontak_kerjasama' => 'required|max:15',
                 'rencana_kegiatan' => 'required',
                 'nama_mitra' => 'required',
                 'nama_pengusul' => 'required',
@@ -130,34 +130,16 @@ class UsulanController extends Controller
         }
         // simpan kerjasama
         else {
-            if ($request->nama_kategori == '1') {
-                $validateData = $request->validate([
-                    'nama_kerja_sama' => 'required',
-                    'tanggal_mulai' => 'required',
-                    'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
-                    'nama_kategori' => 'required',
-                    'nama_status' => 'required',
-                    'usulan_id' => 'required',
-                    'no_mou' => 'required',
-                ]);
-            } else {
-                $validateData = $request->validate([
-                    'nama_kerja_sama' => 'required',
-                    'tanggal_mulai' => 'required',
-                    'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
-                    'nama_kategori' => 'required',
-                    'nama_status' => 'required',
-                    'usulan_id' => 'required',
-                ]);
-            }
+            $validateData = $request->validate([
+                'nama_kerja_sama' => 'required',
+                'tanggal_mulai' => 'required',
+                'tanggal_sampai' => 'required|date|date_format:Y-m-d|after:tanggal_mulai',
+                'nama_kategori' => 'required',
+                'nama_status' => 'required',
+                'usulan_id' => 'required',
+            ]);
 
             $kerjasama = new Kerjasama();
-
-            if ($request->no_mou != '' || $request->no_mou != null) {
-                $kerjasama->no_mou = $validateData['no_mou'];
-            } else {
-                $kerjasama->no_mou = '';
-            }
 
             $kerjasama->nama_kerja_sama = $validateData['nama_kerja_sama'];
             $kerjasama->tanggal_mulai = $validateData['tanggal_mulai'];
@@ -244,7 +226,7 @@ class UsulanController extends Controller
         $this->validate($request, [
             'usulan' => 'required',
             'bentuk_kerjasama' => 'required',
-            'kontak_kerjasama' => 'required|max:13',
+            'kontak_kerjasama' => 'required|max:15',
             'rencana_kegiatan' => 'required',
             'nama_mitra' => 'required',
             'nama_pengusul' => 'required',

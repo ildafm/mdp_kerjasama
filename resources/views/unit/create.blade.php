@@ -26,8 +26,8 @@
                     {{-- Nama Unit --}}
                     <div class="form-group col-lg-6">
                         <label for="nama_unit">Nama Unit</label>
-                        <input type="text" name='nama_unit' class="form-control @error('nama_unit') is-invalid @enderror"
-                            placeholder="Masukan Nama Unit">
+                        <input required type="text" name='nama_unit'
+                            class="form-control @error('nama_unit') is-invalid @enderror" placeholder="Masukan Nama Unit">
                         @error('nama_unit')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -41,11 +41,12 @@
                             if (old('parent_unit') !== null) {
                                 $option = old('parent_unit');
                             } else {
-                                $option = 1;
+                                $option = '';
                             }
                         @endphp
 
                         <select class="form-control select2" name="parent_unit" id="">
+                            <option value="">-- Pilih Parent Unit --</option>
                             @foreach ($units as $data)
                                 <option value="{{ $data->id }}" {{ $option == $data->id ? 'selected' : '' }}>
                                     {{ $data->nama_unit }}

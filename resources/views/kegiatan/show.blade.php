@@ -103,9 +103,9 @@
 
                     {{-- Nama Laporan --}}
                     <div class="form-group">
-                        <label for="nama_bukti_kegiatan">Nama Laporan</label>
+                        <label for="nama_bukti_kegiatan">Nama File Laporan</label>
                         <input type="text" class="form-control" name="nama_bukti_kegiatan"
-                            placeholder="Enter Nama Laporan" value="{{ old('nama_bukti_kegiatan') }}">
+                            placeholder="Enter Nama Laporan" value="{{ old('nama_bukti_kegiatan') }}" required>
                         @error('nama_bukti_kegiatan')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -113,10 +113,11 @@
 
                     {{-- add file --}}
                     <div class="form-group">
-                        <label for="file">File Laporan(pdf,jpg,png,docx,doc | Max:10mb)</label>
+                        <label for="file">File Laporan(pdf,jpg,png,docx,doc|Max:10mb)</label>
                         <div class="input-group">
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" name="file" id="exampleInputFile">
+                                <input type="file" class="custom-file-input" name="file" id="exampleInputFile"
+                                    required>
                                 <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                             </div>
                             <div class="input-group-append">
@@ -229,7 +230,7 @@
                     <tr>
                         <th>No</th>
                         <th>Aksi</th>
-                        <th>Nama Laporan Kegiatan</th>
+                        <th>Nama File Laporan Kegiatan</th>
                         <th>Bidang</th>
                         <th>Nama Unit</th>
                         {{-- <th>APT</th>
@@ -260,7 +261,7 @@
                                             title="Edit"></i></a>
                                 @endif
 
-                                @if (Auth::user()->id == $kegiatan->user_id || Auth::user()->level == 'A')
+                                @if (Auth::user()->level == 'A')
                                     {{-- Button Hapus --}}
                                     <button class="btn btn-sm btn-danger btn-hapus"
                                         data-id="{{ $data->id_bukti_kegiatan }}" data-toggle="modal"

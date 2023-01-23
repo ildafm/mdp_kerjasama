@@ -24,7 +24,7 @@
 
                 <div class="form-group">
                     <label for="nama_kategori">Nama Kategori</label>
-                    <input type="text" name='nama_kategori'
+                    <input required type="text" name='nama_kategori'
                         class="form-control @error('nama_kategori') is-invalid @enderror"
                         placeholder="Masukan Nama Kategori">
                     @error('nama_kategori')

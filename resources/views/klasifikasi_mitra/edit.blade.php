@@ -19,14 +19,16 @@
 
         <div class="card-body">
             {{-- Form Ubah Data --}}
-            <form action="{{ route('klasifikasi_mitras.update', ['klasifikasi_mitra' => $klasifikasiMitra->id]) }}" method="POST">
+            <form action="{{ route('klasifikasi_mitras.update', ['klasifikasi_mitra' => $klasifikasiMitra->id]) }}"
+                method="POST">
                 @method('PUT')
                 @csrf
 
                 {{-- ubah nama --}}
                 <div class="form-group">
                     <label for="klasifikasi_mitra">Klasifikasi Mitra</label>
-                    <input type="text" name='klasifikasi_mitra' class="form-control @error('klasifikasi_mitra') is-invalid @enderror"
+                    <input required type="text" name='klasifikasi_mitra'
+                        class="form-control @error('klasifikasi_mitra') is-invalid @enderror"
                         placeholder="Masukan Klasifikasi Mitra" value="{{ $klasifikasiMitra->klasifikasi_mitra }}">
                     @error('klasifikasi_mitra')
                         <div class="text-danger">{{ $message }}</div>
@@ -36,13 +38,14 @@
                 {{-- ubah keterangan --}}
                 <div class="form-group">
                     <label for="keterangan">Keterangan</label>
-                    <input type="text" name='keterangan' class="form-control @error('keterangan') is-invalid @enderror"
-                        placeholder="Masukan Keterangan" value="{{ $klasifikasiMitra->keterangan }}">
+                    <input required type="text" name='keterangan'
+                        class="form-control @error('keterangan') is-invalid @enderror" placeholder="Masukan Keterangan"
+                        value="{{ $klasifikasiMitra->keterangan }}">
                     @error('keterangan')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
-                
+
                 <br>
                 {{-- Button --}}
                 <button type="submit" class="btn btn-primary">Submit</button>

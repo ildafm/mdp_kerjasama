@@ -25,8 +25,8 @@
                 {{-- Nama Usulan --}}
                 <div class="form-group">
                     <label for="usulan">Usulan </label>
-                    <input type="text" name='usulan' class="form-control @error('usulan') is-invalid @enderror"
-                        placeholder="Masukan Nama Usulan" value="{{ old('usulan') }}">
+                    <input required type="text" name='usulan' class="form-control @error('usulan') is-invalid @enderror"
+                        placeholder="Masukan Usulan" value="{{ old('usulan') }}">
                     @error('usulan')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -36,7 +36,7 @@
                     {{-- Bentuk Kerjasama --}}
                     <div class="form-group col-lg-6">
                         <label for="bentuk_kerjasama">Bentuk Kerjasama </label>
-                        <input type="text" name='bentuk_kerjasama'
+                        <input required type="text" name='bentuk_kerjasama'
                             class="form-control @error('bentuk_kerjasama') is-invalid @enderror"
                             placeholder="Masukan Bentuk Kerjasama" value="{{ old('bentuk_kerjasama') }}">
                         @error('bentuk_kerjasama')
@@ -47,7 +47,7 @@
                     {{-- Kontak Kerjasama --}}
                     <div class="form-group col-lg-6">
                         <label for="kontak_kerjasama">Kontak Kerjasama </label>
-                        <input type="text" name='kontak_kerjasama'
+                        <input required type="text" name='kontak_kerjasama'
                             class="form-control @error('kontak_kerjasama') is-invalid @enderror"
                             placeholder="Masukan Kontak Kerjasama" value="{{ old('kontak_kerjasama') }}">
                         @error('kontak_kerjasama')
@@ -59,7 +59,7 @@
                 {{-- Rencana Kegiatan --}}
                 <div class="form-group">
                     <label for="rencana_kegiatan">Rencana Kegiatan </label>
-                    <input type="text" name='rencana_kegiatan'
+                    <input required type="text" name='rencana_kegiatan'
                         class="form-control @error('rencana_kegiatan') is-invalid @enderror"
                         placeholder="Masukan Rencana Kegiatan" value="{{ old('rencana_kegiatan') }}">
                     @error('rencana_kegiatan')

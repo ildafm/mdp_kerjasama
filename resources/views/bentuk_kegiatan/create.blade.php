@@ -24,7 +24,7 @@
 
                 <div class="form-group">
                     <label for="bentuk_kegiatan">Bentuk Kegiatan</label>
-                    <input type="text" name='bentuk_kegiatan'
+                    <input required type="text" name='bentuk_kegiatan'
                         class="form-control @error('bentuk_kegiatan') is-invalid @enderror"
                         placeholder="Masukan Bentuk Kegiatan">
                     @error('bentuk_kegiatan')

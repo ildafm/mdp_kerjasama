@@ -305,8 +305,8 @@ class KerjasamaController extends Controller
         $this->authorize('adminOnly', User::class);
 
         try {
-            $kerjasama->delete();
             $getBuktiKerjasama = DB::select("SELECT * FROM bukti_kerjasamas WHERE kerjasama_id = $kerjasama->id");
+            $kerjasama->delete();
 
             // unlink semua file sekaligus
             if (count($getBuktiKerjasama) > 0) {
@@ -327,9 +327,10 @@ class KerjasamaController extends Controller
 
         try {
             $kerjasama = Kerjasama::findOrFail($id_kerjasama);
+            $getBuktiKerjasama = DB::select("SELECT * FROM bukti_kerjasamas WHERE kerjasama_id = $kerjasama->id");
+
             $kerjasama->delete();
 
-            $getBuktiKerjasama = DB::select("SELECT * FROM bukti_kerjasamas WHERE kerjasama_id = $kerjasama->id");
 
             // unlink semua file sekaligus
             if (count($getBuktiKerjasama) > 0) {

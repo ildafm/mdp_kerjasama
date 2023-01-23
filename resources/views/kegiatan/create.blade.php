@@ -135,7 +135,7 @@
                     {{-- Tanggal Mulai --}}
                     <div class="form-group col-lg-3">
                         <label for="tanggal_mulai">Tanggal Mulai</label>
-                        <input type="date" name="tanggal_mulai" id="tanggal_mulai" class="form-control"
+                        <input required type="date" name="tanggal_mulai" id="tanggal_mulai" class="form-control"
                             value="{{ old('tanggal_mulai') }}" min="">
                         @error('tanggal_mulai')
                             <div class="text-danger">{{ $message }}</div>
@@ -145,7 +145,7 @@
                     {{-- Tanggal Berakhir --}}
                     <div class="form-group col-lg-3">
                         <label for="tanggal_sampai">Tanggal Berakhir</label>
-                        <input type="date" name="tanggal_sampai" id="tanggal_sampai" class="form-control"
+                        <input required type="date" name="tanggal_sampai" id="tanggal_sampai" class="form-control"
                             value="{{ old('tanggal_sampai') }}">
                         @error('tanggal_sampai')
                             <div class="text-danger">{{ $message }}</div>
@@ -209,7 +209,7 @@
 
                 <div class="form-group">
                     <label for="keterangan">Keterangan</label>
-                    <input type="text" name="keterangan" id="" value="{{ old('keterangan') }}"
+                    <input required type="text" name="keterangan" id="" value="{{ old('keterangan') }}"
                         class="form-control @error('keterangan') is-invalid @enderror" placeholder="Masukan Keterangan">
                     @error('keterangan')
                         <div class="text-danger">{{ $message }}</div>

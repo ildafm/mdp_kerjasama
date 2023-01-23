@@ -79,11 +79,11 @@ class UserController extends Controller
         $nowHour = $nowHourQuerry[0]->jam_sekarang;
         if ($nowHour <= 10) {
             $salam = 'Selamat pagi';
-        } elseif($nowHour <= 14){
+        } elseif ($nowHour <= 14) {
             $salam = 'Selamat siang';
-        } elseif($nowHour <= 18){
+        } elseif ($nowHour <= 18) {
             $salam = 'Selamat sore';
-        } elseif($nowHour < 24){
+        } elseif ($nowHour < 24) {
             $salam = 'Selamat malam';
         }
         $details = [
@@ -109,9 +109,8 @@ class UserController extends Controller
     {
         //
         $this->authorize('adminOnly', User::class);
-        
-        return view('user.show')->with('user', $user);
 
+        return view('user.show')->with('user', $user);
     }
 
     /**
@@ -123,10 +122,10 @@ class UserController extends Controller
     public function edit(User $user) //User $user = $id
     {
         //
-            $this->authorize('adminOnly', User::class);
+        $this->authorize('adminOnly', User::class);
 
-            $units = Unit::All();
-            return view('user.edit')
+        $units = Unit::All();
+        return view('user.edit')
             ->with('units', $units)
             ->with('user', $user);
     }
@@ -151,14 +150,14 @@ class UserController extends Controller
         ]);
 
         $user = User::findOrFail($user->id);
-        if($request->password != ""){
+        if ($request->password != "") {
             $user->update([
                 'name' => $request->name,
                 'password' => $request->password = Hash::make($validateData['password']),
                 'level' => $request->level,
                 'unit_id' => $request->nama_unit,
-            ]); 
-            
+            ]);
+
             if ($user->id != Auth::user()->id) {
                 // Send email to new user
                 $details = [
@@ -169,15 +168,14 @@ class UserController extends Controller
                 ];
                 Mail::to($user->email)->send(new \App\Mail\EditUserMail($details));
             }
-        }
-        else{
+        } else {
             $user->update([
                 'name' => $request->name,
                 'level' => $request->level,
                 'unit_id' => $request->nama_unit,
-            ]); 
+            ]);
         }
-       
+
         $request->session()->flash('pesan', 'Perubahan data berhasil');
         return redirect()->route('users.index');
     }
@@ -192,16 +190,18 @@ class UserController extends Controller
     {
         //
         $this->authorize('adminOnly', User::class);
+        try {
+            $getUser = User::find($user->id);
+            $user->delete();
 
-        if($user->file != null || $user->file != ''){
-            unlink(storage_path('app/public/profile/'.$user->file));
+            if ($getUser->file != null || $getUser->file != '') {
+                unlink(storage_path('app/public/profile/' . $user->file));
+            }
+
+            return redirect()->route('users.index')->with('pesan', "Hapus data $user->name berhasil");
+        } catch (\Throwable $th) {
+            // throw $th;
+            return redirect()->route('users.index')->with('pesan_error', "Gagal menghapus data $user->name");
         }
-
-        $user->delete();
-        return redirect()->route('users.index')->with('pesan', "Hapus data $user->name berhasil");
-    }
-
-    public function profile(User $user){
-        return view('user.profile')->with('user', $user);
     }
 }

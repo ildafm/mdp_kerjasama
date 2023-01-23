@@ -82,7 +82,7 @@
                     {{-- Tanggal Mulai --}}
                     <div class="form-group col-lg-6">
                         <label for="tanggal_mulai">Tanggal Mulai : </label>
-                        <input type="date" name="tanggal_mulai" id="" class="form-control"
+                        <input required type="date" name="tanggal_mulai" id="" class="form-control"
                             value="{{ old('tanggal_mulai') }}">
                         @error('tanggal_mulai')
                             <div class="text-danger">{{ $message }}</div>
@@ -92,7 +92,7 @@
                     {{-- Tanggal Berakhir --}}
                     <div class="form-group col-lg-6">
                         <label for="tanggal_sampai"> Tanggal Berakhir : </label>
-                        <input type="date" name="tanggal_sampai" id="" class="form-control"
+                        <input required type="date" name="tanggal_sampai" id="" class="form-control"
                             value="{{ old('tanggal_sampai') }}">
                         @error('tanggal_sampai')
                             <div class="text-danger">{{ $message }}</div>

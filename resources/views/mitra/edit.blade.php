@@ -27,7 +27,7 @@
                 <div class="form-group">
                     <label for="nama_mitra">Nama Mitra</label>
                     <input type="text" name='nama_mitra' class="form-control @error('nama_mitra') is-invalid @enderror"
-                        placeholder="Masukan Nama Mitra" value="{{ $mitra->nama_mitra }}">
+                        placeholder="Masukan Nama Mitra" value="{{ $mitra->nama_mitra }}" required>
                     @error('nama_mitra')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -51,7 +51,7 @@
                     <div class="form-group col-lg-4">
                         <label for="klasifikasi_mitra">Klasifikasi Mitra</label>
                         @php
-                                $option = $mitra->klasifikasi_id;
+                            $option = $mitra->klasifikasi_id;
                         @endphp
                         <select class="form-control select2" name='klasifikasi_mitra'>
                             @foreach ($klasifikasiMitras as $data)
@@ -69,7 +69,7 @@
                     <div class="form-group col-lg-4">
                         <label for="nama_negara">Negara Asal</label>
                         @php
-                                $option = $mitra->negara_id;
+                            $option = $mitra->negara_id;
                         @endphp
                         <select class="form-control select2" name='nama_negara'>
                             @foreach ($negaras as $data)
