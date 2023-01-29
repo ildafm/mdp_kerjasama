@@ -83,8 +83,6 @@ class UsulanController extends Controller
             $usulan->user_id = $validateData['nama_pengusul'];
             $usulan->unit_id = $validateData['nama_unit'];
 
-            $usulan->save();
-
             // Send email to admin
             $findAdmin = DB::select("SELECT users.id, users.kode_dosen, users.name AS 'name', users.email, users.level 
             FROM users
@@ -126,6 +124,7 @@ class UsulanController extends Controller
             }
 
             $request->session()->flash('pesan', 'Penambahan data berhasil');
+            $usulan->save();
             return redirect()->route('usulans.index');
         }
         // simpan kerjasama

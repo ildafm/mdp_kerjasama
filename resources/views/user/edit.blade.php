@@ -19,7 +19,8 @@
 
         <div class="card-body">
             {{-- Form Ubah Data --}}
-            <form action="{{ route('users.update', ['user' => $user->id]) }}" method="POST">
+            <form action="{{ route('users.update', ['user' => $user->id]) }}" method="POST"
+                onsubmit="disableBtnSubmitEditForm()">
                 @method('PUT')
                 @csrf
 
@@ -74,9 +75,8 @@
                     {{-- konfirmasi password --}}
                     <div class="form-group col-lg-6">
                         <label for="password-confirm">Konfirmasi Password</label>
-                        <input id="password-confirm" type="password" class="form-control"
-                            name="password_confirmation" placeholder="Konfirmasi Password" autocomplete="new-password"
-                            value="">
+                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
+                            placeholder="Konfirmasi Password" autocomplete="new-password" value="">
                     </div>
                 </div>
 
@@ -132,7 +132,7 @@
 
                 <br>
                 {{-- Button Submit --}}
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button id="btn-submit-edit" type="submit" class="btn btn-primary">Submit</button>
                 {{-- Spasi --}}
                 &ensp;
                 {{-- Button Kembali --}}

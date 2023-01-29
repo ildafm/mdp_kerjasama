@@ -62,7 +62,8 @@
 
         <div class="card-body">
             {{-- Form ubah data --}}
-            <form action="{{ route('kegiatans.update', ['kegiatan' => $kegiatan->id]) }}" method="POST">
+            <form action="{{ route('kegiatans.update', ['kegiatan' => $kegiatan->id]) }}" method="POST"
+                onsubmit="disableBtnSubmitEditForm()">
                 @method('PUT')
                 @csrf
 
@@ -238,7 +239,7 @@
                 </div>
                 <br>
                 {{-- Button --}}
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button id="btn-submit-edit" type="submit" class="btn btn-primary">Submit</button>
                 {{-- &nbsp;
                 <a href="/kegiatans" class="btn btn-outline-dark">Kembali</a> --}}
             </form>

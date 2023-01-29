@@ -20,7 +20,7 @@
         <div class="card-body">
             {{-- Form Ubah Data --}}
             <form action="{{ route('klasifikasi_mitras.update', ['klasifikasi_mitra' => $klasifikasiMitra->id]) }}"
-                method="POST">
+                method="POST" onsubmit="disableBtnSubmitEditForm()">
                 @method('PUT')
                 @csrf
 
@@ -48,7 +48,7 @@
 
                 <br>
                 {{-- Button --}}
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button id="btn-submit-edit" type="submit" class="btn btn-primary">Submit</button>
                 &nbsp;
                 <a href="/klasifikasi_mitras" class="btn btn-outline-dark">Kembali</a>
             </form>

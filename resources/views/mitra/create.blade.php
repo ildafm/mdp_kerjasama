@@ -19,7 +19,7 @@
 
         <div class="card-body">
             {{-- Form Tambah Data --}}
-            <form action="{{ route('mitras.store') }}" method="POST">
+            <form action="{{ route('mitras.store') }}" method="POST" onsubmit="disableBtnSubmitCreateForm()">
                 @csrf
 
                 {{-- Nama Mitra --}}
@@ -74,7 +74,7 @@
                 </div>
 
                 <br>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button id="btn-submit-create" type="submit" class="btn btn-primary">Submit</button>
                 &nbsp;
                 <a href="/mitras" class="btn btn-outline-dark">Kembali</a>
 

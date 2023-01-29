@@ -111,7 +111,7 @@
     <div class="modal fade" id="modal-sm">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
-                <form action="" method="POST" id="formDelete">
+                <form action="" method="POST" id="formDelete" onsubmit="disableBtnSubmitDelForm()">
                     @method('DELETE')
                     @csrf
                     <div class="modal-header">
@@ -125,7 +125,7 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Tidak</button>
-                        <button type="submit" class="btn btn-danger">Iya, Hapus</button>
+                        <button type="submit" class="btn btn-danger" id="btn-submit-delete">Iya, Hapus</button>
                     </div>
                 </form>
             </div>

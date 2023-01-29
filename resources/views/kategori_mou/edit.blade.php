@@ -19,7 +19,8 @@
 
         <div class="card-body">
             {{-- Form edit data --}}
-            <form action="{{ route('kategori_mous.update', ['kategori_mou' => $kategoriMou->id]) }}" method="POST">
+            <form action="{{ route('kategori_mous.update', ['kategori_mou' => $kategoriMou->id]) }}" method="POST"
+                onsubmit="disableBtnSubmitEditForm()">
                 @method('PUT')
                 @csrf
 
@@ -35,7 +36,7 @@
 
                 <br>
                 {{-- Button --}}
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button id="btn-submit-edit" type="submit" class="btn btn-primary">Submit</button>
                 &nbsp;
                 <a href="/kategori_mous" class="btn btn-outline-dark">Kembali</a>
             </form>

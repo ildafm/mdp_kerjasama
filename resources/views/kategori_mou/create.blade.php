@@ -19,7 +19,7 @@
 
         <div class="card-body">
             {{-- Form Tambah Data --}}
-            <form action="{{ route('kategori_mous.store') }}" method="POST">
+            <form action="{{ route('kategori_mous.store') }}" method="POST" onsubmit="disableBtnSubmitCreateForm()">
                 @csrf
 
                 <div class="form-group">
@@ -34,7 +34,7 @@
 
                 <br>
                 {{-- Button --}}
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button id="btn-submit-create" type="submit" class="btn btn-primary">Submit</button>
                 &nbsp;
                 <a href="/kategori_mous" class="btn btn-outline-dark">Kembali</a>
             </form>

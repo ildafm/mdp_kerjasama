@@ -20,7 +20,7 @@
 
         <div class="card-body">
             {{-- Form Tambah Data --}}
-            <form action="{{ route('units.store') }}" method="POST">
+            <form action="{{ route('units.store') }}" method="POST" onsubmit="disableBtnSubmitCreateForm()">
                 @csrf
                 <div class="row">
                     {{-- Nama Unit --}}
@@ -60,7 +60,7 @@
                 </div>
                 <br>
                 {{-- Button --}}
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button id="btn-submit-create" type="submit" class="btn btn-primary">Submit</button>
                 &nbsp;
                 <a href="/units" class="btn btn-outline-dark">Kembali</a>
             </form>

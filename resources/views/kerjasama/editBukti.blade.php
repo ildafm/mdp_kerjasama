@@ -52,7 +52,7 @@
 
         {{-- Barisan edit data Bukti --}}
         <form action="{{ route('buktiKerjasamas.update', ['buktiKerjasama' => $buktiKerjasama->id]) }}" method="POST"
-            enctype="multipart/form-data">
+            enctype="multipart/form-data" onsubmit="disableBtnSubmitEditForm()">
             @method('PUT')
             @csrf
 
@@ -167,7 +167,7 @@
 
             <div class="card-footer">
                 {{-- Button Submit --}}
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button id="btn-submit-edit" type="submit" class="btn btn-primary">Submit</button>
                 &nbsp;
                 <a href="{{ url("kerjasamas/$buktiKerjasama->kerjasama_id") }}" class="btn btn-outline-dark">Kembali</a>
 

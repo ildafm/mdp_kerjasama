@@ -19,7 +19,8 @@ class DashboardController extends Controller
     }
 
     //
-    function index(){
+    function index()
+    {
         // getJumlah
         // infoBox
         $getJumlahMitra = DB::select("SELECT COUNT(id) as jumlahMitra FROM mitras");
@@ -56,7 +57,7 @@ class DashboardController extends Controller
             LIMIT 10
         ) AS tbl_total_kegiatan_negaras
         ORDER BY tbl_total_kegiatan_negaras.total_kegiatan DESC");
-        
+
         //count top 5 klasifikasi mitra
         $top5BentukKegiatan = DB::select("SELECT * FROM (
             SELECT bentuk_kegiatans.id, bentuk_kegiatans.bentuk AS 'bentuk_kegiatan', COUNT(kegiatans.id) AS 'total_kegiatan'
@@ -78,6 +79,9 @@ class DashboardController extends Controller
             SELECT klasifikasi_mitras.id, klasifikasi_mitras.klasifikasi_mitra, COUNT(mitras.id) AS 'total'
             FROM klasifikasi_mitras
             JOIN mitras ON mitras.klasifikasi_id = klasifikasi_mitras.id
+            JOIN usulans ON usulans.mitra_id = mitras.id
+            JOIN kerjasamas ON kerjasamas.usulan_id = usulans.id
+            JOIN kegiatans ON kegiatans.kerjasama_id = kerjasamas.id
             GROUP BY klasifikasi_mitras.id, klasifikasi_mitras.klasifikasi_mitra
         ) AS tbl_top_5_klasifikasi_mitra
         ORDER BY tbl_top_5_klasifikasi_mitra.total DESC
@@ -106,7 +110,6 @@ class DashboardController extends Controller
             ->with('top5BentukKegiatan', $top5BentukKegiatan)
             // ->with('top5BentukKegiatanDrillDown', $top5BentukKegiatanDrillDown)
             //top 5 klasifikasi mitra
-            ->with('top5KlasifikasiMitra', $top5KlasifikasiMitra)
-            ;
+            ->with('top5KlasifikasiMitra', $top5KlasifikasiMitra);
     }
 }

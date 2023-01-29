@@ -48,7 +48,7 @@ class UnitController extends Controller
 
         $validateData = $request->validate([
             'nama_unit' => 'required',
-            'parent_unit' => 'required'
+            'parent_unit' => ''
         ]);
 
         $unit = new Unit();
@@ -105,7 +105,7 @@ class UnitController extends Controller
 
         $this->validate($request, [
             'nama_unit' => 'required',
-            'parent_unit' => 'required'
+            'parent_unit' => ''
         ]);
 
         $unit = Unit::findOrFail($unit->id);

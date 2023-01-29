@@ -846,6 +846,30 @@
             }
         @endif
     </script>
+
+    <script>
+        // mencegah agar tidak terjadinya double klik ketika submit form
+        function disableBtnSubmitCreateForm() {
+            document.getElementById("btn-submit-create").disabled = true
+        }
+
+        function disableBtnSubmitCreateForm_2() {
+            document.getElementById("btn-submit-create-2").disabled = true
+        } //biasanya digunakan di view show
+
+        function disableBtnSubmitEditForm() {
+            document.getElementById("btn-submit-edit").disabled = true
+
+        }
+
+        function disableBtnSubmitDelForm() {
+            document.getElementById("btn-submit-delete").disabled = true
+        }
+
+        function disableBtnSubmitDelForm_2() {
+            document.getElementById("btn-submit-delete-2").disabled = true
+        } //biasanya digunakan di view show
+    </script>
 </body>
 
 </html>

@@ -20,7 +20,8 @@
 
         <div class="card-body">
             {{-- Form ubah data --}}
-            <form action="{{ route('units.update', ['unit' => $unit->id]) }}" method="POST">
+            <form action="{{ route('units.update', ['unit' => $unit->id]) }}" method="POST"
+                onsubmit="disableBtnSubmitEditForm()">
                 @method('PUT')
                 @csrf
 
@@ -62,7 +63,7 @@
                 </div>
                 <br>
                 {{-- Button --}}
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button id="btn-submit-edit" type="submit" class="btn btn-primary">Submit</button>
                 &nbsp;
                 <a href="/units" class="btn btn-outline-dark">Kembali</a>
 

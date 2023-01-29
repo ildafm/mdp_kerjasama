@@ -175,7 +175,8 @@
                         @else
                             {{-- Form tambah data kegiatan --}}
                             <h3>Tambah Data Kegiatan</h3>
-                            <form action="{{ route('kerjasamas.store') }}" method="POST">
+                            <form action="{{ route('kerjasamas.store') }}" method="POST"
+                                onsubmit="disableBtnSubmitCreateForm()">
                                 @csrf
 
                                 {{-- getKerjasamaID --}}
@@ -294,7 +295,7 @@
                                     <input type="text" name="keterangan" id=""
                                         value="{{ old('keterangan') }}"
                                         class="form-control @error('keterangan') is-invalid @enderror"
-                                        placeholder="Masukan Keterangan">
+                                        placeholder="Masukan Keterangan" required>
                                     @error('keterangan')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -302,7 +303,7 @@
 
                                 <br>
                                 {{-- Button --}}
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button id="btn-submit-create" type="submit" class="btn btn-primary">Submit</button>
                             </form>
                         @endif
                         <br><br>
@@ -490,8 +491,8 @@
                     @if (Auth::user()->level != 'D')
                         {{-- Form Menambahkan data File --}}
                         <h3>Tambah Data File</h3>
-                        <form action="{{ route('buktiKerjasamas.store') }}" method="POST"
-                            enctype="multipart/form-data">
+                        <form action="{{ route('buktiKerjasamas.store') }}" method="POST" enctype="multipart/form-data"
+                            onsubmit="disableBtnSubmitCreateForm_2()">
                             @csrf
                             {{-- Nama File --}}
                             <div class="row">
@@ -612,7 +613,7 @@
 
                             <br>
                             {{-- Button --}}
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button id="btn-submit-create-2" type="submit" class="btn btn-primary">Submit</button>
                         </form>
                         <br><br>
                     @endif
@@ -705,7 +706,7 @@
     <div class="modal fade" id="modal-sm">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
-                <form action="" method="POST" id="formDelete">
+                <form action="" method="POST" id="formDelete" onsubmit="disableBtnSubmitDelForm_2()">
                     @method('DELETE')
                     @csrf
                     <div class="modal-header">
@@ -719,7 +720,7 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Tidak</button>
-                        <button type="submit" class="btn btn-danger">Iya, Hapus</button>
+                        <button id="btn-submit-delete-2" type="submit" class="btn btn-danger">Iya, Hapus</button>
                     </div>
                 </form>
             </div>
@@ -727,7 +728,7 @@
     </div>
 
     {{-- Modal Layout Kegiatan --}}
-    <div class="modal fade" id="modal-sm-kegiatan">
+    <div class="modal fade" id="modal-sm-kegiatan" onsubmit="disableBtnSubmitDelForm()">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <form action="" method="POST" id="formDelete-kegiatan">
@@ -744,7 +745,7 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Tidak</button>
-                        <button type="submit" class="btn btn-danger">Iya, Hapus</button>
+                        <button id="btn-submit-delete" type="submit" class="btn btn-danger">Iya, Hapus</button>
                     </div>
                 </form>
             </div>

@@ -63,7 +63,7 @@
         </div>
 
         <div class="card-body">
-            <form action="{{ route('kegiatans.store') }}" method="POST">
+            <form action="{{ route('kegiatans.store') }}" method="POST" onsubmit="disableBtnSubmitCreateForm()">
                 @csrf
 
                 <div class="row">
@@ -75,7 +75,7 @@
                             if (old('kerjasamas') !== null) {
                                 $option = old('kerjasamas');
                             } else {
-                                $option = 1;
+                                $option = '';
                             }
                         @endphp
 
@@ -218,7 +218,7 @@
 
                 <br>
                 {{-- Button --}}
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button id="btn-submit-create" type="submit" class="btn btn-primary">Submit</button>
                 {{-- &nbsp;
                 <a href="/kegiatans" class="btn btn-outline-dark">Kembali</a> --}}
             </form>

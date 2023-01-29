@@ -19,7 +19,7 @@
 
         <div class="card-body">
             {{-- Form Tambah Data --}}
-            <form action="{{ route('usulans.store') }}" method="POST">
+            <form action="{{ route('usulans.store') }}" method="POST" onsubmit="disableBtnSubmitCreateForm()">
                 @csrf
 
                 {{-- Nama Usulan --}}
@@ -44,12 +44,12 @@
                         @enderror
                     </div>
 
-                    {{-- Kontak Kerjasama --}}
+                    {{-- Telepon Kerjasama --}}
                     <div class="form-group col-lg-6">
-                        <label for="kontak_kerjasama">Kontak Kerjasama </label>
+                        <label for="kontak_kerjasama">Telepon Kerjasama </label>
                         <input required type="text" name='kontak_kerjasama'
-                            class="form-control @error('kontak_kerjasama') is-invalid @enderror"
-                            placeholder="Masukan Kontak Kerjasama" value="{{ old('kontak_kerjasama') }}">
+                            class="form-control @error('kontak_kerjasama') is-invalid @enderror" placeholder="(0711) 00001"
+                            value="{{ old('kontak_kerjasama') }}">
                         @error('kontak_kerjasama')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -162,7 +162,7 @@
 
                 <br>
                 {{-- Button --}}
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button id="btn-submit-create" type="submit" class="btn btn-primary">Submit</button>
                 &nbsp;
                 <a href="/usulans" class="btn btn-outline-dark">Kembali</a>
             </form>

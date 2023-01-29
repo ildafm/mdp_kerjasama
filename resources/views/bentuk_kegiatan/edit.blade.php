@@ -19,8 +19,8 @@
 
         <div class="card-body">
             {{-- Form Tambah Data --}}
-            <form action="{{ route('bentuk_kegiatans.update', ['bentuk_kegiatan' => $bentukKegiatan->id]) }}"
-                method="POST">
+            <form action="{{ route('bentuk_kegiatans.update', ['bentuk_kegiatan' => $bentukKegiatan->id]) }}" method="POST"
+                onsubmit="disableBtnSubmitEditForm()">
                 @method('PUT')
                 @csrf
 
@@ -35,7 +35,7 @@
                 </div>
 
                 <br>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button id="btn-submit-edit" type="submit" class="btn btn-primary">Submit</button>
                 &nbsp;
                 <a href="/bentuk_kegiatans" class="btn btn-outline-dark">Kembali</a>
 

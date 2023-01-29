@@ -98,7 +98,7 @@
 
                 {{-- Barisan Menambahkan data Laporan --}}
                 <form action="{{ route('buktiKegiatans.store') }}" method="POST" enctype="multipart/form-data"
-                    id="formBuktiKegiatan">
+                    id="formBuktiKegiatan" onsubmit="disableBtnSubmitCreateForm_2()">
                     @csrf
 
                     {{-- Nama Laporan --}}
@@ -201,7 +201,7 @@
                     </div>
 
                     {{-- Button Submit --}}
-                    <button type="submit" id="" class="btn btn-primary">Submit</button>
+                    <button type="submit" id="btn-submit-create-2" class="btn btn-primary">Submit</button>
                 </form>
             </div>
         </div>
@@ -334,7 +334,7 @@
     <div class="modal fade" id="modal-sm">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
-                <form action="" method="POST" id="formDelete">
+                <form action="" method="POST" id="formDelete" onsubmit="disableBtnSubmitDelForm_2()">
                     @method('DELETE')
                     @csrf
                     <div class="modal-header">
@@ -348,7 +348,7 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Tidak</button>
-                        <button type="submit" class="btn btn-danger">Iya, Hapus</button>
+                        <button id="btn-submit-delete-2" type="submit" class="btn btn-danger">Iya, Hapus</button>
                     </div>
                 </form>
             </div>

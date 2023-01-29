@@ -19,7 +19,7 @@
 
         <div class="card-body">
             {{-- Form Tambah Data --}}
-            <form action="{{ route('bentuk_kegiatans.store') }}" method="POST">
+            <form action="{{ route('bentuk_kegiatans.store') }}" method="POST" onsubmit="disableBtnSubmitCreateForm()">
                 @csrf
 
                 <div class="form-group">
@@ -33,7 +33,7 @@
                 </div>
 
                 <br>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button id="btn-submit-create" type="submit" class="btn btn-primary">Submit</button>
                 &nbsp;
                 <a href="/bentuk_kegiatans" class="btn btn-outline-dark">Kembali</a>
 

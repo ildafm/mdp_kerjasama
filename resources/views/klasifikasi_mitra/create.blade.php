@@ -19,7 +19,7 @@
 
         <div class="card-body">
             {{-- Form Tambah Data --}}
-            <form action="{{ route('klasifikasi_mitras.store') }}" method="POST">
+            <form action="{{ route('klasifikasi_mitras.store') }}" method="POST" onsubmit="disableBtnSubmitCreateForm()">
                 @csrf
                 {{-- Klasifikasi Mitra --}}
                 <div class="form-group">
@@ -43,7 +43,7 @@
                 </div>
 
                 <br>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button id="btn-submit-create" type="submit" class="btn btn-primary">Submit</button>
                 &nbsp;
                 <a href="/klasifikasi_mitras" class="btn btn-outline-dark">Kembali</a>
 

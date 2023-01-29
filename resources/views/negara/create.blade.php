@@ -19,7 +19,7 @@
 
         <div class="card-body">
             {{-- Form Tambah Data --}}
-            <form action="{{ route('negaras.store') }}" method="POST">
+            <form action="{{ route('negaras.store') }}" method="POST" onsubmit="disableBtnSubmitCreateForm()">
                 @csrf
                 <div class="form-group">
                     <label for="nama_negara">Nama Negara</label>
@@ -31,7 +31,7 @@
                 </div>
 
                 <br>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button id="btn-submit-create" type="submit" class="btn btn-primary">Submit</button>
                 &nbsp;
                 <a href="/negaras" class="btn btn-outline-dark">Kembali</a>
 

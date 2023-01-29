@@ -19,7 +19,7 @@
 
         {{-- Form input --}}
         <div class="card-body">
-            <form action="{{ route('users.store') }}" method="POST">
+            <form action="{{ route('users.store') }}" method="POST" onsubmit="disableBtnSubmitCreateForm()">
                 @csrf
 
                 <div class="row">
@@ -144,7 +144,7 @@
 
                 <br>
                 {{-- Button Submit --}}
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button id="btn-submit-create" type="submit" class="btn btn-primary">Submit</button>
                 {{-- Spasi --}}
                 &ensp;
                 {{-- Button Kembali --}}

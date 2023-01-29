@@ -10,6 +10,7 @@ use App\Models\Kerjasama;
 use App\Models\Status;
 use App\Models\User;
 use App\Models\Usulan;
+use Exception;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
@@ -316,6 +317,7 @@ class KerjasamaController extends Controller
             }
             return redirect()->back()->with('pesan', "Hapus data $kerjasama->nama_kerja_sama berhasil");
         } catch (\Throwable $th) {
+            // $errorMessage = $th->getMessage();
             return redirect()->back()->with('pesan_error', "Gagal Menghapus data $kerjasama->nama_kerja_sama");
         }
     }
