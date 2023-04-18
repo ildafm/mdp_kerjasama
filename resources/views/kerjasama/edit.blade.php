@@ -88,7 +88,7 @@
 
                 <div class="row">
                     {{-- Edit Usulan --}}
-                    <div class="form-group col-lg-4">
+                    <div class="form-group col-lg-6">
                         <label for="usulan">Usulan</label>
                         <select class="form-control select2" name='usulan'>
                             @foreach ($usulans as $data)
@@ -111,7 +111,7 @@
                         }
                     @endphp
 
-                    <div class="form-group col-lg-4">
+                    <div class="form-group col-lg-3">
                         <label for="bidang">Bidang</label>
                         <select class="form-control" name="bidang">
                             <option value='P' <?= $option == 'P' ? 'selected' : '' ?>>
@@ -136,7 +136,7 @@
                     </div>
 
                     {{-- Edit Nama Status --}}
-                    <div class="form-group col-lg-4">
+                    <div class="form-group col-lg-3">
                         <label for="nama_status">Status</label>
                         <select class="form-control" name='nama_status'>
                             @foreach ($statuses as $data)

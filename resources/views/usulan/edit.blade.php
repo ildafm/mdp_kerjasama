@@ -51,8 +51,7 @@
                     <div class="form-group col-lg-6">
                         <label for="kontak_kerjasama">Kontak Kerjasama </label>
                         <input required type="text" name='kontak_kerjasama'
-                            class="form-control @error('kontak_kerjasama') is-invalid @enderror"
-                            placeholder="Masukan Kontak Kerjasama"
+                            class="form-control @error('kontak_kerjasama') is-invalid @enderror" placeholder="(0711) 00001"
                             value="{{ old('kontak_kerjasama', $usulans->kontak_kerjasama) }}">
                         @error('kontak_kerjasama')
                             <div class="text-danger">{{ $message }}</div>

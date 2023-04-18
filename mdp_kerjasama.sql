@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 25, 2023 at 12:39 AM
+-- Generation Time: Apr 18, 2023 at 08:56 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -84,14 +84,6 @@ CREATE TABLE `bukti_kegiatans` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `bukti_kegiatans`
---
-
-INSERT INTO `bukti_kegiatans` (`id`, `nama_bukti_kegiatan`, `file`, `kegiatans_id`, `bidang`, `created_at`, `updated_at`) VALUES
-(1, 'Laporan kegiatan seminar HIMIF', 'file-1674457811.png', 4, 'P', '2023-01-23 07:10:11', '2023-01-23 07:10:11'),
-(2, 'Pertukaran mahasiswa di STMIK PGRI Tanggerang', 'file-1674601495.png', 2, 'P', '2023-01-24 23:04:55', '2023-01-24 23:04:55');
-
 -- --------------------------------------------------------
 
 --
@@ -105,14 +97,6 @@ CREATE TABLE `bukti_kegiatan_units` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `bukti_kegiatan_units`
---
-
-INSERT INTO `bukti_kegiatan_units` (`id`, `units_id`, `bukti_kegiatans_id`, `created_at`, `updated_at`) VALUES
-(1, 4, 1, '2023-01-23 07:10:11', '2023-01-23 07:10:11'),
-(2, 5, 2, '2023-01-24 23:04:55', '2023-01-24 23:04:55');
 
 -- --------------------------------------------------------
 
@@ -131,20 +115,6 @@ CREATE TABLE `bukti_kerjasamas` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `bukti_kerjasamas`
---
-
-INSERT INTO `bukti_kerjasamas` (`id`, `nama_file`, `nomor_file`, `jenis_file`, `file`, `kerjasama_id`, `kategori_mou_id`, `created_at`, `updated_at`) VALUES
-(1, 'SPK pertukaran mahasiswa Informatika selama 6 bulan dengan Vietnam National University Hanoi', '001/UMDP/SPK/II/2023', 'S', 'file-1674456201.pdf', 1, NULL, '2023-01-23 06:43:22', '2023-01-23 06:43:41'),
-(2, 'MoU Vietnam National University Hanoi', '001/UMDP/MOU/II/2023', 'M', 'file-1674456263.pdf', 1, 2, '2023-01-23 06:44:23', '2023-01-23 06:44:23'),
-(3, 'SPK kerjasama Pertukaran mahasiswa di STMIK PGRI Tanggerang', '002/UMDP/SPK/II/2023', 'S', 'file-1674456535.pdf', 2, NULL, '2023-01-23 06:48:55', '2023-01-23 06:48:55'),
-(4, 'File MoU Pertukaran dosen dengan Universiti Malaya', '002/UMDP/MOU/II/2023', 'M', 'file-1674456904.pdf', 3, 2, '2023-01-23 06:55:04', '2023-01-23 06:55:04'),
-(5, 'SPK Pertukaran dosen dengan Universiti Malaya', '003/UMDP/SPK/II/2023', 'S', 'file-1674456940.pdf', 3, NULL, '2023-01-23 06:55:40', '2023-01-23 06:55:40'),
-(6, 'SPK Seminar dengan HIMIF', '004/UMDP/SPK/II/2023', 'S', 'file-1674457331.pdf', 4, NULL, '2023-01-23 07:02:11', '2023-01-23 07:02:11'),
-(7, 'MoU Program magang di Gojek', '003/UMDP/MOU/II/2023', 'M', 'file-1674601860.pdf', 5, 3, '2023-01-24 23:11:00', '2023-01-24 23:11:00'),
-(9, 'Acara kegiatan seminar HIMSI', '001/UMDP/SPK/II/2022', 'S', 'file-1674602288.png', 6, NULL, '2023-01-24 23:18:08', '2023-01-24 23:37:33');
 
 -- --------------------------------------------------------
 
@@ -227,17 +197,6 @@ CREATE TABLE `kegiatans` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `kegiatans`
---
-
-INSERT INTO `kegiatans` (`id`, `tanggal_mulai`, `tanggal_sampai`, `bentuk_kegiatan_id`, `PIC`, `keterangan`, `kerjasama_id`, `user_id`, `bukti_kerjasama_spk_id`, `status`, `created_at`, `updated_at`) VALUES
-(1, '2023-02-01', '2023-07-29', 12, NULL, 'Kegiatan ini akan dimulai sejak tanggal 01 Febuari 2023 hingga 29 Juli 2023', 1, 8, 1, '1', '2023-01-23 06:46:17', '2023-01-24 23:07:55'),
-(2, '2023-01-30', '2023-03-04', 12, NULL, 'kegiatan pertukaran mahasiswa di STMIK PGRI Tanggerang berlangsung selama kurang lebih 2 bulan', 2, 5, 3, '1', '2023-01-23 06:50:21', '2023-01-24 23:03:50'),
-(3, '2023-01-30', '2023-05-27', 18, NULL, 'Pertukaran dosen dengan Universiti Malaya akan dimulai pada tanggal 30 Januari 2023 dan berakhir pada tanggal 27 Meu 2023', 3, 3, 5, '1', '2023-01-23 06:56:47', '2023-01-24 23:08:41'),
-(4, '2023-01-23', '2023-01-24', 15, NULL, 'Kegiatan seminar yang berlangsung selama 1 hari dengan HIMIF', 4, 4, 6, '1', '2023-01-23 07:03:23', '2023-01-23 07:06:58'),
-(5, '2022-11-01', '2022-11-02', 15, NULL, 'Kegiatan seminar yang berlangsung selama 1 hari dengan HIMSI', 6, 5, 9, '1', '2023-01-24 23:19:25', '2023-01-24 23:20:53');
-
 -- --------------------------------------------------------
 
 --
@@ -256,18 +215,6 @@ CREATE TABLE `kerjasamas` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `kerjasamas`
---
-
-INSERT INTO `kerjasamas` (`id`, `nama_kerja_sama`, `bidang`, `tanggal_mulai`, `tanggal_sampai`, `kategori_id`, `status_id`, `usulan_id`, `created_at`, `updated_at`) VALUES
-(1, 'Kerjasama pertukaran mahasiswa Informatika selama 6 bulan dengan Vietnam National University Hanoi', 'P', '2023-02-01', '2023-07-29', 1, 1, 1, '2023-01-23 06:41:09', '2023-01-23 06:41:09'),
-(2, 'Pertukaran mahasiswa di STMIK PGRI Tanggerang', 'P', '2023-01-30', '2023-03-04', 2, 1, 3, '2023-01-23 06:48:06', '2023-01-23 06:48:06'),
-(3, 'Pertukaran dosen dengan Universiti Malaya', 'P', '2023-01-30', '2023-05-27', 1, 1, 4, '2023-01-23 06:54:12', '2023-01-23 06:54:12'),
-(4, 'Acara kegiatan seminar', 'P', '2023-01-23', '2023-01-24', 2, 2, 6, '2023-01-23 07:01:24', '2023-01-23 23:40:09'),
-(5, 'Program magang di Gojek', 'P', '2022-12-01', '2022-12-31', 1, 2, 8, '2023-01-24 23:09:33', '2023-01-24 23:09:33'),
-(6, 'Acara kegiatan seminar', 'P', '2022-11-01', '2022-11-02', 2, 3, 9, '2023-01-24 23:17:07', '2023-01-24 23:18:28');
 
 -- --------------------------------------------------------
 
@@ -340,26 +287,6 @@ CREATE TABLE `mitras` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `mitras`
---
-
-INSERT INTO `mitras` (`id`, `nama_mitra`, `tingkat`, `klasifikasi_id`, `negara_id`, `created_at`, `updated_at`) VALUES
-(1, 'PT Prima Karya Sasaran Sejahtera', 'W', 2, 1, '2023-01-23 03:25:04', '2023-01-23 03:43:13'),
-(2, 'PT Anugerah Karya Prima', 'W', 2, 1, '2023-01-23 03:25:14', '2023-01-23 03:45:41'),
-(3, 'STMIK PGRI Tanggerang', 'N', 8, 1, '2023-01-23 03:25:28', '2023-01-23 03:46:25'),
-(4, 'Universitas Widya Dharma Pontianak', 'N', 8, 1, '2023-01-23 03:47:06', '2023-01-23 03:47:06'),
-(5, 'Yayasan Iman dan Kasih (IPEKA)', 'W', 13, 1, '2023-01-23 03:47:50', '2023-01-23 03:47:50'),
-(6, 'HIMIF', 'W', 15, 1, '2023-01-23 03:49:40', '2023-01-23 03:49:40'),
-(7, 'HIMSI', 'W', 15, 1, '2023-01-23 03:49:51', '2023-01-23 03:49:51'),
-(8, 'Universiti Malaya', 'N', 13, 2, '2023-01-23 03:51:30', '2023-01-23 03:51:30'),
-(9, 'Universiti Putra Malaysia', 'N', 13, 2, '2023-01-23 03:51:55', '2023-01-23 03:51:55'),
-(10, 'Universiti Kebangsaan Malaysia', 'N', 13, 2, '2023-01-23 03:52:23', '2023-01-23 03:52:23'),
-(11, 'Vietnam National University Hanoi', 'N', 13, 3, '2023-01-23 03:53:14', '2023-01-23 03:53:14'),
-(12, 'Hanoi University of Science and Technology', 'I', 13, 3, '2023-01-23 03:54:19', '2023-01-23 03:54:19'),
-(13, 'Semen Indonesia', 'I', 1, 1, '2023-01-23 03:55:32', '2023-01-23 03:55:32'),
-(14, 'Gojek', 'I', 5, 1, '2023-01-23 03:56:22', '2023-01-23 03:56:22');
 
 -- --------------------------------------------------------
 
@@ -505,15 +432,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `kode_dosen`, `name`, `email`, `level`, `unit_id`, `file`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'D00010', 'Akun Admin', 'usermain026@gmail.com', 'A', 1, NULL, NULL, '$2y$10$bVXvjcHDUEXrrjWxiCSyS.j5RghhXCaumereKrBNW6g9Z6O.yQ1Pu', NULL, '2022-08-03 15:36:10', '2023-01-23 04:11:37'),
-(2, 'D00001', 'Akun Dekan FIKR', 'ildafm502@gmail.com', 'E', 2, NULL, NULL, '$2y$10$F7XeMdB15JrWM2Rykrv3mOZi2F61Jel8gIpuqhN2ME4GPYgQkSJLi', NULL, '2023-01-23 03:35:37', '2023-01-23 04:05:58'),
-(3, 'D00002', 'Akun Kaprodi IF', 'ildafm4000@gmail.com', 'K', 4, NULL, NULL, '$2y$10$/Be0M0MlR4kvhGiT.heKa.joJmUqDVK4Nv22XIOl9bgfQ59/ylFxW', NULL, '2023-01-23 03:36:08', '2023-01-23 03:36:08'),
-(4, 'D00050', 'Akun  Dosen IF', 'dosenmain026@gmail.com', 'D', 4, NULL, NULL, '$2y$10$YIgT8JKYZSA7yHOAD/OH0OXab4KI57fU4OR71qQlZF97/2Sjr.qGW', NULL, '2023-01-23 03:59:29', '2023-01-23 03:59:29'),
-(5, 'D00051', 'Akun Dosen SI', 'dosenmain027@gmail.com', 'D', 5, NULL, NULL, '$2y$10$NcRxTZAs71zsf0Pm82BiiuKk.qI4XA8U0VElIfeBAk90g3ZmgaFsa', NULL, '2023-01-23 04:00:03', '2023-01-24 23:02:08'),
-(6, 'D00020', 'KA UPT SI', 'firstyou587@gmail.com', 'U', 17, NULL, NULL, '$2y$10$lHp0MXBid1RVlOWTcPnhp.UFFwxznXeRByZNU0ahgaNKNc.TVgf2q', NULL, '2023-01-23 04:05:24', '2023-01-23 04:05:24'),
-(7, 'D00011', 'Dekan FEB', 'fieryinferno667@gmail.com', 'E', 3, NULL, NULL, '$2y$10$rxJwtwhwJ1FYcg09/k7TIuz3s6dWhbHhIx3cBfwRwGYDTx/Zf7gz2', NULL, '2023-01-23 04:07:04', '2023-01-23 04:07:04'),
-(8, 'D00053', 'Dosen AK', 'vanderlinde2002@gmail.com', 'D', 8, NULL, NULL, '$2y$10$/2oHDDeq9VZvYYI4WPUiS.kcOBDL2B2MfMgo0l6xkZADSExWe/ifq', NULL, '2023-01-23 04:07:38', '2023-01-23 04:07:38'),
-(10, 'D00023', 'Kaprodi AK', 'algernoon69@gmail.com', 'K', 8, NULL, NULL, '$2y$10$biVwD9csYwusM0zJm2ZSD.Nq87lpiQfHsdCpVIOlpm7aStqubRtbW', NULL, '2023-01-23 04:09:18', '2023-01-23 04:09:18');
+(1, 'D00010', 'Akun Admin', 'usermain026@gmail.com', 'A', 1, 'file-D00010-Akun Admin.png', NULL, '$2y$10$bVXvjcHDUEXrrjWxiCSyS.j5RghhXCaumereKrBNW6g9Z6O.yQ1Pu', NULL, '2022-08-03 15:36:10', '2023-02-01 07:58:02');
 
 -- --------------------------------------------------------
 
@@ -536,21 +455,6 @@ CREATE TABLE `usulans` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `usulans`
---
-
-INSERT INTO `usulans` (`id`, `usulan`, `bentuk_kerjasama`, `rencana_kegiatan`, `kontak_kerjasama`, `type`, `mitra_id`, `user_id`, `unit_id`, `hasil_penjajakan`, `keterangan`, `created_at`, `updated_at`) VALUES
-(1, 'Memulai kerjasama pada tahun 2023', 'Pendidikan', 'Pertukaran mahasiswa prodi informatika selama 6 bulan', '(0813) 000001', 'I', 11, 2, 4, 'L', 'Kesepakatan Disetujui', '2023-01-23 03:57:39', '2023-01-23 06:38:24'),
-(2, 'Kerjasama dengan PT Prima Karya Sasaran Sejahtera', 'Program Magang', 'Mengirim beberapa peserta magang ke PT Prima Karya Sasaran Sejahtera', '+62 81722314812', 'I', 1, 3, 8, 'T', 'Kesepakatan Tidak Disetujui', '2023-01-23 04:04:30', '2023-01-23 06:38:56'),
-(3, 'Pertukaran mahasiswa di STMIK PGRI Tanggerang', 'Pendidikan', 'Pertukaran mahasiswa di STMIK PGRI Tanggerang', '(0701) 1222134', 'I', 3, 10, 8, 'L', 'Kesepakatan Disetujui', '2023-01-23 04:11:06', '2023-01-23 06:39:11'),
-(4, 'Pertukaran Dosen/pengajar dengan Universiti Malaya selama 3 bulan (2023)', 'Pendidikan', 'Pertukaran sementara antara 2 dosen/pengajar dari Universitas Multi Data Palembang dan 2 dosen/pengajar dari Universiti Malaya', '+60 758391123', 'O', 8, 1, 1, 'L', 'Kesepakatan Disetujui', '2023-01-23 04:14:02', '2023-01-23 06:52:35'),
-(5, 'Magang di PT Karya Sasaran Sejahtera', 'Pendidikan, Magang', '2 orang peserta akan melaksanakan magang di PT Karya Sasaran Sejahterah selama 6 bulan', '(0813) 612062', 'I', 1, 6, 17, 'B', NULL, '2023-01-23 04:17:11', '2023-01-23 04:17:11'),
-(6, 'Mengadakan acara kegiatan seminar', 'Pendidikan, Seminar', 'Mengadakan acara seminar yang berlangsung selama 1 hari', '+62 81012934129', 'I', 6, 3, 4, 'L', 'Kesepakatan Disetujui', '2023-01-23 07:00:28', '2023-01-23 07:00:46'),
-(7, 'Visitting Professor di Hanoi University of Science and Technology', 'Kunjungan', 'Kujungan kepada para ahli yang ada di Hanoi University of Science and Technology di Vietnam', '+84 98231746102', 'I', 12, 1, 5, 'T', 'Kesepakatan Tidak Disetujui', '2023-01-23 07:14:54', '2023-01-23 07:15:14'),
-(8, 'Program magang di Gojek', 'Magang, pendidikan', 'Peserta akan melaksanakan kegiatan magang selama beberapa bulan di Gojek', '(0813) 000002', 'I', 14, 2, 2, 'L', 'Kesepakatan Disetujui', '2023-01-23 07:17:06', '2023-01-23 07:17:27'),
-(9, 'Webinar Himsi', 'Pendidikan, Webinar', 'Mengadakan acara webinar yang berlangsung selama 1 hari', '-', 'I', 7, 1, 5, 'L', 'Kesepakatan Disetujui', '2023-01-24 23:15:58', '2023-01-24 23:16:19');
 
 --
 -- Indexes for dumped tables
@@ -702,25 +606,25 @@ ALTER TABLE `usulans`
 -- AUTO_INCREMENT for table `bentuk_kegiatans`
 --
 ALTER TABLE `bentuk_kegiatans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `bukti_kegiatans`
 --
 ALTER TABLE `bukti_kegiatans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `bukti_kegiatan_units`
 --
 ALTER TABLE `bukti_kegiatan_units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `bukti_kerjasamas`
 --
 ALTER TABLE `bukti_kerjasamas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `kategoris`
@@ -732,37 +636,37 @@ ALTER TABLE `kategoris`
 -- AUTO_INCREMENT for table `kategori_mous`
 --
 ALTER TABLE `kategori_mous`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `kegiatans`
 --
 ALTER TABLE `kegiatans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `kerjasamas`
 --
 ALTER TABLE `kerjasamas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `klasifikasi_mitras`
 --
 ALTER TABLE `klasifikasi_mitras`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `mitras`
 --
 ALTER TABLE `mitras`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `negaras`
 --
 ALTER TABLE `negaras`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `statuses`
@@ -774,19 +678,19 @@ ALTER TABLE `statuses`
 -- AUTO_INCREMENT for table `units`
 --
 ALTER TABLE `units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `usulans`
 --
 ALTER TABLE `usulans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables

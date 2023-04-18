@@ -153,7 +153,7 @@ class UserController extends Controller
         if ($request->password != "") {
             $user->update([
                 'name' => $request->name,
-                'password' => $request->password = Hash::make($validateData['password']),
+                'password' => Hash::make($validateData['password']),
                 'level' => $request->level,
                 'unit_id' => $request->nama_unit,
             ]);

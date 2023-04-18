@@ -28,12 +28,13 @@ class KerjasamaController extends Controller
     {
         //
         $kerjasamas = DB::select("SELECT * FROM (
-            SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, mou.nomor_file AS 'nomor_mou', mou.file AS 'file_mou', kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kerjasamas.kategori_id, kategoris.nama_kategori, statuses.nama_status, usulans.usulan, kerjasamas.created_at, kerjasamas.updated_at
+            SELECT kerjasamas.id, mitras.nama_mitra, kerjasamas.nama_kerja_sama, mou.nomor_file AS 'nomor_mou', mou.file AS 'file_mou', kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kerjasamas.kategori_id, kategoris.nama_kategori, statuses.nama_status, usulans.usulan, kerjasamas.created_at, kerjasamas.updated_at
             FROM kerjasamas
             LEFT JOIN (SELECT * FROM bukti_kerjasamas WHERE jenis_file = 'M') AS mou ON mou.kerjasama_id = kerjasamas.id
             JOIN kategoris ON kategoris.id = kerjasamas.kategori_id
             JOIN statuses ON statuses.id = kerjasamas.status_id
             JOIN usulans ON usulans.id = kerjasamas.usulan_id
+            JOIN mitras ON mitras.id = usulans.mitra_id
         ) AS c
         ORDER BY c.id");
 
@@ -42,12 +43,13 @@ class KerjasamaController extends Controller
             $tanggal_sampai = ($_GET['filter_tanggal_sampai']);
 
             $kerjasamas = DB::select("SELECT * FROM (
-                SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, mou.nomor_file AS 'nomor_mou', mou.file AS 'file_mou', kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kerjasamas.kategori_id, kategoris.nama_kategori, statuses.nama_status, usulans.usulan, kerjasamas.created_at, kerjasamas.updated_at
+                SELECT kerjasamas.id, mitras.nama_mitra, kerjasamas.nama_kerja_sama, mou.nomor_file AS 'nomor_mou', mou.file AS 'file_mou', kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kerjasamas.kategori_id, kategoris.nama_kategori, statuses.nama_status, usulans.usulan, kerjasamas.created_at, kerjasamas.updated_at
                 FROM kerjasamas
                 LEFT JOIN (SELECT * FROM bukti_kerjasamas WHERE jenis_file = 'M') AS mou ON mou.kerjasama_id = kerjasamas.id
                 JOIN kategoris ON kategoris.id = kerjasamas.kategori_id
                 JOIN statuses ON statuses.id = kerjasamas.status_id
                 JOIN usulans ON usulans.id = kerjasamas.usulan_id
+                JOIN mitras ON mitras.id = usulans.mitra_id
             ) AS c
             WHERE c.tanggal_mulai >= '$tanggal_mulai' AND c.tanggal_sampai <= '$tanggal_sampai'
             ORDER BY c.id");
@@ -351,7 +353,7 @@ class KerjasamaController extends Controller
     {
         //
         $kerjasamas = DB::select("SELECT * FROM (
-            SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, mou.nomor_file AS 'nomor_mou', mou.file AS 'file_mou', kategori_mous.nama_kategori AS 'kategori_mou', kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kerjasamas.kategori_id, kategoris.nama_kategori, statuses.nama_status, usulans.usulan, spk.nomor_file AS 'nomor_spk', spk.file AS 'file_spk', kegiatans.tanggal_mulai AS 'tanggal_mulai_spk', kegiatans.tanggal_sampai AS 'tanggal_sampai_spk'
+            SELECT kerjasamas.id, mitras.nama_mitra, kerjasamas.nama_kerja_sama, mou.nomor_file AS 'nomor_mou', mou.file AS 'file_mou', kategori_mous.nama_kategori AS 'kategori_mou', kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kerjasamas.kategori_id, kategoris.nama_kategori, statuses.nama_status, usulans.usulan, spk.nomor_file AS 'nomor_spk', spk.file AS 'file_spk', kegiatans.tanggal_mulai AS 'tanggal_mulai_spk', kegiatans.tanggal_sampai AS 'tanggal_sampai_spk'
             FROM kerjasamas 
             LEFT JOIN (SELECT * FROM bukti_kerjasamas WHERE jenis_file = 'M') AS mou ON mou.kerjasama_id = kerjasamas.id 
             LEFT JOIN (SELECT * FROM bukti_kerjasamas WHERE jenis_file = 'S') AS spk ON spk.kerjasama_id = kerjasamas.id 
@@ -360,6 +362,7 @@ class KerjasamaController extends Controller
             JOIN kategoris ON kategoris.id = kerjasamas.kategori_id 
             JOIN statuses ON statuses.id = kerjasamas.status_id 
             JOIN usulans ON usulans.id = kerjasamas.usulan_id
+            JOIN mitras ON mitras.id = usulans.mitra_id
         ) AS c
         ORDER BY c.id");
 
@@ -370,7 +373,7 @@ class KerjasamaController extends Controller
             $filterKategoriMou = ($_GET['filter_berdasarkan_kategori_mou']);
 
             $kerjasamas = DB::select("SELECT * FROM (
-                SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, mou.nomor_file AS 'nomor_mou', mou.file AS 'file_mou', mou.kategori_mou_id AS 'id_kategori_mou', kategori_mous.nama_kategori AS 'kategori_mou', kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kerjasamas.kategori_id, kategoris.nama_kategori, statuses.nama_status, usulans.usulan, spk.nomor_file AS 'nomor_spk', spk.file AS 'file_spk', kegiatans.tanggal_mulai AS 'tanggal_mulai_spk', kegiatans.tanggal_sampai AS 'tanggal_sampai_spk'
+                SELECT kerjasamas.id, mitras.nama_mitra, kerjasamas.nama_kerja_sama, mou.nomor_file AS 'nomor_mou', mou.file AS 'file_mou', mou.kategori_mou_id AS 'id_kategori_mou', kategori_mous.nama_kategori AS 'kategori_mou', kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kerjasamas.kategori_id, kategoris.nama_kategori, statuses.nama_status, usulans.usulan, spk.nomor_file AS 'nomor_spk', spk.file AS 'file_spk', kegiatans.tanggal_mulai AS 'tanggal_mulai_spk', kegiatans.tanggal_sampai AS 'tanggal_sampai_spk'
                 FROM kerjasamas 
                 LEFT JOIN (SELECT * FROM bukti_kerjasamas WHERE jenis_file = 'M') AS mou ON mou.kerjasama_id = kerjasamas.id 
                 LEFT JOIN (SELECT * FROM bukti_kerjasamas WHERE jenis_file = 'S') AS spk ON spk.kerjasama_id = kerjasamas.id 
@@ -379,6 +382,7 @@ class KerjasamaController extends Controller
                 JOIN kategoris ON kategoris.id = kerjasamas.kategori_id 
                 JOIN statuses ON statuses.id = kerjasamas.status_id 
                 JOIN usulans ON usulans.id = kerjasamas.usulan_id
+                JOIN mitras ON mitras.id = usulans.mitra_id
             ) AS c
             WHERE c.id_kategori_mou = $filterKategoriMou
             ORDER BY c.id");

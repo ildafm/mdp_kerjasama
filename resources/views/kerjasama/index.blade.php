@@ -68,15 +68,16 @@
                     <tr>
                         <th>No</th>
                         <th>Aksi</th>
+                        <th>Mitra</th>
                         <th>Nama Kerjasama</th>
+                        <th>Usulan</th>
                         <th>Nomor MoU</th>
-                        <th>File MoU</th>
                         <th>Bidang</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Berakhir</th>
                         <th>Kategori</th>
                         <th>Status</th>
-                        <th>Usulan</th>
+                        <th>File MoU</th>
                         <th>Nomor SPK</th>
                         <th>File SPK</th>
                     </tr>
@@ -121,8 +122,12 @@
                                                 title="Hapus"></i></button>
                                     @endif
                                 </td>
+                                {{-- Nama Mitra yang melakukan kerjasama --}}
+                                <td>{{ $data->nama_mitra }}</td>
                                 {{-- Nama Kerjasama --}}
                                 <td>{{ $data->nama_kerja_sama }}</td>
+                                {{-- usulan --}}
+                                <td>{{ $data->usulan }}</td>
                                 {{-- Nomor MoU --}}
                                 <td>
                                     @if ($data->nomor_mou == '' && $data->kategori_id == 1)
@@ -131,17 +136,6 @@
                                         Tanpa MoU
                                     @else
                                         {{ $data->nomor_mou }}
-                                    @endif
-                                </td>
-                                {{-- File MoU --}}
-                                <td>
-                                    @if ($data->file_mou == '' && $data->kategori_id == 1)
-                                        Belum ada file MoU yang diupload
-                                    @elseif($data->kategori_id == 2)
-                                        Tanpa MoU
-                                    @else
-                                        <a href="{{ url('storage/kerjasama/' . $data->file_mou) }}"
-                                            target="_blank">{{ url('storage/kerjasama/' . $data->file_mou) }}</a>
                                     @endif
                                 </td>
                                 {{-- Bidang kerjasama --}}
@@ -168,8 +162,17 @@
                                 <td>{{ $data->nama_kategori }}</td>
                                 {{-- status --}}
                                 <td>{{ $data->nama_status }}</td>
-                                {{-- usulan --}}
-                                <td>{{ $data->usulan }}</td>
+                                {{-- File MoU --}}
+                                <td>
+                                    @if ($data->file_mou == '' && $data->kategori_id == 1)
+                                        Belum ada file MoU yang diupload
+                                    @elseif($data->kategori_id == 2)
+                                        Tanpa MoU
+                                    @else
+                                        <a href="{{ url('storage/kerjasama/' . $data->file_mou) }}"
+                                            target="_blank">{{ url('storage/kerjasama/' . $data->file_mou) }}</a>
+                                    @endif
+                                </td>
                                 {{-- Nomor SPK --}}
                                 <td>
                                     @if (count($getSPK) > 0)
@@ -202,15 +205,16 @@
                     <tr>
                         <th>No</th>
                         <th>Aksi</th>
+                        <th>Mitra</th>
                         <th>Nama Kerjasama</th>
+                        <th>Usulan</th>
                         <th>Nomor MoU</th>
-                        <th>File MoU</th>
                         <th>Bidang</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Berakhir</th>
                         <th>Kategori</th>
                         <th>Status</th>
-                        <th>Usulan</th>
+                        <th>File MoU</th>
                         <th>Nomor SPK</th>
                         <th>File SPK</th>
                     </tr>

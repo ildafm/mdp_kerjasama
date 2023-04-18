@@ -26,7 +26,7 @@ class KerjasamaTanpaKegiatanController extends Controller
     {
         //
         $kerjasamas = DB::select("SELECT * FROM (
-            SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, bentuk_kegiatans.bentuk AS 'bentuk_kegiatan', mou.nomor_file AS 'no_mou', mou.file AS 'file_mou', kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, statuses.nama_status, usulans.usulan
+            SELECT kerjasamas.id, mitras.nama_mitra, kerjasamas.nama_kerja_sama, bentuk_kegiatans.bentuk AS 'bentuk_kegiatan', mou.nomor_file AS 'no_mou', mou.file AS 'file_mou', kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, statuses.nama_status, usulans.usulan
             FROM kerjasamas
             LEFT JOIN kegiatans ON kegiatans.kerjasama_id = kerjasamas.id
             LEFT JOIN bentuk_kegiatans ON bentuk_kegiatans.id = kegiatans.bentuk_kegiatan_id
@@ -34,9 +34,10 @@ class KerjasamaTanpaKegiatanController extends Controller
             JOIN kategoris ON kategoris.id = kerjasamas.kategori_id
             JOIN statuses ON statuses.id = kerjasamas.status_id
             JOIN usulans ON usulans.id = kerjasamas.usulan_id
+            JOIN mitras ON mitras.id = usulans.mitra_id
             WHERE kategoris.id = '1'
         ) AS c
-        WHERE c.bentuk_kegiatan IS NULL
+        -- WHERE c.bentuk_kegiatan IS NULL
         ORDER BY c.id");
 
         if (isset($_GET['filter_tanggal_mulai']) && isset($_GET['filter_tanggal_sampai'])) {
@@ -45,7 +46,7 @@ class KerjasamaTanpaKegiatanController extends Controller
 
 
             $kerjasamas = DB::select("SELECT * FROM (
-                SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, bentuk_kegiatans.bentuk AS 'bentuk_kegiatan', mou.nomor_file AS 'no_mou', mou.file AS 'file_mou', kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, statuses.nama_status, usulans.usulan
+                SELECT kerjasamas.id, mitras.nama_mitra, kerjasamas.nama_kerja_sama, bentuk_kegiatans.bentuk AS 'bentuk_kegiatan', mou.nomor_file AS 'no_mou', mou.file AS 'file_mou', kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, statuses.nama_status, usulans.usulan
                 FROM kerjasamas
                 LEFT JOIN kegiatans ON kegiatans.kerjasama_id = kerjasamas.id
                 LEFT JOIN bentuk_kegiatans ON bentuk_kegiatans.id = kegiatans.bentuk_kegiatan_id
@@ -53,16 +54,17 @@ class KerjasamaTanpaKegiatanController extends Controller
                 JOIN kategoris ON kategoris.id = kerjasamas.kategori_id
                 JOIN statuses ON statuses.id = kerjasamas.status_id
                 JOIN usulans ON usulans.id = kerjasamas.usulan_id
+                JOIN mitras ON mitras.id = usulans.mitra_id
                 WHERE kategoris.id = '1'
             ) AS c
-            WHERE c.bentuk_kegiatan IS NULL AND (c.tanggal_mulai >= '$tanggal_mulai' AND c.tanggal_sampai <= '$tanggal_sampai')
+             WHERE (c.tanggal_mulai >= '$tanggal_mulai' AND c.tanggal_sampai <= '$tanggal_sampai') -- AND c.bentuk_kegiatan IS NULL
             ORDER BY c.id");
         } else {
             $tanggal_mulai = date('Y-m-d');
             $tanggal_sampai = date('Y-m-d');
         }
 
-        return view('kerjasama_tanpa_kegiatan.index')
+        return view('kerjasama_dengan_mou.index')
             ->with('kerjasamas', $kerjasamas)
             ->with('tanggal_mulai', $tanggal_mulai)
             ->with('tanggal_sampai', $tanggal_sampai);

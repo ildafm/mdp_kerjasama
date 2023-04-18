@@ -46,7 +46,7 @@
 
                     {{-- Telepon Kerjasama --}}
                     <div class="form-group col-lg-6">
-                        <label for="kontak_kerjasama">Telepon Kerjasama </label>
+                        <label for="kontak_kerjasama">Kontak Kerjasama </label>
                         <input required type="text" name='kontak_kerjasama'
                             class="form-control @error('kontak_kerjasama') is-invalid @enderror" placeholder="(0711) 00001"
                             value="{{ old('kontak_kerjasama') }}">

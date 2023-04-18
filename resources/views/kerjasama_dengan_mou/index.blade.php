@@ -7,7 +7,6 @@
             <!-- <h3 class="card-title">Tabel Daftar Kerjasama</h3> -->
             @if (Auth::user()->level != 'D')
                 {{-- Button Tambah --}}
-                {{-- <a href="{{ url('/kerjasamas/create') }}" class='btn btn-primary'>Tambah Kerjasama</a> --}}
                 <a href="{{ route('kerjasamas.create', ['type' => 1]) }}" class="btn btn-primary">Tambah Kerjasama</a>
             @else
                 <div class="card-title">
@@ -39,7 +38,7 @@
             @endif
 
             {{-- form untuk memfilter kerjasama berdasarkan tanggal mulai dan tanggal sampai --}}
-            <form action="{{ route('kerjasama_tanpa_kegiatans.index') }}" method="GET">
+            <form action="{{ route('kerjasama_dengan_mous.index') }}" method="GET">
                 @csrf
                 <label for="filter">Filter berdasarkan tanggal</label>
                 <div class="row">
@@ -55,7 +54,7 @@
                         <button type="submit" class="btn btn-primary">Cari</button>
                         @php
                             if (isset($_GET['filter_tanggal_mulai']) && isset($_GET['filter_tanggal_sampai'])) {
-                                echo "<a href='/kerjasama_tanpa_kegiatans' title='Hapus Filter' class='btn btn-secondary'>Hapus Filter</a>";
+                                echo "<a href='/kerjasama_dengan_mous' title='Hapus Filter' class='btn btn-secondary'>Hapus Filter</a>";
                             }
                         @endphp
                     </div>
@@ -69,15 +68,18 @@
                     <tr>
                         <th>No</th>
                         <th>Aksi</th>
+                        <th>Mitra</th>
                         <th>Nama Kerjasama</th>
+                        <th>Usulan</th>
                         <th>Nomor MoU</th>
-                        <th>File MoU</th>
                         <th>Bidang</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Berakhir</th>
                         <th>Kategori</th>
                         <th>Status</th>
-                        <th>Usulan</th>
+                        <th>File MoU</th>
+                        <th>Nomor SPK</th>
+                        <th>File SPK</th>
                     </tr>
                 </thead>
 
@@ -88,6 +90,13 @@
                     @endphp
 
                     @foreach ($kerjasamas as $data)
+                        @php
+                            $getSPK = DB::select("SELECT kerjasamas.id, spk.nomor_file AS 'nomor_spk', spk.jenis_file, spk.nama_file, spk.file AS 'file_spk'
+                                    FROM kerjasamas
+                                    JOIN (SELECT * FROM bukti_kerjasamas WHERE jenis_file = 'S') AS spk ON spk.kerjasama_id = kerjasamas.id
+                                    WHERE kerjasamas.id = $data->id
+                                    ORDER BY kerjasamas.id");
+                        @endphp
                         <tr>
                             <td>{{ $nomor++ }}</td>
                             <td>
@@ -110,12 +119,10 @@
                                             title="Hapus"></i></button>
                                 @endif
                             </td>
+                            <td>{{ $data->nama_mitra }}</td>
                             <td>{{ $data->nama_kerja_sama }}</td>
+                            <td>{{ $data->usulan }}</td>
                             <td> {{ $data->no_mou }} </td>
-                            <td>
-                                <a
-                                    href="{{ url('storage/kerjasama/' . $data->file_mou) }}">{{ url('storage/kerjasama/' . $data->file_mou) }}</a>
-                            </td>
                             <td>
                                 @php
                                     if ($data->bidang == 'P') {
@@ -135,7 +142,33 @@
                             <td>{{ $data->tanggal_sampai }}</td>
                             <td>{{ $data->nama_kategori }}</td>
                             <td>{{ $data->nama_status }}</td>
-                            <td>{{ $data->usulan }}</td>
+                            <td>
+                                <a
+                                    href="{{ url('storage/kerjasama/' . $data->file_mou) }}">{{ url('storage/kerjasama/' . $data->file_mou) }}</a>
+                            </td>
+                            
+                            {{-- Nomor SPK --}}
+                            <td>
+                                @if (count($getSPK) > 0)
+                                    @foreach ($getSPK as $item)
+                                        {{ $item->nomor_spk }};
+                                    @endforeach
+                                @else
+                                    Belum ada file SPK/MoA yang diupload
+                                @endif
+                            </td>
+                            {{-- File SPK --}}
+                            <td>
+                                @if (count($getSPK) > 0)
+                                    @foreach ($getSPK as $item)
+                                        <a href="{{ url('storage/kerjasama/' . $item->file_spk) }}"
+                                            target="_blank">{{ url('storage/kerjasama/' . $item->file_spk) }}</a>;
+                                    @endforeach
+                                @else
+                                    Belum ada file SPK/MoA yang diupload
+                                @endif
+                            </td>
+
                         </tr>
                     @endforeach
                 </tbody>
@@ -144,15 +177,18 @@
                     <tr>
                         <th>No</th>
                         <th>Aksi</th>
+                        <th>Mitra</th>
                         <th>Nama Kerjasama</th>
+                        <th>Usulan</th>
                         <th>Nomor MoU</th>
-                        <th>File MoU</th>
                         <th>Bidang</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Berakhir</th>
                         <th>Kategori</th>
                         <th>Status</th>
-                        <th>Usulan</th>
+                        <th>File MoU</th>
+                        <th>Nomor SPK</th>
+                        <th>File SPK</th>
                     </tr>
                 </tfoot>
 

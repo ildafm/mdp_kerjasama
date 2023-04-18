@@ -69,13 +69,14 @@
                     <tr>
                         <th>No</th>
                         <th>Aksi</th>
+                        <th>Mitra</th>
                         <th>Nama Kerjasama</th>
+                        <th>Usulan</th>
                         <th>Bidang</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Berakhir</th>
                         <th>Kategori</th>
                         <th>Status</th>
-                        <th>Usulan</th>
                         <th>Nomor SPK</th>
                         <th>File SPK</th>
                     </tr>
@@ -118,7 +119,9 @@
                                             title="Hapus"></i></button>
                                 @endif
                             </td>
+                            <td>{{ $data->nama_mitra }}</td>
                             <td>{{ $data->nama_kerja_sama }}</td>
+                            <td>{{ $data->usulan }}</td>
                             <td>
                                 @php
                                     if ($data->bidang == 'P') {
@@ -138,7 +141,6 @@
                             <td>{{ $data->tanggal_sampai }}</td>
                             <td>{{ $data->nama_kategori }}</td>
                             <td>{{ $data->nama_status }}</td>
-                            <td>{{ $data->usulan }}</td>
                             <td>
                                 @if (count($getSPK) > 0)
                                     @foreach ($getSPK as $item)
@@ -166,13 +168,14 @@
                     <tr>
                         <th>No</th>
                         <th>Aksi</th>
+                        <th>Mitra</th>
                         <th>Nama Kerjasama</th>
+                        <th>Usulan</th>
                         <th>Bidang</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Berakhir</th>
                         <th>Kategori</th>
                         <th>Status</th>
-                        <th>Usulan</th>
                         <th>Nomor SPK</th>
                         <th>File SPK</th>
                     </tr>

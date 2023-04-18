@@ -507,7 +507,7 @@
                                 </li>
                                 {{-- Kerjasama yang Hanya Dengan MoU --}}
                                 <li class="nav-item">
-                                    <a href="{{ url('/kerjasama_tanpa_kegiatans') }}" class="nav-link">
+                                    <a href="{{ url('/kerjasama_dengan_mous') }}" class="nav-link">
                                         <i class="fas fa-folder nav-icon"></i>
                                         <p>Kerjasama Dengan MoU</p>
                                     </a>
@@ -817,9 +817,26 @@
         document.getElementById("date").innerHTML = dateNow;
     </script>
 
+    {{-- auto logout --}}
     <script>
         $(function() {
             bsCustomFileInput.init();
+        });
+
+        // autologout
+        $(document).ready(function() {
+            const timeout = 300000; // 1000 ms = 1 detik // 300000 ms = 5 menit
+            var idleTimer = null;
+            $('*').bind(
+                'mousemove click mouseup mousedown keydown keypress keyup submit change mouseenter scroll resize dblclick',
+                function() {
+                    clearTimeout(idleTimer);
+
+                    idleTimer = setTimeout(function() {
+                        document.getElementById('logout-form').submit();
+                    }, timeout);
+                });
+            $("body").trigger("mousemove");
         });
     </script>
 

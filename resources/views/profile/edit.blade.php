@@ -43,6 +43,7 @@
                                 <img style="width: 250px; height: 250px"
                                     src="{{ asset('storage/profile/' . Auth::user()->file) }}" alt="Foto Profile"
                                     class="img-circle elevation-2 img-fluid">
+                                <br>
                             @endif
                         </div>
                         </p>

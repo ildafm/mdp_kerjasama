@@ -15,11 +15,12 @@ class KerjasamaTanpaMouController extends Controller
     {
         //
         $kerjasamas = DB::select("SELECT * FROM (
-            SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, statuses.nama_status, usulans.usulan
+            SELECT kerjasamas.id, mitras.nama_mitra, kerjasamas.nama_kerja_sama, kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, statuses.nama_status, usulans.usulan
             FROM kerjasamas
             JOIN kategoris ON kategoris.id = kerjasamas.kategori_id
             JOIN statuses ON statuses.id = kerjasamas.status_id
             JOIN usulans ON usulans.id = kerjasamas.usulan_id
+            JOIN mitras ON mitras.id = usulans.mitra_id
             WHERE kategoris.id = '2'
         ) AS c
         ORDER BY c.id");
@@ -29,11 +30,12 @@ class KerjasamaTanpaMouController extends Controller
             $tanggal_sampai = ($_GET['filter_tanggal_sampai']);
 
             $kerjasamas = DB::select("SELECT * FROM (
-                 SELECT kerjasamas.id, kerjasamas.nama_kerja_sama, kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, statuses.nama_status, usulans.usulan
+                 SELECT kerjasamas.id, mitras.nama_mitra, kerjasamas.nama_kerja_sama, kerjasamas.bidang, kerjasamas.tanggal_mulai, kerjasamas.tanggal_sampai, kategoris.nama_kategori, statuses.nama_status, usulans.usulan
                 FROM kerjasamas
                 JOIN kategoris ON kategoris.id = kerjasamas.kategori_id
                 JOIN statuses ON statuses.id = kerjasamas.status_id
                 JOIN usulans ON usulans.id = kerjasamas.usulan_id
+                JOIN mitras ON mitras.id = usulans.mitra_id
                 WHERE kategoris.id = '2'
             ) AS c
             WHERE c.tanggal_mulai >= '$tanggal_mulai' AND c.tanggal_sampai <= '$tanggal_sampai'

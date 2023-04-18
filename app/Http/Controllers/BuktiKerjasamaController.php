@@ -170,15 +170,17 @@ class BuktiKerjasamaController extends Controller
     public function destroy(BuktiKerjasama $buktiKerjasama)
     {
         //
-        if ($buktiKerjasama->file != null || $buktiKerjasama->file != '') {
-            unlink(storage_path('app/public/kerjasama/' . $buktiKerjasama->file));
+        $temp = 'app/public/kerjasama/' . $buktiKerjasama->file;
+        try {
+            $buktiKerjasama->delete();
+            if ($buktiKerjasama->file != null || $buktiKerjasama->file != '') {
+                unlink(storage_path($temp));
+            }
+            $message = "Hapus data file $buktiKerjasama->nama_file berhasil";
+            return redirect()->route('kerjasamas.show', $buktiKerjasama->kerjasama_id)->with('pesan', $message);
+        } catch (\Throwable $th) {
+            $message = "Hapus data file $buktiKerjasama->nama_file tidak berhasil";
+            return redirect()->route('kerjasamas.show', $buktiKerjasama->kerjasama_id)->with('pesan_error', $message);
         }
-
-        $buktiKerjasama->delete();
-        return redirect()->route('kerjasamas.show', $buktiKerjasama->kerjasama_id)->with('pesan', "Hapus data file $buktiKerjasama->nama_file berhasil");
     }
-
-    // public function getSpkInKegiatan($id)
-    // {
-    // }
 }

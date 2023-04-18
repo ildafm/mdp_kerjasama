@@ -102,7 +102,7 @@
 
                 <div class="row">
                     {{-- Usulan --}}
-                    <div class="form-group col-lg-4 col-sm-12">
+                    <div class="form-group col-lg-6 col-sm-12">
                         <label for="usulan">Usulan</label>
                         <select class="form-control select2" name='usulan'>
 
@@ -130,7 +130,7 @@
                         $option = old('bidang');
                     @endphp
 
-                    <div class="form-group col-lg-4 col-sm-12">
+                    <div class="form-group col-lg-3 col-sm-12">
                         <label for="bidang">Bidang</label>
                         <select class="form-control" name="bidang">
                             <option value='P' {{ $option == 'P' ? 'selected' : '' }}>
@@ -155,7 +155,7 @@
                     </div>
 
                     {{-- Nama Status --}}
-                    <div class="form-group col-lg-4 col-sm-12">
+                    <div class="form-group col-lg-3 col-sm-12">
                         <label for="nama_status">Status</label>
 
                         @php

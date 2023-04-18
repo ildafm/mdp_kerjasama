@@ -74,16 +74,17 @@
                     <tr>
                         <th>No</th>
                         <th>Aksi</th>
+                        <th>Mitra</th>
                         <th>Nama Kerjasama</th>
+                        <th>Usulan</th>
                         <th>Nomor MoU</th>
-                        <th>File MoU</th>
                         <th>Kategori MoU</th>
                         <th>Bidang</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Berakhir</th>
                         <th>Kategori Kerjasama</th>
                         <th>Status</th>
-                        <th>Usulan</th>
+                        <th>File MoU</th>
                         <th>Nomor SPK</th>
                         <th>File SPK</th>
                         <th>Tanggal Mulai SPK</th>
@@ -108,24 +109,13 @@
                                     {{-- Button Tampil --}}
                                     <a href="{{ url('kerjasamas/' . $data->id) }}" class="btn btn-sm btn-primary"><i
                                             class="nav-icon fas fa-eye" title="Tampil"></i></a>
-
-                                    {{-- @if (Auth::user()->level != 'D')
-                                        Button Ubah
-                                        <a href="{{ route('kerjasamas.edit', ['kerjasama' => $data->id, 'type' => 0]) }}"
-                                            class="btn btn-sm btn-warning"><i class="nav-icon fas fa-edit"
-                                                title="Edit"></i></a>
-                                    @endif
-
-                                    @if (Auth::user()->level == 'A')
-                                        Button Hapus
-                                        <button class="btn btn-sm btn-danger btn-hapus" data-id="{{ $data->id }}"
-                                            data-namaKerjasama="{{ $data->nama_kerja_sama }}" data-toggle="modal"
-                                            data-target="#modal-sm"><i class="nav-icon fas fa-trash"
-                                                title="Hapus"></i></button>
-                                    @endif --}}
                                 </td>
+                                {{-- Nama Mitra --}}
+                                <td>{{ $data->nama_mitra }}</td>
                                 {{-- Nama Kerjasama --}}
                                 <td>{{ $data->nama_kerja_sama }}</td>
+                                {{-- usulan --}}
+                                <td>{{ $data->usulan }}</td>
                                 {{-- Nomor MoU --}}
                                 <td>
                                     @if ($data->nomor_mou == '' && $data->kategori_id == 1)
@@ -134,17 +124,6 @@
                                         Tanpa MoU
                                     @else
                                         {{ $data->nomor_mou }}
-                                    @endif
-                                </td>
-                                {{-- File MoU --}}
-                                <td>
-                                    @if ($data->file_mou == '' && $data->kategori_id == 1)
-                                        Belum ada file MoU yang diupload
-                                    @elseif($data->kategori_id == 2)
-                                        Tanpa MoU
-                                    @else
-                                        <a href="{{ url('storage/kerjasama/' . $data->file_mou) }}"
-                                            target="_blank">{{ url('storage/kerjasama/' . $data->file_mou) }}</a>
                                     @endif
                                 </td>
                                 {{-- Kategori MoU --}}
@@ -175,8 +154,17 @@
                                 <td>{{ $data->nama_kategori }}</td>
                                 {{-- status --}}
                                 <td>{{ $data->nama_status }}</td>
-                                {{-- usulan --}}
-                                <td>{{ $data->usulan }}</td>
+                                {{-- File MoU --}}
+                                <td>
+                                    @if ($data->file_mou == '' && $data->kategori_id == 1)
+                                        Belum ada file MoU yang diupload
+                                    @elseif($data->kategori_id == 2)
+                                        Tanpa MoU
+                                    @else
+                                        <a href="{{ url('storage/kerjasama/' . $data->file_mou) }}"
+                                            target="_blank">{{ url('storage/kerjasama/' . $data->file_mou) }}</a>
+                                    @endif
+                                </td>
                                 {{-- Nomor SPK --}}
                                 <td>
                                     @if ($data->nomor_spk != null)
@@ -225,16 +213,17 @@
                     <tr>
                         <th>No</th>
                         <th>Aksi</th>
+                        <th>Mitra</th>
                         <th>Nama Kerjasama</th>
+                        <th>Usulan</th>
                         <th>Nomor MoU</th>
-                        <th>File MoU</th>
                         <th>Kategori MoU</th>
                         <th>Bidang</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Berakhir</th>
                         <th>Kategori Kerjasama</th>
                         <th>Status</th>
-                        <th>Usulan</th>
+                        <th>File MoU</th>
                         <th>Nomor SPK</th>
                         <th>File SPK</th>
                         <th>Tanggal Mulai SPK</th>
